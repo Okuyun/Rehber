@@ -13,10 +13,15 @@ let data = {
 
     }
     /**
-     * Arabic sura array hold nested array of suras and aya,
-     * This is the base array of Quran with uthmani font. 
-     * suraAr[X][Y] => x number of sura, Y number of aya
+     * Keep the last displayed sura saved for user errors
+     * 
      */
+let lastSura = 0;
+/**
+ * Arabic sura array hold nested array of suras and aya,
+ * This is the base array of Quran with uthmani font. 
+ * suraAr[X][Y] => x number of sura, Y number of aya
+ */
 let suraAr = []
 
 /**
@@ -48,7 +53,7 @@ function readExternal(url, target, callBack) {
  * @param {Array} targetArray Target array to send the modified data to it.
  * @see readExternal
  */
-function dataToArray(t, targetArray, ) {
+function dataToArray(t, targetArray) {
     // split the file to line, which downloaded from Tanzil.
     let lines = t.split("\n");
     let suraN;
@@ -74,3 +79,54 @@ function setArabic() {
     readExternal(dataUrl + data.arclean, suraSr, dataToArray)
 
 }
+/**
+ * Set choosen sura and its search elements to show it.
+ * 
+ * @param {number} h to set the sura number - H was chosen as random, need to be changed
+ * @param {object} htmlEl html object to set its value to sura number 
+ * 
+ */
+function setSura(h = 0, htmlEl) {
+    h = Number(h)
+        //console.log(h);
+    if (h > 113 || h < 0)
+        setSur(lastSura)
+        // return dataShow.innerText = "Please Choose a number between 1-114"
+    lastSura = h
+    htmlEl.value = h + 1;
+
+}
+
+function nextSura() {
+    lastSura++;
+    if (lastSura == 114) {
+        lastSura = 0;
+    }
+    displayArWr(lastSura)
+}
+
+function preSura() {
+    lastSura--;
+    if (lastSura == -1)
+        lastSura = 113;
+    displayArWr(lastSura)
+}
+
+function displaySura(target, arr) {
+    let text = "";
+    arr.forEach(e => {
+        text += e + "\n"
+    });
+    target.innerText = text;
+}
+/**
+ *
+ * Display sura warper, used all of previews to call them.
+ *   */
+function displayArWr(number) {
+    setSura(number, setSuraNumber);
+    displaySura(artxt, suraAr[lastSura]);
+
+}
+
+setArabic();

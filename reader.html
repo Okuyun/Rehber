@@ -80,17 +80,14 @@
         <div class="container">
             <div class="row justify-content-md-center">
                 <div class="col col-lg-2">
-                    <button type="button" class="btn btn-info">Back</button>
+                    <button type="button" class="btn btn-info" onclick="preSura()">Back</button>
                 </div>
                 <div class="col-md-auto">
-                    <input class="form-control col-md-4 text-center" type="search" placeholder="1">
-
-                    <button type="button" class="btn btn-info "> 
-            go to
-                            </button>
+                    <input id=setSuraNumber class="form-control col-md-4 text-center" type="search" placeholder=" " onsubmit="displayArWr(setSuraNumber.value-1)">
+                    <button type="button" class="btn btn-info " onclick="displayArWr(setSuraNumber.value-1)">go to</button>
                 </div>
                 <div class="col col-lg-2">
-                    <button type="button" class="btn btn-info">Next</button>
+                    <button type="button" class="btn btn-info" onclick="nextSura()">Next</button>
                 </div>
             </div>
 
