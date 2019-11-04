@@ -11,6 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
     <style>
         .arabic {
             font: 20px me_quran, serif;
@@ -52,10 +53,11 @@
                 </li>
 
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2 text-right" type="search" placeholder="بسم الله" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            <div class="my-2 my-lg-0">
+                <input id=searchQue id=serachinput class="form-control mr-sm-2 text-right" type="search" placeholder="بسم الله" aria-label="Search">
+                <button onclick=" find(searchQue.value)" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+
+            </div>
         </div>
     </nav>
     <br>
@@ -65,7 +67,7 @@
             <div class="col">
             </div>
             <div class="col-10">
-                <table class="table">
+                <table id="dTable" class="table">
                     <caption>List of found word</caption>
                     <thead>
                         <tr>
@@ -77,15 +79,13 @@
                         <tr>
 
                             <td>
-                                <p> He said, “Embark in it. In the name of God shall be its sailing and its anchorage. My Lord is indeed Forgiving and Merciful.”
-                                </p>
+                                <p> He said, “Embark in it. In the name of God shall be its sailing and its anchorage. My Lord is indeed Forgiving and Merciful.”</p>
                                 <span class="badge badge-light align-text-bottom">Hud - 41</sapn>
                             </td>
                           
                                 <td scope="col" class="text-right">
-                                      <p class="arabic"> وَقَالَ ٱرْكَبُوا۟ فِيهَا بِسْمِ ٱللَّهِ مَجْر۪ىٰهَا وَمُرْسَىٰهَآ إِنَّ رَبِّى لَغَفُورٌ رَّحِيمٌ
-                                        </p>
-                                       <span class=" badge badge-light align-text-bottom">سورة هود اية 41 </sapn>
+                                      <p class="arabic"> وَقَالَ ٱرْكَبُوا۟ فِيهَا بِسْمِ ٱللَّهِ مَجْر۪ىٰهَا وَمُرْسَىٰهَآ إِنَّ رَبِّى لَغَفُورٌ رَّحِيمٌ</p>
+                                       <span class="badge badge-light align-text-bottom">سورة هود اية 41 </sapn>
 
                              
                             </td>
@@ -124,8 +124,14 @@
 
     </div>
 
-
-
+   
+      <script src="finder.js"></script>
+      <script src="quran-data.js"></script>
+      <script src="quran-sura.js"></script>
+      <script src="script.js"></script>
+      <script>
+            init();
+            </script>
 </body>
 
 </html>

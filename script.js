@@ -6,11 +6,20 @@ let dataUrl = "https://a0m0rajab.github.io/BahisQurani/data/"
     /**
      * Data JSON to read them from it.
      * Need to add: Translation for other languages.
+     * tf = stands for tafsir - arabic one. 
+     * tr = stands for translation 
+     * XXYYZZ
+     * xx = either tafsir or translation 
+     * yy = the lanauges 
+     * ZZ = the type or the source if it differ
      */
 let data = {
         arclean: "quran-simple-clean.txt",
         aruthman: "quran-uthmani.txt",
-
+        tfArJal: "ar.jalalayn.txt",
+        tfArMu: "ar.muyassar.txt",
+        trEn: "en.ahmedali.txt",
+        trTr: "tr.diyanet.txt"
     }
     /**
      * Keep the last displayed sura saved for user errors
@@ -26,9 +35,15 @@ let suraAr = []
 
 /**
  * Same as SuraAr but this one does not use uthmani font or even diactrics(harakat) to simplify search methods
+ * Sr stands for search...
  * @see suraAr
  */
 let suraSr = []
+    /** 
+     * Translated sura, chosen by the user to show the translated version.
+     * Tr = stsands for translation
+     */
+let suraTr = []
     /**
      * 
      * Reading data from external source, the send it to a local callback funtion to use it.
@@ -55,6 +70,7 @@ function readExternal(url, target, callBack) {
  */
 function dataToArray(t, targetArray) {
     // split the file to line, which downloaded from Tanzil.
+    let parsedArray = []
     let lines = t.split("\n");
     let suraN;
     console.log("Quran Verses= " + lines.length);
@@ -68,11 +84,12 @@ function dataToArray(t, targetArray) {
         }
         targetArray[suraN].push(line[2])
     }
+
 }
 /**
  * Set Arabic arrays and initialize it.
  */
-function setArabic() {
+function loadArabic() {
     // set uthmani array.
     readExternal(dataUrl + data.aruthman, suraAr, dataToArray)
         // set clean array.
@@ -111,7 +128,12 @@ function preSura() {
         lastSura = 113;
     displayArWr(lastSura)
 }
-
+/**
+ * Display choosen sura from the array on the target HTML element, 
+ * 
+ * @param {Object} target Target HTML elemet to set the inner text as the nested array elements
+ * @param {Object} arr  Array of chosen text, can be arabic or the translation 
+ */
 function displaySura(target, arr) {
     let text = "";
     arr.forEach(e => {
@@ -121,14 +143,96 @@ function displaySura(target, arr) {
 }
 /**
  *
- * Display sura warper, used all of previews to call them.
- *   */
-function displayArWr(number) {
+ * Display arabic sura warper, used all of previews to call them.
+ *   
+ * 
+ */
+function displayArWr(number = 0) {
+
     if (Number.isNaN(Number(number)))
         return
     setSura(number, setSuraNumber);
     displaySura(artxt, suraAr[lastSura]);
+    displayTranslation();
+    setNames()
 
 }
 
-setArabic();
+function displayTranslation() {
+    displaySura(trtxt, suraTr[lastSura]);
+}
+
+
+function init() {
+
+    loadArabic();
+    initTranslation();
+
+    // display results, after waiting the set arabic to be done, this will wait for 0.5 seconds 
+
+}
+/**
+ * Load translation and set the translation array to use it in the future.
+ * 
+ * @param {Number} choosen The choosen number of selected translatio
+ */
+function loadTrans(choosen = "1") {
+    suraTr = []
+    let translate = data.tfArJal;
+    switch (choosen) {
+        case "1":
+            addTextRight()
+            translate = data.tfArJal;
+            break;
+        case "2":
+            addTextRight()
+            translate = data.tfArMu;
+            break;
+        case "3":
+            removeTextRight()
+            translate = data.trTr;
+            break;
+        case "4":
+            removeTextRight()
+            translate = data.trEn;
+            break;
+        case "5":
+            break;
+
+    }
+    /**
+     * Add text right to the tranlsation dislpay to set it for RTL text type (arabic)
+     */
+    function addTextRight() {
+        trtxt.classList.add("text-right")
+
+        //  trtxt.classList.toggle("text-right")
+
+    }
+    /**
+     * Removed class text right from translation display, to set it for LTR text type
+     */
+    function removeTextRight() {
+        trtxt.classList.remove("text-right")
+
+    }
+
+    readExternal(dataUrl + translate, suraTr, dataToArray)
+    setTimeout(displayTranslation, 500);
+}
+
+function initTranslation() {
+    readExternal(dataUrl + data.trTr, suraTr, dataToArray)
+
+}
+
+function setNames() {
+    arname.innerText = quran.sura[lastSura].name
+    ename.innerText = quran.sura[lastSura].ename + " (" + quran.sura[lastSura].tname + ")"
+}
+
+function initReader() {
+    init();
+    loadTrans();
+    setTimeout(displayArWr, 500);
+}

@@ -12,7 +12,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="quran-data.js"></script>
-    <script src="script.js"></script>
+    <script src="quran-sura.js"></script>
+
 
     <style>
         .arabic {
@@ -64,11 +65,25 @@
     <br>
     <div class="container">
         <div class="row">
-            <div class="col">Fatiha</div>
-            <div class="col text-right">الفاتحة</div>
+
+            <div id=ename class="col">
+
+                Fatiha
+
+            </div>
+            <div class="col">
+                <select onchange="loadTrans(this.value)" class="browser-default custom-select">
+                            <option value="1" selected>تفسير الجلالين</option>
+                            <option value="2">تفسير الميسر</option>
+                            <option value="3">Türkçe Meali</option>
+                            <option value="4">English Translation</option>
+                          </select>
+
+            </div>
+            <div id=arname class="col text-right">الفاتحة</div>
             <div class="w-100"></div>
             <!-- max-width: 260px; max-height: 100px; -->
-            <div id=trtxt class="col  border bg-light overflow-auto">
+            <div id=trtxt class="col  border bg-light overflow-auto" style="height: 70vh;">
                 In the name of Allah, most benevolent, ever-merciful. <br> ALL PRAISE BE to Allah, Lord of all the worlds,<br> Most beneficent, ever-merciful,<br> King of the Day of Judgement. <br> You alone we worship, and to You alone turn for help.
                 <br> Guide us (O Lord) to the path that is straight, <br> The path of those You have blessed, Not of those who have earned Your anger, nor those who have gone astray.
             </div>
@@ -79,17 +94,25 @@
             </div>
         </div>
         <div class="container">
-            <div class="row justify-content-md-center">
+            <div class="row justify-content-between">
                 <div class="col col-lg-2">
                     <button type="button" class="btn btn-info" onclick="preSura()">Back</button>
                 </div>
                 <div class="col-md-auto">
-                    <input id=setSuraNumber value="1" class="form-control col-md-4 text-center" type="search" onsubmit="displayArWr(setSuraNumber.value-1)">
-                    <button type="button" class="btn btn-info " onclick="displayArWr(setSuraNumber.value-1)">go to</button>
+
+                    <div class="row">
+                        <input id=setSuraNumber value="1" class="form-control col-md-4 text-center" type="search" onsubmit="displayArWr(setSuraNumber.value-1)">
+
+                        <button type="button" class="btn btn-info " onclick="displayArWr(setSuraNumber.value-1)">go to</button>
+
+                    </div>
                 </div>
                 <div class="col col-lg-2">
+
                     <button type="button" class="btn btn-info" onclick="nextSura()">Next</button>
                 </div>
+
+
             </div>
 
         </div>
@@ -99,5 +122,6 @@
     </script>
 
 </body>
+<script src="script.js"></script>
 
 </html>
