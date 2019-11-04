@@ -1,0 +1,53 @@
+
+#=====================================================================
+#
+#  Quran Translation
+#  Name: تفسير الجلالين
+#  Translator: Jalal ad-Din al-Mahalli and Jalal ad-Din as-Suyuti
+#  Language: Arabic
+#  ID: ar.jalalayn
+#  Last Update: December 1, 2010
+#  Source: Tanzil.net
+#
+#=====================================================================
+
+
+
+#=====================================================================
+#
+#  Quran Translation
+#  Name: Diyanet İşleri
+#  Translator: Diyanet Isleri
+#  Language: Turkish
+#  ID: tr.diyanet
+#  Last Update: December 27, 2011
+#  Source: Tanzil.net
+#
+#=====================================================================
+
+
+#=====================================================================
+#
+#  Quran Translation
+#  Name: تفسير المیسر
+#  Translator: King Fahad Quran Complex
+#  Language: Arabic
+#  ID: ar.muyassar
+#  Last Update: January 7, 2011
+#  Source: Tanzil.net
+#
+#=====================================================================
+
+
+
+#=====================================================================
+#
+#  Quran Translation
+#  Name: Ahmed Ali
+#  Translator: Ahmed Ali
+#  Language: English
+#  ID: en.ahmedali
+#  Last Update: August 28, 2010
+#  Source: Tanzil.net
+#
+#=====================================================================

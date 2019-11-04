@@ -124,6 +124,8 @@ function displaySura(target, arr) {
  * Display sura warper, used all of previews to call them.
  *   */
 function displayArWr(number) {
+    if (Number.isNaN(Number(number)))
+        return
     setSura(number, setSuraNumber);
     displaySura(artxt, suraAr[lastSura]);
 
