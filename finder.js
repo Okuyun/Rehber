@@ -162,7 +162,7 @@ function nextWordList(word) {
 
 function find(word) {
     clearTable();
-
+    console.log([...nextWordList(word)[0]].join("\n"))
     createTable([...nextWordList(word)[1]])
 }
 
