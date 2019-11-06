@@ -82,15 +82,15 @@ function createTable(arr) {
 // TODO: simplify and re-read the code then.
 
 // get the sura and verses that has this word and the word location.
-function search(word) {
+function search(word, arr = suraSr) {
     let index = -1,
         loc = [];
 
     // loop all of suras.
-    for (i = 0; i < suraSr.length; i++) {
+    for (i = 0; i < arr.length; i++) {
         // loop verses of each sura.
-        for (let j = 0; j < suraSr[i].length; j++) {
-            let locs = suraSr[i][j].indexOf(word)
+        for (let j = 0; j < arr[i].length; j++) {
+            let locs = arr[i][j].indexOf(word)
             if (locs !== -1) {
                 loc.push([i, j, locs])
             }
@@ -100,15 +100,15 @@ function search(word) {
 }
 // get the next word location from the search based on length of the word itself... 
 // check if the word is at the ened of aya...
-function nextWordLoc(word) {
-    let wordLoc = search(word);
+function nextWordLoc(word, arr = suraSr) {
+    let wordLoc = search(word, arr);
     let nxtwrd, suraN, aya;
     for (let i = 0; i < wordLoc.length; i++) {
         nxtwrd = wordLoc[i][2] + word.length
         suraN = wordLoc[i][0]
         aya = wordLoc[i][1]
             // check if ened of verse 
-        if (suraSr[suraN][aya].length < nxtwrd) {
+        if (arr[suraN][aya].length < nxtwrd) {
             aya++;
             // check if the vers is the last at the sura
             if (sura[suraN].length < aya) {
@@ -121,8 +121,10 @@ function nextWordLoc(word) {
     return wordLoc;
 }
 
-function nextWordList(word) {
-    let wordlocation = nextWordLoc(word);
+function nextWordList(word, arr = suraSr) {
+    // ayet is out of bound...
+
+    let wordlocation = nextWordLoc(word, arr);
     // sugwrd = suggestion word, ns= number sura, na = number aya, wls = world list.
     // anls = aya number list
     let wls = new Set(),
@@ -134,7 +136,7 @@ function nextWordList(word) {
         anls.add([wordlocation[i][0], wordlocation[i][1]])
         ns = wordlocation[i][0];
         na = wordlocation[i][1];
-        aya = suraSr[ns][na];
+        aya = arr[ns][na];
         lastindex = aya.indexOf(" ", wordlocation[i][2] + 1);
         if (lastindex == -1) {
             lastindex = aya.length;
@@ -148,11 +150,17 @@ function nextWordList(word) {
                 wordlocation[i][0] = 0;
                 wordlocation[i][1] = 0;
             }
+            if (arr[wordlocation[i][0]].length <= wordlocation[i][1]) {
+                wordlocation[i][0] += 1;
+                wordlocation[i][1] = 0
+            }
+
 
             i--;
             continue;
 
         }
+        // check if aya is out of sura index
         wls.add(sugwrd)
         als.add(aya)
     }
@@ -160,10 +168,17 @@ function nextWordList(word) {
     return [wls, anls];
 }
 
+
 function find(word) {
+    let wordLst;
+    if (/[\u064B-\u0652]/.test(word)) {
+        wordLst = nextWordList(word, suraAr);
+    } else {
+        wordLst = nextWordList(word);
+    }
     clearTable();
-    console.log([...nextWordList(word)[0]].join("\n"))
-    createTable([...nextWordList(word)[1]])
+    console.log([...wordLst[0]].join("\n"))
+    createTable([...wordLst[1]])
 }
 
 function autoCreate(word) {
@@ -279,3 +294,5 @@ searchQue.addEventListener("keyup", function(event) {
         find(searchQue.value)
     }
 });
+
+// instead of removing/clearning diactricits( vowels - tashkeel) check if its there then search by another array.
