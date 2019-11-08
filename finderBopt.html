@@ -11,6 +11,9 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!--  -->
+    <link rel="stylesheet" type="text/css" href="http://www.arabic-keyboard.org/keyboard/keyboard.css">
+    <script type="text/javascript" src="http://www.arabic-keyboard.org/keyboard/keyboard.js" charset="UTF-8"></script>
 
     <style>
         .arabic {
@@ -53,13 +56,14 @@
                 </li>
 
             </ul>
-            <div class="my-2 my-lg-0">
-                <input list="test" id=searchQue id=serachinput class="form-control mr-sm-2 text-right" type="search" placeholder="بسم الله" aria-label="Search">
-                <button onclick=" find(searchQue.value)" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                <datalist id="test">
+            <!-- <input type="text" id="YourId" value="" dir="rtl" class="keyboardInput"> -->
 
-                        <option value="Brian Lara">  
-                                <option value="Jacques Kallis">   
+            <div class="my-2 my-lg-0">
+                <input dir="rtl" list="suggestions" value="بسم الله" onchange="sugOnKeyUp(searchQue.value)" onkeyup="sugOnKeyUp(searchQue.value)" id=searchQue id=serachinput class="keyboardInput form-control mr-sm-2 text-right" type="text" aria-label="Search">
+                <button onclick="findAction(searchQue.value)" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <datalist id="suggestions">
+                        <option value="بسم الله">  
+                        <option value="بسم الله الرحمن">   
                 </datalist>
             </div>
         </div>
@@ -71,50 +75,47 @@
 
             <div class="col-12">
                 <table id="dTable" class="table">
-                    <caption>List of found word
-
+                    <caption>Found
+                        <span id="wordNumber">3</span> occurence
                     </caption>
                     <thead>
                         <tr>
-                            <th style="width: 50%;">Tefsir</th>
                             <th class="text-right">عربي</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
 
-                            <td>
-                                <p> He said, “Embark in it. In the name of God shall be its sailing and its anchorage. My Lord is indeed Forgiving and Merciful.”</p>
-                                <span class="badge badge-light align-text-bottom">Hud - 41</sapn>
-                            </td>
-                          
-                                <td scope="col" class="text-right">
-                                      <p class="arabic"> وَقَالَ ٱرْكَبُوا۟ فِيهَا بِسْمِ ٱللَّهِ مَجْر۪ىٰهَا وَمُرْسَىٰهَآ إِنَّ رَبِّى لَغَفُورٌ رَّحِيمٌ</p>
-                                       <span class="badge badge-light align-text-bottom">سورة هود اية 41 </sapn>
 
-                             
+                            <td scope="col" class="text-right">
+                                <span class="arabic"> وَقَالَ ٱرْكَبُوا۟ فِيهَا بِسْمِ ٱللَّهِ مَجْر۪ىٰهَا وَمُرْسَىٰهَآ إِنَّ رَبِّى لَغَفُورٌ رَّحِيمٌ</span> &nbsp; &nbsp;
+
+                                <span class="badge badge-light align-text-bottom">سورة هود اية 41 </sapn>
+
+
                             </td>
 
                         </tr>
                         <tr>
-                            <td> <p>It is from Solomon, and it is, ‘In the Name of God, the Gracious, the Merciful.</p>
-                                    <span class="badge badge-light align-text-bottom">Ant - 30 </sapn>
-                            </td>
+
                             <td scope="col" class="text-right">
-                                <p class="arabic">إِنَّهُۥ مِن سُلَيْمَٰنَ وَإِنَّهُۥ بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
-                                    </p>
+
                                 
-                                    <span class="badge badge-light align-text-bottom">سورة النمل اية 30 </sapn>
+                                <span class="arabic" >إِنَّهُۥ مِن سُلَيْمَٰنَ وَإِنَّهُۥ بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+                                </span> &nbsp; &nbsp;
+                                <span class="badge badge-light align-text-bottom">سورة النمل اية 30 </sapn>
+                                       
+
                             </td>
                         </tr>
                         <tr>
-                            <td><p>In the name of God, the Gracious, the Merciful</p>
-                                    <span class="badge badge-light align-text-bottom">Fatiha - 1</sapn>
-                            </td>
+
                             <td scope="col" class="text-right">
-                                <p class="arabic">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
+                                    <span class="arabic">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</span> &nbsp; &nbsp;
+                                <span class="badge badge-light align-text-bottom">سورة الفاتحة اية 1</sapn>
+
                                 
-                                    <span class="badge badge-light align-text-bottom">الفاتحة - 1</sapn>
+                                  
                             </td>
 
                         </tr>
@@ -128,7 +129,7 @@
     </div>
 
    
-      <script src="finder.js"></script>
+      <script src="finderB.js"></script>
       <script src="quran-data.js"></script>
       <script src="quran-sura.js"></script>
       <script src="script.js"></script>
