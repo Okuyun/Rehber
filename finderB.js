@@ -152,7 +152,8 @@ function nextWordList(word, arr = suraSr) {
         }
         sugwrd = aya.substring(wordlocation[i][2], lastindex);
         // if end of aya, then check next aya, from the beging
-        if (sugwrd.length <= 1) {
+        if (sugwrd.length < 1) {
+            // when it was =< it did not work for الرحمن عل
             wordlocation[i][1] += 1;
             wordlocation[i][2] = -1;
             if (wordlocation[i][0] > 113) {
