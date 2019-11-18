@@ -11,6 +11,9 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- Source: http://www.arabic-keyboard.org/keyboard/ -->
+    <link rel="stylesheet" type="text/css" href="style/keyboard.css">
+    <script type="text/javascript" src="code/keyboard.js" charset="UTF-8"></script>
 
     <style>
         .arabic {
@@ -19,7 +22,12 @@
         
         @font-face {
             font-family: me_quran;
-            src: url("me_quran.ttf")
+            src: url("style/me_quran.ttf")
+        }
+        
+        mark {
+            background-color: yellow;
+            color: black;
         }
     </style>
 </head>
@@ -54,12 +62,11 @@
 
             </ul>
             <div class="my-2 my-lg-0">
-                <input list="test" id=searchQue id=serachinput class="form-control mr-sm-2 text-right" type="search" placeholder="بسم الله" aria-label="Search">
-                <button onclick=" find(searchQue.value)" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                <datalist id="test">
-
-                        <option value="Brian Lara">  
-                                <option value="Jacques Kallis">   
+                <input dir="rtl" list="suggestions" value="بسم الله" onchange="sugOnKeyUp(searchQue.value)" onkeyup="sugOnKeyUp(searchQue.value)" id=searchQue class="arabic form-control mr-sm-2 text-right" type="text" aria-label="Search">
+                <button onclick="findAction(searchQue.value)" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <datalist id="suggestions">
+                               <option value="بسم الله">  
+                        <option value="بسم الله الرحمن">   
                 </datalist>
             </div>
         </div>
@@ -71,13 +78,13 @@
 
             <div class="col-12">
                 <table id="dTable" class="table">
-                    <caption>List of found word
-
+                    <caption style=" caption-side:top;">Found
+                        <span id="wordNumber">3</span> occurence
                     </caption>
                     <thead>
                         <tr>
-                            <th style="width: 50%;">Tefsir</th>
-                            <th class="text-right">عربي</th>
+                            <th style="width: 47%;">Tefsir</th>
+                            <th style="width: 47%;" class="text-right">عربي</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -127,13 +134,20 @@
 
     </div>
 
-   
-      <script src="finder.js"></script>
-      <script src="quran-data.js"></script>
-      <script src="quran-sura.js"></script>
-      <script src="script.js"></script>
+    <script src="code/common.js"></script>
+      <script src="code/buckwalter.js"></script>
+
+      <script src="code/finder.js"></script>
+      <script src="code/quran-data.js"></script>
+     
+      <script src="code/quran-sura.js"></script>
+      <script src="code/script.js"></script>
       <script>
             init();
+            //initFinder();
+            //setTimeout(findAction, 250, 'بسم الله');
+                        setTimeout(initFinder, 250, 'بسم الله');
+
             </script>
 </body>
 

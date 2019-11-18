@@ -45,7 +45,8 @@ function createArTd() {
 // the function be written in much prettier way but whatever.
 // why did not i use class name immedietyl at the set and call? idk? i only used it here.. .
 // TODO- write a generic code and change the functions
-function createRow(sn, an) {
+// get the word to parse and mark based on it....
+function createRow(sn, an, word) {
     let tr = createTr();
 
     let td = createTd();
@@ -54,28 +55,51 @@ function createRow(sn, an) {
     td.appendChild(tp)
 
     let tb = createBadge();
-    tb.innerText = quran.sura[sn].tname + "-" + (an + 1)
+    tb.innerText = (sn + 1) + ":" + quran.sura[sn].tname + "-V:" + (an + 1)
     td.appendChild(tb)
     tr.appendChild(td)
 
 
     let arTd = createArTd();
     let arP = createArPar();
-    arP.innerText = suraAr[sn][an]
+    let loc = getWordLocation(word, suraSr[sn][an]);
+    arP.innerHTML = markAr(loc, word.split(" ").length, suraAr[sn][an]);
     arTd.appendChild(arP)
     let arB = createBadge();
-    arB.innerText = (an + 1) + "-" + quran.sura[sn].name
+    arB.innerText = quran.sura[sn].name + ":" + (sn + 1) + "- اية:" + (an + 1)
     arTd.appendChild(arB)
 
     tr.appendChild(arTd)
     return tr;
 }
+// mark specific words and return it. 
+// location of the word, length of the word string, and arabic aya with vowels.
+// broke at suraSr[1][53] --- because of difference in writing arabic.
+// هو الله
+// the trick is to split the AYA based on spaces and get location from no vowels then change it on the vowels one... 
+function markAr(loc, length, aya) {
+    let wordLst = aya.split(" ");
+    wordLst[loc] = `<mark>` + wordLst[loc];
+    wordLst[loc + length - 1] = wordLst[loc + length - 1] + `</mark>`
+    return wordLst.join(" ");
+}
+// get the searched word location and size to mark.
+// searched word, aya text.
+function getWordLocation(word, aya) {
+    return aya.split(" ").indexOf(word.split(" ")[0]);
+}
 
-// arr is lsit of aya and sura.
-function createTable(arr) {
+function colouredOne(text) {
+    // <font color="blue">This is some text!</font>
+    return text.replace(searchQue.value, `<font color="blue">` + searchQue.value + `</font>`);
+}
+
+// arr is lsit of aya and sura, searched word.
+function createTable(arr, word) {
+    wordNumber.innerText = arr.length
     element = document.getElementById("dTable").getElementsByTagName('tbody')[0];
     arr.forEach(e => {
-        element.appendChild(createRow(e[0], e[1]))
+        element.appendChild(createRow(e[0], e[1], word))
     });
 }
 
@@ -144,6 +168,7 @@ function nextWordList(word, arr = suraSr) {
         sugwrd = aya.substring(wordlocation[i][2], lastindex);
         // if end of aya, then check next aya, from the beging
         if (sugwrd.length <= 1) {
+            // when it was =< it did not work for الرحمن عل
             wordlocation[i][1] += 1;
             wordlocation[i][2] = -1;
             if (wordlocation[i][0] > 113) {
@@ -168,23 +193,54 @@ function nextWordList(word, arr = suraSr) {
     return [wls, anls];
 }
 
+let wordLst;
 
 function find(word) {
-    let wordLst;
     if (/[\u064B-\u0652]/.test(word)) {
         wordLst = nextWordList(word, suraAr);
     } else {
         wordLst = nextWordList(word);
     }
-    clearTable();
-    console.log([...wordLst[0]].join("\n"))
-    createTable([...wordLst[1]])
+    // clearTable();
+    // console.log([...wordLst[0]].join("\n"))
+    // createTable([...wordLst[1]])
 }
+
+function findAction(word) {
+
+    find(word)
+    setHash(word)
+    clearTable();
+
+    createTable([...wordLst[1]], word)
+}
+
+function sugOnKeyUp(word) {
+    find(word)
+    addSuggestions([...wordLst[0]]);
+}
+
 
 function autoCreate(word) {
     let wordLst = [...nextWordList(word)[0]];
     /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
-    autocomplete(document.getElementById("serachinput"), wordLst);
+    autocomplete(document.getElementById("searchQue"), wordLst);
+}
+
+function addSuggestions(wordList) {
+    wordList = wordList.slice(0, 11)
+    suggestions.innerHTML = "";
+    let opt;
+    let html;
+    wordList.forEach(e => {
+        //only check if its the same ... without searchQue value it would not work.. .imporatnt 
+        opt = document.createElement("option")
+        opt.value = searchQue.value + "" + e
+            // suggestions.appendChild(opt)
+        html += opt.outerHTML;
+    })
+    suggestions.innerHTML = html;
+
 }
 
 // https://www.w3schools.com/howto/howto_js_autocomplete.asp
@@ -288,11 +344,30 @@ function autocomplete(inp, arr) {
     });
 }
 
-searchQue.addEventListener("keyup", function(event) {
-    if (event.keyCode === 13) {
-        event.preventDefault();
-        find(searchQue.value)
-    }
-});
+function hashChanged() {
+    let h = location.hash
+    if (!h.startsWith('#w=')) return false
+    let arabic = h.substring(3).replace("%20", " ");
+    findAction(toArabicLetters(arabic));
+}
 
+function setHash(e) {
+    location.hash = 'w=' + toBuckwalter(e);
+
+}
+
+function initFinder() {
+    console.log("Finder started...")
+    searchQue.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            findAction(searchQue.value)
+        }
+    });
+    hashChanged();
+    window.addEventListener("hashchange", hashChanged);
+
+}
+
+// write docs and split the code to more readable style.. 
 // instead of removing/clearning diactricits( vowels - tashkeel) check if its there then search by another array.

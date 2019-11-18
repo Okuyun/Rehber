@@ -204,7 +204,7 @@ function sugOnKeyUp(word) {
 function autoCreate(word) {
     let wordLst = [...nextWordList(word)[0]];
     /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
-    autocomplete(document.getElementById("serachinput"), wordLst);
+    autocomplete(document.getElementById("searchInput"), wordLst);
 }
 
 function addSuggestions(wordList) {
