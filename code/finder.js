@@ -62,7 +62,13 @@ function createRow(sn, an, word) {
 
     let arTd = createArTd();
     let arP = createArPar();
-    let loc = getWordLocation(word, suraSr[sn][an]);
+    let loc;
+    if (/[\u064B-\u0652]/.test(word)) {
+        loc = getWordLocation(word, suraAr[sn][an]);
+    } else {
+        loc = getWordLocation(word, suraSr[sn][an]);
+    }
+
     arP.innerHTML = markAr(loc, word.split(" ").length, suraAr[sn][an]);
     arTd.appendChild(arP)
     let arB = createBadge();
@@ -215,6 +221,13 @@ function findAction(word) {
     createTable([...wordLst[1]], word)
 }
 
+function findActionH(word) {
+    word = decodeURI(word);
+    find(word)
+    clearTable();
+    createTable([...wordLst[1]], word)
+}
+
 function sugOnKeyUp(word) {
     find(word)
     addSuggestions([...wordLst[0]]);
@@ -348,11 +361,11 @@ function hashChanged() {
     let h = location.hash
     if (!h.startsWith('#w=')) return false
     let arabic = h.substring(3).replace("%20", " ");
-    findAction(toArabicLetters(arabic));
+    findActionH(arabic); //toArabicLetters(arabic));
 }
 
 function setHash(e) {
-    location.hash = 'w=' + toBuckwalter(e);
+    location.hash = 'w=' + e //toBuckwalter(e);
 
 }
 
