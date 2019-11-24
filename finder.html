@@ -19,7 +19,9 @@
         .arabic {
             font: 20px me_quran, serif;
         }
-        
+        .container {
+            max-width: 95vw;
+        }
         @font-face {
             font-family: me_quran;
             src: url("style/me_quran.ttf")
@@ -61,22 +63,30 @@
                 </li>
 
             </ul>
-            <div class="my-2 my-lg-0">
-                <input dir="rtl" list="suggestions" value="بسم الله" onchange="sugOnKeyUp(searchQue.value)" onkeyup="sugOnKeyUp(searchQue.value)" id=searchQue class="arabic form-control mr-sm-2 text-right" type="text" aria-label="Search">
-                <button onclick="findAction(searchQue.value)" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                <datalist id="suggestions">
-                               <option value="بسم الله">  
-                        <option value="بسم الله الرحمن">   
-                </datalist>
-            </div>
+            
         </div>
     </nav>
     <br>
-
+    
     <div class="container">
+        <div class="row ">
+               
+                <div class="input-group "  dir="rtl">
+                     <!-- class add input-group-text to change the colour... -->
+                       
+                     <input dir="rtl" list="suggestions"       style="max-width: 80vw;"    class="arabic form-control text-right" value="بسم الله" onchange="sugOnKeyUp(searchQue.value)" onkeyup="sugOnKeyUp(searchQue.value)" id=searchQue  type="text" aria-label="Search">
+                     <button onclick="findAction(searchQue.value)" class="btn btn-outline-success" type="submit">&#128269;</button>
+
+                     <datalist id="suggestions">
+                                       <option value="بسم الله">  
+                                <option value="بسم الله الرحمن">   
+                        </datalist>
+                    </div>
+        </div>
+        
         <div class="row">
 
-            <div class="col-12">
+            <div class=".col-12">
                 <table id="dTable" class="table">
                     <caption style=" caption-side:top;">Found
                         <span id="wordNumber">3</span> occurence

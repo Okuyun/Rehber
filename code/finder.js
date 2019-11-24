@@ -81,7 +81,7 @@ function createRow(sn, an, word) {
 // mark specific words and return it. 
 // location of the word, length of the word string, and arabic aya with vowels.
 // broke at suraSr[1][53] --- because of difference in writing arabic.
-// هو الله
+// هو الله  الله أحق أن
 // the trick is to split the AYA based on spaces and get location from no vowels then change it on the vowels one... 
 function markAr(loc, length, aya) {
     let wordLst = aya.split(" ");
@@ -102,7 +102,7 @@ function colouredOne(text) {
 
 // arr is lsit of aya and sura, searched word.
 function createTable(arr, word) {
-    wordNumber.innerText = arr.length
+    wordNumber.innerText = arr.length + parseInt(wordNumber.innerText)
     element = document.getElementById("dTable").getElementsByTagName('tbody')[0];
     arr.forEach(e => {
         element.appendChild(createRow(e[0], e[1], word))
@@ -137,15 +137,6 @@ function nextWordLoc(word, arr = suraSr) {
         nxtwrd = wordLoc[i][2] + word.length
         suraN = wordLoc[i][0]
         aya = wordLoc[i][1]
-            // check if ened of verse 
-        if (arr[suraN][aya].length < nxtwrd) {
-            aya++;
-            // check if the vers is the last at the sura
-            if (sura[suraN].length < aya) {
-                aya = 0;
-                suraN++;
-            }
-        }
         wordLoc[i] = [suraN, aya, nxtwrd]
     }
     return wordLoc;
@@ -174,20 +165,7 @@ function nextWordList(word, arr = suraSr) {
         sugwrd = aya.substring(wordlocation[i][2], lastindex);
         // if end of aya, then check next aya, from the beging
         if (sugwrd.length <= 1) {
-            // when it was =< it did not work for الرحمن عل
-            wordlocation[i][1] += 1;
-            wordlocation[i][2] = -1;
-            if (wordlocation[i][0] > 113) {
-                wordlocation[i][0] = 0;
-                wordlocation[i][1] = 0;
-            }
-            if (arr[wordlocation[i][0]].length <= wordlocation[i][1]) {
-                wordlocation[i][0] += 1;
-                wordlocation[i][1] = 0
-            }
-
-
-            i--;
+         
             continue;
 
         }
@@ -213,22 +191,32 @@ function find(word) {
 }
 
 function findAction(word) {
-
-    find(word)
-    setHash(word)
     clearTable();
-
-    createTable([...wordLst[1]], word)
+    serachedWordTable(word);
+    setHash(word)
 }
 
+
+function serachedWordTable(word){
+    wordNumber.innerText=0;
+    let words= word.split("+")
+    words.forEach(e => {
+        word = e;
+        find(word)
+        createTable([...wordLst[1]], word)
+    });
+  
+}
 function findActionH(word) {
-    word = decodeURI(word);
-    find(word)
     clearTable();
-    createTable([...wordLst[1]], word)
+    word = decodeURI(word);
+    searchQue.value=word
+    serachedWordTable(word);
 }
 
 function sugOnKeyUp(word) {
+    let sugwrd = word.split("+")
+    word = sugwrd[sugwrd.length-1]
     find(word)
     addSuggestions([...wordLst[0]]);
 }
