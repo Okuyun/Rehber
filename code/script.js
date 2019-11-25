@@ -53,11 +53,13 @@ let suraTr = []
      * @param {*} callBack The call back function to read and parse the file to array.
      * @see dataToArray
      */
-function readExternal(url, target, callBack) {
+async function readExternal(url,target,callBack) {
     console.log("reading external data from " + url)
-    fetch(url)
-        .then(r => r.text()) //response
-        .then(t => callBack(t, target)); //text
+    const r = await fetch(url);
+    const t = await r.text();
+    const r_1 = callBack(t, target);
+    return r_1; 
+      
 }
 
 /**
@@ -84,6 +86,11 @@ function dataToArray(t, targetArray) {
         }
         targetArray[suraN].push(line[2])
     }
+   
+
+    return new Promise(function(resolve, reject) {
+        resolve('Success!');
+      })
 
 }
 /**
@@ -91,9 +98,9 @@ function dataToArray(t, targetArray) {
  */
 function loadArabic() {
     // set uthmani array.
-    readExternal(dataUrl + data.aruthman, suraAr, dataToArray)
+    return readExternal(dataUrl + data.aruthman, suraAr, dataToArray)
         // set clean array.
-    readExternal(dataUrl + data.arclean, suraSr, dataToArray)
+    //readExternal(dataUrl + data.arclean, suraSr, dataToArray)
 
 }
 /**
@@ -158,15 +165,19 @@ function displayArWr(number = 0) {
 
 }
 
-function displayTranslation() {
+function displayTranslation(t) {
+    console.log(t)
     displaySura(trtxt, suraTr[lastSura]);
 }
 
 
 function init() {
 
-    loadArabic();
-    initTranslation();
+    let p1 = loadArabic()
+    let p2 = initTranslation()
+    //displayArWr()
+    Promise.all([p1,p2]).then(displayArWr)
+    //initTranslation();
 
     // display results, after waiting the set arabic to be done, this will wait for 0.5 seconds 
 
@@ -217,12 +228,13 @@ function loadTrans(choosen = "1") {
 
     }
 
-    readExternal(dataUrl + translate, suraTr, dataToArray)
-    setTimeout(displayTranslation, 500);
+    let p1 = readExternal(dataUrl + translate, suraTr, dataToArray)
+    //p1.then(displayTranslation()) -- error? but why?
+    p1.then(displayTranslation)
 }
 
 function initTranslation() {
-    readExternal(dataUrl + data.trTr, suraTr, dataToArray)
+    return readExternal(dataUrl + data.trTr, suraTr, dataToArray)
 
 }
 
@@ -234,5 +246,7 @@ function setNames() {
 function initReader() {
     init();
     loadTrans();
-    setTimeout(displayArWr, 500);
+    return new Promise(function(resolve, reject) {
+        resolve('Success!');
+      })
 }
