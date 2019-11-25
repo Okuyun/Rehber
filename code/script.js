@@ -98,9 +98,12 @@ function dataToArray(t, targetArray) {
  */
 function loadArabic() {
     // set uthmani array.
-    return readExternal(dataUrl + data.aruthman, suraAr, dataToArray)
+    let p1= readExternal(dataUrl + data.aruthman, suraAr, dataToArray)
         // set clean array.
-    //readExternal(dataUrl + data.arclean, suraSr, dataToArray)
+
+    let p2=    readExternal(dataUrl + data.arclean, suraSr, dataToArray)
+
+    return Promise.all([p1,p2])
 
 }
 /**
