@@ -1,164 +1,236 @@
-<!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>finder
-    </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>finder</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
     <!-- Source: http://www.arabic-keyboard.org/keyboard/ -->
-    <link rel="stylesheet" type="text/css" href="style/keyboard.css">
-    <script type="text/javascript" src="code/keyboard.js" charset="UTF-8"></script>
+    <link rel="stylesheet" type="text/css" href="style/keyboard.css" />
+    <script
+      type="text/javascript"
+      src="code/keyboard.js"
+      charset="UTF-8"
+    ></script>
 
     <style>
-        .arabic {
-            font: 20px me_quran, serif;
-        }
-        .container {
-            max-width: 95vw;
-        }
-        @font-face {
-            font-family: me_quran;
-            src: url("style/me_quran.ttf")
-        }
-        
-        mark {
-            background-color: yellow;
-            color: black;
-        }
-    </style>
-</head>
+      .arabic {
+        font: 20px me_quran, serif;
+      }
+      .container {
+        max-width: 95vw;
+      }
+      @font-face {
+        font-family: me_quran;
+        src: url("style/me_quran.ttf");
+      }
 
-<body>
+      mark {
+        background-color: yellow;
+        color: black;
+      }
+    </style>
+  </head>
+
+  <body>
     <!-- from bootstrap examples  -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Bahis Qurani</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+      <a class="navbar-brand" href="#">Bahis Qurani</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Finder <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" aria-disabled="true">Reader</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Other
-              </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Proposal</a>
-                        <a class="dropdown-item" href="#">Source Code</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">About me</a>
-                    </div>
-                </li>
-
-            </ul>
-            
-        </div>
-    </nav>
-    <br>
-    
-    <div class="container">
-        <div class="row ">
-               
-                <div class="input-group "  dir="rtl">
-                     <!-- class add input-group-text to change the colour... -->
-                       
-                     <input dir="rtl" list="suggestions"       style="max-width: 80vw;"    class="arabic form-control text-right" value="بسم الله" onchange="sugOnKeyUp(searchQue.value)" onkeyup="sugOnKeyUp(searchQue.value)" id=searchQue  type="text" aria-label="Search">
-                     <button onclick="findAction(searchQue.value)" class="btn btn-outline-success" type="submit">&#128269;</button>
-
-                     <datalist id="suggestions">
-                                       <option value="بسم الله">  
-                                <option value="بسم الله الرحمن">   
-                        </datalist>
-                    </div>
-        </div>
-        
-        <div class="row">
-
-            <div class=".col-12">
-                <table id="dTable" class="table">
-                    <caption style=" caption-side:top;">Found
-                        <span id="wordNumber">3</span> occurence
-                    </caption>
-                    <thead>
-                        <tr>
-                            <th style="width: 47%;">Tefsir</th>
-                            <th style="width: 47%;" class="text-right">عربي</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-
-                            <td>
-                                <p> He said, “Embark in it. In the name of God shall be its sailing and its anchorage. My Lord is indeed Forgiving and Merciful.”</p>
-                                <span class="badge badge-light align-text-bottom">Hud - 41</sapn>
-                            </td>
-                          
-                                <td scope="col" class="text-right">
-                                      <p class="arabic"> وَقَالَ ٱرْكَبُوا۟ فِيهَا بِسْمِ ٱللَّهِ مَجْر۪ىٰهَا وَمُرْسَىٰهَآ إِنَّ رَبِّى لَغَفُورٌ رَّحِيمٌ</p>
-                                       <span class="badge badge-light align-text-bottom">سورة هود اية 41 </sapn>
-
-                             
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td> <p>It is from Solomon, and it is, ‘In the Name of God, the Gracious, the Merciful.</p>
-                                    <span class="badge badge-light align-text-bottom">Ant - 30 </sapn>
-                            </td>
-                            <td scope="col" class="text-right">
-                                <p class="arabic">إِنَّهُۥ مِن سُلَيْمَٰنَ وَإِنَّهُۥ بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
-                                    </p>
-                                
-                                    <span class="badge badge-light align-text-bottom">سورة النمل اية 30 </sapn>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><p>In the name of God, the Gracious, the Merciful</p>
-                                    <span class="badge badge-light align-text-bottom">Fatiha - 1</sapn>
-                            </td>
-                            <td scope="col" class="text-right">
-                                <p class="arabic">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
-                                
-                                    <span class="badge badge-light align-text-bottom">الفاتحة - 1</sapn>
-                            </td>
-
-                        </tr>
-                    </tbody>
-                </table>
-
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#"
+              >Finder <span class="sr-only">(current)</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" aria-disabled="true"
+              >Reader</a
+            >
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Other
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Proposal</a>
+              <a class="dropdown-item" href="#">Source Code</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">About me</a>
             </div>
-          
-        </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <br />
 
+    <div class="container">
+      <div class="row ">
+        <div class="input-group " dir="rtl">
+          <!-- class add input-group-text to change the colour... -->
+
+          <input
+            dir="rtl"
+            list="suggestions"
+            style="max-width: 80vw;"
+            class="arabic form-control text-right"
+            value="بسم الله"
+            onchange="sugOnKeyUp(searchQue.value)"
+            onkeyup="sugOnKeyUp(searchQue.value)"
+            id="searchQue"
+            type="text"
+            aria-label="Search"
+          />
+          <button
+            onclick="findAction(searchQue.value)"
+            class="btn btn-outline-success"
+            type="submit"
+          >
+            🔍
+          </button>
+
+          <datalist id="suggestions">
+            <option value="بسم الله الرحمن"></option>
+            <option value="بسم الله مجراها"></option>
+          </datalist>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class=".col-12">
+          <table id="dTable" class="table">
+            <caption style=" caption-side:top;">
+              Found
+              <span id="wordNumber">3</span>
+              occurence
+            </caption>
+            <thead>
+              <tr>
+                <th style="width: 47%;">Tefsir</th>
+                <th style="width: 47%;" class="text-right">عربي</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <p>Rahman ve Rahim olan Allah'ın adıyla:</p>
+                  <span class="badge badge-light align-text-bottom"
+                    >1:Al-Faatiha-V:1</span
+                  >
+                </td>
+                <td scope="col" class="text-right">
+                  <p class="arabic">
+                    <mark>بِسْمِ ٱللَّهِ</mark> ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+                  </p>
+                  <span class="badge badge-light align-text-bottom"
+                    >الفاتحة:1- اية:1</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    Allah "Oraya binin; yürümesi ve durması Allah'ın ismiyledir,
+                    Rabbin bağışlar ve merhamet eder" dedi.
+                  </p>
+                  <span class="badge badge-light align-text-bottom">11:Hud-V:41</span
+                  >
+                </td>
+                <td scope="col" class="text-right">
+                  <p class="arabic">
+                    وَقَالَ ٱرْكَبُوا۟ فِيهَا
+                    <mark>بِسْمِ ٱللَّهِ</mark> مَجْر۪ىٰهَا وَمُرْسَىٰهَآ إِنَّ
+                    رَبِّى لَغَفُورٌ رَّحِيمٌ
+                  </p>
+                  <span class="badge badge-light align-text-bottom"
+                    >هود:11- اية:41</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>
+                    Sebe melikesi: "Ey ileri gelenler! Bana,
+                    Bismillahirrahmanirrahim diye başlayan ve 'sakın bana karşı
+                    baş kaldırmayın ve teslim olarak gelin' diyen Süleyman'dan
+                    gönderilen önemli bir mektup bırakıldı" dedi.
+                  </p>
+                  <span class="badge badge-light align-text-bottom"
+                    >27:An-Naml-V:30</span
+                  >
+                </td>
+                <td scope="col" class="text-right">
+                  <p class="arabic">
+                    إِنَّهُۥ مِن سُلَيْمَٰنَ وَإِنَّهُۥ
+                    <mark>بِسْمِ ٱللَّهِ</mark> ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+                  </p>
+                  <span class="badge badge-light align-text-bottom"
+                    >النمل:27- اية:30</span
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
     <script src="code/common.js"></script>
-      <script src="code/buckwalter.js"></script>
+    <script src="code/buckwalter.js"></script>
 
-      <script src="code/finder.js"></script>
-      <script src="code/quran-data.js"></script>
-     
-      <script src="code/quran-sura.js"></script>
-      <script src="code/script.js"></script>
-      <script>
-            init();
-            //initFinder();
-            //setTimeout(findAction, 250, 'بسم الله');
-                        setTimeout(initFinder, 250, 'بسم الله');
+    <script src="code/finder.js"></script>
+    <script src="code/quran-data.js"></script>
 
-            </script>
-</body>
-
+    <script src="code/quran-sura.js"></script>
+    <script src="code/script.js"></script>
+    <script>
+      init();
+      //initFinder();
+      //setTimeout(findAction, 250, 'بسم الله');
+      setTimeout(initFinder, 250, "بسم الله");
+    </script>
+  </body>
 </html>
