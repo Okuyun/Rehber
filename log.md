@@ -9,6 +9,8 @@ Add preference
 Communication between apps 
 PWA 
 Refactor Script to accept promise.
+Add settings menu, 
+Add Normalised search for arabic... 
 
 Done: 
 Multiple word search.

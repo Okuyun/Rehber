@@ -14,6 +14,10 @@ function clearTable() {
 function createBadge() {
     let anch = document.createElement('a');
     anch.className = "badge badge-light align-text-bottom"
+    anch.style="cursor: pointer;"
+    anch.addEventListener("click",function(e) {
+        console.log(e.target.text);
+    });
     return anch
 }
 
@@ -55,7 +59,7 @@ function createRow(sn, an, word) {
     td.appendChild(tp)
 
     let tb = createBadge();
-    tb.href=""
+    //tb.href="http://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
     tb.innerText =  quran.sura[sn].tname + " " + (sn + 1)+ ":" + (an + 1)  
     td.appendChild(tb)
     tr.appendChild(td)
@@ -74,7 +78,7 @@ function createRow(sn, an, word) {
     arTd.appendChild(arP)
     let arB = createBadge();
     arB.innerText = quran.sura[sn].name + " " + (sn + 1) + ":" + (an + 1)
-    arB.href=""
+    //arB.href="http://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
     arTd.appendChild(arB)
 
     tr.appendChild(arTd)

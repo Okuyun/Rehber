@@ -132,7 +132,8 @@
             🔍
           </button>
           <button
-          onclick="findAction(searchQue.value)"
+          data-toggle="modal" 
+          data-target="#settingsModel"
           class="btn btn-outline-success"
           type="submit"
         >
@@ -224,6 +225,57 @@
         </div>
       </div>
     </div>
+
+    <!-- Modal -->
+  <div class="modal fade" id="settingsModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="settingsModelTitle">Preference</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        font size
+        <br>
+        arabic
+        <p class="arabic">
+          <mark>بِسْمِ ٱللَّهِ</mark> ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+        </p>
+        <br>
+        Translation:
+        <br>
+        <p>Rahman ve Rahim olan Allah'ın adıyla:</p>
+        <br>
+
+      <div class="row">
+        <label for="">  Mark Colour : </label>
+        <input  type="color" class="form-control" name="favcolor" value="#ffff00">
+      </div>
+          <hr>
+          <label for="">external source</label> 
+          <select multiple class="form-control">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="mercedes">Mercedes</option>
+            <option value="audi">Audi</option>
+          </select>
+          <hr>
+          Tefsir source
+          Show and hide
+          For small screen can be added  as button
+          Tefsir cumbo box - how many times should it be
+          pagination 
+          <hr>
+          Language
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
     <script src="code/common.js"></script>
     <script src="code/buckwalter.js"></script>
