@@ -378,6 +378,20 @@ function initFinder() {
     window.addEventListener("hashchange", hashChanged);
 
 }
-
+// inspired from: https://stackoverflow.com/questions/1409225/changing-a-css-rule-set-from-javascript
+function changeColour(col){
+    document.styleSheets[2].cssRules[3].style.backgroundColor=col;
+}
+function changeFont(language,size){
+    //console.log(language,size)
+    if(language=="arabic"){
+        let old =parseInt(document.styleSheets[2].cssRules[0].style.fontSize);
+        document.styleSheets[2].cssRules[0].style.fontSize =  old+size+"px"
+    }else{
+        let old =parseInt(document.styleSheets[2].cssRules[4].style.fontSize);
+        document.styleSheets[2].cssRules[4].style.fontSize =  old+size+"px" 
+    }
+  
+}
 // write docs and split the code to more readable style.. 
 // instead of removing/clearning diactricits( vowels - tashkeel) check if its there then search by another array.

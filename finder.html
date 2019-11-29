@@ -52,6 +52,9 @@
         background-color: yellow;
         color: black;
       }
+      .translation {
+        font-size: 17px;
+      }
     </style>
   </head>
 
@@ -239,23 +242,34 @@
         <div class="modal-body">
         font size
         <br>
-        arabic
-        <p class="arabic">
-          <mark>بِسْمِ ٱللَّهِ</mark> ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
-        </p>
+        <div class="container input-group">
+          <button type="button" class="btn" onclick="changeFont(`arabic`,5)">+🗚</button>
+          <div class="btn">
+            <p class="arabic input-form">
+              <mark>بِسْمِ ٱللَّهِ</mark> ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+            </p>
+          </div>
+          <button type="button" class="btn" onclick="changeFont(`arabic`,-5)">🗛-</button>
+        </div>
+      
+        
         <br>
         Translation:
         <br>
-        <p>Rahman ve Rahim olan Allah'ın adıyla:</p>
+        <button type="button" class="btn" onclick="changeFont(`x`,5)">+🗚</button>
+        <p class="translation">Rahman ve Rahim olan Allah'ın adıyla:</p>
+        <button type="button" class="btn" onclick="changeFont(`x`,-5)">🗛-</button>
+
         <br>
 
-      <div class="row">
-        <label for="">  Mark Colour : </label>
-        <input  type="color" class="form-control" name="favcolor" value="#ffff00">
-      </div>
+      
+        <label for="">  Mark Colour: </label> &nbsp;
+        <input  type="color" class="form-control col-4" name="favcolor" value="#ffff00" onchange="changeColour(this.value)">
+     
           <hr>
           <label for="">external source</label> 
-          <select multiple class="form-control">
+          <!-- if you want to choose from multiple add only this keyword before class.. -->
+          <select  class="form-control"> 
             <option value="volvo">Volvo</option>
             <option value="saab">Saab</option>
             <option value="mercedes">Mercedes</option>
