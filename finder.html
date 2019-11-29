@@ -131,6 +131,13 @@
           >
             🔍
           </button>
+          <button
+          onclick="findAction(searchQue.value)"
+          class="btn btn-outline-success"
+          type="submit"
+        >
+        ⚙️
+        </button>
 
           <datalist id="suggestions">
             <option value="بسم الله الرحمن"></option>
@@ -227,10 +234,10 @@
     <script src="code/quran-sura.js"></script>
     <script src="code/script.js"></script>
     <script>
-      init();
+      init().then(initFinder)
       //initFinder();
       //setTimeout(findAction, 250, 'بسم الله');
-      setTimeout(initFinder, 250, "بسم الله");
+    //  setTimeout(initFinder, 250, "بسم الله");
     </script>
   </body>
 </html>

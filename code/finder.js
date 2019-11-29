@@ -12,9 +12,9 @@ function clearTable() {
 }
 
 function createBadge() {
-    let span = document.createElement('span');
-    span.className = "badge badge-light align-text-bottom"
-    return span
+    let anch = document.createElement('a');
+    anch.className = "badge badge-light align-text-bottom"
+    return anch
 }
 
 function createParagraph() {
@@ -55,7 +55,8 @@ function createRow(sn, an, word) {
     td.appendChild(tp)
 
     let tb = createBadge();
-    tb.innerText = (sn + 1) + ":" + quran.sura[sn].tname + "-V:" + (an + 1)
+    tb.href=""
+    tb.innerText =  quran.sura[sn].tname + " " + (sn + 1)+ ":" + (an + 1)  
     td.appendChild(tb)
     tr.appendChild(td)
 
@@ -69,10 +70,11 @@ function createRow(sn, an, word) {
         loc = getWordLocation(word, suraSr[sn][an]);
     }
 
-    arP.innerHTML = markAr(loc, word.split(" ").length, suraAr[sn][an]);
+    arP.innerHTML = loc
     arTd.appendChild(arP)
     let arB = createBadge();
-    arB.innerText = quran.sura[sn].name + ":" + (sn + 1) + "- اية:" + (an + 1)
+    arB.innerText = quran.sura[sn].name + " " + (sn + 1) + ":" + (an + 1)
+    arB.href=""
     arTd.appendChild(arB)
 
     tr.appendChild(arTd)
@@ -83,16 +85,17 @@ function createRow(sn, an, word) {
 // broke at suraSr[1][53] --- because of difference in writing arabic.
 // هو الله  الله أحق أن
 // the trick is to split the AYA based on spaces and get location from no vowels then change it on the vowels one... 
-function markAr(loc, length, aya) {
+function markAr(loc, aya) {
     let wordLst = aya.split(" ");
     wordLst[loc] = `<mark>` + wordLst[loc];
     wordLst[loc + length - 1] = wordLst[loc + length - 1] + `</mark>`
-    return wordLst.join(" ");
+    return aya.replace(" ");
 }
 // get the searched word location and size to mark.
 // searched word, aya text.
 function getWordLocation(word, aya) {
-    return aya.split(" ").indexOf(word.split(" ")[0]);
+    let regx = RegExp(word,"g");
+    return aya.replace(regx, "<mark>$&</mark>")
 }
 
 function colouredOne(text) {
@@ -185,6 +188,7 @@ function find(word) {
     } else {
         wordLst = nextWordList(word);
     }
+   
     // clearTable();
     // console.log([...wordLst[0]].join("\n"))
     // createTable([...wordLst[1]])
@@ -198,6 +202,7 @@ function findAction(word) {
 
 
 function serachedWordTable(word){
+     document.title="finder - " + word
     wordNumber.innerText=0;
     let words= word.split("+")
     words.forEach(e => {

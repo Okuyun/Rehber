@@ -179,7 +179,7 @@ function init() {
     let p1 = loadArabic()
     let p2 = initTranslation()
     //displayArWr()
-    Promise.all([p1,p2]).then(displayArWr)
+    return Promise.all([p1,p2])//.then(displayArWr)
     //initTranslation();
 
     // display results, after waiting the set arabic to be done, this will wait for 0.5 seconds 
@@ -248,6 +248,7 @@ function setNames() {
 
 function initReader() {
     init();
+    displayArWr();
     loadTrans();
     return new Promise(function(resolve, reject) {
         resolve('Success!');
