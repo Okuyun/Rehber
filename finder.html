@@ -269,12 +269,13 @@
           <hr>
           <label for="">external source</label> 
           <!-- if you want to choose from multiple add only this keyword before class.. -->
-          <select  class="form-control"> 
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
-          </select>
+          <select onchange="loadTransF(this.value)" class="browser-default custom-select form-control">
+              <option value="1" selected>تفسير الجلالين</option>
+              <option value="2">تفسير الميسر</option>
+              <option value="3">Türkçe Meali</option>
+              <option value="4">English Translation</option>
+            </select>
+          
           <hr>
           Tefsir source
           Show and hide
@@ -282,7 +283,7 @@
           Tefsir cumbo box - how many times should it be
           pagination 
           <hr>
-          Language
+          Language : comboBox For ar,tr,en (not implemented yet.)
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -301,6 +302,7 @@
     <script src="code/script.js"></script>
     <script>
       init().then(initFinder)
+      findAction( 'بسم الله')
       //initFinder();
       //setTimeout(findAction, 250, 'بسم الله');
     //  setTimeout(initFinder, 250, "بسم الله");

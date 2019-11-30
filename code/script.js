@@ -195,46 +195,46 @@ function loadTrans(choosen = "1") {
     let translate = data.tfArJal;
     switch (choosen) {
         case "1":
-            addTextRight()
             translate = data.tfArJal;
             break;
-        case "2":
-            addTextRight()
+        case "2":       
             translate = data.tfArMu;
             break;
         case "3":
-            removeTextRight()
             translate = data.trTr;
             break;
         case "4":
-            removeTextRight()
             translate = data.trEn;
             break;
         case "5":
             break;
 
     }
-    /**
+    return readExternal(dataUrl + translate, suraTr, dataToArray)    
+}
+
+async function  loadTransR(n){
+     /**
      * Add text right to the tranlsation dislpay to set it for RTL text type (arabic)
      */
     function addTextRight() {
         trtxt.classList.add("text-right")
-
         //  trtxt.classList.toggle("text-right")
-
     }
     /**
      * Removed class text right from translation display, to set it for LTR text type
      */
     function removeTextRight() {
         trtxt.classList.remove("text-right")
-
     }
-
-    let p1 = readExternal(dataUrl + translate, suraTr, dataToArray)
-    //p1.then(displayTranslation()) -- error? but why?
-    p1.then(displayTranslation)
-}
+    await loadTrans(n) 
+    if(choosen <= 2 ){
+        addTextRight()
+    }else{
+        removeTextRight()
+    }
+    displayTranslation();
+  }
 
 function initTranslation() {
     return readExternal(dataUrl + data.trTr, suraTr, dataToArray)

@@ -12,7 +12,7 @@ function clearTable() {
 }
 
 function createBadge() {
-    let anch = document.createElement('a');
+    let anch = document.createElement('span');
     anch.className = "badge badge-light align-text-bottom"
     anch.style="cursor: pointer;"
     anch.addEventListener("click",function(e) {
@@ -22,7 +22,7 @@ function createBadge() {
 }
 
 function createParagraph() {
-    return document.createElement('p');
+    return document.createElement('span');
 }
 
 function createArPar() {
@@ -54,18 +54,23 @@ function createRow(sn, an, word) {
     let tr = createTr();
 
     let td = createTd();
-    let tp = createParagraph()
-    tp.innerText = suraTr[sn][an]
-    td.appendChild(tp)
 
     let tb = createBadge();
     //tb.href="http://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
     tb.innerText =  quran.sura[sn].tname + " " + (sn + 1)+ ":" + (an + 1)  
     td.appendChild(tb)
+    td.append("\xA0\xA0")
+
     tr.appendChild(td)
 
+    let tp = createParagraph()
+    tp.innerText = suraTr[sn][an]
+    td.appendChild(tp)
+    tp.className="translation"
 
     let arTd = createArTd();
+    arTd.scope="col"
+    arTd.className="text-right"
     let arP = createArPar();
     let loc;
     if (/[\u064B-\u0652]/.test(word)) {
@@ -75,13 +80,16 @@ function createRow(sn, an, word) {
     }
 
     arP.innerHTML = loc
-    arTd.appendChild(arP)
     let arB = createBadge();
     arB.innerText = quran.sura[sn].name + " " + (sn + 1) + ":" + (an + 1)
     //arB.href="http://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
-    arTd.appendChild(arB)
+   
 
+    arTd.appendChild(arP)
+    arTd.append("\xA0\xA0")
+    arTd.appendChild(arB)
     tr.appendChild(arTd)
+
     return tr;
 }
 // mark specific words and return it. 
@@ -245,6 +253,7 @@ function addSuggestions(wordList) {
     wordList.forEach(e => {
         //only check if its the same ... without searchQue value it would not work.. .imporatnt 
         opt = document.createElement("option")
+        opt.className="arabic"
         opt.value = searchQue.value + "" + e
             // suggestions.appendChild(opt)
         html += opt.outerHTML;
@@ -392,6 +401,38 @@ function changeFont(language,size){
         document.styleSheets[2].cssRules[4].style.fontSize =  old+size+"px" 
     }
   
+}
+
+async function loadTransF(n){
+    await loadTrans(n)
+    clearTable();
+    findAction(searchQue.value);
+}
+
+function openMeali(cv){
+    cv =cv.split(":");
+    let c= cv[0] , v= cv[1];
+    let link = `http://kuranmeali.com/AyetKarsilastirma.php?sure=${c}&ayet=${v}`
+    window.open(link,"meali") 
+}
+// cv = chapter verses C:V 
+function openReader(cv){
+    let link="http://maeyler.github.io/Iqra3/reader#v=" + cv;
+    window.open(link,"reader") 
+}
+
+function openQuran(cv){
+    cv =cv.split(":");
+    let c= cv[0] , v= cv[1];
+    let link=`https://quran.com/${c}/${v}`
+    window.open(link,"Quran") 
+}
+
+function openCorpus(cv){
+    cv =cv.split(":");
+    let c= cv[0] , v= cv[1];
+    let linl =`http://corpus.quran.com/translation.jsp?chapter=${c}&verse=${v}`
+    window.open(link,"Corpus") 
 }
 // write docs and split the code to more readable style.. 
 // instead of removing/clearning diactricits( vowels - tashkeel) check if its there then search by another array.
