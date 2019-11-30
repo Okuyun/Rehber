@@ -4,7 +4,11 @@
  * https://www.daniweb.com/programming/web-development/threads/113340/delete-all-rows-from-table-in-javascript
  * https://developer.mozilla.org/en-US/docs/Web/API/Node/removeChild
  */
+
+ let control=true;
 function clearTable() {
+    translationHeader.style.display = "none"
+    arabicHeader.style.width="100vw"
     element = document.getElementById("dTable").getElementsByTagName('tbody')[0];;
     while (element.firstChild) {
         element.removeChild(element.firstChild);
@@ -52,20 +56,21 @@ function createArTd() {
 // get the word to parse and mark based on it....
 function createRow(sn, an, word) {
     let tr = createTr();
+   if(control){
+    arabicHeader.style.width="47%"
 
+    translationHeader.style.display="table-cell"
     let td = createTd();
-
     let tb = createDropDownSplit( quran.sura[sn].tname + " " + (sn + 1)+ ":" + (an + 1)  );
     //tb.href="http://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
     td.innerHTML += tb;
     td.append("\xA0\xA0")
-
     tr.appendChild(td)
-
     let tp = createParagraph()
     tp.innerText = suraTr[sn][an]
     td.appendChild(tp)
     tp.className="translation"
+   }
 
     let arTd = createArTd();
     arTd.scope="col"
@@ -455,6 +460,12 @@ function createDropDownSplit(suraCV){
 </div>
 `
 return x;
+}
+
+function toggleTranslation(){
+    control =!control;
+    clearTable();
+    findAction(searchQue.value) 
 }
 // write docs and split the code to more readable style.. 
 // instead of removing/clearning diactricits( vowels - tashkeel) check if its there then search by another array.

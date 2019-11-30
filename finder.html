@@ -160,8 +160,8 @@
             </caption>
             <thead>
               <tr>
-                <th style="width: 47%;">Tefsir</th>
-                <th style="width: 47%;" class="text-right">عربي</th>
+                <th id="translationHeader" style="width: 47%;">Tefsir</th>
+                <th id="arabicHeader" style="width: 47%;" class="text-right">عربي</th>
               </tr>
             </thead>
             <tbody>
@@ -267,7 +267,16 @@
         <input  type="color" class="form-control col-4" name="favcolor" value="#ffff00" onchange="changeColour(this.value)">
      
           <hr>
-          <label for="">external source</label> 
+         
+          <label for="">Action button</label>
+          <hr>
+          Tefsir source
+          <div class="custom-control custom-switch">
+              <input onchange="toggleTranslation()" type="checkbox" class="custom-control-input" id="customSwitches">
+              <label class="custom-control-label" for="customSwitches">Show/Hide tefsir</label>
+            </div>
+          Show and hide
+          <label for="">Tefsir source</label> 
           <!-- if you want to choose from multiple add only this keyword before class.. -->
           <select onchange="loadTransF(this.value)" class="browser-default custom-select form-control">
               <option value="1" selected>تفسير الجلالين</option>
@@ -275,13 +284,8 @@
               <option value="3">Türkçe Meali</option>
               <option value="4">English Translation</option>
             </select>
-          
-          <hr>
-          Tefsir source
-          Show and hide
-          For small screen can be added  as button
           Tefsir cumbo box - how many times should it be
-          pagination 
+          pagination - for tefsir.
           <hr>
           Language : comboBox For ar,tr,en (not implemented yet.)
         </div>
