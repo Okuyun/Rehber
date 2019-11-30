@@ -55,10 +55,9 @@ function createRow(sn, an, word) {
 
     let td = createTd();
 
-    let tb = createBadge();
+    let tb = createDropDownSplit( quran.sura[sn].tname + " " + (sn + 1)+ ":" + (an + 1)  );
     //tb.href="http://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
-    tb.innerText =  quran.sura[sn].tname + " " + (sn + 1)+ ":" + (an + 1)  
-    td.appendChild(tb)
+    td.innerHTML += tb;
     td.append("\xA0\xA0")
 
     tr.appendChild(td)
@@ -80,14 +79,14 @@ function createRow(sn, an, word) {
     }
 
     arP.innerHTML = loc
-    let arB = createBadge();
-    arB.innerText = quran.sura[sn].name + " " + (sn + 1) + ":" + (an + 1)
+    let arB = createDropDownSplit(quran.sura[sn].name + " " + (sn + 1) + ":" + (an + 1));
     //arB.href="http://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
    
 
     arTd.appendChild(arP)
     arTd.append("\xA0\xA0")
-    arTd.appendChild(arB)
+    arTd.innerHTML+=arB;
+    
     tr.appendChild(arTd)
 
     return tr;
@@ -431,8 +430,31 @@ function openQuran(cv){
 function openCorpus(cv){
     cv =cv.split(":");
     let c= cv[0] , v= cv[1];
-    let linl =`http://corpus.quran.com/translation.jsp?chapter=${c}&verse=${v}`
+    let link =`http://corpus.quran.com/translation.jsp?chapter=${c}&verse=${v}`
     window.open(link,"Corpus") 
+}
+
+function createDropDownSplit(suraCV){
+    // may change it to javascript later, but this is much easier LOL.
+    // NEED TO reFactor.
+    let cv = suraCV.split(" ")[1];
+    let x = `
+    <!-- Example split danger button -->
+<div class="btn-group">
+  <button type="button" class="btn badge badge-light align-text-bottom">${suraCV}</button>
+  <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <div class="dropdown-menu">
+    <button class="dropdown-item" onclick="openCorpus('${cv}')">Corpus</button>
+    <button class="dropdown-item" onclick="openQuran('${cv}')">Quran</button>
+    <button class="dropdown-item" onclick="openMeali('${cv}')">Meali</button>
+    <div class="dropdown-divider"></div>
+    <button class="dropdown-item" onclick="openReader('${cv}')">Reader</button>
+  </div>
+</div>
+`
+return x;
 }
 // write docs and split the code to more readable style.. 
 // instead of removing/clearning diactricits( vowels - tashkeel) check if its there then search by another array.
