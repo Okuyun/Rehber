@@ -111,7 +111,7 @@ function markAr(loc, aya) {
 // searched word, aya text.
 function getWordLocation(word, aya) {
     let regx = RegExp(word,"g");
-    return aya.replace(regx, "<mark>$&</mark>")
+    return aya.replace(regx, "<great>$&</great>")
 }
 
 function colouredOne(text) {
@@ -369,7 +369,11 @@ function autocomplete(inp, arr) {
 
 function hashChanged() {
     let h = location.hash
-    if (!h.startsWith('#w=')) return false
+    if (!h.startsWith('#w=')){
+        console.log(h)
+        findAction( 'بسم الله')
+        return;
+    }
     let arabic = h.substring(3).replace("%20", " ");
     findActionH(arabic); //toArabicLetters(arabic));
 }
