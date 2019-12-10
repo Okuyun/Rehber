@@ -56,7 +56,12 @@ function createArTd() {
 // get the word to parse and mark based on it....
 function createRow(sn, an, word) {
     let tr = createTr();
+    let loc;
    if(control){
+    let regXenglish= /^[A-Za-z0-9]*$/
+    if(regXenglish.test(word)){
+        loc=getWordLocation(word,suraTr[sn][an]);
+    }
     arabicHeader.style.width="47%"
 
     translationHeader.style.display="table-cell"
@@ -67,7 +72,7 @@ function createRow(sn, an, word) {
     td.append("\xA0\xA0")
     tr.appendChild(td)
     let tp = createParagraph()
-    tp.innerText = suraTr[sn][an]
+    tp.innerHTML = shrink(loc,100)
     td.appendChild(tp)
     tp.className="translation"
    }
@@ -76,14 +81,15 @@ function createRow(sn, an, word) {
     arTd.scope="col"
     arTd.className="text-right"
     let arP = createArPar();
-    let loc;
+    
     if (/[\u064B-\u0652]/.test(word)) {
         loc = getWordLocation(word, suraAr[sn][an]);
     } else {
         loc = getWordLocation(word, suraSr[sn][an]);
     }
+    
 
-    arP.innerHTML = loc
+    arP.innerHTML = shrink(loc)
     let arB = createDropDownSplit(quran.sura[sn].name + " " + (sn + 1) + ":" + (an + 1));
     //arB.href="http://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
    
@@ -112,6 +118,37 @@ function markAr(loc, aya) {
 function getWordLocation(word, aya) {
     let regx = RegExp(word,"g");
     return aya.replace(regx, "<great>$&</great>")
+}
+
+function shrink(text,number=5){
+    /**
+     * length = 20
+     * index = 15
+     * 5- (15) +5 
+     * 5- (index) +5
+     * IF index+5 = 23 
+     * pre+3 (23-length)
+     * IF index-5 = -X
+     * post+x, start from 0
+     */
+    text=text.split(" ");
+    if(text.length <= number){
+        return text.join(" ")
+    }
+    let index= text.findIndex( e => e.includes("<great>"))
+    if(index < 0 ){
+        return text.join(" ")
+    }
+    let pre=index-number/2 ,post =index+number/2 
+    if(pre < 0){
+        return text.slice(0,number).join(" ");  
+    }
+    if(post > text.length ){
+        return text.slice(pre+(text.length - post)).join(" ");  
+    }
+    //console.log(text.slice(pre,post).length)
+    return text.slice(pre,post).join(" ");  
+           
 }
 
 function colouredOne(text) {
@@ -199,6 +236,11 @@ function nextWordList(word, arr = suraSr) {
 let wordLst;
 
 function find(word) {
+    let regXenglish= /^[A-Za-z0-9]*$/
+    if(regXenglish.test(word)){
+        wordLst=nextWordList(word,suraTr);
+        return;
+    }
     if (/[\u064B-\u0652]/.test(word)) {
         wordLst = nextWordList(word, suraAr);
     } else {
@@ -218,7 +260,7 @@ function findAction(word) {
 
 
 function serachedWordTable(word){
-     document.title="finder - " + word
+    document.title="finder - " + word
     wordNumber.innerText=0;
     let words= word.split("+")
     words.forEach(e => {

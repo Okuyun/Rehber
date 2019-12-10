@@ -111,7 +111,7 @@
     <br />
 
     <div class="container">
-      <div class="row ">
+      <div class="row bg-white sticky-top">
         <div class="input-group " dir="rtl">
           <!-- class add input-group-text to change the colour... -->
 
@@ -246,7 +246,7 @@
           <button type="button" class="btn" onclick="changeFont(`arabic`,5)">+🗚</button>
           <div class="btn">
             <p class="arabic input-form">
-              <mark>بِسْمِ ٱللَّهِ</mark> ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+              <great>بِسْمِ ٱللَّهِ</great> ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
             </p>
           </div>
           <button type="button" class="btn" onclick="changeFont(`arabic`,-5)">🗛-</button>
@@ -270,12 +270,12 @@
          
           <label for="">Action button</label>
           <hr>
-          Tefsir source
+         Show/Hide
           <div class="custom-control custom-switch">
               <input onchange="toggleTranslation()" type="checkbox" class="custom-control-input" id="customSwitches">
               <label class="custom-control-label" for="customSwitches">Show/Hide tefsir</label>
             </div>
-          Show and hide
+          
           <label for="">Tefsir source</label> 
           <!-- if you want to choose from multiple add only this keyword before class.. -->
           <select onchange="loadTransF(this.value)" class="browser-default custom-select form-control">
@@ -287,7 +287,12 @@
           Tefsir cumbo box - how many times should it be
           pagination - for tefsir.
           <hr>
-          Language : comboBox For ar,tr,en (not implemented yet.)
+          Language : (not implemented yet.)
+          <select onchange="language(this.value)" class="browser-default custom-select form-control">
+            <option value="1" selected>TR</option>
+            <option value="2">AR</option>
+            <option value="3">EN</option>
+          </select>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
