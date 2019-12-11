@@ -7,6 +7,7 @@ Reader showing the arabic text.
 Bug not showing more than 5 words, need to check the number of words and update it.
 w=قال%20يا%20مريم%20أنى error -- going to reader not showing.  (reading array, check the last index - instead of the second.)
 if two sura at same page error.
+check reader why getting to P=XE instead of V=XX
 
 
 

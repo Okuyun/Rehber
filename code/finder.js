@@ -6,6 +6,7 @@
  */
 
 let control=true;
+let settings={};
 function clearTable() {
     translationHeader.style.display = "none"
     arabicHeader.style.width="100vw"
@@ -441,20 +442,29 @@ function initFinder() {
     });
     hashChanged();
     window.addEventListener("hashchange", hashChanged);
-
+    if(storageAvailable("localStorage")){
+        if(window.localStorage.settings === undefined){
+            initLocalStorage();
+        }else{
+            loadSettings()
+        }
+    }
 }
 // inspired from: https://stackoverflow.com/questions/1409225/changing-a-css-rule-set-from-javascript
 function changeColour(col){
     document.styleSheets[2].cssRules[3].style.backgroundColor=col;
+    updateSettings("colour",col)
 }
 function changeFont(language,size){
     //console.log(language,size)
     if(language=="arabic"){
         let old =parseInt(document.styleSheets[2].cssRules[0].style.fontSize);
         document.styleSheets[2].cssRules[0].style.fontSize =  old+size+"px"
-    }else{
+        updateSettings("arabic",old+size)
+        }else{
         let old =parseInt(document.styleSheets[2].cssRules[4].style.fontSize);
         document.styleSheets[2].cssRules[4].style.fontSize =  old+size+"px" 
+        updateSettings("translation",old+size)
     }
   
 }
@@ -463,6 +473,7 @@ async function loadTransF(n){
     await loadTrans(n)
     clearTable();
     findAction(searchQue.value);
+    updateSettings("source",n)
 }
 
 function openMeali(cv){
@@ -518,7 +529,71 @@ return x;
 function toggleTranslation(){
     control =!control;
     clearTable();
+    updateSettings("control",control)
     findAction(searchQue.value) 
 }
+// Local storage code.  
+// source: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
+function storageAvailable(type) {
+    var storage;
+    try {
+        storage = window[type];
+        var x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    }
+    catch(e) {
+        return e instanceof DOMException && (
+            // everything except Firefox
+            e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === 'QuotaExceededError' ||
+            // Firefox
+            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            (storage && storage.length !== 0);
+    }
+}
+
+function populateSettings(){
+
+}
+function initLocalStorage(){
+    let keys=["arabic","translation","colour","control","source"]
+    let arabicSize =parseInt(document.styleSheets[2].cssRules[0].style.fontSize);
+    let translationSize =parseInt(document.styleSheets[2].cssRules[4].style.fontSize);
+    let colour=     document.styleSheets[2].cssRules[3].style.backgroundColor;
+    let values=[arabicSize,translationSize,colour,control,tefsirSource.value]
+   for (let i = 0; i < keys.length; i++) {
+      updateSettings(keys[i],values[i])
+   }
+}
+function updateSettings(target,value){
+    settings[target]=value;
+    updateSettingsStorage()
+}
+
+function updateSettingsStorage(){
+    if (storageAvailable('localStorage')) {
+        localStorage.setItem('settings',JSON.stringify(settings))
+     }
+}
+
+function loadSettings(){
+    if (storageAvailable('localStorage')) {
+        settings= JSON.parse(localStorage.getItem('settings'))
+        changeColour(settings.colour)
+        changeFont("arabic",0)
+        changeFont("x",0)
+        loadTransF(settings.source)
+        control=settings.control;
+
+    }
+}
+
 // write docs and split the code to more readable style.. 
 // instead of removing/clearning diactricits( vowels - tashkeel) check if its there then search by another array.
