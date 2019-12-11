@@ -5,7 +5,7 @@
  * https://developer.mozilla.org/en-US/docs/Web/API/Node/removeChild
  */
 
- let control=true;
+let control=true;
 function clearTable() {
     translationHeader.style.display = "none"
     arabicHeader.style.width="100vw"
@@ -239,6 +239,7 @@ function nextWordList(word, arr = suraSr) {
 let wordLst;
 
 function find(word) {
+    if(word.length <= 0) return;
     let regXenglish= /^[A-Za-z0-9]*$/
     if(regXenglish.test(word)){
         wordLst=nextWordList(word,suraTr);
@@ -256,6 +257,7 @@ function find(word) {
 }
 
 function findAction(word) {
+    if(word.length <= 0) return;
     clearTable();
     serachedWordTable(word);
     setHash(word)
@@ -420,6 +422,7 @@ function hashChanged() {
         return;
     }
     let arabic = h.substring(3).replace("%20", " ");
+    if(arabic.length <= 0) return;
     findActionH(arabic); //toArabicLetters(arabic));
 }
 
@@ -471,7 +474,7 @@ function openMeali(cv){
 // cv = chapter verses C:V 
 function openReader(cv){
     let link="http://maeyler.github.io/Iqra3/reader#v=" + cv;
-    window.open(link,"reader") 
+    window.open(link,"iqra") 
 }
 
 function openQuran(cv){
@@ -491,7 +494,8 @@ function openCorpus(cv){
 function createDropDownSplit(suraCV){
     // may change it to javascript later, but this is much easier LOL.
     // NEED TO reFactor.
-    let cv = suraCV.split(" ")[1];
+    let cv = suraCV.split(" ");
+    cv = cv[cv.length-1]
     let x = `
     <!-- Example split danger button -->
 <div class="btn-group">
