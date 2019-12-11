@@ -1,3 +1,9 @@
+Last Meeting:
+Fix bugs
+Finish with local storage 
+DraggAble -- water thingy
+
+
 ToDo: 
 Android desgin google like serach button 
 Fix bugs and check the plan 

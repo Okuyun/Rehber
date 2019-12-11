@@ -58,10 +58,13 @@ function createRow(sn, an, word) {
     let tr = createTr();
     let loc;
    if(control){
-    let regXenglish= /^[A-Za-z0-9]*$/
+    let regXenglish= /^[A-Za-z0-9]*/i
     if(regXenglish.test(word)){
         loc=getWordLocation(word,suraTr[sn][an]);
+    }else{
+        loc=suraTr[sn][an];
     }
+    
     arabicHeader.style.width="47%"
 
     translationHeader.style.display="table-cell"
@@ -116,7 +119,7 @@ function markAr(loc, aya) {
 // get the searched word location and size to mark.
 // searched word, aya text.
 function getWordLocation(word, aya) {
-    let regx = RegExp(word,"g");
+    let regx = RegExp(word,"gi");
     return aya.replace(regx, "<great>$&</great>")
 }
 
