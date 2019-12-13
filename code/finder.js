@@ -595,5 +595,35 @@ function loadSettings(){
     }
 }
 
+function SearchVoice(){
+
+   
+function listen() {
+    SR.lang = "tr-TR" //: "en-EN"; 
+    SR.start()
+   
+}
+function getResult(e) {
+    let a = e.results[0][0]; //use first result
+    console.log(a.transcript, a.confidence.toFixed(2))
+    searchQue.value=a.transcript;
+    findAction(searchQue.value)
+    // out.innerText = a.transcript; speak()
+    // out.style.background = ''
+}
+function error(e) {
+    // out.innerText = turk.checked? '[ses yok]' : '[no input]'
+    // out.style.background = ''
+    console.log("error ",e)
+}
+   
+    const SR = new webkitSpeechRecognition()
+    SR.onspeechend = SR.stop; 
+    SR.onsoundend = error
+    SR.onresult = getResult;  
+    SR.onnomatch = error
+    listen();
+}
+
 // write docs and split the code to more readable style.. 
 // instead of removing/clearning diactricits( vowels - tashkeel) check if its there then search by another array.
