@@ -175,6 +175,7 @@ function colouredOne(text) {
 // arr is lsit of aya and sura, searched word.
 function createTable(arr, word) {
     wordNumber.innerText = arr.length + parseInt(wordNumber.innerText)
+    document.title += " " + wordNumber.innerText;
     element = document.getElementById("dTable").getElementsByTagName('tbody')[0];
     arr.forEach(e => {
         element.appendChild(createRow(e[0], e[1], word))
@@ -281,7 +282,7 @@ function findAction(word) {
 
 function serachedWordTable(word){
     word= word.trim();
-    document.title="finder - " + word
+    document.title="finder - " + word;
     wordNumber.innerText=0;
     let words= word.split("+")
     words.forEach(e => {
