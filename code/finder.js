@@ -488,7 +488,7 @@ async function loadTransF(n){
     await loadTrans(n)
     clearTable();
     findAction(searchQue.value);
-    translationHeader.innerText= tefsirSource.selectedOptions[0].innerText;
+    translationHeader.innerText= tefsirSource[n-1].innerText;
     updateSettings("source",n)
 }
 
@@ -628,6 +628,7 @@ function loadSettings(){
         control=settings.control;
         oneline=settings.oneline;
         lastOne=eval('(' + settings.lastOne+ ')');
+        language(settings.lang)
 
     }
 }
