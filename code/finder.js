@@ -7,6 +7,7 @@
 
 let control=false;
 let oneline=false;
+let lastOne =openReader; 
 let settings={};
 function clearTable() {
     translationHeader.style.display = "none"
@@ -492,11 +493,16 @@ function openMeali(cv){
     let c= cv[0] , v= cv[1];
     let link = `http://kuranmeali.com/AyetKarsilastirma.php?sure=${c}&ayet=${v}`
     window.open(link,"meali") 
+    lastOne=openMeali
+    warpLast()
+
 }
 // cv = chapter verses C:V 
 function openReader(cv){
     let link="http://maeyler.github.io/Iqra3/reader#v=" + cv;
     window.open(link,"iqra") 
+    lastOne=openReader;
+    warpLast()
 }
 
 function openQuran(cv){
@@ -504,6 +510,8 @@ function openQuran(cv){
     let c= cv[0] , v= cv[1];
     let link=`https://quran.com/${c}/${v}`
     window.open(link,"Quran") 
+    lastOne=openQuran;
+    warpLast()
 }
 
 function openCorpus(cv){
@@ -511,6 +519,8 @@ function openCorpus(cv){
     let c= cv[0] , v= cv[1];
     let link =`http://corpus.quran.com/translation.jsp?chapter=${c}&verse=${v}`
     window.open(link,"Corpus") 
+    lastOne=openCorpus;
+    warpLast()
 }
 
 function createDropDownSplit(suraCV){
@@ -521,7 +531,7 @@ function createDropDownSplit(suraCV){
     let x = `
     <!-- Example split danger button -->
 <div class="btn-group">
-  <button type="button" class="btn badge badge-light align-text-bottom">${suraCV}</button>
+  <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('${cv}')">${suraCV}</button>
   <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <span class="sr-only">Toggle Dropdown</span>
   </button>
@@ -582,11 +592,11 @@ function populateSettings(){
 
 }
 function initLocalStorage(){
-    let keys=["arabic","translation","colour","control","source","oneline"]
+    let keys=["arabic","translation","colour","control","source","oneline","lastOne"]
     let arabicSize =parseInt(document.styleSheets[2].cssRules[0].style.fontSize);
     let translationSize =parseInt(document.styleSheets[2].cssRules[4].style.fontSize);
     let colour=     document.styleSheets[2].cssRules[3].style.backgroundColor;
-    let values=[arabicSize,translationSize,colour,control,tefsirSource.value,oneline]
+    let values=[arabicSize,translationSize,colour,control,tefsirSource.value,oneline,lastOne.toString()]
    for (let i = 0; i < keys.length; i++) {
       updateSettings(keys[i],values[i])
    }
@@ -595,7 +605,9 @@ function updateSettings(target,value){
     settings[target]=value;
     updateSettingsStorage()
 }
-
+function warpLast(){
+    updateSettings("lastOne",lastOne.toString())
+}
 function updateSettingsStorage(){
     if (storageAvailable('localStorage')) {
         localStorage.setItem('settings',JSON.stringify(settings))
@@ -610,6 +622,8 @@ function loadSettings(){
         changeFont("x",0)
         loadTransF(settings.source)
         control=settings.control;
+        oneline=settings.oneline;
+        lastOne=eval('(' + settings.lastOne+ ')');
 
     }
 }
