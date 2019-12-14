@@ -5,7 +5,8 @@
  * https://developer.mozilla.org/en-US/docs/Web/API/Node/removeChild
  */
 
-let control=true;
+let control=false;
+let oneline=false;
 let settings={};
 function clearTable() {
     translationHeader.style.display = "none"
@@ -58,7 +59,7 @@ function createArTd() {
 function createRow(sn, an, word) {
     let tr = createTr();
     let loc;
-   if(control){
+   if(!control && !oneline){
     let regXenglish= /^[A-Za-z0-9]*/i
     if(regXenglish.test(word)){
         loc=getWordLocation(word,suraTr[sn][an]);
@@ -92,8 +93,13 @@ function createRow(sn, an, word) {
         loc = getWordLocation(word, suraSr[sn][an]);
     }
     
-
-    arP.innerHTML = shrink(loc)
+    if(oneline){
+        arP.innerHTML = shrink(loc)
+    }
+    else{
+        arP.innerHTML = loc
+    }
+    
     let arB = createDropDownSplit(quran.sura[sn].name + " " + (sn + 1) + ":" + (an + 1));
     //arB.href="http://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
    
@@ -136,10 +142,14 @@ function shrink(text,number=5){
      * post+x, start from 0
      */
     text=text.split(" ");
+
+    let index= text.findIndex( e => e.includes("<great>"))
+    let endIndex= text.findIndex( e => e.includes("</great>"))
+    number = number + (endIndex-index);
+    
     if(text.length <= number){
         return text.join(" ")
     }
-    let index= text.findIndex( e => e.includes("<great>"))
     if(index < 0 ){
         return text.join(" ")
     }
@@ -266,6 +276,7 @@ function findAction(word) {
 
 
 function serachedWordTable(word){
+    word= word.trim();
     document.title="finder - " + word
     wordNumber.innerText=0;
     let words= word.split("+")
@@ -525,12 +536,20 @@ function createDropDownSplit(suraCV){
 `
 return x;
 }
+function toggleOneline(){
+    oneline =!oneline;
+    clearTable();
+    updateSettings("oneline",oneline)
+    findAction(searchQue.value) 
+    // go to check this for future fix:https://stackoverflow.com/questions/4602141/variable-name-as-a-string-in-javascript
+}
 
 function toggleTranslation(){
     control =!control;
     clearTable();
     updateSettings("control",control)
     findAction(searchQue.value) 
+    // go to check this for future fix:https://stackoverflow.com/questions/4602141/variable-name-as-a-string-in-javascript
 }
 // Local storage code.  
 // source: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
@@ -563,11 +582,11 @@ function populateSettings(){
 
 }
 function initLocalStorage(){
-    let keys=["arabic","translation","colour","control","source"]
+    let keys=["arabic","translation","colour","control","source","oneline"]
     let arabicSize =parseInt(document.styleSheets[2].cssRules[0].style.fontSize);
     let translationSize =parseInt(document.styleSheets[2].cssRules[4].style.fontSize);
     let colour=     document.styleSheets[2].cssRules[3].style.backgroundColor;
-    let values=[arabicSize,translationSize,colour,control,tefsirSource.value]
+    let values=[arabicSize,translationSize,colour,control,tefsirSource.value,oneline]
    for (let i = 0; i < keys.length; i++) {
       updateSettings(keys[i],values[i])
    }
