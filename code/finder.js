@@ -8,6 +8,7 @@
 let control=false;
 let oneline=false;
 let lastOne =openReader; 
+let texts=languages.tr;
 let settings={};
 function clearTable() {
     translationHeader.style.display = "none"
@@ -252,8 +253,10 @@ let wordLst;
 
 function find(word) {
     if(word.length <= 0) return;
-    let regXenglish= /^[A-Za-z0-9]*$/
-    if(regXenglish.test(word)){
+
+    let regXenglish= /^[A-Za-z0-9]+/
+    let h = new RegExp(regXenglish,"ig")
+    if(h.test(word)){
         wordLst=nextWordList(word,suraTr);
         return;
     }
@@ -485,6 +488,7 @@ async function loadTransF(n){
     await loadTrans(n)
     clearTable();
     findAction(searchQue.value);
+    translationHeader.innerText= tefsirSource.selectedOptions[0].innerText;
     updateSettings("source",n)
 }
 
@@ -592,11 +596,11 @@ function populateSettings(){
 
 }
 function initLocalStorage(){
-    let keys=["arabic","translation","colour","control","source","oneline","lastOne"]
+    let keys=["arabic","translation","colour","control","source","oneline","lastOne","lang"]
     let arabicSize =parseInt(document.styleSheets[2].cssRules[0].style.fontSize);
     let translationSize =parseInt(document.styleSheets[2].cssRules[4].style.fontSize);
     let colour=     document.styleSheets[2].cssRules[3].style.backgroundColor;
-    let values=[arabicSize,translationSize,colour,control,tefsirSource.value,oneline,lastOne.toString()]
+    let values=[arabicSize,translationSize,colour,control,tefsirSource.value,oneline,lastOne.toString(),"1"]
    for (let i = 0; i < keys.length; i++) {
       updateSettings(keys[i],values[i])
    }
@@ -657,6 +661,39 @@ function error(e) {
     SR.onnomatch = error
     listen();
 }
+function language(val){
+    val = parseInt(val)
+    switch(val){
+        case 1:
+            texts = languages.tr
+            break;
+        case 2:
+            texts = languages.ar
+            break;
+        case 3:
+            texts = languages.en
+            break;
 
+    }
+    updateSettings("lang",val)
+    loadLang();
+}
+
+function loadLang(){
+    txtWordFound.innerText=texts.occ;
+    fontAr.innerText=texts.font + " " + texts.size;
+    txtTrans.innerText=texts.trans + " "+texts.size;
+    markColour.innerText=texts.mark + " " + texts.colour;
+    showHide.innerText=texts.show +"/"+ texts.hide;
+    shTefsir.innerText=texts.show +"/"+ texts.hide +" " + texts.tefsir;
+    settingsModelTitle.innerText=texts.pref;
+    txtOneline.innerText=texts.oneLine;
+    txtTefSource.innerText=texts.tefsir + " "+ texts.source;
+    txtLangs.innerText=texts.language;
+    txtModelClose.innerText=texts.close;
+
+
+
+}
 // write docs and split the code to more readable style.. 
 // instead of removing/clearning diactricits( vowels - tashkeel) check if its there then search by another array.

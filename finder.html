@@ -162,9 +162,9 @@
         <div class=".col-12">
           <table id="dTable" class="table">
             <caption style=" caption-side:top;">
-              Found
-              <span id="wordNumber">3</span>
-              occurence
+              
+             <span id="wordNumber">3</span>
+             <span id=txtWordFound> occurence</span>
             </caption>
             <thead>
               <tr>
@@ -248,7 +248,7 @@
           </button>
         </div>
         <div class="modal-body">
-        font size
+        <span id=fontAr>font size</span>
         <br>
         <div class="container input-group">
           <button type="button" class="btn" onclick="changeFont(`arabic`,5)">+🗚</button>
@@ -262,7 +262,7 @@
       
         
         <br>
-        Translation:
+        <span id=txtTrans>Translation:</span>
         <br>
         <button type="button" class="btn" onclick="changeFont(`x`,5)">+🗚</button>
         <p class="translation">Rahman ve Rahim olan Allah'ın adıyla:</p>
@@ -271,25 +271,25 @@
         <br>
 
       
-        <label for="">  Mark Colour: </label> &nbsp;
+        <label for="" id=markColour>  Mark Colour: </label> &nbsp;
         <input  type="color" class="form-control col-4" name="favcolor" value="#ffff00" onchange="changeColour(this.value)">
      
           <hr>
          
           <label for="">Action button</label>
           <hr>
-         Show/Hide
+        <span id=showHide> Show/Hide</span>
           <div class="custom-control custom-switch">
               <input onchange="toggleTranslation()" type="checkbox" class="custom-control-input" id="customSwitches">
-              <label class="custom-control-label" for="customSwitches">Show/Hide tefsir</label>
+              <label id="shTefsir" class="custom-control-label" for="customSwitches">Show/Hide tefsir</label>
             </div>
             one line
             <div class="custom-control custom-switch">
                 <input onchange="toggleOneline()" type="checkbox" class="custom-control-input" id="onlineSwitch">
-                <label class="custom-control-label" for="onlineSwitch">one line</label>
+                <label id="txtOneline" class="custom-control-label" for="onlineSwitch">one line</label i>
               </div>
           
-          <label for="">Tefsir source</label> 
+          <label id=txtTefSource for="">Tefsir source</label> 
           <!-- if you want to choose from multiple add only this keyword before class.. -->
           <select id="tefsirSource" onchange="loadTransF(this.value)" class="browser-default custom-select form-control">
               <option value="1">تفسير الجلالين</option>
@@ -300,7 +300,7 @@
           Tefsir cumbo box - how many times should it be
           pagination - for tefsir.
           <hr>
-          Language : (not implemented yet.)
+          <span id=txtLangs>Languages</span>
           <select onchange="language(this.value)" class="browser-default custom-select form-control">
             <option value="1" selected>TR</option>
             <option value="2">AR</option>
@@ -308,17 +308,19 @@
           </select>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button id=txtModelClose type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
   </div>
+  <script src="code/language.js"></script>
 
     <script src="code/common.js"></script>
     <script src="code/buckwalter.js"></script>
 
     <script src="code/finder.js"></script>
     <script src="code/quran-data.js"></script>
+
 
     <script src="code/quran-sura.js"></script>
     <script src="code/script.js"></script>
