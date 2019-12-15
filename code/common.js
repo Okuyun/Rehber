@@ -1,10 +1,4 @@
 "use strict";
-/**
- * 
- * The code version.
- * 
- */
-const VERSION = "V3.12T";
 
 /**
  * Translating Arabic letters to Buckwalter.
@@ -20,14 +14,11 @@ function toBuckwalter(s) {
 }
 
 /**
- * Translating Buckwalter letters to Arabic.
+ * Translating to Arabic letters back from Buckwalter.
  * 
- * uses BWC object in src="buckwalter.js"
- * code from https://github.com/stts-se/buckwalter-converter
- *
- * @param {string} s  Buckwalter transliteration 
- * @returns {string}  Arabic String
+ * @param {string} s  Buckwalter transliteration
+ * @returns {string}  Arabic string
  */
-function toArabicLetters(s) {
+function toArabic(s) {
     return BWC.convert(BWC.b2aMap, s).output
 }

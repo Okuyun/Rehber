@@ -62,8 +62,7 @@ function createRow(sn, an, word) {
     let tr = createTr();
     let loc;
    if(!control && !oneline){
-    let regXenglish= /^[A-Za-z0-9]*/i
-    if(regXenglish.test(word)){
+    if(isEnglish(word)){
         loc=getWordLocation(word,suraTr[sn][an]);
     }else{
         loc=suraTr[sn][an];
@@ -193,7 +192,9 @@ function search(word, arr = suraSr) {
     for (i = 0; i < arr.length; i++) {
         // loop verses of each sura.
         for (let j = 0; j < arr[i].length; j++) {
-            let locs = arr[i][j].indexOf(word)
+            // 
+            let locs = arr[i][j].toLowerCase().indexOf(word.toLowerCase())
+            
             if (locs !== -1) {
                 loc.push([i, j, locs])
             }
@@ -252,15 +253,25 @@ function nextWordList(word, arr = suraSr) {
 
 let wordLst;
 
-function find(word) {
-    if(word.length <= 0) return;
+function isEnglish(word){
+    // /([A-Za-z])+/
+    // /^[A-Za-z0-9]*/i
 
     let regXenglish= /^[A-Za-z0-9]+/
     let h = new RegExp(regXenglish,"ig")
     if(h.test(word)){
-        wordLst=nextWordList(word,suraTr);
-        return;
+       return true
     }
+    return false
+}
+
+function find(word) {
+    if(word.length <= 0) return;
+
+    if(isEnglish(word)) {
+        wordLst=nextWordList(word,suraTr)
+    }
+    
     if (/[\u064B-\u0652]/.test(word)) {
         wordLst = nextWordList(word, suraAr);
     } else {
@@ -438,12 +449,18 @@ function hashChanged() {
         findAction( 'بسم الله')
         return;
     }
-    let arabic = h.substring(3).replace("%20", " ");
+    let arabic = h.substring(3)//.replace("%20", " ");
+    arabic=toArabic(decodeURI(arabic)); // move the decode function to BuckWalter code... better approach
     if(arabic.length <= 0) return;
     findActionH(arabic); //toArabicLetters(arabic));
 }
 
 function setHash(e) {
+    if(!isEnglish(e)){
+        e=  toBuckwalter(e);
+    }
+
+    
     location.hash = 'w=' + e //toBuckwalter(e);
 
 }
