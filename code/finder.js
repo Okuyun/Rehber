@@ -128,7 +128,7 @@ function markAr(loc, aya) {
 // searched word, aya text.
 function getWordLocation(word, aya) {
     let regx = RegExp(word,"gi");
-    return aya.replace(regx, "<great>$&</great>")
+    return aya.replace(regx, `<great onclick="console.log('clicked')">$&</great>`)
 }
 
 function shrink(text,number=5){
