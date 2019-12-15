@@ -270,6 +270,7 @@ function find(word) {
 
     if(isEnglish(word)) {
         wordLst=nextWordList(word,suraTr)
+        return;
     }
     
     if (/[\u064B-\u0652]/.test(word)) {
@@ -449,16 +450,16 @@ function hashChanged() {
         findAction( 'بسم الله')
         return;
     }
-    let arabic = h.substring(3)//.replace("%20", " ");
-    arabic=toArabic(decodeURI(arabic)); // move the decode function to BuckWalter code... better approach
+    let arabic = h.substring(3).replace("%20", " ");
+   // arabic=toArabic(decodeURI(arabic)); // move the decode function to BuckWalter code... better approach
     if(arabic.length <= 0) return;
     findActionH(arabic); //toArabicLetters(arabic));
 }
 
 function setHash(e) {
-    if(!isEnglish(e)){
-        e=  toBuckwalter(e);
-    }
+    // if(!isEnglish(e)){
+    //     e=  toBuckwalter(e);
+    // }
 
     
     location.hash = 'w=' + e //toBuckwalter(e);
