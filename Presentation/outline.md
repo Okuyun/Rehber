@@ -5,10 +5,21 @@ its gonna be in Turkish, you dont have to read if you dont speak it.
 
 ### Giriş 
 Programın adı: ksıaca neden onu seçtik neden türkçe değil?
+* neden bu isim seçildi?
+  proposal gibi ismi neden seçildiğini anlatırım
+* küçük ve az davran, Büyük hayal kur. 
+  Basit ve normal bir program gibi olsada bile şuanda en çok kullanılan programların benzerliği görüp daha iyisi olur inşallah. Zamnla beraber dünya çapında kullanır...
+> “Allah’a en hoş gelen amel, az da olsa devamlı olanıdır.”
+
+ Programda nasıl bir örnek oldu hayat ve Agile düşüncesi ile bağlamak.
+
 
 ### Farkımız
 Diğer var olan programlar listeyip onlarla arsında fark gösterebilirim, Alt slayt olarak ilk slayt ise sadece yaptığım farklı olan şeyler. 
-
+http://www.hasenat.net/
+http://corpus.quran.com/translation.jsp?chapter=2&verse=124
+https://quran.com/2/124
+http://kuranmeali.com/AyetKarsilastirma.php?sure=2&ayet=124
 
 ### Fonkisyonlar
 Fonkisyonlar ile kod gösterilir.
@@ -35,7 +46,9 @@ diğer varolan ve yapılacak olan projeler içim bir dokumantasyon hazırlayıp 
 
 
 
-### Öğrendiklerim
+### ~~Öğrendiklerim~~
+~~Agile olmak~~
+~~Kodlamada: promise, JS ile flutency,~~
 
 ### Yapılacaklar
 * PWA 
