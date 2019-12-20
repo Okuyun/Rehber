@@ -73,7 +73,7 @@ function createRow(sn, an, word) {
     translationHeader.style.display="table-cell"
     let td = createTd();
     let tb = createDropDownSplit( quran.sura[sn].tname + " " + (sn + 1)+ ":" + (an + 1)  );
-    //tb.href="http://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
+    //tb.href="https://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
     td.innerHTML += tb;
     td.append("\xA0\xA0")
     tr.appendChild(td)
@@ -102,7 +102,7 @@ function createRow(sn, an, word) {
     }
     
     let arB = createDropDownSplit(quran.sura[sn].name + " " + (sn + 1) + ":" + (an + 1));
-    //arB.href="http://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
+    //arB.href="https://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
    
 
     arTd.appendChild(arP)
@@ -532,7 +532,7 @@ async function loadTransF(n=3){
 function openMeali(cv){
     cv =cv.split(":");
     let c= cv[0] , v= cv[1];
-    let link = `http://kuranmeali.com/AyetKarsilastirma.php?sure=${c}&ayet=${v}`
+    let link = `https://kuranmeali.com/AyetKarsilastirma.php?sure=${c}&ayet=${v}`
     window.open(link,"meali") 
     lastOne=openMeali
     warpLast()
@@ -540,7 +540,7 @@ function openMeali(cv){
 }
 // cv = chapter verses C:V 
 function openIqra(cv){
-    let link="http://maeyler.github.io/Iqra3/reader#v=" + cv ;
+    let link="https://maeyler.github.io/Iqra3/reader#v=" + cv ;
     window.open(link,"iqra") 
     lastOne=openIqra;
     warpLast()
@@ -558,7 +558,7 @@ function openQuran(cv){
 function openCorpus(cv){
     cv =cv.split(":");
     let c= cv[0] , v= cv[1];
-    let link =`http://corpus.quran.com/translation.jsp?chapter=${c}&verse=${v}`
+    let link =`https://corpus.quran.com/translation.jsp?chapter=${c}&verse=${v}`
     window.open(link,"Corpus") 
     lastOne=openCorpus;
     warpLast()
