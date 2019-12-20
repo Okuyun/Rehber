@@ -669,35 +669,63 @@ function loadSettings(){
 
     }
 }
-
-function SearchVoice(){
-
+// Global to be able to cancel :) 
+const SR = new webkitSpeechRecognition()
+function SearchVoice(language){
+let speechLang= "tr-TR"
+switch(tefsirSource.value){
+   case "3":
+   case "5":
+        speechLang="tr-TR"
+        break;
+    case "1":
+    case "2":
+        speechLang="ar-AR"
+        break;
+    case "4":
+    case "6":
+        speechLang="en-EN"
+        break;
+}
    
-function listen() {
-    SR.lang = "tr-TR" //: "en-EN"; 
-    SR.start()
-   
+function listen(lang) {
+    SR.lang = lang?lang:speechLang; //: "en-EN"; 
+    console.log(SR.lang)
+    SR.start() 
 }
 function getResult(e) {
     let a = e.results[0][0]; //use first result
+    $('#speechSettings').modal('hide');
     console.log(a.transcript, a.confidence.toFixed(2))
     searchQue.value=a.transcript;
     findAction(searchQue.value)
+    loading.hidden=true;
+
     // out.innerText = a.transcript; speak()
     // out.style.background = ''
 }
 function error(e) {
     // out.innerText = turk.checked? '[ses yok]' : '[no input]'
     // out.style.background = ''
+    loading.hidden=true;
     console.log("error ",e)
 }
+function started(){
+    loading.hidden=false;
+}
+function stopped() { loading.hidden=true;};
    
-    const SR = new webkitSpeechRecognition()
     SR.onspeechend = SR.stop; 
     SR.onsoundend = error
     SR.onresult = getResult;  
     SR.onnomatch = error
-    listen();
+    SR.onstart = started;
+    SR.onstop = stopped;
+    listen(language);
+}
+function speechCancel(){
+    SR.abort();
+    loading.hidden=true;
 }
 function language(val){
     val = parseInt(val)
