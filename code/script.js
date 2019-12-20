@@ -19,7 +19,9 @@ let data = {
         tfArJal: "ar.jalalayn.txt",
         tfArMu: "ar.muyassar.txt",
         trEn: "en.ahmedali.txt",
-        trTr: "tr.diyanet.txt"
+        trTr: "tr.diyanet.txt",
+        trEl: "tr.yazir.txt",
+        trYL: "en.yusufali.txt",
     }
     /**
      * Keep the last displayed sura saved for user errors
@@ -207,7 +209,12 @@ function loadTrans(choosen = "1") {
             translate = data.trEn;
             break;
         case "5":
+            translate = data.trEl;
             break;
+            case "6":
+                translate = data.trYL;
+
+                break;
 
     }
     return readExternal(dataUrl + translate, suraTr, dataToArray)    
