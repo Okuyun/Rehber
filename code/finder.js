@@ -264,11 +264,25 @@ function isEnglish(word){
     let regXenglish= /[A-Za-z0-9]+/
     let h = new RegExp(regXenglish,"ig")
     if(h.test(word)){
-       return true
+        SearchBarLTR()
+        return true
     }
+    SearchBarRTL();
     return false
 }
 
+function SearchBarLTR(){
+   
+        searchQue.dir="LTR"
+        searchQue.className = "form-control translation"
+    
+  
+}
+
+function SearchBarRTL(){
+    searchQue.className = "arabic form-control text-right";
+    searchQue.dir="rtl"
+}
 function find(word) {
     if(word.length <= 0) return;
 

@@ -1,8 +1,6 @@
-Text direction should be LTR in Turkish
 Diacritical - normlisatin 
 Arapça ses tanımayı eklemelisin, kolayca yaparsın senıyorum
 linki yazmayı unuttum:  maeyler.github.io/305/work/Speech
-Elmalılı mealini istedi bilhassa
 You need two icons for these pages
 Finder'daki (secure) linklerin adı Iqra olsun lutfen - change reader to IQRA
 Speech kullanici bildirimi 
