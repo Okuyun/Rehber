@@ -1,13 +1,10 @@
-#v=11:121&w=makaAnatikumo -- onClicked 
-windows.name finder 
-Tek satir with function 
 Text direction should be LTR in Turkish
 Diacritical - normlisatin 
 Arapça ses tanımayı eklemelisin, kolayca yaparsın senıyorum
+linki yazmayı unuttum:  maeyler.github.io/305/work/Speech
 Elmalılı mealini istedi bilhassa
 You need two icons for these pages
 Finder'daki (secure) linklerin adı Iqra olsun lutfen - change reader to IQRA
-linki yazmayı unuttum:  maeyler.github.io/305/work/Speech
 Speech kullanici bildirimi 
 PWA 
 Similarity table :) 
@@ -16,3 +13,4 @@ Similarity table :)
 Bugs: 
 Iqra:reader -> If word is null . &w=
 Iqra:reader -> V=11:33 -- reader error 
+BQ:finder -> أَضَآءَتْ 

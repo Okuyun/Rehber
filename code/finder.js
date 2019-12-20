@@ -130,8 +130,9 @@ function getWordLocation(word, aya,sn,an,cnt) {
     let regx = RegExp(word,"gi");
     let cv = (sn+1)+":"+(an+1);
     if(cnt) cv += "&w=" + toBuckwalter(word)+"";
-    
-    return aya.replace(regx, `<great onclick=openIqra('${cv.toString()}') >$&</great>`)
+    // TODO: bug at أَضَآءَتْ  -- need to fix :( 
+    let call = `openIqra("` + cv +`")`;
+    return aya.replace(regx, `<great onclick=${call}>$&</great>`)
 }
 
 function shrink(text,number=5){
@@ -147,9 +148,9 @@ function shrink(text,number=5){
      */
     text=text.split(" ");
 
-    let index= text.findIndex( e => e.includes("<great>"))
+    let index= text.findIndex( e => e.includes("<great"))
     let endIndex= text.findIndex( e => e.includes("</great>"))
-    number = number + (endIndex-index);
+    number = number + (searchQue.value.split(" ").length);
     
     if(text.length <= number){
         return text.join(" ")
@@ -157,7 +158,7 @@ function shrink(text,number=5){
     if(index < 0 ){
         return text.join(" ")
     }
-    let pre=index-number/2 ,post =index+number/2 
+    let pre=index-number/2 ,post =endIndex+number/2 
     if(pre < 0){
         return text.slice(0,number).join(" ");  
     }
@@ -506,7 +507,7 @@ function changeFont(language,size){
   
 }
 
-async function loadTransF(n){
+async function loadTransF(n=3){
     await loadTrans(n)
     clearTable();
     findAction(searchQue.value);
