@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Similarity</title>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+</head>
+<body>
+    <div>
+        <div id="chart"></div>
+    </div>
+    <script>
+     function generateData(count, yrange) {
+            var i = 0;
+            var series = [];
+            while (i < count) {
+                var x = 'P' + (i + 1).toString();
+                var y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
+
+                series.push({
+                    x: x,
+                    y: y
+                });
+                i++;
+            }
+            return series;
+        }
+
+
+        var options = {
+            chart: {
+                height: 'auto',
+                type: 'heatmap',
+            },
+            dataLabels: {
+                enabled: false
+            },
+            colors: ["#008FFB"],
+           
+            title: {
+                text: 'HeatMap Chart (Single color)'
+            },
+
+        }
+        let juz = [];
+        for (let i = 1; i <= 30; i++) {
+                    juz.push({name:"juz "+i, data:(generateData(20,{min:0,max:100}))});
+        }
+
+        options.series=juz;
+        var chart = new ApexCharts(
+            document.querySelector("#chart"),
+            options
+        );
+
+        chart.render();
+    </script>
+</body>
+</html>

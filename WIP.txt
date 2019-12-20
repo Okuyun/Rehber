@@ -1,9 +1,11 @@
 Diacritical - normlisatin 
+
 Arapça ses tanımayı eklemelisin, kolayca yaparsın senıyorum
 linki yazmayı unuttum:  maeyler.github.io/305/work/Speech
-You need two icons for these pages
-Finder'daki (secure) linklerin adı Iqra olsun lutfen - change reader to IQRA
 Speech kullanici bildirimi 
+
+You need two icons for these pages
+
 PWA 
 Similarity table :) 
 
