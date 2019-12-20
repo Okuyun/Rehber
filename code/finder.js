@@ -261,7 +261,7 @@ function isEnglish(word){
     // /([A-Za-z])+/
     // /^[A-Za-z0-9]*/i
 
-    let regXenglish= /^[A-Za-z0-9]+/
+    let regXenglish= /[A-Za-z0-9]+/
     let h = new RegExp(regXenglish,"ig")
     if(h.test(word)){
        return true
