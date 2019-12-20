@@ -7,7 +7,7 @@
 
 let control=false;
 let oneline=false;
-let lastOne =openReader; 
+let lastOne =openIqra; 
 let texts=languages.tr;
 let settings={};
 function clearTable() {
@@ -63,7 +63,7 @@ function createRow(sn, an, word) {
     let loc;
    if(!control && !oneline){
     if(isEnglish(word)){
-        loc=getWordLocation(word,suraTr[sn][an]);
+        loc=getWordLocation(word,suraTr[sn][an],sn,an);
     }else{
         loc=suraTr[sn][an];
     }
@@ -89,9 +89,9 @@ function createRow(sn, an, word) {
     let arP = createArPar();
     
     if (/[\u064B-\u0652]/.test(word)) {
-        loc = getWordLocation(word, suraAr[sn][an]);
+        loc = getWordLocation(word, suraAr[sn][an],sn,an,1);
     } else {
-        loc = getWordLocation(word, suraSr[sn][an]);
+        loc = getWordLocation(word, suraSr[sn][an],sn,an);
     }
     
     if(oneline){
@@ -126,9 +126,12 @@ function markAr(loc, aya) {
 }
 // get the searched word location and size to mark.
 // searched word, aya text.
-function getWordLocation(word, aya) {
+function getWordLocation(word, aya,sn,an,cnt) {
     let regx = RegExp(word,"gi");
-    return aya.replace(regx, `<great onclick="console.log('clicked')">$&</great>`)
+    let cv = (sn+1)+":"+(an+1);
+    if(cnt) cv += "&w=" + toBuckwalter(word)+"";
+    
+    return aya.replace(regx, `<great onclick=openIqra('${cv.toString()}') >$&</great>`)
 }
 
 function shrink(text,number=5){
@@ -521,10 +524,10 @@ function openMeali(cv){
 
 }
 // cv = chapter verses C:V 
-function openReader(cv){
-    let link="http://maeyler.github.io/Iqra3/reader#v=" + cv;
+function openIqra(cv){
+    let link="http://maeyler.github.io/Iqra3/reader#v=" + cv ;
     window.open(link,"iqra") 
-    lastOne=openReader;
+    lastOne=openIqra;
     warpLast()
 }
 
@@ -563,7 +566,7 @@ function createDropDownSplit(suraCV){
     <button class="dropdown-item" onclick="openQuran('${cv}')">Quran</button>
     <button class="dropdown-item" onclick="openMeali('${cv}')">Meali</button>
     <div class="dropdown-divider"></div>
-    <button class="dropdown-item" onclick="openReader('${cv}')">Reader</button>
+    <button class="dropdown-item" onclick="openIqra('${cv}')">Reader</button>
   </div>
 </div>
 `
