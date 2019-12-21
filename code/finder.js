@@ -197,7 +197,8 @@ function search(word, arr = suraSr) {
         // loop verses of each sura.
         for (let j = 0; j < arr[i].length; j++) {
             // 
-            let locs = arr[i][j].toLowerCase().indexOf(word.toLowerCase())
+            let aya =arr[i][j].toLowerCase();
+            let locs = removeOddChar(aya).indexOf(word.toLowerCase(word.toLowerCase()))
             
             if (locs !== -1) {
                 loc.push([i, j, locs])
@@ -205,6 +206,13 @@ function search(word, arr = suraSr) {
         }
     }
     return loc;
+}
+
+function removeOddChar(string){
+    let oddChar = `İ`.toLowerCase()[1]
+    let h = new RegExp(oddChar,"ig")
+
+    return string.replace( h,"");
 }
 // get the next word location from the search based on length of the word itself... 
 // check if the word is at the ened of aya...
