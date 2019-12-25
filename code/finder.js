@@ -127,6 +127,7 @@ function markAr(loc, aya) {
 // get the searched word location and size to mark.
 // searched word, aya text.
 function getWordLocation(word, aya,sn,an,cnt) {
+    // TODO : change to proper html
     let regx = RegExp(word,"gi");
     let cv = (sn+1)+":"+(an+1);
     if(cnt) cv += "&w=" + toBuckwalter(word)+"";
@@ -198,7 +199,8 @@ function search(word, arr = suraSr) {
         for (let j = 0; j < arr[i].length; j++) {
             // 
             let aya =arr[i][j].toLowerCase();
-            let locs = removeOddChar(aya).indexOf(word.toLowerCase(word.toLowerCase()))
+            // working :) -- the insan error is caused by the RegEx
+            let locs = removeOddChar(aya).indexOf(removeOddChar(word.toLowerCase()))
             
             if (locs !== -1) {
                 loc.push([i, j, locs])
@@ -228,6 +230,10 @@ function nextWordLoc(word, arr = suraSr) {
     return wordLoc;
 }
 
+function removePunctions(word){
+    return word.replace(/(~|`|!|@|#|$|%|^|&|\*|\(|\)|{|}|\[|\]|;|:|\"|'|<|,|\.|>|\?|\/|\\|\||-|_|\+|=)/g,"")
+}
+
 function nextWordList(word, arr = suraSr) {
     // ayet is out of bound...
 
@@ -249,6 +255,7 @@ function nextWordList(word, arr = suraSr) {
             lastindex = aya.length;
         }
         sugwrd = aya.substring(wordlocation[i][2], lastindex);
+        sugwrd = removePunctions(sugwrd);
         // if end of aya, then check next aya, from the beging
         if (sugwrd.length <= 1) {
          

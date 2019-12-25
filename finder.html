@@ -113,28 +113,27 @@
 
     <div class="container">
       <div class="row bg-white sticky-top">
-        <div class="input-group " dir="rtl">
+       
+        <div class="input-group" >
           <!-- class add input-group-text to change the colour... -->
+ <!-- can change to text center, would not it be better? -->
+ <input
+ dir="rtl"
+ list="suggestions"
+ style="max-width: 80vw;"
+ class="arabic form-control text-right" 
+ 
+ value="بسم الله"
+ onchange="sugOnKeyUp(searchQue.value)"
+ onkeyup="sugOnKeyUp(searchQue.value)"
+ id="searchQue"
+ type="text"
+ aria-label="Search"
+/>
 
-          <input
-            dir="rtl"
-            list="suggestions"
-            style="max-width: 80vw;"
-            class="arabic form-control text-right"
-            value="بسم الله"
-            onchange="sugOnKeyUp(searchQue.value)"
-            onkeyup="sugOnKeyUp(searchQue.value)"
-            id="searchQue"
-            type="text"
-            aria-label="Search"
-          />
-          <button
-            onclick="findAction(searchQue.value)"
-            class="btn btn-outline-success"
-            type="submit"
-          >
-            🔍
-          </button>
+       
+        
+
           <button
           data-toggle="modal" 
           data-target="#settingsModel"
@@ -160,6 +159,20 @@
             <option value="بسم الله مجراها"></option>
           </datalist>
         </div>
+        <div class=col>
+               
+          <div class="row custom-control custom-switch">
+            <input onchange="toggleTranslation()" type="checkbox" class="custom-control-input" id="customSwitches">
+            <label id="shTefsir" class="custom-control-label" for="customSwitches">tefsir</label>
+          </div>
+          <div class="row custom-control custom-switch">
+            <input onchange="toggleOneline()" type="checkbox" class="custom-control-input" id="onlineSwitch">
+            <label id="txtOneline" class="custom-control-label" for="onlineSwitch">one line</label i>
+          </div>
+         
+         
+         </div>
+        
       </div>
     
       <div class="row">

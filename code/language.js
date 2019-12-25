@@ -1,7 +1,7 @@
 let languages={
     ar:{
         pref:"الإعدادات",
-        occ:"تم العثور على",
+        occ:"عدد الآيات",
         size:"حجم",
         font:"الخط",
         trans:"الترجمة أو التفسير",
@@ -17,7 +17,7 @@ let languages={
     },
     tr:{
         pref:"ayarlar",
-        occ:"kelime bulundu",
+        occ:"ayet",
         size:"boy",
         font:"font",
         trans:"Meal ya da tefsir",
@@ -34,7 +34,7 @@ let languages={
     },
     en:{
         pref:"preference",
-        occ:"occurence",
+        occ:"verses",
         size:"size",
         font:"font",
         trans:"Translation",
