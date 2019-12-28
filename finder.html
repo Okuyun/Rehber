@@ -159,22 +159,26 @@
             <option value="بسم الله مجراها"></option>
           </datalist>
         </div>
-        <div class=col>
+        <!-- <div class=col> -->
                
-          <div class="row custom-control custom-switch">
-            <input onchange="toggleTranslation()" type="checkbox" class="custom-control-input" id="customSwitches">
-            <label id="shTefsir" class="custom-control-label" for="customSwitches">tefsir</label>
+        
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+            <label class="custom-control-label" for="customRadioInline1">All</label>
           </div>
-          <div class="row custom-control custom-switch">
-            <input onchange="toggleOneline()" type="checkbox" class="custom-control-input" id="onlineSwitch">
-            <label id="txtOneline" class="custom-control-label" for="onlineSwitch">one line</label i>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input onchange="toggleTranslation()"  type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+            <label class="custom-control-label" for="customRadioInline2">Tefsir</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input onchange="toggleOneline()" type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input">
+            <label class="custom-control-label" for="customRadioInline3">One Line</label>
           </div>
          
-         
-         </div>
+        
+         <!-- </div> -->
         
       </div>
-    
       <div class="row">
         <div class="col-12">
           <table id="dTable" class="table">
@@ -342,18 +346,7 @@
          
           <label for="">Action button</label>
           <hr>
-        <span id=showHide> Show/Hide</span>
-          <div class="custom-control custom-switch">
-              <input onchange="toggleTranslation()" type="checkbox" class="custom-control-input" id="customSwitches">
-              <label id="shTefsir" class="custom-control-label" for="customSwitches">Show/Hide tefsir</label>
-            </div>
-            one line
-            <div class="custom-control custom-switch">
-                <input onchange="toggleOneline()" type="checkbox" class="custom-control-input" id="onlineSwitch">
-                <label id="txtOneline" class="custom-control-label" for="onlineSwitch">one line</label i>
-              </div>
-          
-          <label id=txtTefSource for="">Tefsir source</label> 
+     
           <!-- if you want to choose from multiple add only this keyword before class.. -->
          
           Tefsir cumbo box - how many times should it be
