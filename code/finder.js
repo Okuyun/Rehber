@@ -11,7 +11,7 @@ let lastOne =openIqra;
 let texts=languages.tr;
 let settings={};
 function clearTable() {
-    translationHeader.style.display = "none"
+    // translationHeader.style.display = "none"
     arabicHeader.style.width="100vw"
     element = document.getElementById("dTable").getElementsByTagName('tbody')[0];;
     while (element.firstChild) {
@@ -61,17 +61,16 @@ function createArTd() {
 function createRow(sn, an, word) {
     let tr = createTr();
     let loc;
-   if(!control && !oneline){
+  
     if(isEnglish(word)){
         loc=getWordLocation(word,suraTr[sn][an],sn,an);
     }else{
         loc=suraTr[sn][an];
     }
-    
     arabicHeader.style.width="47%"
-
-    translationHeader.style.display="table-cell"
+    // translationHeader.style.display="table-cell"
     let td = createTd();
+    td.className="tableTranslation"
     let tb = createDropDownSplit( quran.sura[sn].tname + " " + (sn + 1)+ ":" + (an + 1)  );
     //tb.href="https://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
     td.innerHTML += tb;
@@ -81,7 +80,7 @@ function createRow(sn, an, word) {
     tp.innerHTML = shrink(loc,100)
     td.appendChild(tp)
     tp.className="translation"
-   }
+   
 
     let arTd = createArTd();
     arTd.scope="col"
@@ -517,23 +516,37 @@ function initFinder() {
         }
     }
 }
-// inspired from: https://stackoverflow.com/questions/1409225/changing-a-css-rule-set-from-javascript
+// from: https://stackoverflow.com/questions/1409225/changing-a-css-rule-set-from-javascript
+function getCSSRule(ruleName) {              
+    // ruleName=ruleName.toLowerCase();                      
+    for ( let sheet of  document.styleSheets){
+        for (let rule of sheet.cssRules){
+       if(rule.selectorText == ruleName){
+           return rule;
+       }
+        }
+        }
+
+}            
+
 function changeColour(col){
-    document.styleSheets[2].cssRules[3].style.backgroundColor=col;
+    getCSSRule("great").style.backgroundColor=col;
     updateSettings("colour",col)
 }
 function changeFont(language,size){
     //console.log(language,size)
+    let rule,update="translation";
     if(language=="arabic"){
-        let old =parseInt(document.styleSheets[2].cssRules[0].style.fontSize);
-        document.styleSheets[2].cssRules[0].style.fontSize =  old+size+"px"
-        updateSettings("arabic",old+size)
+        //.arabic
+        rule=getCSSRule(".arabic");
+        update = "arabic"
         }else{
-        let old =parseInt(document.styleSheets[2].cssRules[4].style.fontSize);
-        document.styleSheets[2].cssRules[4].style.fontSize =  old+size+"px" 
-        updateSettings("translation",old+size)
+            //.translation 
+         rule=getCSSRule(".translation")
     }
-  
+    let old =parseInt(rule.style.fontSize);
+    rule.style.fontSize =  old+size+"px"
+    updateSettings(update,old+size)
 }
 
 async function loadTransF(n=3){
@@ -608,18 +621,19 @@ function createDropDownSplit(suraCV){
 return x;
 }
 function toggleOneline(){
+    let htmlText;
+    for (let el of document.querySelectorAll("span.arabic") ){
+        htmlText=  el.innerHTML;
+        el.innerHTML = shrink(htmlText)
+    }
+  
     oneline =!oneline;
-    clearTable();
     updateSettings("oneline",oneline)
-    findAction(searchQue.value) 
     // go to check this for future fix:https://stackoverflow.com/questions/4602141/variable-name-as-a-string-in-javascript
 }
 
-function toggleTranslation(){
-    control =!control;
-    clearTable();
-    updateSettings("control",control)
-    findAction(searchQue.value) 
+function translationStyle(text){
+    getCSSRule(".tableTranslation").style.display=text
     // go to check this for future fix:https://stackoverflow.com/questions/4602141/variable-name-as-a-string-in-javascript
 }
 // Local storage code.  
@@ -654,9 +668,9 @@ function populateSettings(){
 }
 function initLocalStorage(){
     let keys=["arabic","translation","colour","control","source","oneline","lastOne","lang"]
-    let arabicSize =parseInt(document.styleSheets[2].cssRules[0].style.fontSize);
-    let translationSize =parseInt(document.styleSheets[2].cssRules[4].style.fontSize);
-    let colour=     document.styleSheets[2].cssRules[3].style.backgroundColor;
+    let arabicSize =parseInt(getCSSRule(".arabic").style.fontSize);
+    let translationSize =parseInt(getCSSRule(".translation").style.fontSize);
+    let colour=getCSSRule("great").style.backgroundColor;
     let values=[arabicSize,translationSize,colour,control,tefsirSource.value,oneline,lastOne.toString(),"1"]
    for (let i = 0; i < keys.length; i++) {
       updateSettings(keys[i],values[i])

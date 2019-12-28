@@ -56,6 +56,9 @@
       .translation {
         font-size: 17px;
       }
+      .tableTranslation {
+        display: table-cell;
+      }
     </style>
   </head>
 
@@ -167,7 +170,7 @@
             <label class="custom-control-label" for="customRadioInline1">All</label>
           </div>
           <div class="custom-control custom-radio custom-control-inline">
-            <input onchange="toggleTranslation()"  type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+            <input onchange="translationStyle(`none`)"  type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
             <label class="custom-control-label" for="customRadioInline2">Tefsir</label>
           </div>
           <div class="custom-control custom-radio custom-control-inline">
@@ -188,10 +191,10 @@
             </caption>
             <thead>
               <tr>
-                <th id="translationHeader" style="width: 47%; display: table-cell;">
+                <th id="translationHeader" style="width: 47%;"  class="tableTranslation">
                   <div class="btn-group">
                     <button id="THtext" type="button" class="btn badge badge-white align-text-bottom dropdown-toggle dropdown-toggle-split translation" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                     Tefsir
+                    Türkçe: Diyanet Meali
                     </button>
                     <div class="dropdown-menu">
                       <button class="dropdown-item" onclick="loadTransF('3')">Türkçe: Diyanet Meali</button>
