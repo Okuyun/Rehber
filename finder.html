@@ -185,14 +185,20 @@
             <thead>
               <tr>
                 <th id="translationHeader" style="width: 47%; display: table-cell;">
-                  <select id="tefsirSource" onchange="loadTransF(this.value)" class="browser-default custom-select form-control form-control-sm">
-                    <option value="1">تفسير الجلالين</option>
-                    <option value="2">تفسير الميسر</option>
-                    <option value="3" selected>Türkçe: Diyanet Meali</option>
-                    <option value="4">English: Ahmed Ali</option>
-                    <option value="5" >Türkçe: Elmalılı Hamdi Yazır</option>
-                    <option value="6" >English: Abdullah Yusuf Ali</option>
-                  </select>
+                  <div class="btn-group">
+                    <button id="THtext" type="button" class="btn badge badge-white align-text-bottom dropdown-toggle dropdown-toggle-split translation" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     Tefsir
+                    </button>
+                    <div class="dropdown-menu">
+                      <button class="dropdown-item" onclick="loadTransF('3')">Türkçe: Diyanet Meali</button>
+                      <button class="dropdown-item" onclick="loadTransF('5')">Türkçe: Elmalılı Hamdi Yazır</button>
+                      <button class="dropdown-item" onclick="loadTransF('6')">English: Abdullah Yusuf Ali</button>
+                      <button class="dropdown-item" onclick="loadTransF('4')">English: Ahmed Ali</button>
+                      <button class="dropdown-item" onclick="loadTransF('1')">تفسير الجلالين</button>
+                      <button class="dropdown-item" onclick="loadTransF('2')">تفسير الميسر</button>
+
+                    </div>
+                  </div>
                 </th>
                 <th id="arabicHeader" style="width: 47%;" class="text-right">عربي
                 <!-- TODO: implement tefsir source here as well, it will be helpful to compare. -->

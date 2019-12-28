@@ -540,8 +540,13 @@ async function loadTransF(n=3){
     await loadTrans(n)
     clearTable();
     findAction(searchQue.value);
-    // translationHeader.innerText= tefsirSource[n-1].innerText;
+    THtext.innerText= getTefsirText(n) + "\u2002";
     updateSettings("source",n)
+}
+
+function getTefsirText(n){
+    let tefsir = [ "تفسير الجلالين","تفسير الميسر","Türkçe: Diyanet Meali","English: Ahmed Ali","Türkçe: Elmalılı Hamdi Yazır","English: Abdullah Yusuf Ali"]
+    return tefsir[n-1];
 }
 
 function openMeali(cv){
