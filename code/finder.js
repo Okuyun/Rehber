@@ -540,7 +540,7 @@ async function loadTransF(n=3){
     await loadTrans(n)
     clearTable();
     findAction(searchQue.value);
-    translationHeader.innerText= tefsirSource[n-1].innerText;
+    // translationHeader.innerText= tefsirSource[n-1].innerText;
     updateSettings("source",n)
 }
 

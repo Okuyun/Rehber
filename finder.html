@@ -180,74 +180,116 @@
           <table id="dTable" class="table">
             <caption style=" caption-side:top;">
              <span id="wordNumber">3</span>
-             <span id=txtWordFound> occurence</span>
+             <span id="txtWordFound">ayet</span>
             </caption>
             <thead>
               <tr>
-                <th id="translationHeader" style="width: 47%;">Tefsir</th>
-                <th id="arabicHeader" style="width: 47%;" class="text-right">عربي</th>
+                <th id="translationHeader" style="width: 47%; display: table-cell;">
+                  <select id="tefsirSource" onchange="loadTransF(this.value)" class="browser-default custom-select form-control form-control-sm">
+                    <option value="1">تفسير الجلالين</option>
+                    <option value="2">تفسير الميسر</option>
+                    <option value="3" selected>Türkçe: Diyanet Meali</option>
+                    <option value="4">English: Ahmed Ali</option>
+                    <option value="5" >Türkçe: Elmalılı Hamdi Yazır</option>
+                    <option value="6" >English: Abdullah Yusuf Ali</option>
+                  </select>
+                </th>
+                <th id="arabicHeader" style="width: 47%;" class="text-right">عربي
+                <!-- TODO: implement tefsir source here as well, it will be helpful to compare. -->
+                </th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <p>Rahman ve Rahim olan Allah'ın adıyla:</p>
-                  <span class="badge badge-light align-text-bottom"
-                    >1:Al-Faatiha-V:1</span
-                  >
-                </td>
-                <td scope="col" class="text-right">
-                  <p class="arabic">
-                    <mark>بِسْمِ ٱللَّهِ</mark> ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
-                  </p>
-                  <span class="badge badge-light align-text-bottom"
-                    >الفاتحة:1- اية:1</span
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <p>
-                    Allah "Oraya binin; yürümesi ve durması Allah'ın ismiyledir,
-                    Rabbin bağışlar ve merhamet eder" dedi.
-                  </p>
-                  <span class="badge badge-light align-text-bottom">11:Hud-V:41</span
-                  >
-                </td>
-                <td scope="col" class="text-right">
-                  <p class="arabic">
-                    وَقَالَ ٱرْكَبُوا۟ فِيهَا
-                    <mark>بِسْمِ ٱللَّهِ</mark> مَجْر۪ىٰهَا وَمُرْسَىٰهَآ إِنَّ
-                    رَبِّى لَغَفُورٌ رَّحِيمٌ
-                  </p>
-                  <span class="badge badge-light align-text-bottom"
-                    >هود:11- اية:41</span
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <p>
-                    Sebe melikesi: "Ey ileri gelenler! Bana,
-                    Bismillahirrahmanirrahim diye başlayan ve 'sakın bana karşı
-                    baş kaldırmayın ve teslim olarak gelin' diyen Süleyman'dan
-                    gönderilen önemli bir mektup bırakıldı" dedi.
-                  </p>
-                  <span class="badge badge-light align-text-bottom"
-                    >27:An-Naml-V:30</span
-                  >
-                </td>
-                <td scope="col" class="text-right">
-                  <p class="arabic">
-                    إِنَّهُۥ مِن سُلَيْمَٰنَ وَإِنَّهُۥ
-                    <mark>بِسْمِ ٱللَّهِ</mark> ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
-                  </p>
-                  <span class="badge badge-light align-text-bottom"
-                    >النمل:27- اية:30</span
-                  >
-                </td>
-              </tr>
-            </tbody>
+            <tbody><tr><td>
+      <!-- Example split danger button -->
+  <div class="btn-group">
+    <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('1:1')">Al-Faatiha 1:1</button>
+    <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" onclick="openCorpus('1:1')">Corpus</button>
+      <button class="dropdown-item" onclick="openQuran('1:1')">Quran</button>
+      <button class="dropdown-item" onclick="openMeali('1:1')">Meali</button>
+      <div class="dropdown-divider"></div>
+      <button class="dropdown-item" onclick="openIqra('1:1')">Reader</button>
+    </div>
+  </div>
+  &nbsp;&nbsp;<span class="translation">«بسم الله الرحمن الرحيم»</span></td><td scope="col" class="text-right"><span class="arabic"><great onclick="openIqra(`1:1`)">بسم الله</great> الرحمن الرحيم</span>&nbsp;&nbsp;
+      <!-- Example split danger button -->
+  <div class="btn-group">
+    <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('1:1')">الفاتحة 1:1</button>
+    <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" onclick="openCorpus('1:1')">Corpus</button>
+      <button class="dropdown-item" onclick="openQuran('1:1')">Quran</button>
+      <button class="dropdown-item" onclick="openMeali('1:1')">Meali</button>
+      <div class="dropdown-divider"></div>
+      <button class="dropdown-item" onclick="openIqra('1:1')">Reader</button>
+    </div>
+  </div>
+  </td></tr><tr><td>
+      <!-- Example split danger button -->
+  <div class="btn-group">
+    <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('11:41')">Hud 11:41</button>
+    <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" onclick="openCorpus('11:41')">Corpus</button>
+      <button class="dropdown-item" onclick="openQuran('11:41')">Quran</button>
+      <button class="dropdown-item" onclick="openMeali('11:41')">Meali</button>
+      <div class="dropdown-divider"></div>
+      <button class="dropdown-item" onclick="openIqra('11:41')">Reader</button>
+    </div>
+  </div>
+  &nbsp;&nbsp;<span class="translation">«وقال» نوح «اركبوا فيها بسم الله مجراها ومرساها» بفتح الميمين وضمهما مصدران أي جريها ورسوها أي منتهى سيرها «إن ربي لغفور رحيم» حيث لم يهلكنا.</span></td><td scope="col" class="text-right"><span class="arabic">وقال اركبوا فيها <great onclick="openIqra(`11:41`)">بسم الله</great> مجراها ومرساها إن ربي لغفور رحيم</span>&nbsp;&nbsp;
+      <!-- Example split danger button -->
+  <div class="btn-group">
+    <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('11:41')">هود 11:41</button>
+    <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" onclick="openCorpus('11:41')">Corpus</button>
+      <button class="dropdown-item" onclick="openQuran('11:41')">Quran</button>
+      <button class="dropdown-item" onclick="openMeali('11:41')">Meali</button>
+      <div class="dropdown-divider"></div>
+      <button class="dropdown-item" onclick="openIqra('11:41')">Reader</button>
+    </div>
+  </div>
+  </td></tr><tr><td>
+      <!-- Example split danger button -->
+  <div class="btn-group">
+    <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('27:30')">An-Naml 27:30</button>
+    <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" onclick="openCorpus('27:30')">Corpus</button>
+      <button class="dropdown-item" onclick="openQuran('27:30')">Quran</button>
+      <button class="dropdown-item" onclick="openMeali('27:30')">Meali</button>
+      <div class="dropdown-divider"></div>
+      <button class="dropdown-item" onclick="openIqra('27:30')">Reader</button>
+    </div>
+  </div>
+  &nbsp;&nbsp;<span class="translation">«إنه من سليمان وإنه» أي مضمونه «بسم الله الرحمن الرحيم».</span></td><td scope="col" class="text-right"><span class="arabic">إنه من سليمان وإنه <great onclick="openIqra(`27:30`)">بسم الله</great> الرحمن الرحيم</span>&nbsp;&nbsp;
+      <!-- Example split danger button -->
+  <div class="btn-group">
+    <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('27:30')">النمل 27:30</button>
+    <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" onclick="openCorpus('27:30')">Corpus</button>
+      <button class="dropdown-item" onclick="openQuran('27:30')">Quran</button>
+      <button class="dropdown-item" onclick="openMeali('27:30')">Meali</button>
+      <div class="dropdown-divider"></div>
+      <button class="dropdown-item" onclick="openIqra('27:30')">Reader</button>
+    </div>
+  </div>
+  </td></tr></tbody>
           </table>
         </div>
       </div>
@@ -307,14 +349,7 @@
           
           <label id=txtTefSource for="">Tefsir source</label> 
           <!-- if you want to choose from multiple add only this keyword before class.. -->
-          <select id="tefsirSource" onchange="loadTransF(this.value)" class="browser-default custom-select form-control">
-              <option value="1">تفسير الجلالين</option>
-              <option value="2">تفسير الميسر</option>
-              <option value="3" selected>Türkçe: Diyanet Meali</option>
-              <option value="4">English: Ahmed Ali</option>
-              <option value="5" >Türkçe: Elmalılı Hamdi Yazır</option>
-              <option value="6" >English: Abdullah Yusuf Ali</option>
-            </select>
+         
           Tefsir cumbo box - how many times should it be
           pagination - for tefsir.
           <hr>
@@ -369,14 +404,10 @@
 </div>
   
   <script src="code/language.js"></script>
-
     <script src="code/common.js"></script>
     <script src="code/buckwalter.js"></script>
-
     <script src="code/finder.js"></script>
     <script src="code/quran-data.js"></script>
-
-
     <script src="code/quran-sura.js"></script>
     <script src="code/script.js"></script>
     <script>
