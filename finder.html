@@ -59,6 +59,12 @@
       .tableTranslation {
         display: table-cell;
       }
+      .fullText{
+        display: table-cell;
+      }
+      .shrinkArabic{
+        display: table-cell;
+      }
     </style>
   </head>
 
@@ -166,15 +172,15 @@
                
         
           <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+            <input onchange="displayState(1)" type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
             <label class="custom-control-label" for="customRadioInline1">All</label>
           </div>
           <div class="custom-control custom-radio custom-control-inline">
-            <input onchange="translationStyle(`none`)"  type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+            <input onchange="displayState(2)"  type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
             <label class="custom-control-label" for="customRadioInline2">Tefsir</label>
           </div>
           <div class="custom-control custom-radio custom-control-inline">
-            <input onchange="toggleOneline()" type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input">
+            <input onchange="displayState(3)" type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input">
             <label class="custom-control-label" for="customRadioInline3">One Line</label>
           </div>
          
@@ -197,12 +203,12 @@
                     Türkçe: Diyanet Meali
                     </button>
                     <div class="dropdown-menu">
-                      <button class="dropdown-item" onclick="loadTransF('3')">Türkçe: Diyanet Meali</button>
-                      <button class="dropdown-item" onclick="loadTransF('5')">Türkçe: Elmalılı Hamdi Yazır</button>
-                      <button class="dropdown-item" onclick="loadTransF('6')">English: Abdullah Yusuf Ali</button>
-                      <button class="dropdown-item" onclick="loadTransF('4')">English: Ahmed Ali</button>
-                      <button class="dropdown-item" onclick="loadTransF('1')">تفسير الجلالين</button>
-                      <button class="dropdown-item" onclick="loadTransF('2')">تفسير الميسر</button>
+                      <button class="dropdown-item" onclick="loadTransF(3)">Türkçe: Diyanet Meali</button>
+                      <button class="dropdown-item" onclick="loadTransF(5)">Türkçe: Elmalılı Hamdi Yazır</button>
+                      <button class="dropdown-item" onclick="loadTransF(6)">English: Abdullah Yusuf Ali</button>
+                      <button class="dropdown-item" onclick="loadTransF(4)">English: Ahmed Ali</button>
+                      <button class="dropdown-item" onclick="loadTransF(1)">تفسير الجلالين</button>
+                      <button class="dropdown-item" onclick="loadTransF(2)">تفسير الميسر</button>
 
                     </div>
                   </div>
@@ -425,4 +431,6 @@
 <!-- TODO change and add the CSS for arabic shrink and full, Change the great thingy to make it based on Query
 move to issues, heck emails.
 Add SW, Write Thesis, Check Presentation, prepare tests (demo), 
-follow up with old stuff, show semi. -->
+follow up with old stuff, show semi.
+approach one: go from shrink/fulltext by CSS 
+Approach two: use wordlst without clearning the table. -->

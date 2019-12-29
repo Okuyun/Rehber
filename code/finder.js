@@ -93,12 +93,18 @@ function createRow(sn, an, word) {
         loc = getWordLocation(word, suraSr[sn][an],sn,an);
     }
     
-    if(oneline){
-        arP.innerHTML = shrink(loc)
-    }
-    else{
-        arP.innerHTML = loc
-    }
+   
+        let span = document.createElement("span");
+        span.className="shrinkArabic";
+        span.innerHTML = shrink(loc)
+        arP.appendChild(span)
+    
+        span = document.createElement("span");
+        span.className="fullText";
+        span.innerHTML = loc
+        arP.appendChild(span)
+
+    // TODO: if oneline: add controler
     
     let arB = createDropDownSplit(quran.sura[sn].name + " " + (sn + 1) + ":" + (an + 1));
     //arB.href="https://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
@@ -109,6 +115,7 @@ function createRow(sn, an, word) {
     arTd.innerHTML+=arB;
     
     tr.appendChild(arTd)
+    oneLineShow(oneline)
 
     return tr;
 }
@@ -550,7 +557,7 @@ function changeFont(language,size){
 }
 
 async function loadTransF(n=3){
-    await loadTrans(n)
+    await loadTrans(n.toString())
     clearTable();
     findAction(searchQue.value);
     THtext.innerText= getTefsirText(n) + "\u2002";
@@ -621,20 +628,62 @@ function createDropDownSplit(suraCV){
 return x;
 }
 function toggleOneline(){
-    let htmlText;
-    for (let el of document.querySelectorAll("span.arabic") ){
-        htmlText=  el.innerHTML;
-        el.innerHTML = shrink(htmlText)
-    }
-  
-    oneline =!oneline;
+    // Approach two: create and delete the whole page, you got the data in wordlst already... 
+    //  does it worth to loop it? or would it better if we have had the CSS since its easier.
+    // let htmlText;
+    // for (let el of document.querySelectorAll("span.arabic") ){
+    //     htmlText=  el.innerHTML;
+    //     el.innerHTML = shrink(htmlText)
+    // }
+    // oneline =!oneline;
+    // oneLineShow(oneline)
     updateSettings("oneline",oneline)
     // go to check this for future fix:https://stackoverflow.com/questions/4602141/variable-name-as-a-string-in-javascript
 }
-
+function displayState(num){
+    /**
+     * 1: for showing all 
+     * 2: for showing only arabic
+     * 3: for showing only arabic online mode.
+     */
+    switch(num){
+        case 1: 
+        translationStyle("table-cell")
+        oneLineShow(false)
+        
+        break;
+        case 2:
+            translationStyle("none")
+            oneLineShow(false)
+            break;
+        case 3:
+            translationStyle("none")
+            oneLineShow(true)
+            break;
+    }
+}
 function translationStyle(text){
     getCSSRule(".tableTranslation").style.display=text
     // go to check this for future fix:https://stackoverflow.com/questions/4602141/variable-name-as-a-string-in-javascript
+}
+function oneLineShow(bool){
+    oneline=bool;
+    if(bool){
+        fullTextStyle("none")
+        shrinkStyle("table-cell");
+    }else {
+        shrinkStyle("none")
+        fullTextStyle("table-cell");
+    }
+    updateSettings("oneline",oneline)
+
+}
+function fullTextStyle(text){
+    getCSSRule(".fullText").style.display=text;
+
+}
+function shrinkStyle(text){
+    getCSSRule(".shrinkArabic").style.display=text;
 }
 // Local storage code.  
 // source: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
@@ -695,29 +744,33 @@ function loadSettings(){
         changeColour(settings.colour)
         changeFont("arabic",0)
         changeFont("x",0)
-        loadTransF(settings.source)
+        newFunction();
         control=settings.control;
         oneline=settings.oneline;
         lastOne=eval('(' + settings.lastOne+ ')');
         language(settings.lang)
-
     }
 }
 // Global to be able to cancel :) 
 const SR = new webkitSpeechRecognition()
+function newFunction() {
+    loadTransF(settings.source);
+}
+
 function SearchVoice(language){
 let speechLang= "tr-TR"
+// TODO: tefsir source is not defined -- check form local storage.
 switch(tefsirSource.value){
-   case "3":
-   case "5":
+   case 3:
+   case 5:
         speechLang="tr-TR"
         break;
-    case "1":
-    case "2":
+    case 1:
+    case 2:
         speechLang="ar-AR"
         break;
-    case "4":
-    case "6":
+    case 4:
+    case 6:
         speechLang="en-EN"
         break;
 }
@@ -784,11 +837,11 @@ function loadLang(){
     fontAr.innerText=texts.font + " " + texts.size;
     txtTrans.innerText=texts.trans + " "+texts.size;
     markColour.innerText=texts.mark + " " + texts.colour;
-    showHide.innerText=texts.show +"/"+ texts.hide;
-    shTefsir.innerText=texts.show +"/"+ texts.hide +" " + texts.tefsir;
+    // showHide.innerText=texts.show +"/"+ texts.hide;
+    // shTefsir.innerText=texts.show +"/"+ texts.hide +" " + texts.tefsir;
     settingsModelTitle.innerText=texts.pref;
-    txtOneline.innerText=texts.oneLine;
-    txtTefSource.innerText=texts.tefsir + " "+ texts.source;
+    // txtOneline.innerText=texts.oneLine;
+    // txtTefSource.innerText=texts.tefsir + " "+ texts.source;
     txtLangs.innerText=texts.language;
     txtModelClose.innerText=texts.close;
 
