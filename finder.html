@@ -415,7 +415,7 @@
     <script>
     if ('serviceWorker' in navigator) {
       if (location.protocol.startsWith('http')) 
-        navigator.serviceWorker.register('code/sw.js')
+        navigator.serviceWorker.register('sw.js')
         .then(reg => { console.log('SW Registered', reg.scope) })
         .catch(alert)
     }
