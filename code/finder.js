@@ -605,7 +605,7 @@ function getTefsirText(n){
 function openMeali(cv){
     cv =cv.split(":");
     let c= cv[0] , v= cv[1];
-    let link = `https://kuranmeali.com/AyetKarsilastirma.php?sure=${c}&ayet=${v}`
+    let link = `http://kuranmeali.com/AyetKarsilastirma.php?sure=${c}&ayet=${v}`
     window.open(link,"meali") 
     lastOne=openMeali
     warpLast()
@@ -631,7 +631,7 @@ function openQuran(cv){
 function openCorpus(cv){
     cv =cv.split(":");
     let c= cv[0] , v= cv[1];
-    let link =`https://corpus.quran.com/translation.jsp?chapter=${c}&verse=${v}`
+    let link =`http://corpus.quran.com/translation.jsp?chapter=${c}&verse=${v}`
     window.open(link,"Corpus") 
     lastOne=openCorpus;
     warpLast()
