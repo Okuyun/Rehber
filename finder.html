@@ -413,6 +413,12 @@
     <script src="code/quran-sura.js"></script>
     <script src="code/script.js"></script>
     <script>
+    if ('serviceWorker' in navigator) {
+      if (location.protocol.startsWith('http')) 
+        navigator.serviceWorker.register('code/sw.js')
+        .then(reg => { console.log('SW Registered', reg.scope) })
+        .catch(alert)
+    }
       window.name="finder";
       init().then(initFinder)
      
