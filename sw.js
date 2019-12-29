@@ -27,7 +27,8 @@ const FILES = [
 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js',
 '/BahisQurani/style/keyboard.css',
 '/BahisQurani/code/keyboard.js',
-'/BahisQurani/code/language.js'
+'/BahisQurani/code/language.js',
+'BahisQurani/images/search.png'
 ]
 
 function installCB(e) {  //CB means call-back

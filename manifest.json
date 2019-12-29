@@ -2,13 +2,13 @@
   "name": "BahisQurani Beta",
   "short_name": "BahisQurani",
   "description": "Searcher for the Quran",
-  "start_url": "/BahisQurani/finder.html",
+  "start_url": "BahisQurani/finder.html",
   "display": "standalone",
   "background_color": "white",
   "theme_color": "blue",
   "icons": [
     {
-      "src": "image/book.png",
+      "src": "images/search.png",
       "sizes": "192x192",
       "type": "image/png"
     }
