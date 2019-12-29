@@ -63,9 +63,13 @@ function createRow(sn, an, word) {
     let loc;
   
     if(isEnglish(word)){
-        loc=getWordLocation(word,suraTr[sn][an],sn,an);
+        loc=getWordLocation(word,suraTr[sn][an]);
+        state3.disabled =true
+        showState(1)
+        displayState(1)
     }else{
         loc=suraTr[sn][an];
+        state3.disabled =""
     }
     arabicHeader.style.width="47%"
     // translationHeader.style.display="table-cell"
@@ -78,6 +82,8 @@ function createRow(sn, an, word) {
     tr.appendChild(td)
     let tp = createParagraph()
     tp.innerHTML = shrink(loc,100)
+    // add here for great function.
+    SpanAddEventListener(tp,sn,an)
     td.appendChild(tp)
     tp.className="translation"
    
@@ -88,20 +94,27 @@ function createRow(sn, an, word) {
     let arP = createArPar();
     
     if (/[\u064B-\u0652]/.test(word)) {
-        loc = getWordLocation(word, suraAr[sn][an],sn,an,1);
-    } else {
-        loc = getWordLocation(word, suraSr[sn][an],sn,an);
+        loc = getWordLocation(word, suraAr[sn][an]);
+    } else if(isEnglish(word)){
+        loc=getWordLocation(word,suraAr[sn][an]);
+    }else  {
+        loc  = getWordLocation(word, suraSr[sn][an]);
     }
+   
     
    
         let span = document.createElement("span");
         span.className="shrinkArabic";
         span.innerHTML = shrink(loc)
+        // great function
+        SpanAddEventListener(span,sn,an) //1,word)
         arP.appendChild(span)
     
         span = document.createElement("span");
         span.className="fullText";
         span.innerHTML = loc
+        // great function
+        // SpanAddEventListener(span,sn,an)//,1,word)
         arP.appendChild(span)
 
     // TODO: if oneline: add controler
@@ -115,7 +128,6 @@ function createRow(sn, an, word) {
     arTd.innerHTML+=arB;
     
     tr.appendChild(arTd)
-    oneLineShow(oneline)
 
     return tr;
 }
@@ -132,14 +144,25 @@ function markAr(loc, aya) {
 }
 // get the searched word location and size to mark.
 // searched word, aya text.
-function getWordLocation(word, aya,sn,an,cnt) {
+function getWordLocation(word, aya) {
     // TODO : change to proper html
     let regx = RegExp(word,"gi");
-    let cv = (sn+1)+":"+(an+1);
-    if(cnt) cv += "&w=" + toBuckwalter(word)+"";
+    //  event on click 
+    return aya.replace(regx, `<great>$&</great>`)
+}
+
+function SpanAddEventListener(span,sn,an,cnt,word){
+    if(span.children[0] !== undefined){
+        let cv = (sn+1)+":"+(an+1);
+        // if(cnt) cv += "&w=" + toBuckwalter(word)+"";
+        console.log("event listern added to" , span.children[0].innerText)
+        // span.children[0].onclick=function (){console.log("hello")}
+        span.children[0].addEventListener("click",function(e) {
+            console.log("clicked")
+            openIqra(cv)
+        });
+    }
     // TODO: bug at أَضَآءَتْ  -- need to fix :( 
-    let call = `openIqra("` + cv +`")`;
-    return aya.replace(regx, `<great onclick=${call}>$&</great>`)
 }
 
 function shrink(text,number=5){
@@ -562,6 +585,7 @@ async function loadTransF(n=3){
     findAction(searchQue.value);
     THtext.innerText= getTefsirText(n) + "\u2002";
     updateSettings("source",n)
+    langSpeechSettings()
 }
 
 function getTefsirText(n){
@@ -646,12 +670,14 @@ function displayState(num){
      * 2: for showing only arabic
      * 3: for showing only arabic online mode.
      */
+    updateSettings("dstate", num)
+
+
     switch(num){
         case 1: 
-        translationStyle("table-cell")
-        oneLineShow(false)
-        
-        break;
+            translationStyle("table-cell")
+            oneLineShow(false)
+            break;
         case 2:
             translationStyle("none")
             oneLineShow(false)
@@ -667,6 +693,7 @@ function translationStyle(text){
     // go to check this for future fix:https://stackoverflow.com/questions/4602141/variable-name-as-a-string-in-javascript
 }
 function oneLineShow(bool){
+   
     oneline=bool;
     if(bool){
         fullTextStyle("none")
@@ -720,7 +747,7 @@ function initLocalStorage(){
     let arabicSize =parseInt(getCSSRule(".arabic").style.fontSize);
     let translationSize =parseInt(getCSSRule(".translation").style.fontSize);
     let colour=getCSSRule("great").style.backgroundColor;
-    let values=[arabicSize,translationSize,colour,control,tefsirSource.value,oneline,lastOne.toString(),"1"]
+    let values=[arabicSize,translationSize,colour,control,5,oneline,lastOne.toString(),"1"]
    for (let i = 0; i < keys.length; i++) {
       updateSettings(keys[i],values[i])
    }
@@ -744,23 +771,35 @@ function loadSettings(){
         changeColour(settings.colour)
         changeFont("arabic",0)
         changeFont("x",0)
-        newFunction();
-        control=settings.control;
-        oneline=settings.oneline;
+        loadTransF(settings.source);
         lastOne=eval('(' + settings.lastOne+ ')');
         language(settings.lang)
+        showState(settings.dstate)
+        displayState(settings.dstate)
+    }
+}
+
+function showState(state){
+    switch (state){
+        case 1:
+            state1.checked=true;
+            break;
+        case 2:
+            state2.checked=true;
+            break;
+        case 3:
+            state3.checked=true;
+            break;
     }
 }
 // Global to be able to cancel :) 
 const SR = new webkitSpeechRecognition()
-function newFunction() {
-    loadTransF(settings.source);
-}
+
 
 function SearchVoice(language){
 let speechLang= "tr-TR"
 // TODO: tefsir source is not defined -- check form local storage.
-switch(tefsirSource.value){
+switch(settings.source){
    case 3:
    case 5:
         speechLang="tr-TR"
@@ -844,8 +883,32 @@ function loadLang(){
     // txtTefSource.innerText=texts.tefsir + " "+ texts.source;
     txtLangs.innerText=texts.language;
     txtModelClose.innerText=texts.close;
+    state1.labels[0].innerText=texts.show;
+    state2.labels[0].innerText=texts.hide + " " + texts.tefsir
+    state3.labels[0].innerText=texts.oneLine;
+    btnArabic.innerText =texts.arabic;
+    langSpeechSettings()
+    // btnOtherLang.innerText=texts.close; Had to move it inside loadTranF
+    btnClose.innerText=texts.close;
+    modelVoiceControl.innerText=texts.soundSettings;
+    loadText.innerText=texts.listening;
+}
 
-
+function langSpeechSettings(){
+    switch(settings.source){
+        case 3:
+        case 5:
+            btnOtherLang.innerText=texts.turkish;
+             break;
+         case 1:
+         case 2:
+            btnOtherLang.innerText=texts.arabic;
+             break;
+         case 4:
+         case 6:
+            btnOtherLang.innerText=texts.english;
+             break;
+     }
 
 }
 // write docs and split the code to more readable style.. 

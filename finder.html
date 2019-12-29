@@ -63,7 +63,7 @@
         display: table-cell;
       }
       .shrinkArabic{
-        display: table-cell;
+        display: none;
       }
     </style>
   </head>
@@ -122,11 +122,8 @@
 
     <div class="container">
       <div class="row bg-white sticky-top">
-       
-        <div class="input-group" >
-          <!-- class add input-group-text to change the colour... -->
- <!-- can change to text center, would not it be better? -->
- <input
+        <div class="input-group">
+           <input
  dir="rtl"
  list="suggestions"
  style="max-width: 80vw;"
@@ -139,49 +136,46 @@
  type="text"
  aria-label="Search"
 />
-
-       
-        
-
+          <div class="input-group-append" id="button-addon4">
+            <button
+            data-toggle="modal" 
+            data-target="#settingsModel"
+            class="btn btn-outline-success"
+            type="submit"
+          >
+          ⚙️
+          </button>
           <button
-          data-toggle="modal" 
-          data-target="#settingsModel"
+          data-toggle="modal"
+          data-target="#speechSettings"
           class="btn btn-outline-success"
           type="submit"
         >
-        ⚙️
+        🎤
         </button>
+          </div>
+        </div>
+        <div class="input-group" >
+          <!-- class add input-group-text to change the colour... -->
+ <!-- can change to text center, would not it be better? -->     
         <!-- //onclick="SearchVoice()" -->
-
-        <button
-        data-toggle="modal"
-        data-target="#speechSettings"
-        class="btn btn-outline-success"
-        type="submit"
-      >
-      🎤
-      </button>
-        
-
           <datalist id="suggestions">
             <option value="بسم الله الرحمن"></option>
             <option value="بسم الله مجراها"></option>
           </datalist>
         </div>
         <!-- <div class=col> -->
-               
-        
-          <div class="custom-control custom-radio custom-control-inline">
-            <input onchange="displayState(1)" type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline1">All</label>
+         <div class="custom-control custom-radio custom-control-inline">
+            <input onchange="displayState(1)" type="radio" id="state1" name="state" class="custom-control-input">
+            <label class="custom-control-label" for="state1">Show all</label>
           </div>
           <div class="custom-control custom-radio custom-control-inline">
-            <input onchange="displayState(2)"  type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline2">Tefsir</label>
+            <input onchange="displayState(2)"  type="radio" id="state2" name="state" class="custom-control-input">
+            <label class="custom-control-label" for="state2">Only arabic</label>
           </div>
           <div class="custom-control custom-radio custom-control-inline">
-            <input onchange="displayState(3)" type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline3">One Line</label>
+            <input onchange="displayState(3)" type="radio" id="state3" name="state" class="custom-control-input">
+            <label class="custom-control-label" for="state3">Only oneline</label>
           </div>
          
         
@@ -377,25 +371,25 @@
 
 
   <!-- Modal Speech API-->
-<div class="modal fade" id="speechSettings" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="speechSettings" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modelVoiceControl" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <h5 class="modal-title" id="modelVoiceControl">Voice control</h5>
         <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button> -->
       </div>
       <div class="modal-body">
         <center>
-          <button type="button" class="btn btn-primary" onclick="SearchVoice(`ar-AR`)">Arabic</button>
-          <button type="button" class="btn btn-primary" onclick="SearchVoice()" >Other Lang</button>
+          <button id="btnArabic" type="button" class="btn btn-primary" onclick="SearchVoice(`ar-AR`)">Arabic</button>
+          <button id="btnOtherLang" type="button" class="btn btn-primary" onclick="SearchVoice()" >Other Lang</button>
         </center>
       <hr>
       <center>
        
         <div id=loading hidden=true>
-          listening
+          <span id=loadText>listening</span>
           <br>
          
           <div class="spinner-border text-info" role="status">
@@ -405,7 +399,7 @@
       </center>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="speechCancel()">Cancel</button>
+        <button id="btnClose" type="button" class="btn btn-secondary" data-dismiss="modal" onclick="speechCancel()">Cancel</button>
       </div>
     </div>
   </div>
