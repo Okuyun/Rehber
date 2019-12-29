@@ -56,6 +56,15 @@
       .translation {
         font-size: 17px;
       }
+      .tableTranslation {
+        display: table-cell;
+      }
+      .fullText{
+        display: table-cell;
+      }
+      .shrinkArabic{
+        display: none;
+      }
     </style>
   </head>
 
@@ -113,128 +122,187 @@
 
     <div class="container">
       <div class="row bg-white sticky-top">
-        <div class="input-group " dir="rtl">
-          <!-- class add input-group-text to change the colour... -->
-
-          <input
-            dir="rtl"
-            list="suggestions"
-            style="max-width: 80vw;"
-            class="arabic form-control text-right"
-            value="بسم الله"
-            onchange="sugOnKeyUp(searchQue.value)"
-            onkeyup="sugOnKeyUp(searchQue.value)"
-            id="searchQue"
-            type="text"
-            aria-label="Search"
-          />
-          <button
-            onclick="findAction(searchQue.value)"
+        <div class="input-group">
+           <input
+ dir="rtl"
+ list="suggestions"
+ style="max-width: 80vw;"
+ class="arabic form-control text-right" 
+ 
+ value="بسم الله"
+ onchange="sugOnKeyUp(searchQue.value)"
+ onkeyup="sugOnKeyUp(searchQue.value)"
+ id="searchQue"
+ type="text"
+ aria-label="Search"
+/>
+          <div class="input-group-append" id="button-addon4">
+            <button
+            data-toggle="modal" 
+            data-target="#settingsModel"
             class="btn btn-outline-success"
             type="submit"
           >
-            🔍
+          ⚙️
           </button>
           <button
-          data-toggle="modal" 
-          data-target="#settingsModel"
+          data-toggle="modal"
+          data-target="#speechSettings"
           class="btn btn-outline-success"
           type="submit"
         >
-        ⚙️
+        🎤
         </button>
+          </div>
+        </div>
+        <div class="input-group" >
+          <!-- class add input-group-text to change the colour... -->
+ <!-- can change to text center, would not it be better? -->     
         <!-- //onclick="SearchVoice()" -->
-
-        <button
-        data-toggle="modal"
-        data-target="#speechSettings"
-        class="btn btn-outline-success"
-        type="submit"
-      >
-      🎤
-      </button>
-        
-
           <datalist id="suggestions">
             <option value="بسم الله الرحمن"></option>
             <option value="بسم الله مجراها"></option>
           </datalist>
         </div>
+        <!-- <div class=col> -->
+         <div class="custom-control custom-radio custom-control-inline">
+            <input onchange="displayState(1)" type="radio" id="state1" name="state" class="custom-control-input">
+            <label class="custom-control-label" for="state1">Show all</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input onchange="displayState(2)"  type="radio" id="state2" name="state" class="custom-control-input">
+            <label class="custom-control-label" for="state2">Only arabic</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input onchange="displayState(3)" type="radio" id="state3" name="state" class="custom-control-input">
+            <label class="custom-control-label" for="state3">Only oneline</label>
+          </div>
+         
+        
+         <!-- </div> -->
+        
       </div>
-    
       <div class="row">
         <div class="col-12">
           <table id="dTable" class="table">
             <caption style=" caption-side:top;">
              <span id="wordNumber">3</span>
-             <span id=txtWordFound> occurence</span>
+             <span id="txtWordFound">ayet</span>
             </caption>
             <thead>
               <tr>
-                <th id="translationHeader" style="width: 47%;">Tefsir</th>
-                <th id="arabicHeader" style="width: 47%;" class="text-right">عربي</th>
+                <th id="translationHeader" style="width: 47%;"  class="tableTranslation">
+                  <div class="btn-group">
+                    <button id="THtext" type="button" class="btn badge badge-white align-text-bottom dropdown-toggle dropdown-toggle-split translation" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Türkçe: Diyanet Meali
+                    </button>
+                    <div class="dropdown-menu">
+                      <button class="dropdown-item" onclick="loadTransF(3)">Türkçe: Diyanet Meali</button>
+                      <button class="dropdown-item" onclick="loadTransF(5)">Türkçe: Elmalılı Hamdi Yazır</button>
+                      <button class="dropdown-item" onclick="loadTransF(6)">English: Abdullah Yusuf Ali</button>
+                      <button class="dropdown-item" onclick="loadTransF(4)">English: Ahmed Ali</button>
+                      <button class="dropdown-item" onclick="loadTransF(1)">تفسير الجلالين</button>
+                      <button class="dropdown-item" onclick="loadTransF(2)">تفسير الميسر</button>
+
+                    </div>
+                  </div>
+                </th>
+                <th id="arabicHeader" style="width: 47%;" class="text-right">عربي
+                <!-- TODO: implement tefsir source here as well, it will be helpful to compare. -->
+                </th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <p>Rahman ve Rahim olan Allah'ın adıyla:</p>
-                  <span class="badge badge-light align-text-bottom"
-                    >1:Al-Faatiha-V:1</span
-                  >
-                </td>
-                <td scope="col" class="text-right">
-                  <p class="arabic">
-                    <mark>بِسْمِ ٱللَّهِ</mark> ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
-                  </p>
-                  <span class="badge badge-light align-text-bottom"
-                    >الفاتحة:1- اية:1</span
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <p>
-                    Allah "Oraya binin; yürümesi ve durması Allah'ın ismiyledir,
-                    Rabbin bağışlar ve merhamet eder" dedi.
-                  </p>
-                  <span class="badge badge-light align-text-bottom">11:Hud-V:41</span
-                  >
-                </td>
-                <td scope="col" class="text-right">
-                  <p class="arabic">
-                    وَقَالَ ٱرْكَبُوا۟ فِيهَا
-                    <mark>بِسْمِ ٱللَّهِ</mark> مَجْر۪ىٰهَا وَمُرْسَىٰهَآ إِنَّ
-                    رَبِّى لَغَفُورٌ رَّحِيمٌ
-                  </p>
-                  <span class="badge badge-light align-text-bottom"
-                    >هود:11- اية:41</span
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <p>
-                    Sebe melikesi: "Ey ileri gelenler! Bana,
-                    Bismillahirrahmanirrahim diye başlayan ve 'sakın bana karşı
-                    baş kaldırmayın ve teslim olarak gelin' diyen Süleyman'dan
-                    gönderilen önemli bir mektup bırakıldı" dedi.
-                  </p>
-                  <span class="badge badge-light align-text-bottom"
-                    >27:An-Naml-V:30</span
-                  >
-                </td>
-                <td scope="col" class="text-right">
-                  <p class="arabic">
-                    إِنَّهُۥ مِن سُلَيْمَٰنَ وَإِنَّهُۥ
-                    <mark>بِسْمِ ٱللَّهِ</mark> ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
-                  </p>
-                  <span class="badge badge-light align-text-bottom"
-                    >النمل:27- اية:30</span
-                  >
-                </td>
-              </tr>
-            </tbody>
+            <tbody><tr><td>
+      <!-- Example split danger button -->
+  <div class="btn-group">
+    <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('1:1')">Al-Faatiha 1:1</button>
+    <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" onclick="openCorpus('1:1')">Corpus</button>
+      <button class="dropdown-item" onclick="openQuran('1:1')">Quran</button>
+      <button class="dropdown-item" onclick="openMeali('1:1')">Meali</button>
+      <div class="dropdown-divider"></div>
+      <button class="dropdown-item" onclick="openIqra('1:1')">Reader</button>
+    </div>
+  </div>
+  &nbsp;&nbsp;<span class="translation">«بسم الله الرحمن الرحيم»</span></td><td scope="col" class="text-right"><span class="arabic"><great onclick="openIqra(`1:1`)">بسم الله</great> الرحمن الرحيم</span>&nbsp;&nbsp;
+      <!-- Example split danger button -->
+  <div class="btn-group">
+    <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('1:1')">الفاتحة 1:1</button>
+    <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" onclick="openCorpus('1:1')">Corpus</button>
+      <button class="dropdown-item" onclick="openQuran('1:1')">Quran</button>
+      <button class="dropdown-item" onclick="openMeali('1:1')">Meali</button>
+      <div class="dropdown-divider"></div>
+      <button class="dropdown-item" onclick="openIqra('1:1')">Reader</button>
+    </div>
+  </div>
+  </td></tr><tr><td>
+      <!-- Example split danger button -->
+  <div class="btn-group">
+    <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('11:41')">Hud 11:41</button>
+    <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" onclick="openCorpus('11:41')">Corpus</button>
+      <button class="dropdown-item" onclick="openQuran('11:41')">Quran</button>
+      <button class="dropdown-item" onclick="openMeali('11:41')">Meali</button>
+      <div class="dropdown-divider"></div>
+      <button class="dropdown-item" onclick="openIqra('11:41')">Reader</button>
+    </div>
+  </div>
+  &nbsp;&nbsp;<span class="translation">«وقال» نوح «اركبوا فيها بسم الله مجراها ومرساها» بفتح الميمين وضمهما مصدران أي جريها ورسوها أي منتهى سيرها «إن ربي لغفور رحيم» حيث لم يهلكنا.</span></td><td scope="col" class="text-right"><span class="arabic">وقال اركبوا فيها <great onclick="openIqra(`11:41`)">بسم الله</great> مجراها ومرساها إن ربي لغفور رحيم</span>&nbsp;&nbsp;
+      <!-- Example split danger button -->
+  <div class="btn-group">
+    <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('11:41')">هود 11:41</button>
+    <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" onclick="openCorpus('11:41')">Corpus</button>
+      <button class="dropdown-item" onclick="openQuran('11:41')">Quran</button>
+      <button class="dropdown-item" onclick="openMeali('11:41')">Meali</button>
+      <div class="dropdown-divider"></div>
+      <button class="dropdown-item" onclick="openIqra('11:41')">Reader</button>
+    </div>
+  </div>
+  </td></tr><tr><td>
+      <!-- Example split danger button -->
+  <div class="btn-group">
+    <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('27:30')">An-Naml 27:30</button>
+    <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" onclick="openCorpus('27:30')">Corpus</button>
+      <button class="dropdown-item" onclick="openQuran('27:30')">Quran</button>
+      <button class="dropdown-item" onclick="openMeali('27:30')">Meali</button>
+      <div class="dropdown-divider"></div>
+      <button class="dropdown-item" onclick="openIqra('27:30')">Reader</button>
+    </div>
+  </div>
+  &nbsp;&nbsp;<span class="translation">«إنه من سليمان وإنه» أي مضمونه «بسم الله الرحمن الرحيم».</span></td><td scope="col" class="text-right"><span class="arabic">إنه من سليمان وإنه <great onclick="openIqra(`27:30`)">بسم الله</great> الرحمن الرحيم</span>&nbsp;&nbsp;
+      <!-- Example split danger button -->
+  <div class="btn-group">
+    <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('27:30')">النمل 27:30</button>
+    <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item" onclick="openCorpus('27:30')">Corpus</button>
+      <button class="dropdown-item" onclick="openQuran('27:30')">Quran</button>
+      <button class="dropdown-item" onclick="openMeali('27:30')">Meali</button>
+      <div class="dropdown-divider"></div>
+      <button class="dropdown-item" onclick="openIqra('27:30')">Reader</button>
+    </div>
+  </div>
+  </td></tr></tbody>
           </table>
         </div>
       </div>
@@ -281,27 +349,9 @@
          
           <label for="">Action button</label>
           <hr>
-        <span id=showHide> Show/Hide</span>
-          <div class="custom-control custom-switch">
-              <input onchange="toggleTranslation()" type="checkbox" class="custom-control-input" id="customSwitches">
-              <label id="shTefsir" class="custom-control-label" for="customSwitches">Show/Hide tefsir</label>
-            </div>
-            one line
-            <div class="custom-control custom-switch">
-                <input onchange="toggleOneline()" type="checkbox" class="custom-control-input" id="onlineSwitch">
-                <label id="txtOneline" class="custom-control-label" for="onlineSwitch">one line</label i>
-              </div>
-          
-          <label id=txtTefSource for="">Tefsir source</label> 
+     
           <!-- if you want to choose from multiple add only this keyword before class.. -->
-          <select id="tefsirSource" onchange="loadTransF(this.value)" class="browser-default custom-select form-control">
-              <option value="1">تفسير الجلالين</option>
-              <option value="2">تفسير الميسر</option>
-              <option value="3" selected>Türkçe: Diyanet Meali</option>
-              <option value="4">English: Ahmed Ali</option>
-              <option value="5" >Türkçe: Elmalılı Hamdi Yazır</option>
-              <option value="6" >English: Abdullah Yusuf Ali</option>
-            </select>
+         
           Tefsir cumbo box - how many times should it be
           pagination - for tefsir.
           <hr>
@@ -321,25 +371,25 @@
 
 
   <!-- Modal Speech API-->
-<div class="modal fade" id="speechSettings" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="speechSettings" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modelVoiceControl" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <h5 class="modal-title" id="modelVoiceControl">Voice control</h5>
         <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button> -->
       </div>
       <div class="modal-body">
         <center>
-          <button type="button" class="btn btn-primary" onclick="SearchVoice(`ar-AR`)">Arabic</button>
-          <button type="button" class="btn btn-primary" onclick="SearchVoice()" >Other Lang</button>
+          <button id="btnArabic" type="button" class="btn btn-primary" onclick="SearchVoice(`ar-AR`)">Arabic</button>
+          <button id="btnOtherLang" type="button" class="btn btn-primary" onclick="SearchVoice()" >Other Lang</button>
         </center>
       <hr>
       <center>
        
         <div id=loading hidden=true>
-          listening
+          <span id=loadText>listening</span>
           <br>
          
           <div class="spinner-border text-info" role="status">
@@ -349,24 +399,26 @@
       </center>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="speechCancel()">Cancel</button>
+        <button id="btnClose" type="button" class="btn btn-secondary" data-dismiss="modal" onclick="speechCancel()">Cancel</button>
       </div>
     </div>
   </div>
 </div>
   
   <script src="code/language.js"></script>
-
     <script src="code/common.js"></script>
     <script src="code/buckwalter.js"></script>
-
     <script src="code/finder.js"></script>
     <script src="code/quran-data.js"></script>
-
-
     <script src="code/quran-sura.js"></script>
     <script src="code/script.js"></script>
     <script>
+    if ('serviceWorker' in navigator) {
+      if (location.protocol.startsWith('http')) 
+        navigator.serviceWorker.register('code/sw.js')
+        .then(reg => { console.log('SW Registered', reg.scope) })
+        .catch(alert)
+    }
       window.name="finder";
       init().then(initFinder)
      
@@ -376,3 +428,9 @@
     </script>
   </body>
 </html>
+<!-- TODO change and add the CSS for arabic shrink and full, Change the great thingy to make it based on Query
+move to issues, heck emails.
+Add SW, Write Thesis, Check Presentation, prepare tests (demo), 
+follow up with old stuff, show semi.
+approach one: go from shrink/fulltext by CSS 
+Approach two: use wordlst without clearning the table. -->
