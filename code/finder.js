@@ -63,7 +63,7 @@ function createRow(sn, an, word) {
     let loc;
   
     if(isEnglish(word)){
-        loc=getWordLocation(word,suraTr[sn][an]);
+        loc=getWordLocation(word,suraTr[sn][an],sn,an);
         state3.disabled =true
         showState(1)
         displayState(1)
@@ -83,7 +83,7 @@ function createRow(sn, an, word) {
     let tp = createParagraph()
     tp.innerHTML = shrink(loc,100)
     // add here for great function.
-    SpanAddEventListener(tp,sn,an)
+    // SpanAddEventListener(tp,sn,an)
     td.appendChild(tp)
     tp.className="translation"
    
@@ -94,11 +94,11 @@ function createRow(sn, an, word) {
     let arP = createArPar();
     
     if (/[\u064B-\u0652]/.test(word)) {
-        loc = getWordLocation(word, suraAr[sn][an]);
+        loc = getWordLocation(word, suraAr[sn][an],sn,an,1);
     } else if(isEnglish(word)){
-        loc=getWordLocation(word,suraAr[sn][an]);
+        loc=getWordLocation(word,suraAr[sn][an],sn,an,1);
     }else  {
-        loc  = getWordLocation(word, suraSr[sn][an]);
+        loc  = getWordLocation(word, suraSr[sn][an],sn,an);
     }
    
     
@@ -107,7 +107,7 @@ function createRow(sn, an, word) {
         span.className="shrinkArabic";
         span.innerHTML = shrink(loc)
         // great function
-        SpanAddEventListener(span,sn,an) //1,word)
+        // SpanAddEventListener(span,sn,an) //1,word)
         arP.appendChild(span)
     
         span = document.createElement("span");
@@ -144,14 +144,16 @@ function markAr(loc, aya) {
 }
 // get the searched word location and size to mark.
 // searched word, aya text.
-function getWordLocation(word, aya) {
+function getWordLocation(word, aya,sn,an,cnt) {
     // TODO : change to proper html
     let regx = RegExp(word,"gi");
     //  event on click 
-    return aya.replace(regx, `<great>$&</great>`)
+    return aya.replace(regx, `<great onclick="openWithBuck(`+sn+`,`+an+`,'`+word+`',`+cnt+`)">$&</great>`)
 }
 
 function SpanAddEventListener(span,sn,an,cnt,word){
+    // TOD: check why it did not work for arabic, but worked well for English!! 
+    // its over annoying! 
     if(span.children[0] !== undefined){
         let cv = (sn+1)+":"+(an+1);
         // if(cnt) cv += "&w=" + toBuckwalter(word)+"";
@@ -162,7 +164,14 @@ function SpanAddEventListener(span,sn,an,cnt,word){
             openIqra(cv)
         });
     }
-    // TODO: bug at أَضَآءَتْ  -- need to fix :( 
+    // TODO: bug at أَضَآءَتْ  -- need to fix :( -- Still not working in Iqra... need to check.
+}
+
+function openWithBuck(sn,an,word , cnt){
+    let cv = (sn+1)+":"+(an+1);
+    word = word.split(" ")[0]
+    if(cnt) cv += "&w=" + toBuckwalter(word)+"";
+    openIqra(cv);
 }
 
 function shrink(text,number=5){
