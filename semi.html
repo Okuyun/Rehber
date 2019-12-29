@@ -12,7 +12,7 @@
         <div id="chart"></div>
     </div>
     <script>
-     function generateData(count, yrange) {
+     function generateData(count, yrange,juz) {
             var i = 0;
             var series = [];
             while (i < count) {
@@ -45,8 +45,8 @@
 
         }
         let juz = [];
-        for (let i = 1; i <= 30; i++) {
-                    juz.push({name:"juz "+i, data:(generateData(20,{min:0,max:100}))});
+        for (let i = 30; i >= 1; i--) {
+                    juz.push({name:"juz "+i, data:(generateData(20,{min:0,max:100},i))});
         }
 
         options.series=juz;
