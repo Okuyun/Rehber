@@ -65,6 +65,9 @@
       .shrinkArabic{
         display: none;
       }
+      #showHideFull {
+        display:none;
+      }
     </style>
     <link rel="icon" href="images/search.png">
 
@@ -178,7 +181,7 @@
           </div>
           <div class="custom-control custom-radio custom-control-inline">
             <input onchange="displayState(3)" type="radio" id="state3" name="state" class="custom-control-input">
-            <label class="custom-control-label" for="state3">Only oneline</label>
+            <label class="custom-control-label" for="state3">Only Oneline</label>
           </div>
          
         
@@ -385,8 +388,8 @@
       </div>
       <div class="modal-body">
         <center>
-          <button id="btnArabic" type="button" class="btn btn-primary" onclick="SearchVoice(`ar-AR`)">Arabic</button>
           <button id="btnOtherLang" type="button" class="btn btn-primary" onclick="SearchVoice()" >Other Lang</button>
+          <button id="btnArabic" type="button" class="btn btn-primary" onclick="SearchVoice(`ar-AR`)">Arabic</button>
         </center>
       <hr>
       <center>

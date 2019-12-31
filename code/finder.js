@@ -128,7 +128,7 @@ function createRow(sn, an, word) {
     arTd.innerHTML+=arB;
     
     tr.appendChild(arTd)
-
+   
     return tr;
 }
 // mark specific words and return it. 
@@ -146,6 +146,7 @@ function markAr(loc, aya) {
 // searched word, aya text.
 function getWordLocation(word, aya,sn,an,cnt) {
     // TODO : change to proper html
+    // TODO: normilsation should be here i guess...
     let regx = RegExp(word,"gi");
     //  event on click 
     return aya.replace(regx, `<great onclick="openWithBuck(`+sn+`,`+an+`,'`+word+`',`+cnt+`)">$&</great>`)
@@ -222,6 +223,7 @@ function createTable(arr, word) {
     arr.forEach(e => {
         element.appendChild(createRow(e[0], e[1], word))
     });
+    addShowFunction();
 }
 
 // TODO: simplify and re-read the code then.
@@ -556,6 +558,11 @@ function initFinder() {
     }
 }
 // from: https://stackoverflow.com/questions/1409225/changing-a-css-rule-set-from-javascript
+// Add variables array then use destrutctor to call it for once! only one time... 
+// no need to crash the app everytime the user will change the CSS since its static and
+//  stable, yet, do you think the array thingy was faster? if yes then go for it and leave 
+// TODO: this, speed is valuable more than some ninja JS skills here. 
+
 function getCSSRule(ruleName) {              
     // ruleName=ruleName.toLowerCase();                      
     for ( let sheet of  document.styleSheets){
@@ -645,6 +652,7 @@ function createDropDownSplit(suraCV){
     let x = `
     <!-- Example split danger button -->
 <div class="btn-group">
+  <button id="showHideFull" type="button" class="btn badge badge-light align-text-bottom dropdown-toggle-split" aria-expanded="false" onlcick="toggleShow('test')">+</button>
   <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('${cv}')">${suraCV}</button>
   <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <span class="sr-only">Toggle Dropdown</span>
@@ -660,6 +668,47 @@ function createDropDownSplit(suraCV){
 `
 return x;
 }
+
+function toggleShow(e){
+    // $0 this element --> for the split button made in createDropDownSplit
+    // .parentElement btnGroup
+    // .parentElement td
+    // .children[0] spanArabic
+    // .children[0] 
+    // children 0 = ShrinkedArabic
+    // children 1 = full text
+    let fullText = e.parentElement.parentElement.children[0].children[0];
+    let shrinked = e.parentElement.parentElement.children[0].children[1];
+   switch(e.innerText){
+       case "+":
+           e.innerText ="-";
+           fullText.style.display="none"
+           shrinked.style.display="table-cell"
+           break;
+        case "-":
+            e.innerText ="+";
+            shrinked.style.display="none"
+            fullText.style.display="table-cell"
+            break;
+   }
+
+}
+function resetTD(e){
+    let fullText = e.parentElement.parentElement.children[0].children[0];
+    let shrinked = e.parentElement.parentElement.children[0].children[1];
+    e.innerText ="+";
+    fullText.style.display="";
+    shrinked.style.display="";
+}
+
+function addShowFunction(){
+   if(typeof showHideFull !== "undefined"){
+    for ( let x of showHideFull){
+        x.onclick= function () {toggleShow(x)}
+        }
+   }
+}
+
 function toggleOneline(){
     // Approach two: create and delete the whole page, you got the data in wordlst already... 
     //  does it worth to loop it? or would it better if we have had the CSS since its easier.
@@ -702,17 +751,32 @@ function translationStyle(text){
     // go to check this for future fix:https://stackoverflow.com/questions/4602141/variable-name-as-a-string-in-javascript
 }
 function oneLineShow(bool){
-   
+    if(typeof showHideFull !== "undefined"){
+        checkButton();
+       }
+  
+
     oneline=bool;
     if(bool){
         fullTextStyle("none")
         shrinkStyle("table-cell");
+        showHideButtonStyle("")
     }else {
         shrinkStyle("none")
         fullTextStyle("table-cell");
+        showHideButtonStyle("none")
     }
     updateSettings("oneline",oneline)
 
+}
+function checkButton(){
+    for ( let x of showHideFull){
+    //    if(x.innerText == "-"){
+        //    x.click();
+        resetTD(x)
+    //    }
+        }
+        // other approach: document.querySelectorAll("span.fullText") 
 }
 function fullTextStyle(text){
     getCSSRule(".fullText").style.display=text;
@@ -720,6 +784,9 @@ function fullTextStyle(text){
 }
 function shrinkStyle(text){
     getCSSRule(".shrinkArabic").style.display=text;
+}
+function showHideButtonStyle(text){
+    getCSSRule("#showHideFull").style.display=text;
 }
 // Local storage code.  
 // source: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
@@ -747,7 +814,14 @@ function storageAvailable(type) {
             (storage && storage.length !== 0);
     }
 }
-
+function normlisation(text){
+    text.replace(/[\u064B-\ufd3f]/gm, '');
+    text.replace(/\u0629/gm,"ه");
+    text.replace(/\u0623/gm,"ا");
+    text.replace(/\u0625/gm,"ا");
+    return text;
+    
+}
 function populateSettings(){
 
 }
@@ -893,7 +967,7 @@ function loadLang(){
     txtLangs.innerText=texts.language;
     txtModelClose.innerText=texts.close;
     state1.labels[0].innerText=texts.show;
-    state2.labels[0].innerText=texts.hide + " " + texts.tefsir
+    state2.labels[0].innerText=texts.arabic;
     state3.labels[0].innerText=texts.oneLine;
     btnArabic.innerText =texts.arabic;
     langSpeechSettings()
