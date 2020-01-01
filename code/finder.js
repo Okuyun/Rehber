@@ -159,10 +159,72 @@ function getWordLocation(word, aya,sn,an,cnt) {
     aya.splice(index,0,`<great onclick="openWithBuck(`+sn+`,`+an+`,'`+word+`',`+cnt+`)">`);
     let regx = RegExp(word,"gi");
     //  event on click 
-    // return aya.rep   lace(regx, `<great onclick="openWithBuck(`+sn+`,`+an+`,'`+word+`',`+cnt+`)">$&</great>`)
+    // return aya.replace(regx, `<great onclick="openWithBuck(`+sn+`,`+an+`,'`+word+`',`+cnt+`)">$&</great>`)
     return aya.join(" ")
 }
 
+function subArrayIndexes(master,sub){
+//  inspiration from, Jaimin Patel's comment: https://stackoverflow.com/questions/34151834/javascript-array-contains-includes-sub-array
+
+//collect all master indexes matching first element of sub-array
+   let matched_index= allOccurence(master,sub[0])  
+
+    for(let index of matched_index){
+        for(let [j,element] of sub.entries()){
+            if(element != master[j+index]) {
+                matched_index= removeElement(matched_index,index)
+                break;
+            }
+        }
+    }
+    return matched_index;
+}
+
+function removeElement(arr, value) {
+// https://love2dev.com/blog/javascript-remove-from-array/
+    return arr.filter(function(ele){
+        return ele != value;
+    });
+    
+ }
+
+function allOccurence(array,element){
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
+    var indices = [];
+    let idx = array.indexOf(element);
+    while (idx != -1) {
+    indices.push(idx);
+    idx = array.indexOf(element, idx + 1);
+    }
+    return indices;
+}
+/**
+function subArrayIndexes(master,sub){
+//  inspiration from, Jaimin Patel comment: https://stackoverflow.com/questions/34151834/javascript-array-contains-includes-sub-array
+    //collect all master indexes matching first element of sub-array
+    let matched_index = [] 
+    let start_index = master.indexOf(master.find(e=>e==sub[0]))
+    
+    while(master.indexOf(sub[0], start_index)>0){
+        matched_index.push(start_index)
+        let index = master.indexOf(sub[0], start_index)
+        start_index = index+1
+    } 
+
+    let has_array //flag
+    
+    for(let [i,s_index] of matched_index.entries()){
+        for(let [j,element] of sub.entries()){
+            if(element != master[j+s_index]) {
+                matched_index.pop()
+                has_array = false
+                break
+            }else has_array = true
+        }
+        if (has_array) break
+    }
+    return matched_index
+} */
 function SpanAddEventListener(span,sn,an,cnt,word){
     // TOD: check why it did not work for arabic, but worked well for English!! 
     // its over annoying! 
