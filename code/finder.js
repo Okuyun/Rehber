@@ -153,11 +153,13 @@ function getWordLocation(word, aya,sn,an,cnt) {
     // TODO: normilsation should be here i guess...
     let normAya = normlisation(aya).split(" ");;
     let normWord= normlisation(word).split(" ");
-    let index= normAya.findIndex( e => e.includes(normWord[0]))
+    let index= subArrayIndexes(normAya,normWord).reverse();
     aya = aya.split(" ");
-    aya.splice(index+normWord.length,0,`</great>`)
-    aya.splice(index,0,`<great onclick="openWithBuck(`+sn+`,`+an+`,'`+word+`',`+cnt+`)">`);
-    let regx = RegExp(word,"gi");
+    for (let loc of index){
+    aya.splice(loc+normWord.length,0,`</great>`)
+    aya.splice(loc,0,`<great onclick="openWithBuck(`+sn+`,`+an+`,'`+word+`',`+cnt+`)">`);
+    }
+    // let regx = RegExp(word,"gi");
     //  event on click 
     // return aya.replace(regx, `<great onclick="openWithBuck(`+sn+`,`+an+`,'`+word+`',`+cnt+`)">$&</great>`)
     return aya.join(" ")
@@ -171,7 +173,7 @@ function subArrayIndexes(master,sub){
 
     for(let index of matched_index){
         for(let [j,element] of sub.entries()){
-            if(element != master[j+index]) {
+            if(!element.includes(master[j+index])) {
                 matched_index= removeElement(matched_index,index)
                 break;
             }
