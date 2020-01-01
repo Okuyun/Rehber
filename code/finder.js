@@ -91,18 +91,21 @@ function createRow(sn, an, word) {
     let arTd = createArTd();
     arTd.scope="col"
     arTd.className="text-right"
+    arTd.dir="rtl"
+    // need to change the span thingy as well
     let arP = createArPar();
     
-    if (/[\u064B-\u0652]/.test(word)) {
-        loc = getWordLocation(word, suraAr[sn][an],sn,an,1);
-    } else if(isEnglish(word)){
-        loc=getWordLocation(word,suraAr[sn][an],sn,an,1);
-    }else  {
-        loc  = getWordLocation(word, suraSr[sn][an],sn,an);
-    }
+    // if (/[\u064B-\u0652]/.test(word)) {
+    //     loc = getWordLocation(word, suraAr[sn][an],sn,an,1);
+    // } else if(isEnglish(word)){
+    //     loc=getWordLocation(word,suraAr[sn][an],sn,an,1);
+    // }else  {
+    //     loc  = getWordLocation(word, suraSr[sn][an],sn,an);
+    // }
    
     
-   
+    loc = getWordLocation(word, suraAr[sn][an],sn,an,1);
+
         let span = document.createElement("span");
         span.className="shrinkArabic";
         span.innerHTML = shrink(loc)
@@ -119,13 +122,14 @@ function createRow(sn, an, word) {
 
     // TODO: if oneline: add controler
     
-    let arB = createDropDownSplit(quran.sura[sn].name + " " + (sn + 1) + ":" + (an + 1));
+    let arB = createDropDownSplit(quran.sura[sn].name + " " + (sn + 1) + ":" + (an + 1) , 1);
     //arB.href="https://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
    
 
-    arTd.appendChild(arP)
-    arTd.append("\xA0\xA0")
+    
     arTd.innerHTML+=arB;
+    arTd.append("\xA0\xA0")
+    arTd.appendChild(arP)
     
     tr.appendChild(arTd)
    
@@ -147,9 +151,16 @@ function markAr(loc, aya) {
 function getWordLocation(word, aya,sn,an,cnt) {
     // TODO : change to proper html
     // TODO: normilsation should be here i guess...
+    let normAya = normlisation(aya).split(" ");;
+    let normWord= normlisation(word).split(" ");
+    let index= normAya.findIndex( e => e.includes(normWord[0]))
+    aya = aya.split(" ");
+    aya.splice(index+normWord.length,0,`</great>`)
+    aya.splice(index,0,`<great onclick="openWithBuck(`+sn+`,`+an+`,'`+word+`',`+cnt+`)">`);
     let regx = RegExp(word,"gi");
     //  event on click 
-    return aya.replace(regx, `<great onclick="openWithBuck(`+sn+`,`+an+`,'`+word+`',`+cnt+`)">$&</great>`)
+    // return aya.rep   lace(regx, `<great onclick="openWithBuck(`+sn+`,`+an+`,'`+word+`',`+cnt+`)">$&</great>`)
+    return aya.join(" ")
 }
 
 function SpanAddEventListener(span,sn,an,cnt,word){
@@ -644,7 +655,7 @@ function openCorpus(cv){
     warpLast()
 }
 
-function createDropDownSplit(suraCV){
+function createDropDownSplit(suraCV , control){
     // may change it to javascript later, but this is much easier LOL.
     // NEED TO reFactor.
     let cv = suraCV.split(" ");
@@ -666,6 +677,27 @@ function createDropDownSplit(suraCV){
   </div>
 </div>
 `
+if(control){
+    x = `
+    <!-- Example split danger button -->
+<div class="btn-group">
+<button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<span class="sr-only">Toggle Dropdown</span>
+</button>
+  <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('${cv}')">${suraCV}</button>
+ 
+  <button id="showHideFull" type="button" class="btn badge badge-light align-text-bottom dropdown-toggle-split" aria-expanded="false" onlcick="toggleShow('test')">+</button>
+
+  <div class="dropdown-menu">
+    <button class="dropdown-item" onclick="openCorpus('${cv}')">Corpus</button>
+    <button class="dropdown-item" onclick="openQuran('${cv}')">Quran</button>
+    <button class="dropdown-item" onclick="openMeali('${cv}')">Meali</button>
+    <div class="dropdown-divider"></div>
+    <button class="dropdown-item" onclick="openIqra('${cv}')">Reader</button>
+  </div>
+</div>
+`
+}
 return x;
 }
 
@@ -677,8 +709,8 @@ function toggleShow(e){
     // .children[0] 
     // children 0 = ShrinkedArabic
     // children 1 = full text
-    let fullText = e.parentElement.parentElement.children[0].children[0];
-    let shrinked = e.parentElement.parentElement.children[0].children[1];
+    let fullText = e.parentElement.parentElement.children[1].children[0];
+    let shrinked = e.parentElement.parentElement.children[1].children[1];
    switch(e.innerText){
        case "+":
            e.innerText ="-";
@@ -694,8 +726,10 @@ function toggleShow(e){
 
 }
 function resetTD(e){
-    let fullText = e.parentElement.parentElement.children[0].children[0];
-    let shrinked = e.parentElement.parentElement.children[0].children[1];
+    if(e.parentElement.parentElement.children[1].className == "translation")
+        return
+    let fullText = e.parentElement.parentElement.children[1].children[0];
+    let shrinked = e.parentElement.parentElement.children[1].children[1];
     e.innerText ="+";
     fullText.style.display="";
     shrinked.style.display="";
@@ -815,10 +849,11 @@ function storageAvailable(type) {
     }
 }
 function normlisation(text){
-    text.replace(/[\u064B-\ufd3f]/gm, '');
-    text.replace(/\u0629/gm,"ه");
-    text.replace(/\u0623/gm,"ا");
-    text.replace(/\u0625/gm,"ا");
+    text = text.replace(/[\u0671]/gm,"ا")
+    text = text.replace(/[\u064B-\ufd3f]/gm, '');
+    text = text.replace(/\u0629/gm,"ه");
+    text = text.replace(/\u0623/gm,"ا");
+    text = text.replace(/\u0625/gm,"ا");
     return text;
     
 }
