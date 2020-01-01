@@ -913,7 +913,7 @@ function storageAvailable(type) {
     }
 }
 function normlisation(text){
-    text = text.replace(/[\u0671]/gm,"ا")
+    text = text.replace(/[\u0670-\u0671]/gm,"ا")
     text = text.replace(/[\u064B-\ufd3f]/gm, '');
     text = text.replace(/\u0629/gm,"ه");
     text = text.replace(/\u0623/gm,"ا");
