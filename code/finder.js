@@ -173,7 +173,7 @@ function subArrayIndexes(master,sub){
 
     for(let index of matched_index){
         for(let [j,element] of sub.entries()){
-            if(element.includes(master[j+index])) {
+            if(!master[j+index].includes(element)) {
                 matched_index= removeElement(matched_index,index)
                 break;
             }
