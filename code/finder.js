@@ -157,7 +157,7 @@ function getWordLocation(word, aya,sn,an,cnt) {
     aya = aya.split(" ");
     for (let loc of index){
     aya.splice(loc+normWord.length,0,`</great>`)
-    aya.splice(loc,0,`<great onclick="openWithBuck(`+sn+`,`+an+`,'`+word+`',`+cnt+`)">`);
+    aya.splice(loc,0,`<great onclick="openWithBuck(`+sn+`,`+an+`,this,`+cnt+`)">`);
     }
     // let regx = RegExp(word,"gi");
     //  event on click 
@@ -169,11 +169,11 @@ function subArrayIndexes(master,sub){
 //  inspiration from, Jaimin Patel's comment: https://stackoverflow.com/questions/34151834/javascript-array-contains-includes-sub-array
 
 //collect all master indexes matching first element of sub-array
-   let matched_index= allOccurence(master,sub[0])  
+   let matched_index= allOccurenceSub(master,sub[0])  
 
     for(let index of matched_index){
         for(let [j,element] of sub.entries()){
-            if(!element.includes(master[j+index])) {
+            if(element.includes(master[j+index])) {
                 matched_index= removeElement(matched_index,index)
                 break;
             }
@@ -191,14 +191,25 @@ function removeElement(arr, value) {
  }
 
 function allOccurence(array,element){
+    // This match if EXACTLY the same... need to check if substring, will this can be a mode in the future, yeah far FUTURE not now, note to yourself, finish your code :( )
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
-    var indices = [];
+    let indices = [];
     let idx = array.indexOf(element);
     while (idx != -1) {
     indices.push(idx);
     idx = array.indexOf(element, idx + 1);
     }
     return indices;
+}
+
+function allOccurenceSub(array,element){
+    let indices = [];
+    array.forEach(function(item,index) {
+        if (item.indexOf(element) !== -1) {
+            indices.push(index)
+        }
+      })
+      return indices;
 }
 /**
 function subArrayIndexes(master,sub){
@@ -245,7 +256,10 @@ function SpanAddEventListener(span,sn,an,cnt,word){
 
 function openWithBuck(sn,an,word , cnt){
     let cv = (sn+1)+":"+(an+1);
-    word = word.split(" ")[0]
+    // console.log(word)
+    word=word.innerText;
+    // console.log(word)
+    // word = word.split(" ")[0]
     if(cnt) cv += "&w=" + toBuckwalter(word)+"";
     openIqra(cv);
 }
