@@ -563,7 +563,7 @@ function hashChanged() {
     arabic=decodeURI(arabic);
    // arabic=toArabic(decodeURI(arabic)); // move the decode function to BuckWalter code... better approach
     if(arabic.length <= 0) return;
-    if(suraTr == "undefined") return; // a little lovely bug.. faster way to solve it lol
+    if(suraTr == undefined) return; // a little lovely bug.. faster way to solve it lol
     if(arabic == searchQue.value) return;
     findActionH(arabic); //toArabicLetters(arabic));
 }
