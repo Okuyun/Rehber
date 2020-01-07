@@ -5,11 +5,28 @@
  * https://developer.mozilla.org/en-US/docs/Web/API/Node/removeChild
  */
 
-let control=false;
+/**
+ * Used to check one line function if its open or not.
+ */
 let oneline=false;
+/**
+ * Last opened function to go and visit. 
+ */
 let lastOne =openIqra; 
+/**
+ * Interface language it has three options: tr,ar,en
+ */
 let texts=languages.tr;
+/**
+ * Application settings to be save in the local storage. 
+ * @see initLocalStorage
+ * @see updateSettings. 
+ * @see loadSettings
+ */
 let settings={};
+/**
+ * Clear html table and reset it to create the table for second word.
+ */
 function clearTable() {
     // translationHeader.style.display = "none"
     arabicHeader.style.width="100vw"
@@ -18,51 +35,79 @@ function clearTable() {
         element.removeChild(element.firstChild);
     }
 }
-
-function createBadge() {
-    let anch = document.createElement('span');
-    anch.className = "badge badge-light align-text-bottom"
-    anch.style="cursor: pointer;"
-    anch.addEventListener("click",function(e) {
-        console.log(e.target.text);
-    });
-    return anch
-}
-
-function createParagraph() {
+/**
+ * create Span to use for HTML paragraph
+ * @see createArPar
+ * @see createRow
+ */
+function createSpan() {
     return document.createElement('span');
 }
-
+/**
+ * Create arabic paragraph, with class name arabic. 
+ * @see createRow
+ */
 function createArPar() {
-    let p = createParagraph();
+    let p = createSpan();
     p.className = "arabic"
     return p;
 }
-
+/**
+ * Create table row element, TR
+ */
 function createTr() {
     return document.createElement('tr');
 }
-
+/**
+ * Create table data element, TD
+ */
 function createTd() {
     return document.createElement('td');
 }
-
+/**
+ * Create table row element, TR
+ * with scope: col
+ *      class: text-right
+ * @see createRow
+ */
 function createArTd() {
     let td = createTd();
     td.scope = "col"
     td.className = "text-right"
     return td;
 }
-// array first element = sura number, second= aya number
+
+/**
+ * Creating the table row based on sura aya number and the word to mark/highlight it. 
+ * 
+ * @param {int} sn sura number
+ * @param {int} an aya number
+ * @param {string} word the searched word string
+ */
+function createRow(sn, an, word) {
+    // array first element = sura number, second= aya number
 // the function be written in much prettier way but whatever.
 // why did not i use class name immedietyl at the set and call? idk? i only used it here.. .
 // TODO- write a generic code and change the functions
 // get the word to parse and mark based on it....
-function createRow(sn, an, word) {
+    /**
+     * create table row.
+     */
     let tr = createTr();
+    /**
+     * loc stands for location of the word itself.
+     */
     let loc;
-  
-    if(isEnglish(word)){
+  /**
+   * Check if word is latin or not, 
+   * if latin get the query inside it and mark it, then set the view and disable oneline option - since it's only for arabic.  
+   * otherwise it will print it normally and enable the oneline option.
+   * @see showState
+   * @see isLatin
+   * @see displayState
+   * @see getWordLocation
+   */
+    if(isLatin(word)){
         loc=getWordLocation(word,suraTr[sn][an],sn,an);
         state3.disabled =true
         showState(1)
@@ -75,12 +120,12 @@ function createRow(sn, an, word) {
     // translationHeader.style.display="table-cell"
     let td = createTd();
     td.className="tableTranslation"
-    let tb = createDropDownSplit( quran.sura[sn].tname + " " + (sn + 1)+ ":" + (an + 1)  );
+    let tb = createDropDownSplit(quran.sura[sn].tname + " " + (sn + 1)+ ":" + (an + 1)  );
     //tb.href="https://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
     td.innerHTML += tb;
     td.append("\xA0\xA0")
     tr.appendChild(td)
-    let tp = createParagraph()
+    let tp = createSpan()
     tp.innerHTML = shrink(loc,100)
     // add here for great function.
     // SpanAddEventListener(tp,sn,an)
@@ -97,7 +142,7 @@ function createRow(sn, an, word) {
     
     // if (/[\u064B-\u0652]/.test(word)) {
     //     loc = getWordLocation(word, suraAr[sn][an],sn,an,1);
-    // } else if(isEnglish(word)){
+    // } else if(isLatin(word)){
     //     loc=getWordLocation(word,suraAr[sn][an],sn,an,1);
     // }else  {
     //     loc  = getWordLocation(word, suraSr[sn][an],sn,an);
@@ -146,10 +191,22 @@ function markAr(loc, aya) {
     wordLst[loc + length - 1] = wordLst[loc + length - 1] + `</mark>`
     return aya.replace(" ");
 }
-// get the searched word location and size to mark.
-// searched word, aya text.
+
+/**
+ * Create the string of searched word based on array indexes with the highlight  - HTML tag great.
+ * @param {string} word the searched word
+ * @param {string} aya full aya
+ * @param {number} sn sura number
+ * @param {number} an aya number
+ * @param {number} cnt to check if need to translate to buckwalter or not...
+ * @returns the aya highlighting the serached word.
+ * TODO: refactor and check if we really need count? 
+ * @see normlisation
+ * @see subArrayIndexes
+ * 
+ */
 function getWordLocation(word, aya,sn,an,cnt) {
-    // TODO : change to proper html
+    // TODO: change to proper html
     // TODO: normilsation should be here i guess...
     let normAya = normlisation(aya).split(" ");;
     let normWord= normlisation(word).split(" ");
@@ -299,11 +356,6 @@ function shrink(text,number=5){
            
 }
 
-function colouredOne(text) {
-    // <font color="blue">This is some text!</font>
-    return text.replace(searchQue.value, `<font color="blue">` + searchQue.value + `</font>`);
-}
-
 // arr is lsit of aya and sura, searched word.
 function createTable(arr, word) {
     wordNumber.innerText = arr.length + parseInt(wordNumber.innerText)
@@ -342,7 +394,6 @@ function search(word, arr = suraSr) {
 function removeOddChar(string){
     let oddChar = `İ`.toLowerCase()[1]
     let h = new RegExp(oddChar,"ig")
-
     return string.replace( h,"");
 }
 // get the next word location from the search based on length of the word itself... 
@@ -401,7 +452,7 @@ function nextWordList(word, arr = suraSr) {
 
 let wordLst;
 
-function isEnglish(word){
+function isLatin(word){
     // /([A-Za-z])+/
     // /^[A-Za-z0-9]*/i
 
@@ -430,7 +481,7 @@ function SearchBarRTL(){
 function find(word) {
     if(word.length <= 0) return;
 
-    if(isEnglish(word)) {
+    if(isLatin(word)) {
         wordLst=nextWordList(word,suraTr)
         return;
     }
@@ -504,107 +555,6 @@ function addSuggestions(wordList) {
 
 }
 
-// https://www.w3schools.com/howto/howto_js_autocomplete.asp
-function autocomplete(inp, arr) {
-    /*the autocomplete function takes two arguments,
-    the text field element and an array of possible autocompleted values:*/
-    var currentFocus;
-    /*execute a function when someone writes in the text field:*/
-    inp.addEventListener("input", function(e) {
-        var a, b, i, val = this.value;
-        /*close any already open lists of autocompleted values*/
-        closeAllLists();
-        if (!val) { return false; }
-        currentFocus = -1;
-        /*create a DIV element that will contain the items (values):*/
-        a = document.createElement("DIV");
-        a.setAttribute("id", this.id + "autocomplete-list");
-        a.setAttribute("class", "autocomplete-items");
-        /*append the DIV element as a child of the autocomplete container:*/
-        this.parentNode.appendChild(a);
-        /*for each item in the array...*/
-        for (i = 0; i < arr.length; i++) {
-            /*check if the item starts with the same letters as the text field value:*/
-            if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                /*create a DIV element for each matching element:*/
-                b = document.createElement("DIV");
-                /*make the matching letters bold:*/
-                b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                b.innerHTML += arr[i].substr(val.length);
-                /*insert a input field that will hold the current array item's value:*/
-                b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-                /*execute a function when someone clicks on the item value (DIV element):*/
-                b.addEventListener("click", function(e) {
-                    /*insert the value for the autocomplete text field:*/
-                    inp.value = this.getElementsByTagName("input")[0].value;
-                    /*close the list of autocompleted values,
-                    (or any other open lists of autocompleted values:*/
-                    closeAllLists();
-                });
-                a.appendChild(b);
-            }
-        }
-    });
-    /*execute a function presses a key on the keyboard:*/
-    inp.addEventListener("keydown", function(e) {
-        var x = document.getElementById(this.id + "autocomplete-list");
-        if (x) x = x.getElementsByTagName("div");
-        if (e.keyCode == 40) {
-            /*If the arrow DOWN key is pressed,
-            increase the currentFocus variable:*/
-            currentFocus++;
-            /*and and make the current item more visible:*/
-            addActive(x);
-        } else if (e.keyCode == 38) { //up
-            /*If the arrow UP key is pressed,
-            decrease the currentFocus variable:*/
-            currentFocus--;
-            /*and and make the current item more visible:*/
-            addActive(x);
-        } else if (e.keyCode == 13) {
-            /*If the ENTER key is pressed, prevent the form from being submitted,*/
-            e.preventDefault();
-            if (currentFocus > -1) {
-                /*and simulate a click on the "active" item:*/
-                if (x) x[currentFocus].click();
-            }
-        }
-    });
-
-    function addActive(x) {
-        /*a function to classify an item as "active":*/
-        if (!x) return false;
-        /*start by removing the "active" class on all items:*/
-        removeActive(x);
-        if (currentFocus >= x.length) currentFocus = 0;
-        if (currentFocus < 0) currentFocus = (x.length - 1);
-        /*add class "autocomplete-active":*/
-        x[currentFocus].classList.add("autocomplete-active");
-    }
-
-    function removeActive(x) {
-        /*a function to remove the "active" class from all autocomplete items:*/
-        for (var i = 0; i < x.length; i++) {
-            x[i].classList.remove("autocomplete-active");
-        }
-    }
-
-    function closeAllLists(elmnt) {
-        /*close all autocomplete lists in the document,
-        except the one passed as an argument:*/
-        var x = document.getElementsByClassName("autocomplete-items");
-        for (var i = 0; i < x.length; i++) {
-            if (elmnt != x[i] && elmnt != inp) {
-                x[i].parentNode.removeChild(x[i]);
-            }
-        }
-    }
-    /*execute a function when someone clicks in the document:*/
-    document.addEventListener("click", function(e) {
-        closeAllLists(e.target);
-    });
-}
-
 function hashChanged() {
     let h = location.hash
     if (!h.startsWith('#w=')){
@@ -615,11 +565,12 @@ function hashChanged() {
     let arabic = h.substring(3).replace("%20", " ");
    // arabic=toArabic(decodeURI(arabic)); // move the decode function to BuckWalter code... better approach
     if(arabic.length <= 0) return;
+    if(suraTr == undefined) return; // a little lovely bug.. faster way to solve it lol
     findActionH(arabic); //toArabicLetters(arabic));
 }
 
 function setHash(e) {
-    // if(!isEnglish(e)){
+    // if(!isLatin(e)){
     //     e=  toBuckwalter(e);
     // }
 
@@ -803,6 +754,10 @@ function toggleShow(e){
    }
 
 }
+/**
+ * Rest all the show/hide buttons and get the original CSS style. 
+ * @param {html element} e button
+ */
 function resetTD(e){
     if(e.parentElement.parentElement.children[1].className == "translation")
         return
@@ -812,7 +767,9 @@ function resetTD(e){
     fullText.style.display="";
     shrinked.style.display="";
 }
-
+/**
+ * add @see toggleShow function to the whole showHideFull elements. 
+ */
 function addShowFunction(){
    if(typeof showHideFull !== "undefined"){
     for ( let x of showHideFull){
@@ -834,6 +791,10 @@ function toggleOneline(){
     updateSettings("oneline",oneline)
     // go to check this for future fix:https://stackoverflow.com/questions/4602141/variable-name-as-a-string-in-javascript
 }
+/**
+ * set the display state and show the table based on it.
+ * @param {number} num display state of the table 
+ */
 function displayState(num){
     /**
      * 1: for showing all 
@@ -881,6 +842,9 @@ function oneLineShow(bool){
     updateSettings("oneline",oneline)
 
 }
+/**
+ * Reset the showHideFull button which is the one near the open last one to showing as + smybol
+ */
 function checkButton(){
     for ( let x of showHideFull){
     //    if(x.innerText == "-"){
@@ -901,6 +865,7 @@ function showHideButtonStyle(text){
     getCSSRule("#showHideFull").style.display=text;
 }
 // Local storage code.  
+// {@link http://www.google.com|Google}
 // source: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
 function storageAvailable(type) {
     var storage;
@@ -927,6 +892,7 @@ function storageAvailable(type) {
     }
 }
 function normlisation(text){
+    // TODO: add rahman Case
     text = text.replace(/[\u0670-\u0671]/gm,"ا")
     text = text.replace(/[\u064B-\ufd3f]/gm, '');
     text = text.replace(/\u0629/gm,"ه");
@@ -934,9 +900,6 @@ function normlisation(text){
     text = text.replace(/\u0625/gm,"ا");
     return text;
     
-}
-function populateSettings(){
-
 }
 function initLocalStorage(){
     let keys=["arabic","translation","colour","control","source","oneline","lastOne","lang"]
@@ -990,7 +953,6 @@ function showState(state){
 }
 // Global to be able to cancel :) 
 const SR = new webkitSpeechRecognition()
-
 
 function SearchVoice(language){
 let speechLang= "tr-TR"
@@ -1049,6 +1011,13 @@ function speechCancel(){
     SR.abort();
     loading.hidden=true;
 }
+/**
+ * set langauge of the interface. 
+ * then it will update the settings and load the language
+ * @param {string} val the language value to set.
+ * @see updateSettings
+ * @see loadLang
+ */
 function language(val){
     val = parseInt(val)
     switch(val){
@@ -1066,7 +1035,11 @@ function language(val){
     updateSettings("lang",val)
     loadLang();
 }
-
+/**
+ * Load langugae file and change the UI based on it,
+ * used html ID's to change the text and the json file. 
+ * @see langSpeechSettings
+ */
 function loadLang(){
     txtWordFound.innerText=texts.occ;
     fontAr.innerText=texts.font + " " + texts.size;
@@ -1089,7 +1062,10 @@ function loadLang(){
     modelVoiceControl.innerText=texts.soundSettings;
     loadText.innerText=texts.listening;
 }
-
+/**
+ * A seprate langauge laod for speech language since it needed a switch case. 
+ * @see loadLang
+ */
 function langSpeechSettings(){
     switch(settings.source){
         case 3:
@@ -1107,5 +1083,5 @@ function langSpeechSettings(){
      }
 
 }
-// write docs and split the code to more readable style.. 
-// instead of removing/clearning diactricits( vowels - tashkeel) check if its there then search by another array.
+// TODO: write docs and split the code to more readable style.. 
+// TODO: instead of removing/clearning diactricits( vowels - tashkeel) check if its there then search by another array.
