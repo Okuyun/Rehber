@@ -4,7 +4,8 @@
  * https://www.daniweb.com/programming/web-development/threads/113340/delete-all-rows-from-table-in-javascript
  * https://developer.mozilla.org/en-US/docs/Web/API/Node/removeChild
  */
-
+// TODO: merciful ... bug :( 
+    // أتقاكم show google thingy.
 /**
  * Used to check one line function if its open or not.
  */
@@ -415,8 +416,7 @@ function removePunctions(word){
 }
 
 function nextWordList(word, arr = suraSr) {
-    // ayet is out of bound...
-
+    // ayet is out of bound... 
     let wordlocation = nextWordLoc(word, arr);
     // sugwrd = suggestion word, ns= number sura, na = number aya, wls = world list.
     // anls = aya number list
@@ -480,18 +480,15 @@ function SearchBarRTL(){
 }
 function find(word) {
     if(word.length <= 0) return;
-
     if(isLatin(word)) {
         wordLst=nextWordList(word,suraTr)
         return;
     }
-    
     if (/[\u064B-\u0652]/.test(word)) {
         wordLst = nextWordList(word, suraAr);
     } else {
         wordLst = nextWordList(word);
     }
-   
     // clearTable();
     // console.log([...wordLst[0]].join("\n"))
     // createTable([...wordLst[1]])
@@ -504,6 +501,11 @@ function findAction(word) {
     setHash(word)
 }
 
+function timer(log, callback){
+    let start = Date.now() ;
+    callback()
+    console.log(log, Date.now()- start, "ms");
+  }
 
 function serachedWordTable(word){
     word= word.trim();
@@ -512,7 +514,7 @@ function serachedWordTable(word){
     let words= word.split("+")
     words.forEach(e => {
         word = e;
-        find(word)
+        timer("Results in ", () => find(word))
         createTable([...wordLst[1]], word)
     });
   
@@ -531,12 +533,6 @@ function sugOnKeyUp(word) {
     addSuggestions([...wordLst[0]]);
 }
 
-
-function autoCreate(word) {
-    let wordLst = [...nextWordList(word)[0]];
-    /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
-    autocomplete(document.getElementById("searchQue"), wordLst);
-}
 
 function addSuggestions(wordList) {
     wordList = wordList.slice(0, 11)
@@ -557,15 +553,18 @@ function addSuggestions(wordList) {
 
 function hashChanged() {
     let h = location.hash
+    console.log("hashChanged...")
     if (!h.startsWith('#w=')){
         console.log(h)
         findAction( 'بسم الله')
         return;
     }
-    let arabic = h.substring(3).replace("%20", " ");
+    let arabic = h.substring(3).replace(/%20/g, " ");
+    arabic=decodeURI(arabic);
    // arabic=toArabic(decodeURI(arabic)); // move the decode function to BuckWalter code... better approach
     if(arabic.length <= 0) return;
-    if(suraTr == undefined) return; // a little lovely bug.. faster way to solve it lol
+    if(suraTr == "undefined") return; // a little lovely bug.. faster way to solve it lol
+    if(arabic == searchQue.value) return;
     findActionH(arabic); //toArabicLetters(arabic));
 }
 
@@ -578,7 +577,18 @@ function setHash(e) {
     location.hash = 'w=' + e //toBuckwalter(e);
 
 }
-
+/**
+ * Ininitlise finder by adding serachbar keyup event (onsubmit)
+ * Adding the hash change event to check the hash and control it. 
+ * check the settings avaialability on local storage if available --> load()
+ * if not then initilise local storage. 
+ *   graph TD
+      initReader --> b[Add serach bar enter event]
+      b--> c[hashControl/event added]
+      c --> s{settings Available}
+      s-->|no| initLocalStorage
+      s-->|yes| loadSettings
+ */
 function initFinder() {
     console.log("Finder started...")
     searchQue.addEventListener("keyup", function(event) {
@@ -902,11 +912,11 @@ function normlisation(text){
     
 }
 function initLocalStorage(){
-    let keys=["arabic","translation","colour","control","source","oneline","lastOne","lang"]
+    let keys=["arabic","translation","colour","source","oneline","lastOne","lang"]
     let arabicSize =parseInt(getCSSRule(".arabic").style.fontSize);
     let translationSize =parseInt(getCSSRule(".translation").style.fontSize);
     let colour=getCSSRule("great").style.backgroundColor;
-    let values=[arabicSize,translationSize,colour,control,5,oneline,lastOne.toString(),"1"]
+    let values=[arabicSize,translationSize,colour,5,oneline,lastOne.toString(),"1"]
    for (let i = 0; i < keys.length; i++) {
       updateSettings(keys[i],values[i])
    }
