@@ -346,6 +346,7 @@ function shrink(text,number=5){
         return text.join(" ")
     }
     let pre=index-number/2 ,post =endIndex+number/2 
+    post=text.length;
     if(pre < 0){
         return text.slice(0,number).join(" ");  
     }
