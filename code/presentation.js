@@ -7,6 +7,9 @@ class presentation{
        this.fonkisyon[this.index]();
         this.index++;
     }
+    ses(){
+    console.log("ilim verilenlere\nبسم الله\n")
+    }
     previous(){
         this.index--;
         this.fonkisyon[this.index]();
