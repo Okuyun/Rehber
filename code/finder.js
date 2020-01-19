@@ -732,7 +732,7 @@ if(control){
     <button class="dropdown-item" onclick="openQuran('${cv}')">Quran</button>
     <button class="dropdown-item" onclick="openMeali('${cv}')">Meali</button>
     <div class="dropdown-divider"></div>
-    <button class="dropdown-item" onclick="openIqra('${cv}')">Reader</button>
+    <button class="dropdown-item" onclick="openIqra('${cv}')">Iqra</button>
   </div>
 </div>
 `
