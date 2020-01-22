@@ -1,0 +1,25 @@
+﻿first opening doesnot show the word, 
+tooltip iqra  
+open new tab iqra 
+mucam to table  -- we need it so bad, yet i have the table why not to pass it? 
+reader#v=45:26&w=>akovara%20{ln~aAsi
+reader links when open 
+link of reader 
+one line mode 
+menu when press outside it. 
+Game suyolu
+اسجدوا لادم 
+https://maeyler.github.io/Iqra3/benzerlik -- teksatir 
+يا بني ادم 
+context menu 
+Examples list 
+move to Issues 
+Show speed 
+Collect data 
+FeedBack form and data 
+Report - what to add? the links of downloaded stuff and from the 3 ocak sunum email get other ideas.
+final thesis 
+---
+overflow-x: scroll;
+    white-space: nowrap;
+    max-width: 80vw;

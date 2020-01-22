@@ -209,8 +209,8 @@ function markAr(loc, aya) {
 function getWordLocation(word, aya,sn,an,cnt) {
     // TODO: change to proper html
     // TODO: normilsation should be here i guess...
-    let normAya = normlisation(aya).split(" ");;
-    let normWord= normlisation(word).split(" ");
+    let normAya = normlisation(aya).toLowerCase().split(" ");;
+    let normWord= normlisation(word).toLowerCase().split(" ");
     let index= subArrayIndexes(normAya,normWord).reverse();
     aya = aya.split(" ");
     for (let loc of index){
@@ -348,7 +348,7 @@ function shrink(text,number=5){
     // let pre=index-number/2 ,post =endIndex+number/2 
     let post=text.length, pre = index-3;
     if(pre < 0){
-        return text.slice(0,post).join(" ");  
+        return text.slice(0,number).join(" ");  
     }
     if(post > text.length ){
         return text.slice(pre+(text.length - post)).join(" ");  
@@ -553,15 +553,28 @@ function addSuggestions(wordList) {
 }
 
 function hashChanged() {
-    let h = location.hash
+    let h = decodeURI(location.hash);
     console.log("hashChanged...")
-    if (!h.startsWith('#w=')){
-        console.log(h)
-        findAction( 'بسم الله')
-        return;
+    let type= h[1];
+    h = h.slice(3);
+    let arabic = h.replace(/%20/g, " ");;
+    switch(type){
+        case "b":
+            arabic=toArabic(decodeURI(arabic));
+            break;
+        case "w":
+            
+            break;
+        case "t":
+            arabic = h.replace(/%20/g, " ");
+            break;
+        default:
+            console.log(h)
+            findAction( 'بسم الله')
+            return;
     }
-    let arabic = h.substring(3).replace(/%20/g, " ");
-    arabic=decodeURI(arabic);
+    
+    
    // arabic=toArabic(decodeURI(arabic)); // move the decode function to BuckWalter code... better approach
     if(arabic.length <= 0) return;
     if(suraTr == undefined) return; // a little lovely bug.. faster way to solve it lol
@@ -570,13 +583,13 @@ function hashChanged() {
 }
 
 function setHash(e) {
-    // if(!isLatin(e)){
-    //     e=  toBuckwalter(e);
-    // }
+    if(!isLatin(e)){
+        e="b="+  toBuckwalter(e);
+    }else {
+        e= "t="+ e;
+    } 
 
-    
-    location.hash = 'w=' + e //toBuckwalter(e);
-
+    location.hash = e //toBuckwalter(e);
 }
 /**
  * Ininitlise finder by adding serachbar keyup event (onsubmit)
