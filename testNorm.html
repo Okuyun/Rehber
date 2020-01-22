@@ -62,20 +62,20 @@
                 if(suraSr[i][j].split(" ").length != suraAr[i][j].split(" ").length){
                         console.log("length..")
                         counter++;
-                let word = document.createElement("td");
-                word.innerText=suraAr[i][j]
-                let norm = document.createElement("td");
-                norm.innerText=normlisation(suraAr[i][j])
-                let wordAr = document.createElement("td");
-                wordAr.innerText=suraSr[i][j]
-                let test = document.createElement("td");
-                test.innerText= normlisation(suraAr[i][j])==suraSr[i][j];
-                test.innerHTML= (normlisation(suraAr[i][j])==suraSr[i][j])? "<mark>" +  test.innerHTML+"</mark>": test.innerHTML;
+                let word = document.createElement("tr");
+                word.innerText=suraAr[i][j].split(" ").join(",")
+                // let norm = document.createElement("td");
+                // norm.innerText=normlisation(suraAr[i][j].split(" ").join(","))
+                let wordAr = document.createElement("tr");
+                wordAr.innerText=suraSr[i][j].split(" ").join(",")
+                // let test = document.createElement("td");
+                // test.innerText= normlisation(suraAr[i][j])==suraSr[i][j];
+                // test.innerHTML= (normlisation(suraAr[i][j])==suraSr[i][j])? "<mark>" +  test.innerHTML+"</mark>": test.innerHTML;
                 let tr = document.createElement("tr");
                 tr.appendChild(word)
-                tr.appendChild(norm)
+                // tr.appendChild(norm)
                 tr.appendChild(wordAr)
-                tr.appendChild(test)
+                // tr.appendChild(test)
                 words.appendChild(tr);
                     }
                 
