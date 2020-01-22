@@ -479,7 +479,7 @@ function SearchBarRTL(){
     searchQue.className = "arabic form-control text-right";
     searchQue.dir="rtl"
 }
-function find(word) {
+function find(word ="") {
     if(word.length <= 0) return;
     if(isLatin(word)) {
         wordLst=nextWordList(word,suraTr)
@@ -495,7 +495,7 @@ function find(word) {
     // createTable([...wordLst[1]])
 }
 
-function findAction(word) {
+function findAction(word ="") {
     if(word.length <= 0) return;
     clearTable();
     serachedWordTable(word);
@@ -518,6 +518,7 @@ function serachedWordTable(word){
         timer("Results in ", () => find(word))
         createTable([...wordLst[1]], word)
     });
+    menuFn();
   
 }
 function findActionH(word) {
@@ -620,6 +621,7 @@ function initFinder() {
             loadSettings()
         }
     }
+    menuFn();
 }
 // from: https://stackoverflow.com/questions/1409225/changing-a-css-rule-set-from-javascript
 // Add variables array then use destrutctor to call it for once! only one time... 
@@ -1106,6 +1108,86 @@ function langSpeechSettings(){
              break;
      }
 
+}
+
+
+
+function menuFn() {
+    const menu = document.getElementById("contextMenu");
+    const menuOption = document.querySelector(".menu-option");
+    let menuVisible = false;
+    function select(){
+    let s = getSelection().toString().trim()
+    if (s) return s
+    else alert("Önce Arapça bir kelime seçin")
+    }
+    function addContextMenu(){
+        document.querySelectorAll("span.arabic").forEach( e => {
+            e.addEventListener("contextmenu", e => {
+                e.preventDefault();
+                const origin = {
+                    left: e.screenX,
+                    top: e.screenY
+                };
+                console.log(e)
+                setPosition(origin);
+                return false;
+            })}
+        )
+    }
+    
+    function contextMenuArabic(){
+        let spAr= document.querySelectorAll("span.arabic")
+        for (let e of spAr) {
+            e.addEventListener("click", e => {
+                if (menuVisible) toggleMenu("hide");
+            });
+        }
+    }
+  
+  
+  
+    const toggleMenu = command => {
+        console.log("toggle" + command)
+        menu.style.display = command === "show" ? "block" : "none";
+        menuVisible = !menuVisible;
+    };
+  
+    const setPosition = ({ top, left }) => {
+        menu.style.left = `${left}px`;
+        menu.style.top = `${top-100}px`;
+        toggleMenu("show");
+    };
+  
+    contextMenuArabic();
+   
+    document.addEventListener("click", e => {
+        if (menuVisible) toggleMenu("hide");
+    });
+    // should be added by a function - future note  to myself.
+    contextMenu.addEventListener("click", e => {
+        if(!menuVisible){return}
+        let sel = select();
+        console.log("worked..." +" sel ="+ sel)
+        switch (e.target.innerText) {
+            case "Find":
+                findAction(sel)
+                break;
+                case "Google it":
+                    window.open("https://google.com/search?q=" + sel)
+                break;
+                case "Copy":
+                    navigator.clipboard.writeText(sel)
+                    .then(() => { console.log('Panoya:', sel) })
+                    .catch(e => { alert('Panoya yazamadım\n'+sel) })
+                    break
+                break;
+        }
+        toggleMenu("hide");
+    });
+    addContextMenu();
+  
+   
 }
 // TODO: write docs and split the code to more readable style.. 
 // TODO: instead of removing/clearning diactricits( vowels - tashkeel) check if its there then search by another array.

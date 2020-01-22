@@ -71,6 +71,33 @@
       #showHideFull {
         display:none;
       }
+
+#contextMenu {
+  width: 120px;
+  user-select: none;
+  z-index: 1;
+  box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  display: none;
+  transition: 0.2s display ease-in;
+}
+#contextMenu .menu-options {
+  list-style: none;
+  padding: 10px 0;
+  z-index: 1;
+}
+#contextMenu .menu-options .menu-option {
+  font-weight: 500;
+  z-index: 1;
+  font-size: 14px;
+  padding: 10px 40px 10px 20px;
+  cursor: pointer;
+}
+#contextMenu .menu-options .menu-option:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+
     </style>
     <link rel="icon" href="images/search.png">
 
@@ -414,6 +441,16 @@
   </div>
 </div>
   
+
+<div class="dropdown-menu dropdown-menu-sm" id="contextMenu">
+  <ul class="menu-options">
+    <li class="menu-option dropdown-item">Find</li>
+    <li class="menu-option dropdown-item">Google it</li>
+    <li class="menu-option dropdown-item">Copy</li>
+   
+  </ul>
+</div>
+
   <script src="code/language.js"></script>
     <script src="code/common.js"></script>
     <script src="code/buckwalter.js"></script>

@@ -42,6 +42,16 @@
                 tr.appendChild(test)
                 words.appendChild(tr);
             }
+            function createTd(arr){
+                let tr = document.createElement("tr");
+                let td;
+                for (const e of arr) {
+                    td = document.createElement("td")
+                    td.innerText=e;
+                    tr.appendChild(td)
+                }
+                return tr;
+            }
             for (let i = 0; i < suraSr.length; i++) {
             
             for (let j = 0; j < suraSr[i].length; j++) {
@@ -62,12 +72,12 @@
                 if(suraSr[i][j].split(" ").length != suraAr[i][j].split(" ").length){
                         console.log("length..")
                         counter++;
-                let word = document.createElement("tr");
-                word.innerText=suraAr[i][j].split(" ").join(",")
+                let word =createTd(suraAr[i][j].split(" ").reverse())
+                // word.innerText=
                 // let norm = document.createElement("td");
                 // norm.innerText=normlisation(suraAr[i][j].split(" ").join(","))
-                let wordAr = document.createElement("tr");
-                wordAr.innerText=suraSr[i][j].split(" ").join(",")
+                let wordAr = createTd(suraSr[i][j].split(" ").reverse())
+                // wordAr.innerText=suraSr[i][j].split(" ").join(",")
                 // let test = document.createElement("td");
                 // test.innerText= normlisation(suraAr[i][j])==suraSr[i][j];
                 // test.innerHTML= (normlisation(suraAr[i][j])==suraSr[i][j])? "<mark>" +  test.innerHTML+"</mark>": test.innerHTML;
