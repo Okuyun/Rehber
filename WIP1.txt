@@ -1,7 +1,4 @@
-﻿first opening doesnot show the word, 
-tooltip iqra  
-open new tab iqra 
-mucam to table  -- we need it so bad, yet i have the table why not to pass it? 
+﻿mucam to table  -- we need it so bad, yet i have the table why not to pass it? 
 reader#v=45:26&w=>akovara%20{ln~aAsi
 reader links when open 
 link of reader 
@@ -28,3 +25,5 @@ BQ:finder -> أَضَآءَتْ
 overflow-x: scroll;
     white-space: nowrap;
     max-width: 80vw;
+---
+hide columns for small screens and only one column

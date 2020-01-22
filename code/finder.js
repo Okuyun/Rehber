@@ -348,7 +348,7 @@ function shrink(text,number=5){
     // let pre=index-number/2 ,post =endIndex+number/2 
     let post=text.length, pre = index-3;
     if(pre < 0){
-        return text.slice(0,number).join(" ");  
+        return text.slice(0,post).join(" ");  
     }
     if(post > text.length ){
         return text.slice(pre+(text.length - post)).join(" ");  
