@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Test Norm</title>
+</head>
+<body>
+    <table>
+        <tr>
+          <th>word</th>
+          <th>norm</th>
+          <th>word</th>
+          <th>test</th>
+        </tr>
+       <tbody id="words"></tbody
+        >
+      </table>
+      <script src="code/language.js"></script>
+    <script src="code/script.js"></script>
+    <script src="code/finder.js"></script>
+    <script>
+        init().then(printAll);
+        function printAll(){
+            let counter = 0;
+            let whole=0;
+            function test(){
+                let word = document.createElement("td");
+                word.innerText=suraAr[i][j][h]
+                let norm = document.createElement("td");
+                norm.innerText=normlisation(suraAr[i][j])
+                let wordAr = document.createElement("td");
+                wordAr.innerText=suraSr[i][j][h]
+                let test = document.createElement("td");
+                test.innerText= normlisation(suraAr[i][j][h])==suraSr[i][j][h];
+                test.innerHTML= (normlisation(suraAr[i][j][h])==suraSr[i][j][h])? "<mark>" +  test.innerHTML+"</mark>": test.innerHTML;
+                let tr = document.createElement("tr");
+                tr.appendChild(word)
+                tr.appendChild(norm)
+                tr.appendChild(wordAr)
+                tr.appendChild(test)
+                words.appendChild(tr);
+            }
+            for (let i = 0; i < suraSr.length; i++) {
+            
+            for (let j = 0; j < suraSr[i].length; j++) {
+
+                // for(let h=0; h < suraSr[i][j].split(" ").length ; h++){
+                //     whole++;
+                //     counter++;
+                    
+                //     let srA= suraAr[i][j].split(" ");
+                //     let srS= suraSr[i][j].split(" ");
+                   
+                //     // if(typeof srA[h] =="undefined"){
+                //     //     console.log("wrong...")
+                //     // }
+                //     // if( !normlisation(srA[h])==srS[h])
+                //     //     counter++;
+                // }
+                if(suraSr[i][j].split(" ").length != suraAr[i][j].split(" ").length){
+                        console.log("length..")
+                        counter++;
+                let word = document.createElement("td");
+                word.innerText=suraAr[i][j]
+                let norm = document.createElement("td");
+                norm.innerText=normlisation(suraAr[i][j])
+                let wordAr = document.createElement("td");
+                wordAr.innerText=suraSr[i][j]
+                let test = document.createElement("td");
+                test.innerText= normlisation(suraAr[i][j])==suraSr[i][j];
+                test.innerHTML= (normlisation(suraAr[i][j])==suraSr[i][j])? "<mark>" +  test.innerHTML+"</mark>": test.innerHTML;
+                let tr = document.createElement("tr");
+                tr.appendChild(word)
+                tr.appendChild(norm)
+                tr.appendChild(wordAr)
+                tr.appendChild(test)
+                words.appendChild(tr);
+                    }
+                
+
+
+            }
+            
+        }
+        console.log(counter)
+        console.log("aa",whole)
+        }
+    
+    
+    </script>
+
+</body>
+</html>

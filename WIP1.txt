@@ -19,6 +19,11 @@ Collect data
 FeedBack form and data 
 Report - what to add? the links of downloaded stuff and from the 3 ocak sunum email get other ideas.
 final thesis 
+
+Bugs: 
+Iqra:reader -> If word is null . &w=
+Iqra:reader -> V=11:33 -- reader error 
+BQ:finder -> أَضَآءَتْ 
 ---
 overflow-x: scroll;
     white-space: nowrap;

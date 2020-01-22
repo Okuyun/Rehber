@@ -916,7 +916,7 @@ function storageAvailable(type) {
     }
 }
 function normlisation(text){
-    // TODO: add rahman Case
+    // TODO: add rahman Case, adam case.
     text = text.replace(/[\u0670-\u0671]/gm,"ا")
     text = text.replace(/[\u064B-\ufd3f]/gm, '');
     text = text.replace(/\u0629/gm,"ه");
