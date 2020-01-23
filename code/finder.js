@@ -512,6 +512,7 @@ function serachedWordTable(word){
     word= word.trim();
     document.title="finder - " + word;
     wordNumber.innerText=0;
+    submitSearched(word);
     let words= word.split("+")
     words.forEach(e => {
         word = e;
@@ -521,6 +522,22 @@ function serachedWordTable(word){
     menuFn();
   
 }
+function submitSearched(word){
+    let link = "https://docs.google.com/forms/d/e/1FAIpQLSd7o_vx8kanr371NqY3ylGAmDHrht6APYLFg0g6rhJVDC2zdA/formResponse?usp=pp_url&entry.841595716="
+    let submit = '&submit=Submit';
+    link = link + word + submit;
+    let post = document.createElement("iframe")
+    post.src = link;
+    post.id= "postID"
+    post.hidden = true;
+    document.body.appendChild(post)
+
+}
+function removeElementByID(elementID){
+    let el = document.getElementById(elementID);
+    el.parentNode.removeChild(el);
+}
+
 function findActionH(word) {
     clearTable();
     word = decodeURI(word);
