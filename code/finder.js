@@ -779,7 +779,7 @@ function createDropDownSplit(suraCV , control){
     <div class="dropdown-divider"></div>
     <button class="dropdown-item" onclick="openIqra('${cv}')">Iqra</button>
   </div>
-</div>
+</div><br>
 `
 if(control){
     x = `
@@ -799,7 +799,7 @@ if(control){
     <div class="dropdown-divider"></div>
     <button class="dropdown-item" onclick="openIqra('${cv}')">Iqra</button>
   </div>    
-</div>
+</div><br>
 `
 }
 return x;
