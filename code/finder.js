@@ -735,7 +735,7 @@ function openMeali(cv){
 }
 // cv = chapter verses C:V 
 function openIqra(cv){
-    let link="https://maeyler.github.io/Iqra3/reader#v=" + cv ;
+    let link="https://maeyler.github.io/Iqra3/reader.html#v=" + cv ;
     window.open(link,"iqra") 
     lastOne="iqra";
     warpLast()
@@ -1021,7 +1021,7 @@ function loadSettings(){
         changeFont("arabic",0)
         changeFont("x",0)
         loadTransF(settings.source);
-        lastOne=eval('(' + settings.lastOne+ ')');
+        lastOne= settings.lastOne;
         language(settings.lang)
         showState(settings.dstate)
         displayState(settings.dstate)
