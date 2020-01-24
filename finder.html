@@ -183,6 +183,15 @@
           ⚙️
           </button>
           <button
+          data-toggle="modal" 
+          data-target="#FeedBackModal"
+          class="btn btn-outline-success"
+          type="submit"
+        >
+        📝 
+        </button>
+          
+          <button
           data-toggle="modal"
           data-target="#speechSettings"
           class="btn btn-outline-success"
@@ -190,6 +199,8 @@
         >
         🎤
         </button>
+
+
           </div>
         </div>
         <div class="input-group" >
@@ -437,6 +448,38 @@
       </div>
       <div class="modal-footer">
         <button id="btnClose" type="button" class="btn btn-secondary" data-dismiss="modal" onclick="speechCancel()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal FeedBack-->
+<div class="modal fade" id="FeedBackModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="FeedBackModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modelVoiceControl">Feed Back/contact us</h5>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      </div>
+      <div class="modal-body">
+        <!-- <center> -->
+            <div class="form-group">
+              <label for="inputEmail">Email address</label>
+              <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp">
+              <small id="emailHelp" class="form-text text-muted">Just to tell you about the process.</small>
+            </div>
+            <div class="form-group">
+              <label for="feedBackMessage">Your message</label>
+              <textarea class="form-control" id="feedBackMessage" rows="3"></textarea>
+            </div>
+        <!-- </center> -->
+      
+      </div>
+      <div class="modal-footer">
+        <button id="btnClose" type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cancelFeedBack()">Cancel</button>
+        <button type="submit" class="btn btn-primary" onclick="submitFeedBack()">Submit</button>
       </div>
     </div>
   </div>

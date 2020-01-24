@@ -512,7 +512,7 @@ function serachedWordTable(word){
     word= word.trim();
     document.title="finder - " + word;
     wordNumber.innerText=0;
-    submitSearched(word);
+    submitData(word);
     let words= word.split("+")
     words.forEach(e => {
         word = e;
@@ -520,12 +520,20 @@ function serachedWordTable(word){
         createTable([...wordLst[1]], word)
     });
     menuFn();
+    removeElementByID("postID")
   
 }
-function submitSearched(word){
-    let link = "https://docs.google.com/forms/d/e/1FAIpQLSd7o_vx8kanr371NqY3ylGAmDHrht6APYLFg0g6rhJVDC2zdA/formResponse?usp=pp_url&entry.841595716="
+function submitData(word=searchQue.value,message="no"){
+    // let link = "https://docs.google.com/forms/d/e/1FAIpQLSd7o_vx8kanr371NqY3ylGAmDHrht6APYLFg0g6rhJVDC2zdA/formResponse?usp=pp_url&entry.841595716="
+    let link =  "https://docs.google.com/forms/d/e/1FAIpQLSd7o_vx8kanr371NqY3ylGAmDHrht6APYLFg0g6rhJVDC2zdA/formResponse?usp=pp_url&entry.841595716=word&entry.1093518355=feedBackMessage&entry.2043746972=screen&entry.562870159=model&entry.709022821=settings&entry.1881015334=navigator"
+    link = link.replace("word",word);
+    link = link.replace("feedBackMessage",message);
+    link = link.replace("screen",screen.width + " x " + screen.height);
+    link = link.replace("model",navigator.userAgent)
+    link = link.replace("settings",JSON.stringify(settings))
+    link = link.replace("navigator",navigatorToString())
     let submit = '&submit=Submit';
-    link = link + word + submit;
+    link = link + submit;
     let post = document.createElement("iframe")
     post.src = link;
     post.id= "postID"
@@ -533,11 +541,25 @@ function submitSearched(word){
     document.body.appendChild(post)
 
 }
+function navigatorToString(){
+    var _navigator = {};
+    for (var i in navigator) _navigator[i] = navigator[i];
+    return JSON.stringify(_navigator);
+}
 function removeElementByID(elementID){
     let el = document.getElementById(elementID);
     el.parentNode.removeChild(el);
 }
+function submitFeedBack(){
+   let email= inputEmail.value;
+   let msg = feedBackMessage.value;
+   submitData(undefined,msg)
 
+}
+function cancelFeedBack(){
+
+
+}
 function findActionH(word) {
     clearTable();
     word = decodeURI(word);
@@ -745,7 +767,7 @@ function createDropDownSplit(suraCV , control){
     <button class="dropdown-item" onclick="openQuran('${cv}')">Quran</button>
     <button class="dropdown-item" onclick="openMeali('${cv}')">Meali</button>
     <div class="dropdown-divider"></div>
-    <button class="dropdown-item" onclick="openIqra('${cv}')">Reader</button>
+    <button class="dropdown-item" onclick="openIqra('${cv}')">Iqra</button>
   </div>
 </div>
 `
@@ -765,8 +787,8 @@ if(control){
     <button class="dropdown-item" onclick="openQuran('${cv}')">Quran</button>
     <button class="dropdown-item" onclick="openMeali('${cv}')">Meali</button>
     <div class="dropdown-divider"></div>
-    <button class="dropdown-item" onclick="openIqra('${cv}')">Reader</button>
-  </div>
+    <button class="dropdown-item" onclick="openIqra('${cv}')">Iqra</button>
+  </div>    
 </div>
 `
 }
@@ -1207,4 +1229,5 @@ function menuFn() {
    
 }
 // TODO: write docs and split the code to more readable style.. 
+// bug:la habersiz
 // TODO: instead of removing/clearning diactricits( vowels - tashkeel) check if its there then search by another array.
