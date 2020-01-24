@@ -523,15 +523,19 @@ function serachedWordTable(word){
     removeElementByID("postID")
   
 }
-function submitData(word=searchQue.value,message="no"){
+function submitData(word,message="no",email="anon"){
     // let link = "https://docs.google.com/forms/d/e/1FAIpQLSd7o_vx8kanr371NqY3ylGAmDHrht6APYLFg0g6rhJVDC2zdA/formResponse?usp=pp_url&entry.841595716="
-    let link =  "https://docs.google.com/forms/d/e/1FAIpQLSd7o_vx8kanr371NqY3ylGAmDHrht6APYLFg0g6rhJVDC2zdA/formResponse?usp=pp_url&entry.841595716=word&entry.1093518355=feedBackMessage&entry.2043746972=screen&entry.562870159=model&entry.709022821=settings&entry.1881015334=navigator"
+    // let link =  "https://docs.google.com/forms/d/e/1FAIpQLSd7o_vx8kanr371NqY3ylGAmDHrht6APYLFg0g6rhJVDC2zdA/formResponse?usp=pp_url&entry.364753965=email&entry.841595716=word&entry.1093518355=feedBackMessage&entry.2043746972=screen&entry.562870159=model&entry.709022821=settings&entry.1881015334=navigator"
+       let link =  "https://docs.google.com/forms/d/e/1FAIpQLSd7o_vx8kanr371NqY3ylGAmDHrht6APYLFg0g6rhJVDC2zdA/formResponse?usp=pp_url&entry.364753965=email&entry.841595716=word&entry.1093518355=feedBackMessage&entry.2043746972=screen&entry.562870159=model&entry.709022821=settings&entry.1881015334=navigator"
     link = link.replace("word",word);
     link = link.replace("feedBackMessage",message);
     link = link.replace("screen",screen.width + " x " + screen.height);
     link = link.replace("model",navigator.userAgent)
     link = link.replace("settings",JSON.stringify(settings))
+    link = link.replace("email",email)
+
     link = link.replace("navigator",navigatorToString())
+    link = decodeURI(link)
     let submit = '&submit=Submit';
     link = link + submit;
     let post = document.createElement("iframe")
@@ -553,11 +557,17 @@ function removeElementByID(elementID){
 function submitFeedBack(){
    let email= inputEmail.value;
    let msg = feedBackMessage.value;
-   submitData(undefined,msg)
+  if(email.length <= 2){
+   email= "anon"
+  }
+  if (msg.length <= 2){
+      msg = "empty";
+  }
+    submitData(searchQue.value,msg,email)
 
 }
 function cancelFeedBack(){
-
+    submitData(searchQue.value,"FormCancelled","FormCancelled")
 
 }
 function findActionH(word) {
