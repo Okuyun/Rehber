@@ -13,7 +13,7 @@ let oneline=false;
 /**
  * Last opened function to go and visit. 
  */
-let lastOne =openIqra; 
+let lastOne ="iqra"; 
 /**
  * Interface language it has three options: tr,ar,en
  */
@@ -729,7 +729,7 @@ function openMeali(cv){
     let c= cv[0] , v= cv[1];
     let link = `http://kuranmeali.com/AyetKarsilastirma.php?sure=${c}&ayet=${v}`
     window.open(link,"meali") 
-    lastOne=openMeali
+    lastOne="meal";
     warpLast()
 
 }
@@ -737,7 +737,7 @@ function openMeali(cv){
 function openIqra(cv){
     let link="https://maeyler.github.io/Iqra3/reader#v=" + cv ;
     window.open(link,"iqra") 
-    lastOne=openIqra;
+    lastOne="iqra";
     warpLast()
 }
 
@@ -746,7 +746,7 @@ function openQuran(cv){
     let c= cv[0] , v= cv[1];
     let link=`https://quran.com/${c}/${v}`
     window.open(link,"Quran") 
-    lastOne=openQuran;
+    lastOne="quran";
     warpLast()
 }
 
@@ -755,7 +755,7 @@ function openCorpus(cv){
     let c= cv[0] , v= cv[1];
     let link =`http://corpus.quran.com/translation.jsp?chapter=${c}&verse=${v}`
     window.open(link,"Corpus") 
-    lastOne=openCorpus;
+    lastOne="corpus";
     warpLast()
 }
 
@@ -768,7 +768,7 @@ function createDropDownSplit(suraCV , control){
     <!-- Example split danger button -->
 <div class="btn-group">
   <button id="showHideFull" type="button" class="btn badge badge-light align-text-bottom dropdown-toggle-split" aria-expanded="false" onlcick="toggleShow('test')">+</button>
-  <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('${cv}')">${suraCV}</button>
+  <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOneF('${cv}')">${suraCV}</button>
   <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <span class="sr-only">Toggle Dropdown</span>
   </button>
@@ -788,7 +788,7 @@ if(control){
 <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 <span class="sr-only">Toggle Dropdown</span>
 </button>
-  <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('${cv}')">${suraCV}</button>
+  <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOneF('${cv}')">${suraCV}</button>
  
   <button id="showHideFull" type="button" class="btn badge badge-light align-text-bottom dropdown-toggle-split" aria-expanded="false" onlcick="toggleShow('test')">+</button>
 
@@ -809,12 +809,12 @@ function toggleShow(e){
     // $0 this element --> for the split button made in createDropDownSplit
     // .parentElement btnGroup
     // .parentElement td
-    // .children[0] spanArabic
+    // .children[2] spanArabic
     // .children[0] 
     // children 0 = ShrinkedArabic
     // children 1 = full text
-    let fullText = e.parentElement.parentElement.children[1].children[0];
-    let shrinked = e.parentElement.parentElement.children[1].children[1];
+    let fullText = e.parentElement.parentElement.children[2].children[0];
+    let shrinked = e.parentElement.parentElement.children[2].children[1];
    switch(e.innerText){
        case "+":
            e.innerText ="-";
@@ -834,10 +834,10 @@ function toggleShow(e){
  * @param {html element} e button
  */
 function resetTD(e){
-    if(e.parentElement.parentElement.children[1].className == "translation")
+    if(e.parentElement.parentElement.children[2].className == "translation")
         return
-    let fullText = e.parentElement.parentElement.children[1].children[0];
-    let shrinked = e.parentElement.parentElement.children[1].children[1];
+    let fullText = e.parentElement.parentElement.children[2].children[0];
+    let shrinked = e.parentElement.parentElement.children[2].children[1];
     e.innerText ="+";
     fullText.style.display="";
     shrinked.style.display="";
@@ -981,7 +981,7 @@ function initLocalStorage(){
     let arabicSize =parseInt(getCSSRule(".arabic").style.fontSize);
     let translationSize =parseInt(getCSSRule(".translation").style.fontSize);
     let colour=getCSSRule("great").style.backgroundColor;
-    let values=[arabicSize,translationSize,colour,5,oneline,lastOne.toString(),"1"]
+    let values=[arabicSize,translationSize,colour,5,oneline,lastOne,"1"]
    for (let i = 0; i < keys.length; i++) {
       updateSettings(keys[i],values[i])
    }
@@ -991,14 +991,29 @@ function updateSettings(target,value){
     updateSettingsStorage()
 }
 function warpLast(){
-    updateSettings("lastOne",lastOne.toString())
+    updateSettings("lastOne",lastOne)
 }
 function updateSettingsStorage(){
     if (storageAvailable('localStorage')) {
         localStorage.setItem('settings',JSON.stringify(settings))
      }
 }
-
+function lastOneF(cv){
+    switch(lastOne){
+        case "iqra":
+            openIqra(cv)
+        break; 
+        case "meal": 
+        openMeali(cv)
+        break;
+        case "quran":
+            openQuran(cv)
+        break;
+        case "corpus":
+            openCorpus(cv)
+        break;
+    }
+}
 function loadSettings(){
     if (storageAvailable('localStorage')) {
         settings= JSON.parse(localStorage.getItem('settings'))
