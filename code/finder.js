@@ -10,6 +10,7 @@
  * Used to check one line function if its open or not.
  */
 let oneline=false;
+let rl=false;
 /**
  * Last opened function to go and visit. 
  */
@@ -85,7 +86,7 @@ function createArTd() {
  * @param {int} an aya number
  * @param {string} word the searched word string
  */
-function createRow(sn, an, word) {
+function createRow(sn, an, word="") {
     // array first element = sura number, second= aya number
 // the function be written in much prettier way but whatever.
 // why did not i use class name immedietyl at the set and call? idk? i only used it here.. .
@@ -496,7 +497,7 @@ function find(word ="") {
 }
 
 function findAction(word ="") {
-    if(word.length <= 0) return;
+    if(word.length <= 0 || rl ) return;
     clearTable();
     serachedWordTable(word);
     setHash(word)
@@ -601,6 +602,13 @@ function addSuggestions(wordList) {
     suggestions.innerHTML = html;
 
 }
+function createMujamList(rl){
+    clearTable();
+    let root= rl.split(";")[0];
+    let list= rl.split(";")[1].split(",");
+    let wordLst=  list.map(e => [Number(e.split(":")[0]),Number(e.split(":")[1])])
+    createTable([...wordLst]);
+}
 
 function hashChanged() {
     let h = decodeURI(location.hash);
@@ -618,12 +626,17 @@ function hashChanged() {
         case "t":
             arabic = h.replace(/%20/g, " ");
             break;
+        case "r":
+            arabic = h.replace(/%20/g, " ");
+            rl=true;
+            createMujamList(arabic)
+            return;
         default:
             console.log(h)
             findAction( 'بسم الله')
             return;
     }
-    
+    rl=false;
     
    // arabic=toArabic(decodeURI(arabic)); // move the decode function to BuckWalter code... better approach
     if(arabic.length <= 0) return;
@@ -661,8 +674,9 @@ function initFinder() {
             findAction(searchQue.value)
         }
     });
-    hashChanged();
     window.addEventListener("hashchange", hashChanged);
+        hashChanged();
+
     if(storageAvailable("localStorage")){
         if(window.localStorage.settings === undefined){
             initLocalStorage();
@@ -712,7 +726,8 @@ function changeFont(language,size){
 
 async function loadTransF(n=3){
     await loadTrans(n.toString())
-    clearTable();
+    // clearTable();
+    // toCheck...
     findAction(searchQue.value);
     THtext.innerText= getTefsirText(n) + "\u2002";
     updateSettings("source",n)
