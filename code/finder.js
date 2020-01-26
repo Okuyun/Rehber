@@ -5,33 +5,36 @@
  * https://developer.mozilla.org/en-US/docs/Web/API/Node/removeChild
  */
 // TODO: merciful ... bug :( 
-    // أتقاكم show google thingy.
+// أتقاكم show google thingy.
 /**
  * Used to check one line function if its open or not.
  */
-let oneline=false;
-let rl=false;
+let oneline = false;
+/**
+ * Roots map
+ */
+let rootsMap = new Map();
 /**
  * Last opened function to go and visit. 
  */
-let lastOne ="iqra"; 
+let lastOne = "iqra";
 /**
  * Interface language it has three options: tr,ar,en
  */
-let texts=languages.tr;
+let texts = languages.tr;
 /**
  * Application settings to be save in the local storage. 
  * @see initLocalStorage
  * @see updateSettings. 
  * @see loadSettings
  */
-let settings={};
+let settings = {};
 /**
  * Clear html table and reset it to create the table for second word.
  */
 function clearTable() {
     // translationHeader.style.display = "none"
-    arabicHeader.style.width="100vw"
+    arabicHeader.style.width = "100vw"
     element = document.getElementById("dTable").getElementsByTagName('tbody')[0];;
     while (element.firstChild) {
         element.removeChild(element.firstChild);
@@ -86,12 +89,12 @@ function createArTd() {
  * @param {int} an aya number
  * @param {string} word the searched word string
  */
-function createRow(sn, an, word="") {
+async function createRow(sn, an, word = "") {
     // array first element = sura number, second= aya number
-// the function be written in much prettier way but whatever.
-// why did not i use class name immedietyl at the set and call? idk? i only used it here.. .
-// TODO- write a generic code and change the functions
-// get the word to parse and mark based on it....
+    // the function be written in much prettier way but whatever.
+    // why did not i use class name immedietyl at the set and call? idk? i only used it here.. .
+    // TODO- write a generic code and change the functions
+    // get the word to parse and mark based on it....
     /**
      * create table row.
      */
@@ -100,48 +103,48 @@ function createRow(sn, an, word="") {
      * loc stands for location of the word itself.
      */
     let loc;
-  /**
-   * Check if word is latin or not, 
-   * if latin get the query inside it and mark it, then set the view and disable oneline option - since it's only for arabic.  
-   * otherwise it will print it normally and enable the oneline option.
-   * @see showState
-   * @see isLatin
-   * @see displayState
-   * @see getWordLocation
-   */
-    if(isLatin(word)){
-        loc=getWordLocation(word,suraTr[sn][an],sn,an);
-        state3.disabled =true
+    /**
+     * Check if word is latin or not, 
+     * if latin get the query inside it and mark it, then set the view and disable oneline option - since it's only for arabic.  
+     * otherwise it will print it normally and enable the oneline option.
+     * @see showState
+     * @see isLatin
+     * @see displayState
+     * @see getWordLocation
+     */
+    if (isLatin(word) || !isRoot(word)) {
+        loc = getWordLocation(word, suraTr[sn][an], sn, an);
+        state3.disabled = true
         showState(1)
         displayState(1)
-    }else{
-        loc=suraTr[sn][an];
-        state3.disabled =""
+    } else {
+        loc = suraTr[sn][an];
+        state3.disabled = ""
     }
-    arabicHeader.style.width="47%"
-    // translationHeader.style.display="table-cell"
+    arabicHeader.style.width = "47%"
+        // translationHeader.style.display="table-cell"
     let td = createTd();
-    td.className="tableTranslation"
-    let tb = createDropDownSplit(quran.sura[sn].tname + " " + (sn + 1)+ ":" + (an + 1)  );
+    td.className = "tableTranslation"
+    let tb = createDropDownSplit(quran.sura[sn].tname + " " + (sn + 1) + ":" + (an + 1));
     //tb.href="https://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
     td.innerHTML += tb;
     td.append("\xA0\xA0")
     tr.appendChild(td)
     let tp = createSpan()
-    tp.innerHTML = shrink(loc,100)
-    // add here for great function.
-    // SpanAddEventListener(tp,sn,an)
+    tp.innerHTML = shrink(loc, 100)
+        // add here for great function.
+        // SpanAddEventListener(tp,sn,an)
     td.appendChild(tp)
-    tp.className="translation"
-   
+    tp.className = "translation"
+
 
     let arTd = createArTd();
-    arTd.scope="col"
-    arTd.className="text-right"
-    arTd.dir="rtl"
-    // need to change the span thingy as well
+    arTd.scope = "col"
+    arTd.className = "text-right"
+    arTd.dir = "rtl"
+        // need to change the span thingy as well
     let arP = createArPar();
-    
+
     // if (/[\u064B-\u0652]/.test(word)) {
     //     loc = getWordLocation(word, suraAr[sn][an],sn,an,1);
     // } else if(isLatin(word)){
@@ -149,39 +152,69 @@ function createRow(sn, an, word="") {
     // }else  {
     //     loc  = getWordLocation(word, suraSr[sn][an],sn,an);
     // }
-   
-    
-    loc = getWordLocation(word, suraAr[sn][an],sn,an,1);
 
-        let span = document.createElement("span");
-        span.className="shrinkArabic";
-        span.innerHTML = shrink(loc)
+    if (isRoot(word)) {
+        let h = await markRoot(word.substring(1), suraAr[sn][an], sn, an);
+        loc = h;
+    } else {
+
+        loc = getWordLocation(word, suraAr[sn][an], sn, an, 1);
+    }
+
+    let span = document.createElement("span");
+    span.className = "shrinkArabic";
+    span.innerHTML = shrink(loc)
         // great function
         // SpanAddEventListener(span,sn,an) //1,word)
-        arP.appendChild(span)
-    
-        span = document.createElement("span");
-        span.className="fullText";
-        span.innerHTML = loc
+    arP.appendChild(span)
+
+    span = document.createElement("span");
+    span.className = "fullText";
+    span.innerHTML = loc
         // great function
         // SpanAddEventListener(span,sn,an)//,1,word)
-        arP.appendChild(span)
+    arP.appendChild(span)
 
     // TODO: if oneline: add controler
-    
-    let arB = createDropDownSplit(quran.sura[sn].name + " " + (sn + 1) + ":" + (an + 1) , 1);
-    //arB.href="https://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
-   
 
-    
-    arTd.innerHTML+=arB;
+    let arB = createDropDownSplit(quran.sura[sn].name + " " + (sn + 1) + ":" + (an + 1), 1);
+    //arB.href="https://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
+
+
+
+    arTd.innerHTML += arB;
     arTd.append("\xA0\xA0")
     arTd.appendChild(arP)
-    
+
     tr.appendChild(arTd)
-   
+
     return tr;
 }
+
+function markRoot(root, aya, sn, an) {
+    // await readExternal("https://raw.githubusercontent.com/maeyler/Iqra3/master/data/words.txt",rootsMap,readRoots)
+    let words = rootsMap.get(toBuckwalter(root));
+    words = words.map(e =>
+        toArabic(e)
+    )
+    return aya.split(" ").map(e => {
+        if (words.includes(e)) {
+            return `<great onclick="openWithBuck(` + sn + `,` + an + `,this,` + 1 + `)"> ${e}</great>`
+        } else {
+            return e;
+        }
+    }).join(" ");
+
+}
+
+function readRoots(text, target) {
+    text = text.split("\n")
+    text.forEach(e => {
+        e = e.split(" ")
+        target.set(e.shift(), e)
+    })
+}
+
 // mark specific words and return it. 
 // location of the word, length of the word string, and arabic aya with vowels.
 // broke at suraSr[1][53] --- because of difference in writing arabic.
@@ -207,16 +240,16 @@ function markAr(loc, aya) {
  * @see subArrayIndexes
  * 
  */
-function getWordLocation(word, aya,sn,an,cnt) {
+function getWordLocation(word, aya, sn, an, cnt) {
     // TODO: change to proper html
     // TODO: normilsation should be here i guess...
     let normAya = normlisation(aya).toLowerCase().split(" ");;
-    let normWord= normlisation(word).toLowerCase().split(" ");
-    let index= subArrayIndexes(normAya,normWord).reverse();
+    let normWord = normlisation(word).toLowerCase().split(" ");
+    let index = subArrayIndexes(normAya, normWord).reverse();
     aya = aya.split(" ");
-    for (let loc of index){
-    aya.splice(loc+normWord.length,0,`</great>`)
-    aya.splice(loc,0,`<great onclick="openWithBuck(`+sn+`,`+an+`,this,`+cnt+`)">`);
+    for (let loc of index) {
+        aya.splice(loc + normWord.length, 0, `</great>`)
+        aya.splice(loc, 0, `<great onclick="openWithBuck(` + sn + `,` + an + `,this,` + cnt + `)">`);
     }
     // let regx = RegExp(word,"gi");
     //  event on click 
@@ -224,16 +257,16 @@ function getWordLocation(word, aya,sn,an,cnt) {
     return aya.join(" ")
 }
 
-function subArrayIndexes(master,sub){
-//  inspiration from, Jaimin Patel's comment: https://stackoverflow.com/questions/34151834/javascript-array-contains-includes-sub-array
+function subArrayIndexes(master, sub) {
+    //  inspiration from, Jaimin Patel's comment: https://stackoverflow.com/questions/34151834/javascript-array-contains-includes-sub-array
 
-//collect all master indexes matching first element of sub-array
-   let matched_index= allOccurenceSub(master,sub[0])  
+    //collect all master indexes matching first element of sub-array
+    let matched_index = allOccurenceSub(master, sub[0])
 
-    for(let index of matched_index){
-        for(let [j,element] of sub.entries()){
-            if(!master[j+index].includes(element)) {
-                matched_index= removeElement(matched_index,index)
+    for (let index of matched_index) {
+        for (let [j, element] of sub.entries()) {
+            if (!master[j + index].includes(element)) {
+                matched_index = removeElement(matched_index, index)
                 break;
             }
         }
@@ -242,33 +275,33 @@ function subArrayIndexes(master,sub){
 }
 
 function removeElement(arr, value) {
-// https://love2dev.com/blog/javascript-remove-from-array/
-    return arr.filter(function(ele){
+    // https://love2dev.com/blog/javascript-remove-from-array/
+    return arr.filter(function(ele) {
         return ele != value;
     });
-    
- }
 
-function allOccurence(array,element){
+}
+
+function allOccurence(array, element) {
     // This match if EXACTLY the same... need to check if substring, will this can be a mode in the future, yeah far FUTURE not now, note to yourself, finish your code :( )
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
     let indices = [];
     let idx = array.indexOf(element);
     while (idx != -1) {
-    indices.push(idx);
-    idx = array.indexOf(element, idx + 1);
+        indices.push(idx);
+        idx = array.indexOf(element, idx + 1);
     }
     return indices;
 }
 
-function allOccurenceSub(array,element){
+function allOccurenceSub(array, element) {
     let indices = [];
-    array.forEach(function(item,index) {
+    array.forEach(function(item, index) {
         if (item.indexOf(element) !== -1) {
             indices.push(index)
         }
-      })
-      return indices;
+    })
+    return indices;
 }
 /**
 function subArrayIndexes(master,sub){
@@ -297,15 +330,15 @@ function subArrayIndexes(master,sub){
     }
     return matched_index
 } */
-function SpanAddEventListener(span,sn,an,cnt,word){
+function SpanAddEventListener(span, sn, an, cnt, word) {
     // TOD: check why it did not work for arabic, but worked well for English!! 
     // its over annoying! 
-    if(span.children[0] !== undefined){
-        let cv = (sn+1)+":"+(an+1);
+    if (span.children[0] !== undefined) {
+        let cv = (sn + 1) + ":" + (an + 1);
         // if(cnt) cv += "&w=" + toBuckwalter(word)+"";
-        console.log("event listern added to" , span.children[0].innerText)
-        // span.children[0].onclick=function (){console.log("hello")}
-        span.children[0].addEventListener("click",function(e) {
+        console.log("event listern added to", span.children[0].innerText)
+            // span.children[0].onclick=function (){console.log("hello")}
+        span.children[0].addEventListener("click", function(e) {
             console.log("clicked")
             openIqra(cv)
         });
@@ -313,17 +346,17 @@ function SpanAddEventListener(span,sn,an,cnt,word){
     // TODO: bug at أَضَآءَتْ  -- need to fix :( -- Still not working in Iqra... need to check.
 }
 
-function openWithBuck(sn,an,word , cnt){
-    let cv = (sn+1)+":"+(an+1);
+function openWithBuck(sn, an, word, cnt) {
+    let cv = (sn + 1) + ":" + (an + 1);
     // console.log(word)
-    word=word.innerText;
+    word = word.innerText;
     // console.log(word)
     // word = word.split(" ")[0]
-    if(cnt) cv += "&w=" + toBuckwalter(word)+"";
+    if (cnt) cv += "&w=" + toBuckwalter(word) + "";
     openIqra(cv);
 }
 
-function shrink(text,number=5){
+function shrink(text, number = 5) {
     /**
      * length = 20
      * index = 15
@@ -334,29 +367,30 @@ function shrink(text,number=5){
      * IF index-5 = -X
      * post+x, start from 0
      */
-    text=text.split(" ");
+    text = text.split(" ");
 
-    let index= text.findIndex( e => e.includes("<great"))
-    let endIndex= text.findIndex( e => e.includes("</great>"))
+    let index = text.findIndex(e => e.includes("<great"))
+    let endIndex = text.findIndex(e => e.includes("</great>"))
     number = number + (searchQue.value.split(" ").length);
-    
-    if(text.length <= number){
+
+    if (text.length <= number) {
         return text.join(" ")
     }
-    if(index < 0 ){
+    if (index < 0) {
         return text.join(" ")
     }
     // let pre=index-number/2 ,post =endIndex+number/2 
-    let post=text.length, pre = index-3;
-    if(pre < 0){
-        return text.slice(0,post).join(" ");  
+    let post = text.length,
+        pre = index - 3;
+    if (pre < 0) {
+        return text.slice(0, post).join(" ");
     }
-    if(post > text.length ){
-        return text.slice(pre+(text.length - post)).join(" ");  
+    if (post > text.length) {
+        return text.slice(pre + (text.length - post)).join(" ");
     }
     //console.log(text.slice(pre,post).length)
-    return text.slice(pre,post).join(" ");  
-           
+    return text.slice(pre, post).join(" ");
+
 }
 
 // arr is lsit of aya and sura, searched word.
@@ -382,10 +416,10 @@ function search(word, arr = suraSr) {
         // loop verses of each sura.
         for (let j = 0; j < arr[i].length; j++) {
             // 
-            let aya =arr[i][j].toLowerCase();
+            let aya = arr[i][j].toLowerCase();
             // working :) -- the insan error is caused by the RegEx
             let locs = removeOddChar(aya).indexOf(removeOddChar(word.toLowerCase()))
-            
+
             if (locs !== -1) {
                 loc.push([i, j, locs])
             }
@@ -394,10 +428,10 @@ function search(word, arr = suraSr) {
     return loc;
 }
 
-function removeOddChar(string){
+function removeOddChar(string) {
     let oddChar = `İ`.toLowerCase()[1]
-    let h = new RegExp(oddChar,"ig")
-    return string.replace( h,"");
+    let h = new RegExp(oddChar, "ig")
+    return string.replace(h, "");
 }
 // get the next word location from the search based on length of the word itself... 
 // check if the word is at the ened of aya...
@@ -413,8 +447,8 @@ function nextWordLoc(word, arr = suraSr) {
     return wordLoc;
 }
 
-function removePunctions(word){
-    return word.replace(/(~|`|!|@|#|$|%|^|&|\*|\(|\)|{|}|\[|\]|;|:|\"|'|<|,|\.|>|\?|\/|\\|\||-|_|\+|=)/g,"")
+function removePunctions(word) {
+    return word.replace(/(~|`|!|@|#|$|%|^|&|\*|\(|\)|{|}|\[|\]|;|:|\"|'|<|,|\.|>|\?|\/|\\|\||-|_|\+|=)/g, "")
 }
 
 function nextWordList(word, arr = suraSr) {
@@ -440,7 +474,7 @@ function nextWordList(word, arr = suraSr) {
         sugwrd = removePunctions(sugwrd);
         // if end of aya, then check next aya, from the beging
         if (sugwrd.length <= 1) {
-         
+
             continue;
 
         }
@@ -454,13 +488,13 @@ function nextWordList(word, arr = suraSr) {
 
 let wordLst;
 
-function isLatin(word){
+function isLatin(word) {
     // /([A-Za-z])+/
     // /^[A-Za-z0-9]*/i
 
-    let regXenglish= /[A-Za-z0-9]+/
-    let h = new RegExp(regXenglish,"ig")
-    if(h.test(word)){
+    let regXenglish = /[A-Za-z0-9]+/
+    let h = new RegExp(regXenglish, "ig")
+    if (h.test(word)) {
         SearchBarLTR()
         return true
     }
@@ -468,22 +502,24 @@ function isLatin(word){
     return false
 }
 
-function SearchBarLTR(){
-   
-        searchQue.dir="LTR"
-        searchQue.className = "form-control translation"
-    
-  
+function SearchBarLTR() {
+
+    searchQue.dir = "LTR"
+    searchQue.className = "form-control translation"
+
+
 }
 
-function SearchBarRTL(){
+function SearchBarRTL() {
     searchQue.className = "arabic form-control text-right";
-    searchQue.dir="rtl"
+    searchQue.dir = "rtl"
 }
-function find(word ="") {
-    if(word.length <= 0) return;
-    if(isLatin(word)) {
-        wordLst=nextWordList(word,suraTr)
+
+function find(word = "") {
+    if (word.length <= 0) return;
+    if (isRoot(word)) return;
+    if (isLatin(word)) {
+        wordLst = nextWordList(word, suraTr)
         return;
     }
     if (/[\u064B-\u0652]/.test(word)) {
@@ -496,25 +532,41 @@ function find(word ="") {
     // createTable([...wordLst[1]])
 }
 
-function findAction(word ="") {
-    if(word.length <= 0 || rl ) return;
+function findAction(word = "") {
+    if (word.length <= 0) return;
     clearTable();
     serachedWordTable(word);
     setHash(word)
 }
 
-function timer(log, callback){
-    let start = Date.now() ;
+function timer(log, callback) {
+    let start = Date.now();
     callback()
-    console.log(log, Date.now()- start, "ms");
-  }
+    console.log(log, Date.now() - start, "ms");
+}
 
-function serachedWordTable(word){
-    word= word.trim();
-    document.title="finder - " + word;
-    wordNumber.innerText=0;
+function isRoot(word) {
+    return word.includes(";") || word.includes("=");
+}
+
+function mujamList(rl) {
+    let root = rl.split(";")[0];
+    let list = rl.split(";")[1].split(",");
+    let wordLst = list.map(e => [Number(e.split(":")[0] - 1), Number(e.split(":")[1] - 1)])
+    return [root, wordLst];
+}
+
+function serachedWordTable(word) {
+    word = word.trim();
+    if (isRoot(word)) {
+        [word, wordLst] = mujamList(word)
+        wordLst[1] = [...wordLst];
+    }
+
+    document.title = "finder - " + word;
+    wordNumber.innerText = 0;
     submitData(word);
-    let words= word.split("+")
+    let words = word.split("+")
     words.forEach(e => {
         word = e;
         timer("Results in ", () => find(word))
@@ -522,65 +574,71 @@ function serachedWordTable(word){
     });
     menuFn();
     removeElementByID("postID")
-  
+
 }
-function submitData(word,message="no",email="anon"){
+
+function submitData(word, message = "no", email = "anon") {
     // let link = "https://docs.google.com/forms/d/e/1FAIpQLSd7o_vx8kanr371NqY3ylGAmDHrht6APYLFg0g6rhJVDC2zdA/formResponse?usp=pp_url&entry.841595716="
     // let link =  "https://docs.google.com/forms/d/e/1FAIpQLSd7o_vx8kanr371NqY3ylGAmDHrht6APYLFg0g6rhJVDC2zdA/formResponse?usp=pp_url&entry.364753965=email&entry.841595716=word&entry.1093518355=feedBackMessage&entry.2043746972=screen&entry.562870159=model&entry.709022821=settings&entry.1881015334=navigator"
-       let link =  "https://docs.google.com/forms/d/e/1FAIpQLSd7o_vx8kanr371NqY3ylGAmDHrht6APYLFg0g6rhJVDC2zdA/formResponse?usp=pp_url&entry.364753965=email&entry.841595716=word&entry.1093518355=feedBackMessage&entry.2043746972=screen&entry.562870159=model&entry.709022821=settings&entry.1881015334=navigator"
-    link = link.replace("word",word);
-    link = link.replace("feedBackMessage",message);
-    link = link.replace("screen",screen.width + " x " + screen.height);
-    link = link.replace("model",navigator.userAgent)
-    link = link.replace("settings",JSON.stringify(settings))
-    link = link.replace("email",email)
+    let link = "https://docs.google.com/forms/d/e/1FAIpQLSd7o_vx8kanr371NqY3ylGAmDHrht6APYLFg0g6rhJVDC2zdA/formResponse?usp=pp_url&entry.364753965=email&entry.841595716=word&entry.1093518355=feedBackMessage&entry.2043746972=screen&entry.562870159=model&entry.709022821=settings&entry.1881015334=navigator"
+    link = link.replace("word", word);
+    link = link.replace("feedBackMessage", message);
+    link = link.replace("screen", screen.width + " x " + screen.height);
+    link = link.replace("model", navigator.userAgent)
+    link = link.replace("settings", JSON.stringify(settings))
+    link = link.replace("email", email)
 
-    link = link.replace("navigator",navigatorToString())
+    link = link.replace("navigator", navigatorToString())
     link = decodeURI(link)
     let submit = '&submit=Submit';
     link = link + submit;
     let post = document.createElement("iframe")
     post.src = link;
-    post.id= "postID"
+    post.id = "postID"
     post.hidden = true;
     document.body.appendChild(post)
 
 }
-function navigatorToString(){
+
+function navigatorToString() {
     var _navigator = {};
     for (var i in navigator) _navigator[i] = navigator[i];
     return JSON.stringify(_navigator);
 }
-function removeElementByID(elementID){
+
+function removeElementByID(elementID) {
     let el = document.getElementById(elementID);
     el.parentNode.removeChild(el);
 }
-function submitFeedBack(){
-   let email= inputEmail.value;
-   let msg = feedBackMessage.value;
-  if(email.length <= 2){
-   email= "anon"
-  }
-  if (msg.length <= 2){
-      msg = "empty";
-  }
-    submitData(searchQue.value,msg,email)
+
+function submitFeedBack() {
+    let email = inputEmail.value;
+    let msg = feedBackMessage.value;
+    if (email.length <= 2) {
+        email = "anon"
+    }
+    if (msg.length <= 2) {
+        msg = "empty";
+    }
+    submitData(searchQue.value, msg, email)
 
 }
-function cancelFeedBack(){
-    submitData(searchQue.value,"FormCancelled","FormCancelled")
+
+function cancelFeedBack() {
+    submitData(searchQue.value, "FormCancelled", "FormCancelled")
 
 }
+
 function findActionH(word) {
     clearTable();
     word = decodeURI(word);
-    searchQue.value=word
+    searchQue.value = word
     serachedWordTable(word);
 }
 
 function sugOnKeyUp(word) {
     let sugwrd = word.split("+")
-    word = sugwrd[sugwrd.length-1]
+    word = sugwrd[sugwrd.length - 1]
     find(word)
     addSuggestions([...wordLst[0]]);
 }
@@ -594,7 +652,7 @@ function addSuggestions(wordList) {
     wordList.forEach(e => {
         //only check if its the same ... without searchQue value it would not work.. .imporatnt 
         opt = document.createElement("option")
-        opt.className="arabic"
+        opt.className = "arabic"
         opt.value = searchQue.value + "" + e
             // suggestions.appendChild(opt)
         html += opt.outerHTML;
@@ -602,55 +660,46 @@ function addSuggestions(wordList) {
     suggestions.innerHTML = html;
 
 }
-function createMujamList(rl){
-    clearTable();
-    let root= rl.split(";")[0];
-    let list= rl.split(";")[1].split(",");
-    let wordLst=  list.map(e => [Number(e.split(":")[0]),Number(e.split(":")[1])])
-    createTable([...wordLst]);
-}
+
 
 function hashChanged() {
     let h = decodeURI(location.hash);
     console.log("hashChanged...")
-    let type= h[1];
+    let type = h[1];
     h = h.slice(3);
     let arabic = h.replace(/%20/g, " ");;
-    switch(type){
+    switch (type) {
         case "b":
-            arabic=toArabic(decodeURI(arabic));
+            arabic = toArabic(decodeURI(arabic));
             break;
         case "w":
-            
+
             break;
         case "t":
             arabic = h.replace(/%20/g, " ");
             break;
         case "r":
             arabic = h.replace(/%20/g, " ");
-            rl=true;
-            createMujamList(arabic)
-            return;
+            break;
         default:
             console.log(h)
-            findAction( 'بسم الله')
+            findAction('بسم الله')
             return;
     }
-    rl=false;
-    
-   // arabic=toArabic(decodeURI(arabic)); // move the decode function to BuckWalter code... better approach
-    if(arabic.length <= 0) return;
-    if(suraTr == undefined) return; // a little lovely bug.. faster way to solve it lol
-    if(arabic == searchQue.value) return;
+
+    // arabic=toArabic(decodeURI(arabic)); // move the decode function to BuckWalter code... better approach
+    if (arabic.length <= 0) return;
+    if (suraTr == undefined) return; // a little lovely bug.. faster way to solve it lol
+    if (arabic == searchQue.value) return;
     findActionH(arabic); //toArabicLetters(arabic));
 }
 
 function setHash(e) {
-    if(!isLatin(e)){
-        e="b="+  toBuckwalter(e);
-    }else {
-        e= "t="+ e;
-    } 
+    if (!isLatin(e)) {
+        e = "b=" + toBuckwalter(e);
+    } else {
+        e = "t=" + e;
+    }
 
     location.hash = e //toBuckwalter(e);
 }
@@ -666,7 +715,8 @@ function setHash(e) {
       s-->|no| initLocalStorage
       s-->|yes| loadSettings
  */
-function initFinder() {
+async function initFinder() {
+    await readExternal("https://raw.githubusercontent.com/maeyler/Iqra3/master/data/words.txt", rootsMap, readRoots);
     console.log("Finder started...")
     searchQue.addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
@@ -675,16 +725,17 @@ function initFinder() {
         }
     });
     window.addEventListener("hashchange", hashChanged);
-        hashChanged();
+    hashChanged();
 
-    if(storageAvailable("localStorage")){
-        if(window.localStorage.settings === undefined){
+    if (storageAvailable("localStorage")) {
+        if (window.localStorage.settings === undefined) {
             initLocalStorage();
-        }else{
+        } else {
             loadSettings()
         }
     }
     menuFn();
+
 }
 // from: https://stackoverflow.com/questions/1409225/changing-a-css-rule-set-from-javascript
 // Add variables array then use destrutctor to call it for once! only one time... 
@@ -692,93 +743,97 @@ function initFinder() {
 //  stable, yet, do you think the array thingy was faster? if yes then go for it and leave 
 // TODO: this, speed is valuable more than some ninja JS skills here. 
 
-function getCSSRule(ruleName) {              
+function getCSSRule(ruleName) {
     // ruleName=ruleName.toLowerCase();                      
-    for ( let sheet of  document.styleSheets){
-        for (let rule of sheet.cssRules){
-       if(rule.selectorText == ruleName){
-           return rule;
-       }
+    for (let sheet of document.styleSheets) {
+        for (let rule of sheet.cssRules) {
+            if (rule.selectorText == ruleName) {
+                return rule;
+            }
         }
-        }
-
-}            
-
-function changeColour(col){
-    getCSSRule("great").style.backgroundColor=col;
-    updateSettings("colour",col)
-}
-function changeFont(language,size){
-    //console.log(language,size)
-    let rule,update="translation";
-    if(language=="arabic"){
-        //.arabic
-        rule=getCSSRule(".arabic");
-        update = "arabic"
-        }else{
-            //.translation 
-         rule=getCSSRule(".translation")
     }
-    let old =parseInt(rule.style.fontSize);
-    rule.style.fontSize =  old+size+"px"
-    updateSettings(update,old+size)
+
 }
 
-async function loadTransF(n=3){
+function changeColour(col) {
+    getCSSRule("great").style.backgroundColor = col;
+    updateSettings("colour", col)
+}
+
+function changeFont(language, size) {
+    //console.log(language,size)
+    let rule, update = "translation";
+    if (language == "arabic") {
+        //.arabic
+        rule = getCSSRule(".arabic");
+        update = "arabic"
+    } else {
+        //.translation 
+        rule = getCSSRule(".translation")
+    }
+    let old = parseInt(rule.style.fontSize);
+    rule.style.fontSize = old + size + "px"
+    updateSettings(update, old + size)
+}
+
+async function loadTransF(n = 3) {
     await loadTrans(n.toString())
-    // clearTable();
-    // toCheck...
+        // clearTable();
+        // toCheck...
     findAction(searchQue.value);
-    THtext.innerText= getTefsirText(n) + "\u2002";
-    updateSettings("source",n)
+    THtext.innerText = getTefsirText(n) + "\u2002";
+    updateSettings("source", n)
     langSpeechSettings()
 }
 
-function getTefsirText(n){
-    let tefsir = [ "تفسير الجلالين","تفسير الميسر","Türkçe: Diyanet Meali","English: Ahmed Ali","Türkçe: Elmalılı Hamdi Yazır","English: Abdullah Yusuf Ali"]
-    return tefsir[n-1];
+function getTefsirText(n) {
+    let tefsir = ["تفسير الجلالين", "تفسير الميسر", "Türkçe: Diyanet Meali", "English: Ahmed Ali", "Türkçe: Elmalılı Hamdi Yazır", "English: Abdullah Yusuf Ali"]
+    return tefsir[n - 1];
 }
 
-function openMeali(cv){
-    cv =cv.split(":");
-    let c= cv[0] , v= cv[1];
+function openMeali(cv) {
+    cv = cv.split(":");
+    let c = cv[0],
+        v = cv[1];
     let link = `http://kuranmeali.com/AyetKarsilastirma.php?sure=${c}&ayet=${v}`
-    window.open(link,"meali") 
-    lastOne="meal";
+    window.open(link, "meali")
+    lastOne = "meal";
     warpLast()
 
 }
 // cv = chapter verses C:V 
-function openIqra(cv){
-    let link="https://maeyler.github.io/Iqra3/reader.html#v=" + cv ;
-    window.open(link,"iqra") 
-    lastOne="iqra";
+function openIqra(cv) {
+    let link = "https://maeyler.github.io/Iqra3/reader.html#v=" + cv;
+    window.open(link, "iqra")
+    lastOne = "iqra";
     warpLast()
 }
 
-function openQuran(cv){
-    cv =cv.split(":");
-    let c= cv[0] , v= cv[1];
-    let link=`https://quran.com/${c}/${v}`
-    window.open(link,"Quran") 
-    lastOne="quran";
+function openQuran(cv) {
+    cv = cv.split(":");
+    let c = cv[0],
+        v = cv[1];
+    let link = `https://quran.com/${c}/${v}`
+    window.open(link, "Quran")
+    lastOne = "quran";
     warpLast()
 }
 
-function openCorpus(cv){
-    cv =cv.split(":");
-    let c= cv[0] , v= cv[1];
-    let link =`http://corpus.quran.com/translation.jsp?chapter=${c}&verse=${v}`
-    window.open(link,"Corpus") 
-    lastOne="corpus";
+function openCorpus(cv) {
+    cv = cv.split(":");
+    let c = cv[0],
+        v = cv[1];
+    let link = `http://corpus.quran.com/translation.jsp?chapter=${c}&verse=${v}`
+    window.open(link, "Corpus")
+    lastOne = "corpus";
     warpLast()
 }
 
-function createDropDownSplit(suraCV , control){
+function createDropDownSplit(suraCV, control) {
     // may change it to javascript later, but this is much easier LOL.
     // NEED TO reFactor.
     let cv = suraCV.split(" ");
-    cv = cv[cv.length-1]
+    cv = cv[cv.length - 1]
     let x = `
     <!-- Example split danger button -->
 <div class="btn-group">
@@ -796,8 +851,8 @@ function createDropDownSplit(suraCV , control){
   </div>
 </div><br>
 `
-if(control){
-    x = `
+    if (control) {
+        x = `
     <!-- Example split danger button -->
 <div class="btn-group">
 <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -816,11 +871,11 @@ if(control){
   </div>    
 </div><br>
 `
-}
-return x;
+    }
+    return x;
 }
 
-function toggleShow(e){
+function toggleShow(e) {
     // $0 this element --> for the split button made in createDropDownSplit
     // .parentElement btnGroup
     // .parentElement td
@@ -830,45 +885,45 @@ function toggleShow(e){
     // children 1 = full text
     let fullText = e.parentElement.parentElement.children[2].children[0];
     let shrinked = e.parentElement.parentElement.children[2].children[1];
-   switch(e.innerText){
-       case "+":
-           e.innerText ="-";
-           fullText.style.display="none"
-           shrinked.style.display="table-cell"
-           break;
-        case "-":
-            e.innerText ="+";
-            shrinked.style.display="none"
-            fullText.style.display="table-cell"
+    switch (e.innerText) {
+        case "+":
+            e.innerText = "-";
+            fullText.style.display = "none"
+            shrinked.style.display = "table-cell"
             break;
-   }
+        case "-":
+            e.innerText = "+";
+            shrinked.style.display = "none"
+            fullText.style.display = "table-cell"
+            break;
+    }
 
 }
 /**
  * Rest all the show/hide buttons and get the original CSS style. 
  * @param {html element} e button
  */
-function resetTD(e){
-    if(e.parentElement.parentElement.children[2].className == "translation")
+function resetTD(e) {
+    if (e.parentElement.parentElement.children[2].className == "translation")
         return
     let fullText = e.parentElement.parentElement.children[2].children[0];
     let shrinked = e.parentElement.parentElement.children[2].children[1];
-    e.innerText ="+";
-    fullText.style.display="";
-    shrinked.style.display="";
+    e.innerText = "+";
+    fullText.style.display = "";
+    shrinked.style.display = "";
 }
 /**
  * add @see toggleShow function to the whole showHideFull elements. 
  */
-function addShowFunction(){
-   if(typeof showHideFull !== "undefined"){
-    for ( let x of showHideFull){
-        x.onclick= function () {toggleShow(x)}
+function addShowFunction() {
+    if (typeof showHideFull !== "undefined") {
+        for (let x of showHideFull) {
+            x.onclick = function() { toggleShow(x) }
         }
-   }
+    }
 }
 
-function toggleOneline(){
+function toggleOneline() {
     // Approach two: create and delete the whole page, you got the data in wordlst already... 
     //  does it worth to loop it? or would it better if we have had the CSS since its easier.
     // let htmlText;
@@ -878,14 +933,14 @@ function toggleOneline(){
     // }
     // oneline =!oneline;
     // oneLineShow(oneline)
-    updateSettings("oneline",oneline)
-    // go to check this for future fix:https://stackoverflow.com/questions/4602141/variable-name-as-a-string-in-javascript
+    updateSettings("oneline", oneline)
+        // go to check this for future fix:https://stackoverflow.com/questions/4602141/variable-name-as-a-string-in-javascript
 }
 /**
  * set the display state and show the table based on it.
  * @param {number} num display state of the table 
  */
-function displayState(num){
+function displayState(num) {
     /**
      * 1: for showing all 
      * 2: for showing only arabic
@@ -894,8 +949,8 @@ function displayState(num){
     updateSettings("dstate", num)
 
 
-    switch(num){
-        case 1: 
+    switch (num) {
+        case 1:
             translationStyle("table-cell")
             oneLineShow(false)
             break;
@@ -909,50 +964,55 @@ function displayState(num){
             break;
     }
 }
-function translationStyle(text){
-    getCSSRule(".tableTranslation").style.display=text
-    // go to check this for future fix:https://stackoverflow.com/questions/4602141/variable-name-as-a-string-in-javascript
-}
-function oneLineShow(bool){
-    if(typeof showHideFull !== "undefined"){
-        checkButton();
-       }
-  
 
-    oneline=bool;
-    if(bool){
+function translationStyle(text) {
+    getCSSRule(".tableTranslation").style.display = text
+        // go to check this for future fix:https://stackoverflow.com/questions/4602141/variable-name-as-a-string-in-javascript
+}
+
+function oneLineShow(bool) {
+    if (typeof showHideFull !== "undefined") {
+        checkButton();
+    }
+
+
+    oneline = bool;
+    if (bool) {
         fullTextStyle("none")
         shrinkStyle("table-cell");
         showHideButtonStyle("")
-    }else {
+    } else {
         shrinkStyle("none")
         fullTextStyle("table-cell");
         showHideButtonStyle("none")
     }
-    updateSettings("oneline",oneline)
+    updateSettings("oneline", oneline)
 
 }
 /**
  * Reset the showHideFull button which is the one near the open last one to showing as + smybol
  */
-function checkButton(){
-    for ( let x of showHideFull){
-    //    if(x.innerText == "-"){
+function checkButton() {
+    for (let x of showHideFull) {
+        //    if(x.innerText == "-"){
         //    x.click();
         resetTD(x)
-    //    }
-        }
-        // other approach: document.querySelectorAll("span.fullText") 
+            //    }
+    }
+    // other approach: document.querySelectorAll("span.fullText") 
 }
-function fullTextStyle(text){
-    getCSSRule(".fullText").style.display=text;
+
+function fullTextStyle(text) {
+    getCSSRule(".fullText").style.display = text;
 
 }
-function shrinkStyle(text){
-    getCSSRule(".shrinkArabic").style.display=text;
+
+function shrinkStyle(text) {
+    getCSSRule(".shrinkArabic").style.display = text;
 }
-function showHideButtonStyle(text){
-    getCSSRule("#showHideFull").style.display=text;
+
+function showHideButtonStyle(text) {
+    getCSSRule("#showHideFull").style.display = text;
 }
 // Local storage code.  
 // {@link http://www.google.com|Google}
@@ -965,156 +1025,167 @@ function storageAvailable(type) {
         storage.setItem(x, x);
         storage.removeItem(x);
         return true;
-    }
-    catch(e) {
+    } catch (e) {
         return e instanceof DOMException && (
-            // everything except Firefox
-            e.code === 22 ||
-            // Firefox
-            e.code === 1014 ||
-            // test name field too, because code might not be present
-            // everything except Firefox
-            e.name === 'QuotaExceededError' ||
-            // Firefox
-            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+                // everything except Firefox
+                e.code === 22 ||
+                // Firefox
+                e.code === 1014 ||
+                // test name field too, because code might not be present
+                // everything except Firefox
+                e.name === 'QuotaExceededError' ||
+                // Firefox
+                e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
             // acknowledge QuotaExceededError only if there's something already stored
             (storage && storage.length !== 0);
     }
 }
-function normlisation(text){
+
+function normlisation(text) {
     // TODO: add rahman Case, adam case.
-    text = text.replace(/[\u0670-\u0671]/gm,"ا")
+    text = text.replace(/[\u0670-\u0671]/gm, "ا")
     text = text.replace(/[\u064B-\ufd3f]/gm, '');
-    text = text.replace(/\u0629/gm,"ه");
-    text = text.replace(/\u0623/gm,"ا");
-    text = text.replace(/\u0625/gm,"ا");
+    text = text.replace(/\u0629/gm, "ه");
+    text = text.replace(/\u0623/gm, "ا");
+    text = text.replace(/\u0625/gm, "ا");
     return text;
-    
+
 }
-function initLocalStorage(){
-    let keys=["arabic","translation","colour","source","oneline","lastOne","lang"]
-    let arabicSize =parseInt(getCSSRule(".arabic").style.fontSize);
-    let translationSize =parseInt(getCSSRule(".translation").style.fontSize);
-    let colour=getCSSRule("great").style.backgroundColor;
-    let values=[arabicSize,translationSize,colour,5,oneline,lastOne,"1"]
-   for (let i = 0; i < keys.length; i++) {
-      updateSettings(keys[i],values[i])
-   }
-}
-function updateSettings(target,value){
-    settings[target]=value;
-    updateSettingsStorage()
-}
-function warpLast(){
-    updateSettings("lastOne",lastOne)
-}
-function updateSettingsStorage(){
-    if (storageAvailable('localStorage')) {
-        localStorage.setItem('settings',JSON.stringify(settings))
-     }
-}
-function lastOneF(cv){
-    switch(lastOne){
-        case "iqra":
-            openIqra(cv)
-        break; 
-        case "meal": 
-        openMeali(cv)
-        break;
-        case "quran":
-            openQuran(cv)
-        break;
-        case "corpus":
-            openCorpus(cv)
-        break;
+
+function initLocalStorage() {
+    let keys = ["arabic", "translation", "colour", "source", "oneline", "lastOne", "lang"]
+    let arabicSize = parseInt(getCSSRule(".arabic").style.fontSize);
+    let translationSize = parseInt(getCSSRule(".translation").style.fontSize);
+    let colour = getCSSRule("great").style.backgroundColor;
+    let values = [arabicSize, translationSize, colour, 5, oneline, lastOne, "1"]
+    for (let i = 0; i < keys.length; i++) {
+        updateSettings(keys[i], values[i])
     }
 }
-function loadSettings(){
+
+function updateSettings(target, value) {
+    settings[target] = value;
+    updateSettingsStorage()
+}
+
+function warpLast() {
+    updateSettings("lastOne", lastOne)
+}
+
+function updateSettingsStorage() {
     if (storageAvailable('localStorage')) {
-        settings= JSON.parse(localStorage.getItem('settings'))
+        localStorage.setItem('settings', JSON.stringify(settings))
+    }
+}
+
+function lastOneF(cv) {
+    switch (lastOne) {
+        case "iqra":
+            openIqra(cv)
+            break;
+        case "meal":
+            openMeali(cv)
+            break;
+        case "quran":
+            openQuran(cv)
+            break;
+        case "corpus":
+            openCorpus(cv)
+            break;
+    }
+}
+
+function loadSettings() {
+    if (storageAvailable('localStorage')) {
+        settings = JSON.parse(localStorage.getItem('settings'))
         changeColour(settings.colour)
-        changeFont("arabic",0)
-        changeFont("x",0)
+        changeFont("arabic", 0)
+        changeFont("x", 0)
         loadTransF(settings.source);
-        lastOne= settings.lastOne;
+        lastOne = settings.lastOne;
         language(settings.lang)
         showState(settings.dstate)
         displayState(settings.dstate)
     }
 }
 
-function showState(state){
-    switch (state){
+function showState(state) {
+    switch (state) {
         case 1:
-            state1.checked=true;
+            state1.checked = true;
             break;
         case 2:
-            state2.checked=true;
+            state2.checked = true;
             break;
         case 3:
-            state3.checked=true;
+            state3.checked = true;
             break;
     }
 }
 // Global to be able to cancel :) 
 const SR = new webkitSpeechRecognition()
 
-function SearchVoice(language){
-let speechLang= "tr-TR"
-// TODO: tefsir source is not defined -- check form local storage.
-switch(settings.source){
-   case 3:
-   case 5:
-        speechLang="tr-TR"
-        break;
-    case 1:
-    case 2:
-        speechLang="ar-AR"
-        break;
-    case 4:
-    case 6:
-        speechLang="en-EN"
-        break;
-}
-   
-function listen(lang) {
-    SR.lang = lang?lang:speechLang; //: "en-EN"; 
-    console.log(SR.lang)
-    SR.start() 
-}
-function getResult(e) {
-    let a = e.results[0][0]; //use first result
-    $('#speechSettings').modal('hide');
-    console.log(a.transcript, a.confidence.toFixed(2))
-    searchQue.value=a.transcript;
-    findAction(searchQue.value)
-    loading.hidden=true;
+function SearchVoice(language) {
+    let speechLang = "tr-TR"
+        // TODO: tefsir source is not defined -- check form local storage.
+    switch (settings.source) {
+        case 3:
+        case 5:
+            speechLang = "tr-TR"
+            break;
+        case 1:
+        case 2:
+            speechLang = "ar-AR"
+            break;
+        case 4:
+        case 6:
+            speechLang = "en-EN"
+            break;
+    }
 
-    // out.innerText = a.transcript; speak()
-    // out.style.background = ''
-}
-function error(e) {
-    // out.innerText = turk.checked? '[ses yok]' : '[no input]'
-    // out.style.background = ''
-    loading.hidden=true;
-    console.log("error ",e)
-}
-function started(){
-    loading.hidden=false;
-}
-function stopped() { loading.hidden=true;};
-   
-    SR.onspeechend = SR.stop; 
+    function listen(lang) {
+        SR.lang = lang ? lang : speechLang; //: "en-EN"; 
+        console.log(SR.lang)
+        SR.start()
+    }
+
+    function getResult(e) {
+        let a = e.results[0][0]; //use first result
+        $('#speechSettings').modal('hide');
+        console.log(a.transcript, a.confidence.toFixed(2))
+        searchQue.value = a.transcript;
+        findAction(searchQue.value)
+        loading.hidden = true;
+
+        // out.innerText = a.transcript; speak()
+        // out.style.background = ''
+    }
+
+    function error(e) {
+        // out.innerText = turk.checked? '[ses yok]' : '[no input]'
+        // out.style.background = ''
+        loading.hidden = true;
+        console.log("error ", e)
+    }
+
+    function started() {
+        loading.hidden = false;
+    }
+
+    function stopped() { loading.hidden = true; };
+
+    SR.onspeechend = SR.stop;
     SR.onsoundend = error
-    SR.onresult = getResult;  
+    SR.onresult = getResult;
     SR.onnomatch = error
     SR.onstart = started;
     SR.onstop = stopped;
     listen(language);
 }
-function speechCancel(){
+
+function speechCancel() {
     SR.abort();
-    loading.hidden=true;
+    loading.hidden = true;
 }
 /**
  * set langauge of the interface. 
@@ -1123,9 +1194,9 @@ function speechCancel(){
  * @see updateSettings
  * @see loadLang
  */
-function language(val){
+function language(val) {
     val = parseInt(val)
-    switch(val){
+    switch (val) {
         case 1:
             texts = languages.tr
             break;
@@ -1137,7 +1208,7 @@ function language(val){
             break;
 
     }
-    updateSettings("lang",val)
+    updateSettings("lang", val)
     loadLang();
 }
 /**
@@ -1145,47 +1216,47 @@ function language(val){
  * used html ID's to change the text and the json file. 
  * @see langSpeechSettings
  */
-function loadLang(){
-    txtWordFound.innerText=texts.occ;
-    fontAr.innerText=texts.font + " " + texts.size;
-    txtTrans.innerText=texts.trans + " "+texts.size;
-    markColour.innerText=texts.mark + " " + texts.colour;
+function loadLang() {
+    txtWordFound.innerText = texts.occ;
+    fontAr.innerText = texts.font + " " + texts.size;
+    txtTrans.innerText = texts.trans + " " + texts.size;
+    markColour.innerText = texts.mark + " " + texts.colour;
     // showHide.innerText=texts.show +"/"+ texts.hide;
     // shTefsir.innerText=texts.show +"/"+ texts.hide +" " + texts.tefsir;
-    settingsModelTitle.innerText=texts.pref;
+    settingsModelTitle.innerText = texts.pref;
     // txtOneline.innerText=texts.oneLine;
     // txtTefSource.innerText=texts.tefsir + " "+ texts.source;
-    txtLangs.innerText=texts.language;
-    txtModelClose.innerText=texts.close;
-    state1.labels[0].innerText=texts.show;
-    state2.labels[0].innerText=texts.arabic;
-    state3.labels[0].innerText=texts.oneLine;
-    btnArabic.innerText =texts.arabic;
+    txtLangs.innerText = texts.language;
+    txtModelClose.innerText = texts.close;
+    state1.labels[0].innerText = texts.show;
+    state2.labels[0].innerText = texts.arabic;
+    state3.labels[0].innerText = texts.oneLine;
+    btnArabic.innerText = texts.arabic;
     langSpeechSettings()
-    // btnOtherLang.innerText=texts.close; Had to move it inside loadTranF
-    btnClose.innerText=texts.close;
-    modelVoiceControl.innerText=texts.soundSettings;
-    loadText.innerText=texts.listening;
+        // btnOtherLang.innerText=texts.close; Had to move it inside loadTranF
+    btnClose.innerText = texts.close;
+    modelVoiceControl.innerText = texts.soundSettings;
+    loadText.innerText = texts.listening;
 }
 /**
  * A seprate langauge laod for speech language since it needed a switch case. 
  * @see loadLang
  */
-function langSpeechSettings(){
-    switch(settings.source){
+function langSpeechSettings() {
+    switch (settings.source) {
         case 3:
         case 5:
-            btnOtherLang.innerText=texts.turkish;
-             break;
-         case 1:
-         case 2:
-            btnOtherLang.innerText=texts.arabic;
-             break;
-         case 4:
-         case 6:
-            btnOtherLang.innerText=texts.english;
-             break;
-     }
+            btnOtherLang.innerText = texts.turkish;
+            break;
+        case 1:
+        case 2:
+            btnOtherLang.innerText = texts.arabic;
+            break;
+        case 4:
+        case 6:
+            btnOtherLang.innerText = texts.english;
+            break;
+    }
 
 }
 
@@ -1195,13 +1266,15 @@ function menuFn() {
     const menu = document.getElementById("contextMenu");
     const menuOption = document.querySelector(".menu-option");
     let menuVisible = false;
-    function select(){
-    let s = getSelection().toString().trim()
-    if (s) return s
-    else alert("Önce Arapça bir kelime seçin")
+
+    function select() {
+        let s = getSelection().toString().trim()
+        if (s) return s
+        else alert("Önce Arapça bir kelime seçin")
     }
-    function addContextMenu(){
-        document.querySelectorAll("span.arabic").forEach( e => {
+
+    function addContextMenu() {
+        document.querySelectorAll("span.arabic").forEach(e => {
             e.addEventListener("contextmenu", e => {
                 e.preventDefault();
                 const origin = {
@@ -1211,62 +1284,62 @@ function menuFn() {
                 console.log(e)
                 setPosition(origin);
                 return false;
-            })}
-        )
+            })
+        })
     }
-    
-    function contextMenuArabic(){
-        let spAr= document.querySelectorAll("span.arabic")
+
+    function contextMenuArabic() {
+        let spAr = document.querySelectorAll("span.arabic")
         for (let e of spAr) {
             e.addEventListener("click", e => {
                 if (menuVisible) toggleMenu("hide");
             });
         }
     }
-  
-  
-  
+
+
+
     const toggleMenu = command => {
         console.log("toggle" + command)
         menu.style.display = command === "show" ? "block" : "none";
         menuVisible = !menuVisible;
     };
-  
+
     const setPosition = ({ top, left }) => {
         menu.style.left = `${left}px`;
         menu.style.top = `${top-100}px`;
         toggleMenu("show");
     };
-  
+
     contextMenuArabic();
-   
+
     document.addEventListener("click", e => {
         if (menuVisible) toggleMenu("hide");
     });
     // should be added by a function - future note  to myself.
     contextMenu.addEventListener("click", e => {
-        if(!menuVisible){return}
+        if (!menuVisible) { return }
         let sel = select();
-        console.log("worked..." +" sel ="+ sel)
+        console.log("worked..." + " sel =" + sel)
         switch (e.target.innerText) {
             case "Find":
                 findAction(sel)
                 break;
-                case "Google it":
-                    window.open("https://google.com/search?q=" + sel)
+            case "Google it":
+                window.open("https://google.com/search?q=" + sel)
                 break;
-                case "Copy":
-                    navigator.clipboard.writeText(sel)
+            case "Copy":
+                navigator.clipboard.writeText(sel)
                     .then(() => { console.log('Panoya:', sel) })
-                    .catch(e => { alert('Panoya yazamadım\n'+sel) })
-                    break
+                    .catch(e => { alert('Panoya yazamadım\n' + sel) })
+                break
                 break;
         }
         toggleMenu("hide");
     });
     addContextMenu();
-  
-   
+
+
 }
 // TODO: write docs and split the code to more readable style.. 
 // bug:la habersiz
