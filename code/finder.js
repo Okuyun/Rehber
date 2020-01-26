@@ -89,7 +89,7 @@ function createArTd() {
  * @param {int} an aya number
  * @param {string} word the searched word string
  */
-async function createRow(sn, an, word = "") {
+function createRow(sn, an, word = "") {
     // array first element = sura number, second= aya number
     // the function be written in much prettier way but whatever.
     // why did not i use class name immedietyl at the set and call? idk? i only used it here.. .
@@ -154,7 +154,7 @@ async function createRow(sn, an, word = "") {
     // }
 
     if (isRoot(word)) {
-        let h = await markRoot(word.substring(1), suraAr[sn][an], sn, an);
+        let h = markRoot(word.substring(1), suraAr[sn][an], sn, an);
         loc = h;
     } else {
 
