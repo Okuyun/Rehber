@@ -112,7 +112,8 @@ function createRow(sn, an, word = "") {
      * @see displayState
      * @see getWordLocation
      */
-    if (isLatin(word) || !isRoot(word)) {
+    if (isLatin(word) ) {
+        // !isRoot(word)
         loc = getWordLocation(word, suraTr[sn][an], sn, an);
         state3.disabled = true
         showState(1)
@@ -1246,14 +1247,17 @@ function langSpeechSettings() {
     switch (settings.source) {
         case 3:
         case 5:
+            language(1)
             btnOtherLang.innerText = texts.turkish;
             break;
         case 1:
         case 2:
+            language(2)
             btnOtherLang.innerText = texts.arabic;
             break;
         case 4:
         case 6:
+            language(3)
             btnOtherLang.innerText = texts.english;
             break;
     }
@@ -1338,8 +1342,6 @@ function menuFn() {
         toggleMenu("hide");
     });
     addContextMenu();
-
-
 }
 // TODO: write docs and split the code to more readable style.. 
 // bug:la habersiz
