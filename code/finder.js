@@ -418,6 +418,7 @@ function search(word, arr = suraSr) {
         for (let j = 0; j < arr[i].length; j++) {
             // 
             let aya = arr[i][j].toLowerCase();
+            // aya = normlisation(aya)
             // working :) -- the insan error is caused by the RegEx
             let locs = removeOddChar(aya).indexOf(removeOddChar(word.toLowerCase()))
 
@@ -558,8 +559,9 @@ function mujamList(rl) {
 }
 
 function serachedWordTable(word) {
+    submitData(word);
     word = word.trim();
-    word = normlisation(word)
+    // word = normlisation(word)
     if (isRoot(word)) {
         [word, wordLst] = mujamList(word)
         wordLst[1] = [...wordLst];
@@ -567,7 +569,6 @@ function serachedWordTable(word) {
 
     document.title = "finder - " + word;
     wordNumber.innerText = 0;
-    submitData(word);
     let words = word.split("+")
     words.forEach(e => {
         word = e;
