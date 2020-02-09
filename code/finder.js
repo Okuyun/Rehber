@@ -10,10 +10,8 @@
  * Used to check one line function if its open or not.
  */
 let oneline = false;
-/**
- * Roots map
- */
-let rootsMap = new Map();
+
+// toArabic(wordToRoot.get(toBuckwalter("أَتْقَىٰكُمْ"))) -- get word root.. 
 /**
  * Last opened function to go and visit. 
  */
@@ -112,7 +110,7 @@ function createRow(sn, an, word = "") {
      * @see displayState
      * @see getWordLocation
      */
-    if (isLatin(word) ) {
+    if (isLatin(word)) {
         // !isRoot(word)
         loc = getWordLocation(word, suraTr[sn][an], sn, an);
         state3.disabled = true
@@ -208,13 +206,7 @@ function markRoot(root, aya, sn, an) {
 
 }
 
-function readRoots(text, target) {
-    text = text.split("\n")
-    text.forEach(e => {
-        e = e.split(" ")
-        target.set(e.shift(), e)
-    })
-}
+
 
 // mark specific words and return it. 
 // location of the word, length of the word string, and arabic aya with vowels.
@@ -298,6 +290,7 @@ function allOccurence(array, element) {
 function allOccurenceSub(array, element) {
     let indices = [];
     array.forEach(function(item, index) {
+        // localeCompare to use.
         if (item.indexOf(element) !== -1) {
             indices.push(index)
         }
@@ -663,7 +656,9 @@ function addSuggestions(wordList) {
     suggestions.innerHTML = html;
 
 }
-
+function rootToWords(rootB){
+    return rootsMap.get((decodeURI(rootB))).map(e => toArabic(e)).join("+")
+}
 
 function hashChanged() {
     let h = decodeURI(location.hash);
@@ -676,14 +671,14 @@ function hashChanged() {
             arabic = toArabic(decodeURI(arabic));
             break;
         case "w":
-
             break;
         case "t":
-            arabic = h.replace(/%20/g, " ");
             break;
         case "r":
-            arabic = h.replace(/%20/g, " ");
+            // let arr=  ;
+            arabic = rootToWords(arabic)
             break;
+
         default:
             console.log(h)
             findAction('بسم الله')
@@ -697,13 +692,15 @@ function hashChanged() {
     findActionH(arabic); //toArabicLetters(arabic));
 }
 
-function setHash(e) {
+function setHash(word,type) {
+    e = word;
+    if (e.split("+").length !== 1) return;
     if (!isLatin(e)) {
         e = "b=" + toBuckwalter(e);
     } else {
         e = "t=" + e;
     }
-
+    if(type == "r") e = "r="+toBuckwalter(word);
     location.hash = e //toBuckwalter(e);
 }
 /**
@@ -719,7 +716,8 @@ function setHash(e) {
       s-->|yes| loadSettings
  */
 async function initFinder() {
-    await readExternal("https://raw.githubusercontent.com/maeyler/Iqra3/master/data/words.txt", rootsMap, readRoots);
+    // await readWords("words.txt");
+    await initMujam();
     console.log("Finder started...")
     searchQue.addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
@@ -1212,7 +1210,6 @@ function language(val) {
 
     }
     updateSettings("lang", val)
-    loadLang();
 }
 /**
  * Load langugae file and change the UI based on it,
@@ -1224,19 +1221,12 @@ function loadLang() {
     fontAr.innerText = texts.font + " " + texts.size;
     txtTrans.innerText = texts.trans + " " + texts.size;
     markColour.innerText = texts.mark + " " + texts.colour;
-    // showHide.innerText=texts.show +"/"+ texts.hide;
-    // shTefsir.innerText=texts.show +"/"+ texts.hide +" " + texts.tefsir;
     settingsModelTitle.innerText = texts.pref;
-    // txtOneline.innerText=texts.oneLine;
-    // txtTefSource.innerText=texts.tefsir + " "+ texts.source;
-    txtLangs.innerText = texts.language;
     txtModelClose.innerText = texts.close;
     state1.labels[0].innerText = texts.show;
     state2.labels[0].innerText = texts.arabic;
     state3.labels[0].innerText = texts.oneLine;
     btnArabic.innerText = texts.arabic;
-    langSpeechSettings()
-        // btnOtherLang.innerText=texts.close; Had to move it inside loadTranF
     btnClose.innerText = texts.close;
     modelVoiceControl.innerText = texts.soundSettings;
     loadText.innerText = texts.listening;
@@ -1263,6 +1253,7 @@ function langSpeechSettings() {
             btnOtherLang.innerText = texts.english;
             break;
     }
+    loadLang();
 
 }
 
@@ -1338,8 +1329,12 @@ function menuFn() {
                 navigator.clipboard.writeText(sel)
                     .then(() => { console.log('Panoya:', sel) })
                     .catch(e => { alert('Panoya yazamadım\n' + sel) })
-                break
                 break;
+            case "Find Root": 
+            let root= wordToRoot.get(toBuckwalter(sel))
+            setHash(toArabic(root),"r")
+            findAction(rootToWords(root))
+            break;
         }
         toggleMenu("hide");
     });

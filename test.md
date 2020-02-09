@@ -24,7 +24,6 @@ You need to check the following:
   * First Aya of Quran
   * Last Aya of Quran
 
-
 Direct Examples, with expected:
 
 
