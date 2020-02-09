@@ -261,3 +261,8 @@ function initReader() {
         resolve('Success!');
       })
 }
+function timer(log, callback) {
+    let start = Date.now();
+    callback()
+    console.log(log, Date.now() - start, "ms");
+}

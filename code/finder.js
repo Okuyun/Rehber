@@ -534,11 +534,7 @@ function findAction(word = "") {
     setHash(word)
 }
 
-function timer(log, callback) {
-    let start = Date.now();
-    callback()
-    console.log(log, Date.now() - start, "ms");
-}
+
 
 function isRoot(word) {
     return word.includes(";") || word.includes("=");
