@@ -17,7 +17,7 @@ function tableGenerator() {
                 let array = words.split(" ")
                 let temp = new Map(rootsVector);
                 array.forEach(e => { if (wordToRoot.get(toBuckwalter(e)) !== undefined) temp.set(wordToRoot.get(toBuckwalter(e)), temp.get(wordToRoot.get(toBuckwalter(e))) + 1) })
-                surasVector.get(indS).set(indA, { vector: temp, aya: words })
+                surasVector.get(indS).set(indA, { vector: temp, aya: words, ch: indS + 1, ver: indA + 1 })
             }
         );
     })
@@ -59,8 +59,8 @@ function allMag() {
     })
 }
 // two map as vectors.
-function similarity(a, b) {
-    return innerProd(a, b) / (magnitude(a) * magnitude(b))
+function similarity(a, b, magB) {
+    return innerProd(a, b) / (magnitude(a) * (magB ? magB : magnitude(b)))
 }
 
 function test() {
@@ -87,4 +87,17 @@ function similiartyError() {
     // a=a.vector;
     // console.log(similarity(a,a))
     surasVector.forEach((sura) => sura.forEach((aya) => Math.round(!similarity(aya.vector, aya.vector)) >= 1 ? console.log(aya.aya) : aya))
+}
+
+function checkSimilarity(c, v, min = 85) {
+    min = min / 100
+        // verse vector
+    let ratio;
+    let vv = surasVector.get(c - 1).get(v - 1).vector;
+    let mag = magnitude(vv)
+    surasVector.forEach(s => s.forEach(v => {
+        if ((ratio = similarity(v.vector, vv, mag)) >= min) {
+            console.log(v.aya, ratio, v.ch, v.ver)
+        }
+    }))
 }
