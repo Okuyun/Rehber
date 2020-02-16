@@ -1,6 +1,7 @@
 // math stuff: https://youtu.be/5XVFQix8tAk?t=455
 const rootsVector = new Map();
 const surasVector = new Map();
+let result;
 
 function initRootVector() {
     [...rootsMap.keys()].forEach((key) => {
@@ -76,7 +77,7 @@ function similiartySimilarVerses() {
 }
 
 function similarityCheckNAN() {
-    let result = []
+    result = []
     let f = (aya, c, v) => (isNaN(similarity(aya.vector, aya.vector))) ? result.push([100, c + 1, v + 1]) : null;
     surasVector.forEach((sura, c) => sura.forEach((aya, v) => f(aya, c, v)))
     return result;
@@ -92,7 +93,7 @@ function similiartyError() {
 }
 
 function checkSimilarity(c, v, min = 85) {
-    let result = [];
+    result = [];
     min = min / 100
         // verse vector
     let ratio;
@@ -110,7 +111,6 @@ function checkSimilarity(c, v, min = 85) {
     } else {
         result = similarityCheckNAN();
     }
-
 
 
     return result;
@@ -144,6 +144,11 @@ function ayaList() {
 function initEvents() {
     let aList = document.getElementById("al");
     let suraList = document.getElementById("sl");
+    let perc = document.getElementById("perc");
+    let srt = document.getElementById("sortBy");
+
+    srt.addEventListener("change", sortWarp)
+    perc.addEventListener("change", triggerSimilarity)
     suraList.addEventListener("change", ayaList)
     aList.addEventListener("change", triggerSimilarity)
 }
@@ -151,8 +156,11 @@ function initEvents() {
 function triggerSimilarity() {
     let ayaList = document.getElementById("al");
     let suraList = document.getElementById("sl");
-    let arr = checkSimilarity(suraList.value, ayaList.value)
-    createTable(arr)
+    let per = document.getElementById("perc");
+
+    result = checkSimilarity(suraList.value, ayaList.value, perc.value)
+    sortReslts()
+    createTable(result)
 }
 
 function initSimilarity() {
@@ -220,6 +228,35 @@ function splitDown(c, v) {
   </div>    
 </div>
 `
+}
+
+function sortWarp() {
+    sortReslts()
+    createTable(result)
+}
+
+function sortReslts() {
+    let perDesc = (a, b) => a[0] - b[0]
+    let perAsc = (a, b) => b[0] - a[0]
+    let indDesc = (a, b) => (a[1] + a[2]) - (b[1] + b[2])
+    let indAsc = (a, b) => (b[1] + b[2]) - (a[1] + a[2])
+    switch (sortBy.value) {
+        case "0":
+            result.sort(perDesc)
+            break;
+        case "1":
+            result.sort(perAsc)
+            break;
+        case "2":
+            result.sort(indDesc)
+            break;
+        case "3":
+            result.sort(indAsc)
+            break;
+    }
+
+
+
 }
 
 // check full words, check the speed, time to get them, if its slow or not, or if it broken, need pagination...
