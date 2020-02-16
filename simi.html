@@ -97,7 +97,22 @@
     <br />
 
     <div class="container">
-   
+      <div class="row bg-white sticky-top" style="z-index: 2;">
+        <label  class="col-1">Sura</label>
+        <select class="select col-2">
+          <option value="0">1 Al-Faatiha</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+        <label  name="aya" class="col-1">Aya</label>
+        <select name="aya"class="select col-1">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </div>
       <div class="row">
         <div class="col-12">
           <table id="dTable" class="table">
@@ -107,44 +122,15 @@
             </caption>
             <thead>
               <tr>
-                <th id="translationHeader" style="width: 47%;"  class="tableTranslation">
-                  <div class="btn-group">
-                    <button id="THtext" type="button" class="btn badge badge-white align-text-bottom dropdown-toggle dropdown-toggle-split translation" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Türkçe: Diyanet Meali
-                    </button>
-                    <div class="dropdown-menu">
-                      <button class="dropdown-item" onclick="loadTransF(3)">Türkçe: Diyanet Meali</button>
-                      <button class="dropdown-item" onclick="loadTransF(5)">Türkçe: Elmalılı Hamdi Yazır</button>
-                      <button class="dropdown-item" onclick="loadTransF(6)">English: Abdullah Yusuf Ali</button>
-                      <button class="dropdown-item" onclick="loadTransF(4)">English: Ahmed Ali</button>
-                      <button class="dropdown-item" onclick="loadTransF(1)">تفسير الجلالين</button>
-                      <button class="dropdown-item" onclick="loadTransF(2)">تفسير الميسر</button>
-
-                    </div>
-                  </div>
-                </th>
-                <th id="arabicHeader" style="width: 47%;" class="text-right">عربي
+              
+                <th id="arabicHeader"  class="text-right">عربي
                 <!-- TODO: implement tefsir source here as well, it will be helpful to compare. -->
                 </th>
               </tr>
             </thead>
-            <tbody><tr><td>
-      <!-- Example split danger button -->
-  <div class="btn-group">
-    <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('1:1')">Benzerlik xx%</button>
-    <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('1:1')">Al-Faatiha 1:1</button>
-    <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <span class="sr-only">Toggle Dropdown</span>
-    </button>
-    <div class="dropdown-menu">
-      <button class="dropdown-item" onclick="openCorpus('1:1')">Corpus</button>
-      <button class="dropdown-item" onclick="openQuran('1:1')">Quran</button>
-      <button class="dropdown-item" onclick="openMeali('1:1')">Meali</button>
-      <div class="dropdown-divider"></div>
-      <button class="dropdown-item" onclick="openIqra('1:1')">Reader</button>
-    </div>
-  </div>
-  &nbsp;&nbsp;<span class="translation">«بسم الله الرحمن الرحيم»</span></td><td scope="col" class="text-right"><span class="arabic"><great onclick="openIqra(`1:1`)">بسم الله</great> الرحمن الرحيم</span>&nbsp;&nbsp;
+            <tbody>
+              <tr>
+               <td scope="col" class="text-right"><span class="arabic"><great onclick="openIqra(`1:1`)">بسم الله</great> الرحمن الرحيم</span>&nbsp;&nbsp;
       <!-- Example split danger button -->
   <div class="btn-group">
     <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('1:1')">الفاتحة 1:1</button>
@@ -159,22 +145,13 @@
       <button class="dropdown-item" onclick="openIqra('1:1')">Reader</button>
     </div>
   </div>
-  </td></tr><tr><td>
-      <!-- Example split danger button -->
-  <div class="btn-group">
-    <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('11:41')">Hud 11:41</button>
-    <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <span class="sr-only">Toggle Dropdown</span>
-    </button>
-    <div class="dropdown-menu">
-      <button class="dropdown-item" onclick="openCorpus('11:41')">Corpus</button>
-      <button class="dropdown-item" onclick="openQuran('11:41')">Quran</button>
-      <button class="dropdown-item" onclick="openMeali('11:41')">Meali</button>
-      <div class="dropdown-divider"></div>
-      <button class="dropdown-item" onclick="openIqra('11:41')">Reader</button>
-    </div>
-  </div>
-  &nbsp;&nbsp;<span class="translation">«وقال» نوح «اركبوا فيها بسم الله مجراها ومرساها» بفتح الميمين وضمهما مصدران أي جريها ورسوها أي منتهى سيرها «إن ربي لغفور رحيم» حيث لم يهلكنا.</span></td><td scope="col" class="text-right"><span class="arabic">وقال اركبوا فيها <great onclick="openIqra(`11:41`)">بسم الله</great> مجراها ومرساها إن ربي لغفور رحيم</span>&nbsp;&nbsp;
+  <span class="badge badge-info">100%</span>
+
+  </td></tr>
+  
+  <tr>
+ 
+  <td scope="col" class="text-right"><span class="arabic">وقال اركبوا فيها <great onclick="openIqra(`11:41`)">بسم الله</great> مجراها ومرساها إن ربي لغفور رحيم</span>&nbsp;&nbsp;
       <!-- Example split danger button -->
   <div class="btn-group">
     <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('11:41')">هود 11:41</button>
@@ -189,22 +166,7 @@
       <button class="dropdown-item" onclick="openIqra('11:41')">Reader</button>
     </div>
   </div>
-  </td></tr><tr><td>
-      <!-- Example split danger button -->
-  <div class="btn-group">
-    <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('27:30')">An-Naml 27:30</button>
-    <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <span class="sr-only">Toggle Dropdown</span>
-    </button>
-    <div class="dropdown-menu">
-      <button class="dropdown-item" onclick="openCorpus('27:30')">Corpus</button>
-      <button class="dropdown-item" onclick="openQuran('27:30')">Quran</button>
-      <button class="dropdown-item" onclick="openMeali('27:30')">Meali</button>
-      <div class="dropdown-divider"></div>
-      <button class="dropdown-item" onclick="openIqra('27:30')">Reader</button>
-    </div>
-  </div>
-  &nbsp;&nbsp;<span class="translation">«إنه من سليمان وإنه» أي مضمونه «بسم الله الرحمن الرحيم».</span></td><td scope="col" class="text-right"><span class="arabic">إنه من سليمان وإنه <great onclick="openIqra(`27:30`)">بسم الله</great> الرحمن الرحيم</span>&nbsp;&nbsp;
+  </td></tr><tr><td scope="col" class="text-right"><span class="arabic">إنه من سليمان وإنه <great onclick="openIqra(`27:30`)">بسم الله</great> الرحمن الرحيم</span>&nbsp;&nbsp;
       <!-- Example split danger button -->
   <div class="btn-group">
     <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('27:30')">النمل 27:30</button>
