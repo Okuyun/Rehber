@@ -42,7 +42,7 @@ function magnitude(a) {
 }
 
 function round_to_precision(x, precision) {
-    var y = +x + (precision === undefined ? 0.5 : precision / 2);
+    let y = +x + (precision === undefined ? 0.5 : precision / 2);
     return y - (y % (precision === undefined ? 1 : +precision));
 }
 
@@ -93,11 +93,14 @@ function checkSimilarity(c, v, min = 85) {
     min = min / 100
         // verse vector
     let ratio;
+
     let vv = surasVector.get(c - 1).get(v - 1).vector;
     let mag = magnitude(vv)
     surasVector.forEach(s => s.forEach(v => {
         if ((ratio = similarity(v.vector, vv, mag)) >= min) {
-            console.log(v.aya, ratio, v.ch, v.ver)
+            console.log(v.aya, (ratio = parseInt(ratio * 100)) > 100 ? 100 : ratio, v.ch, v.ver)
         }
     }))
 }
+
+// check full words, check the speed, time to get them, if its slow or not, or if it broken, need pagination...
