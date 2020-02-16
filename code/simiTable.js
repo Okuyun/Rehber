@@ -28,6 +28,9 @@ async function initTable() {
     await initMujam();
     initRootVector();
     timer("All vectors created in ", tableGenerator)
+    initEvents()
+    suraList()
+    ayaList()
 
 }
 
@@ -165,11 +168,9 @@ function triggerSimilarity() {
 
 function initSimilarity() {
     initTable()
-    initEvents()
-    suraList()
-    ayaList()
+
 }
-initSimilarity();
+initTable();
 
 function createTable(arr) {
     let ayaList = document.getElementById("al");
