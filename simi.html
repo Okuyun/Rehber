@@ -16,6 +16,11 @@
     <link rel="icon" href="images/search.png">
 
     <link rel="manifest" href="manifest.json">
+    <style>
+        /* * {
+    border: 1px solid;
+} */
+    </style>
 </head>
 
 <body>
@@ -67,14 +72,14 @@
     <div class="container">
         <div class="row bg-white sticky-top" style="z-index: 2;">
             <label class="col-1">Sura</label>
-            <select class="select col-2">
+            <select id="sl" class="select col-2">
           <option value="0">1 Al-Faatiha</option>
           <option value="1">One</option>
           <option value="2">Two</option>
           <option value="3">Three</option>
         </select>
             <label name="aya" class="col-1">Aya</label>
-            <select name="aya" class="select col-1">
+            <select id="al" name="aya" class="select col-1">
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -92,13 +97,13 @@
                         <tr>
 
                             <th id="arabicHeader" class="text-right">عربي
-                                <!-- TODO: implement tefsir source here as well, it will be helpful to compare. -->
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td scope="col" class="text-right"><span class="arabic"><great onclick="openIqra(`1:1`)">بسم الله</great> الرحمن الرحيم</span>&nbsp;&nbsp;
+                            <td scope="col" class="text-right">
+                                <span class="arabic"><great onclick="openIqra(`1:1`)">بسم الله</great> الرحمن الرحيم</span>&nbsp;&nbsp;
                                 <!-- Example split danger button -->
                                 <div class="btn-group">
                                     <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('1:1')">الفاتحة 1:1</button>
@@ -112,8 +117,9 @@
                                         <div class="dropdown-divider"></div>
                                         <button class="dropdown-item" onclick="openIqra('1:1')">Reader</button>
                                     </div>
+
                                 </div>
-                                <span class="badge badge-info">100%</span>
+                                <span class="badge badge-info col-1">100%</span>
 
                             </td>
                         </tr>
@@ -135,6 +141,8 @@
                                         <button class="dropdown-item" onclick="openIqra('11:41')">Reader</button>
                                     </div>
                                 </div>
+                                <span class="badge badge-info col-1">41%</span>
+
                             </td>
                         </tr>
                         <tr>
@@ -152,7 +160,10 @@
                                         <div class="dropdown-divider"></div>
                                         <button class="dropdown-item" onclick="openIqra('27:30')">Reader</button>
                                     </div>
+
                                 </div>
+                                <span class="badge badge-info col-1">90% </span>
+
                             </td>
                         </tr>
                     </tbody>
@@ -160,6 +171,8 @@
             </div>
         </div>
     </div>
+    <script src="./code/finder.js"></script>
+    <script src="./code/quran-sura.js"></script>
     <script src="./code/buckwalter.js"></script>
     <script src="./code/common.js"></script>
     <script src="./code/script.js"></script>

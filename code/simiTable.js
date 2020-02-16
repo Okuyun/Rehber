@@ -75,9 +75,11 @@ function similiartySimilarVerses() {
     surasVector.forEach((sura) => sura.forEach((aya) => console.log(similarity(aya.vector, aya.vector), aya.aya)))
 }
 
-function similairtyCheckNAN() {
-    let f = (aya) => (isNaN(similarity(aya.vector, aya.vector))) ? console.log(aya.aya) : null;
-    surasVector.forEach((sura) => sura.forEach((aya) => f(aya)))
+function similarityCheckNAN() {
+    let result = []
+    let f = (aya, c, v) => (isNaN(similarity(aya.vector, aya.vector))) ? result.push([100, c + 1, v + 1]) : null;
+    surasVector.forEach((sura, c) => sura.forEach((aya, v) => f(aya, c, v)))
+    return result;
 
 }
 
@@ -90,17 +92,134 @@ function similiartyError() {
 }
 
 function checkSimilarity(c, v, min = 85) {
+    let result = [];
     min = min / 100
         // verse vector
     let ratio;
 
     let vv = surasVector.get(c - 1).get(v - 1).vector;
     let mag = magnitude(vv)
-    surasVector.forEach(s => s.forEach(v => {
-        if ((ratio = similarity(v.vector, vv, mag)) >= min) {
-            console.log(v.aya, (ratio = parseInt(ratio * 100)) > 100 ? 100 : ratio, v.ch, v.ver)
-        }
-    }))
+        // console.log(mag)
+    if (mag > 0) {
+        surasVector.forEach(s => s.forEach(v => {
+            if ((ratio = similarity(v.vector, vv, mag)) >= min) {
+                // console.log(v.aya, (ratio = parseInt(ratio * 100)) > 100 ? 100 : ratio, v.ch, v.ver)
+                result.push([(ratio = parseInt(ratio * 100)) > 100 ? 100 : ratio, v.ch, v.ver])
+            }
+        }))
+    } else {
+        result = similarityCheckNAN();
+    }
+
+
+
+    return result;
+}
+// start DOM functions
+function suraList() {
+    let suraList = document.getElementById("sl");
+    suraList.innerHTML = "";
+    quran.sura.forEach((e, ind) => {
+        suraList.appendChild(createOption(ind + 1 + " " + e.tname, ind + 1))
+    })
+}
+
+function createOption(text, value) {
+    let option = document.createElement("option");
+    option.text = text;
+    option.value = value;
+    return option
+}
+
+function ayaList() {
+    let ayaList = document.getElementById("al");
+    let suraList = document.getElementById("sl");
+    ayaList.innerHTML = "";
+    for (let i = 1; i <= quran.sura[suraList.value - 1].ayas; i++) {
+        ayaList.appendChild(createOption(i, i))
+    }
+    ayaList.dispatchEvent(new Event("change"));
+}
+
+function initEvents() {
+    let aList = document.getElementById("al");
+    let suraList = document.getElementById("sl");
+    suraList.addEventListener("change", ayaList)
+    aList.addEventListener("change", triggerSimilarity)
+}
+
+function triggerSimilarity() {
+    let ayaList = document.getElementById("al");
+    let suraList = document.getElementById("sl");
+    let arr = checkSimilarity(suraList.value, ayaList.value)
+    createTable(arr)
+}
+
+function initSimilarity() {
+    initTable()
+    initEvents()
+    suraList()
+    ayaList()
+}
+initSimilarity();
+
+function createTable(arr) {
+    let ayaList = document.getElementById("al");
+    let suraList = document.getElementById("sl");
+
+    wordNumber.innerText = arr.length
+    document.title = suraList.value + " " + ayaList.value + " " + arr.length
+    element = document.getElementById("dTable").getElementsByTagName('tbody')[0];
+    element.innerHTML = ""
+    arr.forEach(e => {
+        element.appendChild(createRow(...e))
+    });
+}
+
+function createRow(ratio, ch, ve) {
+    //tr ==> td ==> div ==> span
+    let tr = document.createElement("tr");
+
+    let td = document.createElement("td");
+    td.scope = "col"
+    td.className = "text-right"
+
+    let span = document.createElement("span")
+    span.className = "arabic"
+    span.innerText = suraAr[ch - 1][ve - 1]
+    td.appendChild(span)
+    let div = splitDown(ch, ve)
+    td.innerHTML += div
+        // btn group...
+    span = document.createElement("span")
+    span.className = "badge badge-info col-1";
+    span.innerText = ratio + "%"
+    td.appendChild(span)
+
+
+    tr.appendChild(td)
+    return tr;
+}
+
+function splitDown(c, v) {
+    let cv = c + ":" + v
+    return `
+    <!-- Example split danger button -->
+<div class="btn-group">
+<button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<span class="sr-only">Toggle Dropdown</span>
+</button>
+  <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOneF('${cv}')">${cv + " "+ quran.sura[c-1].name}</button>
+ 
+  <div class="dropdown-menu">
+    <button class="dropdown-item" onclick="openCorpus('${cv}')">Corpus</button>
+    <button class="dropdown-item" onclick="openQuran('${cv}')">Quran</button>
+    <button class="dropdown-item" onclick="openMeali('${cv}')">Meali</button>
+    <div class="dropdown-divider"></div>
+    <button class="dropdown-item" onclick="openIqra('${cv}')">Iqra</button>
+  </div>    
+</div>
+`
 }
 
 // check full words, check the speed, time to get them, if its slow or not, or if it broken, need pagination...
