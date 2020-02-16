@@ -36,70 +36,7 @@
       charset="UTF-8"
     ></script>
 
-    <style>
-      .arabic {
-        font: 20px me_quran, serif;
-      }
-      .container {
-        max-width: 95vw;
-      }
-      @font-face {
-        font-family: me_quran;
-        src: url("style/me_quran.ttf");
-      }
-
-      great {
-        cursor: pointer;
-        background-color: yellow;
-        color: black;
-      }
-      .translation {
-        font-size: 17px;
-      }
-      .tableTranslation {
-        display: table-cell;
-      }
-      .fullText{
-        display: table-cell;
-      }
-      .shrinkArabic{
-        display: none;
-        white-space: nowrap;
-    max-width: 80vw;
-    overflow-x: hidden;
-    /* overflow-x: scroll; */
-      }
-      #showHideFull {
-        display:none;
-      }
-
-#contextMenu {
-  width: 120px;
-  user-select: none;
-  z-index: 1;
-  box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
-  position: fixed;
-  display: none;
-  transition: 0.2s display ease-in;
-}
-#contextMenu .menu-options {
-  list-style: none;
-  padding: 10px 0;
-  z-index: 1;
-}
-#contextMenu .menu-options .menu-option {
-  font-weight: 500;
-  z-index: 1;
-  font-size: 14px;
-  padding: 10px 40px 10px 20px;
-  cursor: pointer;
-}
-#contextMenu .menu-options .menu-option:hover {
-  background: rgba(0, 0, 0, 0.2);
-}
-
-
-    </style>
+    <link rel="stylesheet" href="./style/common.css">
     <link rel="icon" href="images/search.png">
 
     <link rel="manifest" href="manifest.json">
