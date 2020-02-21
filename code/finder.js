@@ -10,7 +10,14 @@
  * Used to check one line function if its open or not.
  */
 let oneline = false;
-
+/**
+ * Selected Page -- for chuncks of data.
+ */
+let dataIndex = 0;
+/**
+ * totalPages of data in page.
+ */
+let totalPages = 10;
 // toArabic(wordToRoot.get(toBuckwalter("أَتْقَىٰكُمْ"))) -- get word root.. 
 /**
  * Last opened function to go and visit. 
@@ -88,6 +95,7 @@ function createArTd() {
  * @param {string} word the searched word string
  */
 function createRow(sn, an, word = "") {
+    // https://stackoverflow.com/questions/37924104/table-column-sizing -- to follow and fix.
     // array first element = sura number, second= aya number
     // the function be written in much prettier way but whatever.
     // why did not i use class name immedietyl at the set and call? idk? i only used it here.. .
@@ -386,17 +394,37 @@ function shrink(text, number = 5) {
     return text.slice(pre, post).join(" ");
 
 }
-
+let dataArr, wordCt;
 // arr is lsit of aya and sura, searched word.
 function createTable(arr, word) {
+    dataArr = arr;
+    wordCt = word;
     wordNumber.innerText = arr.length + parseInt(wordNumber.innerText)
     document.title += " " + wordNumber.innerText;
-    element = document.getElementById("dTable").getElementsByTagName('tbody')[0];
-    arr.forEach(e => {
-        element.appendChild(createRow(e[0], e[1], word))
-    });
+    // arr.forEach((e, i) => {
+    //     if (i > 100) { console.log(i); return; } else {
+    //         element.appendChild(createRow(e[0], e[1], word))
+    //     }
+    // });
+    paginationControl(0)
+}
+
+// wordLst[1].size --> get number of page   s
+
+
+
+function paginationControl(num) {
+    let element = document.getElementById("dTable").getElementsByTagName('tbody')[0];
+    element.innerHTML = ""
+    dataIndex = num;
+    let min = dataIndex * totalPages >= dataArr.length? dataArr.length- dataArr.length%totalPages :dataIndex * totalPages;
+    let max = min + totalPages >= dataArr.length ? dataArr.length : min + totalPages;
+    for (let i = min; i < max; i++) {
+        element.appendChild(createRow(dataArr[i][0], dataArr[i][1], wordCt))
+    }
     addShowFunction();
 }
+
 
 // TODO: simplify and re-read the code then.
 
@@ -652,9 +680,10 @@ function addSuggestions(wordList) {
     suggestions.innerHTML = html;
 
 }
-function rootToWords(rootB){
-    return rootsMap.get((decodeURI(rootB))).map(e => toArabic(e)).join("+")
-}
+
+// function rootToWords(rootB) {
+//     return rootsMap.get((decodeURI(rootB))).map(e => toArabic(e)).join("+")
+// }
 
 function hashChanged() {
     let h = decodeURI(location.hash);
@@ -672,8 +701,8 @@ function hashChanged() {
             break;
         case "r":
             // let arr=  ;
-            arabic = rootToWords(arabic)
-            break;
+            // arabic = rootToWords(arabic)
+            return;
 
         default:
             console.log(h)
@@ -688,7 +717,7 @@ function hashChanged() {
     findActionH(arabic); //toArabicLetters(arabic));
 }
 
-function setHash(word,type) {
+function setHash(word, type) {
     e = word;
     if (e.split("+").length !== 1) return;
     if (!isLatin(e)) {
@@ -696,7 +725,7 @@ function setHash(word,type) {
     } else {
         e = "t=" + e;
     }
-    if(type == "r") e = "r="+toBuckwalter(word);
+    if (type == "r") e = "r=" + toBuckwalter(word);
     location.hash = e //toBuckwalter(e);
 }
 /**
@@ -1254,7 +1283,6 @@ function langSpeechSettings() {
 }
 
 
-
 function menuFn() {
     const menu = document.getElementById("contextMenu");
     const menuOption = document.querySelector(".menu-option");
@@ -1326,11 +1354,11 @@ function menuFn() {
                     .then(() => { console.log('Panoya:', sel) })
                     .catch(e => { alert('Panoya yazamadım\n' + sel) })
                 break;
-            case "Find Root": 
-            let root= wordToRoot.get(toBuckwalter(sel))
-            setHash(toArabic(root),"r")
-            findAction(rootToWords(root))
-            break;
+            case "Find Root":
+                let root = wordToRoot.get(toBuckwalter(sel))
+                setHash(toArabic(root), "r")
+                    // findAction(rootToWords(root))
+                break;
         }
         toggleMenu("hide");
     });

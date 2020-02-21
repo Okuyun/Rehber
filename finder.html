@@ -294,6 +294,34 @@
           </table>
         </div>
       </div>
+      <!-- pagination -->
+      <div aria-label="Page navigation example " class="row justify-content-center">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <button id=pagePrev class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </button>
+          </li>
+            <li class="page-item"><button  id=firstPage  class="page-link" href="#">1</button></li>
+            <!-- <li class="page-item"><button class="page-link" href="#">2</button></li>
+            <li class="page-item"><button class="page-link" href="#">3</button></li>
+            <li class="page-item"><button class="page-link" href="#">4</button></li> -->
+            <!-- <li class="page-item"><button class="page-link" href="#">...</button></li> -->
+            <li class="page-item"><input  id=firstPage  type="number" class="page-link" placeholder="Your Data" value="0"></input></li>
+            <!-- <li class="page-item"><button class="page-link" href="#">7</button></li>
+            <li class="page-item"><button class="page-link" href="#">8</button></li>
+            <li class="page-item"><button class="page-link" href="#">9</button></li>-->
+            <li  class="page-item"><button  id=lastPage  class="page-link" href="#">10</buton></li> 
+          <li class="page-item">
+            <button id=pageNext class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <!-- end of pagination -->
     </div>
 
     <!-- Modal Settings-->
@@ -335,7 +363,14 @@
      
           <hr>
          
-          <label for="">Action button</label>
+          <label for="dataAmount">Number of Verse in page</label>
+          <select id="dataAmount" name="dataAmount" class="select col-3">
+            <option value="1">10</option>
+            <option value="2">20</option>
+            <option value="3">50</option>
+            <option value="4">100</option>
+            <option value="5">All</option>
+          </select>
           <hr>
      
           <!-- if you want to choose from multiple add only this keyword before class.. -->
@@ -429,6 +464,11 @@
    
   </ul>
 </div>
+<!-- <script src="./Iqra3/code/common.js"></script> -->
+<!-- <script src="./Iqra3/code/mujam.js"></script> -->
+<script src="./Iqra3/code/utilities.js"></script>
+<script src="./code/classes.js"></script>
+
 <script src="./code/mujam.js"></script>
   <script src="code/language.js"></script>
     <script src="code/common.js"></script>
