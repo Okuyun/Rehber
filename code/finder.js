@@ -15,9 +15,9 @@ let oneline = false;
  */
 let dataIndex = 0;
 /**
- * totalPages of data in page.
+ * verseInPage of data in page.
  */
-let totalPages = 10;
+let verseInPage = 10;
 // toArabic(wordToRoot.get(toBuckwalter("أَتْقَىٰكُمْ"))) -- get word root.. 
 /**
  * Last opened function to go and visit. 
@@ -406,7 +406,7 @@ function createTable(arr, word) {
     //         element.appendChild(createRow(e[0], e[1], word))
     //     }
     // });
-    paginationControl(0)
+    setVersePerPage()
 }
 
 // wordLst[1].size --> get number of page   s
@@ -416,16 +416,83 @@ function createTable(arr, word) {
 function paginationControl(num) {
     let element = document.getElementById("dTable").getElementsByTagName('tbody')[0];
     element.innerHTML = ""
-    dataIndex = num;
-    let min = dataIndex * totalPages >= dataArr.length? dataArr.length- dataArr.length%totalPages :dataIndex * totalPages;
-    let max = min + totalPages >= dataArr.length ? dataArr.length : min + totalPages;
+    let numberOfPages = getPages()
+    if (num < 0) dataIndex = 0;
+    else if (num > numberOfPages) dataIndex = numberOfPages;
+    else dataIndex = num;
+    let chosenPageButton = document.getElementById("choosenPage")
+    chosenPageButton.value = dataIndex + 1;
+    // dataIndex = num <= 0 ? 0 : (Math.ceil(dataArr.length / verseInPage) <= num) ? num : Math.ceil(dataArr.length / verseInPage);
+    let min = dataIndex * verseInPage >= dataArr.length ? dataArr.length - dataArr.length % verseInPage : dataIndex * verseInPage;
+    let max = min + verseInPage >= dataArr.length ? dataArr.length : min + verseInPage;
     for (let i = min; i < max; i++) {
         element.appendChild(createRow(dataArr[i][0], dataArr[i][1], wordCt))
     }
     addShowFunction();
 }
 
+function paginationNext() {
+    paginationControl(dataIndex + 1)
+}
 
+function getPages() {
+    return Math.ceil(dataArr.length / verseInPage) - 1;
+}
+
+function setTotalVerses() {
+    verseInPage = document.getElementById("dataAmount").value
+    if (verseInPage == "All") {
+        verseInPage = dataArr.length;
+    } else {
+        verseInPage = parseInt(verseInPage)
+    }
+    paginationControl(0)
+}
+
+function paginationPrev() {
+    paginationControl(dataIndex - 1)
+}
+
+function paginationFirst() {
+    paginationControl(0)
+}
+
+function paginationLast() {
+    paginationControl(getPages())
+}
+
+function setVersePerPage() {
+    let controller = document.getElementById("dataAmount").value
+    let lastPageButton = document.getElementById("lastPage")
+    verseInPage = parseInt(controller);
+    lastPageButton.innerText = getPages() + 1;
+    paginationControl(dataIndex)
+}
+
+function paginationSet() {
+    let chosenPageButton = document.getElementById("choosenPage")
+    paginationControl(chosenPageButton.value - 1)
+}
+
+function initPagination() {
+    let controller = document.getElementById("dataAmount")
+    controller.addEventListener("change", setVersePerPage)
+
+    let lastPageButton = document.getElementById("lastPage")
+    lastPageButton.addEventListener("click", paginationLast)
+
+    let chosenPageButton = document.getElementById("choosenPage")
+    chosenPageButton.addEventListener("change", paginationSet)
+
+    let firstPageButton = document.getElementById("firstPage")
+    firstPageButton.addEventListener("click", paginationFirst)
+
+    let pagePrevButton = document.getElementById("pagePrev")
+    pagePrevButton.addEventListener("click", paginationPrev)
+
+    let pageNextButton = document.getElementById("pageNext")
+    pageNextButton.addEventListener("click", paginationNext)
+}
 // TODO: simplify and re-read the code then.
 
 // get the sura and verses that has this word and the word location.
@@ -761,6 +828,8 @@ async function initFinder() {
         }
     }
     menuFn();
+    initPagination();
+
 
 }
 // from: https://stackoverflow.com/questions/1409225/changing-a-css-rule-set-from-javascript

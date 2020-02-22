@@ -2,6 +2,7 @@
 const rootsVector = new Map();
 const surasVector = new Map();
 let result;
+// <!-- tum kurandan gecip 80% ustu var olan benzerlikleri bir yere yazdirmaya dusundum -->
 
 function initRootVector() {
     [...rootsMap.keys()].forEach((key) => {
