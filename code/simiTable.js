@@ -9,7 +9,12 @@ function initRootVector() {
         if (rootsVector.get(key)) console.log("key")
         rootsVector.set(key, 0);
     });
+    return new Promise((resolve, reject) => { resolve("Horay") })
 }
+
+function readHash() {}
+
+function parseHash() {}
 
 function tableGenerator() {
     suraAr.forEach((ayas, indS) => {
@@ -23,15 +28,20 @@ function tableGenerator() {
             }
         );
     })
+    return new Promise((resolve, reject) => { resolve("Horay") })
+
 }
 async function initTable() {
     await init()
     await initMujam();
-    initRootVector();
-    timer("All vectors created in ", tableGenerator)
+    await initRootVector();
+    await timer("All vectors created in ", tableGenerator)
     initEvents()
     suraList()
-    ayaList()
+
+    if (location.hash) {
+        getHash();
+    }
 
 }
 
@@ -135,14 +145,16 @@ function createOption(text, value) {
     return option
 }
 
-function ayaList() {
+function ayaList(trigger = 1) {
     let ayaList = document.getElementById("al");
     let suraList = document.getElementById("sl");
     ayaList.innerHTML = "";
     for (let i = 1; i <= quran.sura[suraList.value - 1].ayas; i++) {
         ayaList.appendChild(createOption(i, i))
     }
-    ayaList.dispatchEvent(new Event("change"));
+    if (trigger) {
+        ayaList.dispatchEvent(new Event("change"));
+    }
 }
 
 function initEvents() {
@@ -155,13 +167,15 @@ function initEvents() {
     perc.addEventListener("change", triggerSimilarity)
     suraList.addEventListener("change", ayaList)
     aList.addEventListener("change", triggerSimilarity)
+    window.addEventListener("hashchange", getHash);
+
 }
 
 function triggerSimilarity() {
     let ayaList = document.getElementById("al");
     let suraList = document.getElementById("sl");
-    let per = document.getElementById("perc");
-
+    let perc = document.getElementById("perc");
+    setHash()
     result = checkSimilarity(suraList.value, ayaList.value, perc.value)
     sortReslts()
     createTable(result)
@@ -261,4 +275,25 @@ function sortReslts() {
 
 }
 
+function getHash() {
+    let h = decodeURI(location.hash).slice(1);
+    let [c, v] = h.split(":")
+    let ayaListObj = document.getElementById("al");
+    let suraList = document.getElementById("sl");
+    suraList.selectedIndex = c - 1;
+    ayaList(0);
+    ayaListObj.selectedIndex = v - 1;
+    triggerSimilarity()
+
+
+
+}
+
+function setHash() {
+    let ayaList = document.getElementById("al").value;
+    let suraList = document.getElementById("sl").value;
+    location.hash = suraList + ":" + ayaList;
+    // console.trace();
+
+}
 // check full words, check the speed, time to get them, if its slow or not, or if it broken, need pagination...

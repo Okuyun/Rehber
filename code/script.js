@@ -55,13 +55,13 @@ let suraTr = []
      * @param {*} callBack The call back function to read and parse the file to array.
      * @see dataToArray
      */
-async function readExternal(url,target,callBack) {
+async function readExternal(url, target, callBack) {
     console.log("reading external data from " + url)
     const r = await fetch(url);
     const t = await r.text();
     const r_1 = callBack(t, target);
-    return r_1; 
-      
+    return r_1;
+
 }
 
 /**
@@ -88,11 +88,11 @@ function dataToArray(t, targetArray) {
         }
         targetArray[suraN].push(line[2])
     }
-   
+
 
     return new Promise(function(resolve, reject) {
         resolve('Success!');
-      })
+    })
 
 }
 /**
@@ -100,12 +100,12 @@ function dataToArray(t, targetArray) {
  */
 function loadArabic() {
     // set uthmani array.
-    let p1= readExternal(dataUrl + data.aruthman, suraAr, dataToArray)
+    let p1 = readExternal(dataUrl + data.aruthman, suraAr, dataToArray)
         // set clean array.
 
-    let p2=    readExternal(dataUrl + data.arclean, suraSr, dataToArray)
+    let p2 = readExternal(dataUrl + data.arclean, suraSr, dataToArray)
 
-    return Promise.all([p1,p2])
+    return Promise.all([p1, p2])
 
 }
 /**
@@ -180,9 +180,9 @@ function init() {
 
     let p1 = loadArabic()
     let p2 = initTranslation()
-    //displayArWr()
-    return Promise.all([p1,p2])//.then(displayArWr)
-    //initTranslation();
+        //displayArWr()
+    return Promise.all([p1, p2]) //.then(displayArWr)
+        //initTranslation();
 
     // display results, after waiting the set arabic to be done, this will wait for 0.5 seconds 
 
@@ -199,7 +199,7 @@ function loadTrans(choosen = "1") {
         case "1":
             translate = data.tfArJal;
             break;
-        case "2":       
+        case "2":
             translate = data.tfArMu;
             break;
         case "3":
@@ -211,22 +211,22 @@ function loadTrans(choosen = "1") {
         case "5":
             translate = data.trEl;
             break;
-            case "6":
-                translate = data.trYL;
+        case "6":
+            translate = data.trYL;
 
-                break;
+            break;
 
     }
-    return readExternal(dataUrl + translate, suraTr, dataToArray)    
+    return readExternal(dataUrl + translate, suraTr, dataToArray)
 }
 
-async function  loadTransR(n){
-     /**
+async function loadTransR(n) {
+    /**
      * Add text right to the tranlsation dislpay to set it for RTL text type (arabic)
      */
     function addTextRight() {
         trtxt.classList.add("text-right")
-        //  trtxt.classList.toggle("text-right")
+            //  trtxt.classList.toggle("text-right")
     }
     /**
      * Removed class text right from translation display, to set it for LTR text type
@@ -234,14 +234,14 @@ async function  loadTransR(n){
     function removeTextRight() {
         trtxt.classList.remove("text-right")
     }
-    await loadTrans(n) 
-    if(choosen <= 2 ){
+    await loadTrans(n)
+    if (choosen <= 2) {
         addTextRight()
-    }else{
+    } else {
         removeTextRight()
     }
     displayTranslation();
-  }
+}
 
 function initTranslation() {
     return readExternal(dataUrl + data.trTr, suraTr, dataToArray)
@@ -259,10 +259,12 @@ function initReader() {
     loadTrans();
     return new Promise(function(resolve, reject) {
         resolve('Success!');
-      })
+    })
 }
+
 function timer(log, callback) {
     let start = Date.now();
-    callback()
+    let h = callback()
     console.log(log, Date.now() - start, "ms");
+    return h;
 }

@@ -37,6 +37,8 @@ let settings = {};
 /**
  * Clear html table and reset it to create the table for second word.
  */
+function mujam() {}
+
 function clearTable() {
     // translationHeader.style.display = "none"
     arabicHeader.style.width = "100vw"
@@ -161,7 +163,7 @@ function createRow(sn, an, word = "") {
     // }
 
     if (isRoot(word)) {
-        let h = markRoot(word.substring(1), suraAr[sn][an], sn, an);
+        let h = markRoot(word.substring(2), suraAr[sn][an], sn, an);
         loc = h;
     } else {
 
@@ -200,7 +202,7 @@ function createRow(sn, an, word = "") {
 
 function markRoot(root, aya, sn, an) {
     // await readExternal("https://raw.githubusercontent.com/maeyler/Iqra3/master/data/words.txt",rootsMap,readRoots)
-    let words = rootsMap.get(toBuckwalter(root));
+    let words = rootsMap.get(root);
     words = words.map(e =>
         toArabic(e)
     )
@@ -399,7 +401,7 @@ let dataArr, wordCt;
 function createTable(arr, word) {
     dataArr = arr;
     wordCt = word;
-    wordNumber.innerText = arr.length + parseInt(wordNumber.innerText)
+    wordNumber.innerText = arr.length //+ parseInt(wordNumber.innerText)
     document.title += " " + wordNumber.innerText;
     // arr.forEach((e, i) => {
     //     if (i > 100) { console.log(i); return; } else {
@@ -425,10 +427,14 @@ function paginationControl(num) {
     // dataIndex = num <= 0 ? 0 : (Math.ceil(dataArr.length / verseInPage) <= num) ? num : Math.ceil(dataArr.length / verseInPage);
     let min = dataIndex * verseInPage >= dataArr.length ? dataArr.length - dataArr.length % verseInPage : dataIndex * verseInPage;
     let max = min + verseInPage >= dataArr.length ? dataArr.length : min + verseInPage;
+    if (isNaN(min)) min = 0;
+    if (isNaN(max)) max = dataArr.length;
+
     for (let i = min; i < max; i++) {
         element.appendChild(createRow(dataArr[i][0], dataArr[i][1], wordCt))
     }
     addShowFunction();
+    menuFn();
 }
 
 function paginationNext() {
@@ -442,7 +448,7 @@ function getPages() {
 function setTotalVerses() {
     verseInPage = document.getElementById("dataAmount").value
     if (verseInPage == "All") {
-        verseInPage = dataArr.length;
+        verseInPage = dataArr.length - 1;
     } else {
         verseInPage = parseInt(verseInPage)
     }
@@ -581,7 +587,7 @@ let wordLst;
 function isLatin(word) {
     // /([A-Za-z])+/
     // /^[A-Za-z0-9]*/i
-
+    if (isRoot(word)) return false;
     let regXenglish = /[A-Za-z0-9]+/
     let h = new RegExp(regXenglish, "ig")
     if (h.test(word)) {
@@ -751,6 +757,21 @@ function addSuggestions(wordList) {
 // function rootToWords(rootB) {
 //     return rootsMap.get((decodeURI(rootB))).map(e => toArabic(e)).join("+")
 // }
+function rootToFinder(root) {
+    // wordCt = root;
+    // searchQue.value = root
+    let refs = getReferences(toArabic(root.slice(2)));
+    let refSet = new Set()
+    refs.forEach(e => refSet.add(e.index));
+    let rootArr = [];
+    refSet.forEach(e => {
+            let [c, v] = toCV(e)
+            rootArr.push([c - 1, v - 1])
+        })
+        // wordLst[0] = [];
+        // wordLst[1] = rootArr
+    createTable(rootArr, root)
+}
 
 function hashChanged() {
     let h = decodeURI(location.hash);
@@ -769,10 +790,12 @@ function hashChanged() {
         case "r":
             // let arr=  ;
             // arabic = rootToWords(arabic)
+            rootToFinder(type + "=" + arabic);
             return;
 
         default:
-            console.log(h)
+            console.log(h, type, arabic, "BROKEN")
+
             findAction('بسم الله')
             return;
     }
@@ -794,6 +817,7 @@ function setHash(word, type) {
     }
     if (type == "r") e = "r=" + toBuckwalter(word);
     location.hash = e //toBuckwalter(e);
+    console.trace();
 }
 /**
  * Ininitlise finder by adding serachbar keyup event (onsubmit)
@@ -875,7 +899,7 @@ async function loadTransF(n = 3) {
     await loadTrans(n.toString())
         // clearTable();
         // toCheck...
-    findAction(searchQue.value);
+    if (!location.hash.includes("r=")) findAction(searchQue.value);
     THtext.innerText = getTefsirText(n) + "\u2002";
     updateSettings("source", n)
     langSpeechSettings()
