@@ -435,6 +435,8 @@ function paginationControl(num) {
     }
     addShowFunction();
     menuFn();
+    initPagination();
+
 }
 
 function paginationNext() {
@@ -714,6 +716,7 @@ function submitFeedBack() {
         msg = "empty";
     }
     submitData(searchQue.value, msg, email)
+    $('#FeedBackModal').modal('hide');
 
 }
 
@@ -817,7 +820,7 @@ function setHash(word, type) {
     }
     if (type == "r") e = "r=" + toBuckwalter(word);
     location.hash = e //toBuckwalter(e);
-    console.trace();
+        // console.trace();
 }
 /**
  * Ininitlise finder by adding serachbar keyup event (onsubmit)
@@ -1384,7 +1387,7 @@ function menuFn() {
     function select() {
         let s = getSelection().toString().trim()
         if (s) return s
-        else alert("Önce Arapça bir kelime seçin")
+        // else alert("Önce Arapça bir kelime seçin")
     }
 
     function addContextMenu() {
@@ -1439,7 +1442,7 @@ function menuFn() {
             case "Find":
                 findAction(sel)
                 break;
-            case "Google it":
+            case "Gooogle Search":
                 window.open("https://google.com/search?q=" + sel)
                 break;
             case "Copy":
