@@ -436,7 +436,11 @@ function paginationControl(num) {
     addShowFunction();
     menuFn();
     initPagination();
-
+    if(getPages()<=1){
+        document.getElementById("PaginationMenu").hidden=true
+    }else {
+        document.getElementById("PaginationMenu").hidden=false
+    } 
 }
 
 function paginationNext() {
@@ -469,12 +473,13 @@ function paginationLast() {
     paginationControl(getPages())
 }
 
-function setVersePerPage() {
+function setVersePerPage(mode) {
+    if(mode==0) dataIndex=0;// if dataindex it will go to the last page, now it will reset.
     let controller = document.getElementById("dataAmount").value
     let lastPageButton = document.getElementById("lastPage")
     verseInPage = parseInt(controller);
     lastPageButton.innerText = getPages() + 1;
-    paginationControl(dataIndex)
+    paginationControl(dataIndex) 
 }
 
 function paginationSet() {
@@ -793,6 +798,8 @@ function hashChanged() {
         case "r":
             // let arr=  ;
             // arabic = rootToWords(arabic)
+            document.title = "R="+arabic;
+
             rootToFinder(type + "=" + arabic);
             return;
 
@@ -878,8 +885,12 @@ function getCSSRule(ruleName) {
 }
 
 function changeColour(col) {
-    getCSSRule("great").style.backgroundColor = col;
+    changeGreatColour(col)
     updateSettings("colour", col)
+}
+function changeGreatColour(col){
+    getCSSRule("great").style.backgroundColor = col;
+
 }
 
 function changeFont(language, size) {
@@ -903,6 +914,7 @@ async function loadTransF(n = 3) {
         // clearTable();
         // toCheck...
     if (!location.hash.includes("r=")) findAction(searchQue.value);
+    else hashChanged();
     THtext.innerText = getTefsirText(n) + "\u2002";
     updateSettings("source", n)
     langSpeechSettings()
@@ -1380,14 +1392,21 @@ function langSpeechSettings() {
 
 
 function menuFn() {
+  
     const menu = document.getElementById("contextMenu");
     const menuOption = document.querySelector(".menu-option");
     let menuVisible = false;
-
+    document.addEventListener('keydown', keyPress);
     function select() {
         let s = getSelection().toString().trim()
         if (s) return s
         // else alert("Önce Arapça bir kelime seçin")
+    }
+    function keyPress (e) {
+        if(e.key === "Escape") {
+            // preventDefault();
+            if (menuVisible) toggleMenu("hide");
+        }
     }
 
     function addContextMenu() {
@@ -1438,19 +1457,19 @@ function menuFn() {
         if (!menuVisible) { return }
         let sel = select();
         console.log("worked..." + " sel =" + sel)
-        switch (e.target.innerText) {
-            case "Find":
+        switch (e.target.value) {
+            case 0: // Search in finder
                 findAction(sel)
                 break;
-            case "Gooogle Search":
+            case 1: // google search
                 window.open("https://google.com/search?q=" + sel)
                 break;
-            case "Copy":
+            case 2: // copy 
                 navigator.clipboard.writeText(sel)
                     .then(() => { console.log('Panoya:', sel) })
                     .catch(e => { alert('Panoya yazamadım\n' + sel) })
                 break;
-            case "Find Root":
+            case 3:// search for root
                 let root = wordToRoot.get(toBuckwalter(sel))
                 setHash(toArabic(root), "r")
                     // findAction(rootToWords(root))
