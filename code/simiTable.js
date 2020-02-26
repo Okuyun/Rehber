@@ -41,6 +41,8 @@ async function initTable() {
 
     if (location.hash) {
         getHash();
+    }else {
+        ayaList();
     }
 
 }
@@ -106,13 +108,13 @@ function similiartyError() {
     surasVector.forEach((sura) => sura.forEach((aya) => Math.round(!similarity(aya.vector, aya.vector)) >= 1 ? console.log(aya.aya) : aya))
 }
 
-function checkSimilarity(c, v, min = 85) {
+function checkSimilarity(c, v, min = 70) {
     result = [];
     min = min / 100
         // verse vector
     let ratio;
 
-    let vv = surasVector.get(c - 1).get(v - 1).vector;
+    let vv = getVerseVector(c,v);
     let mag = magnitude(vv)
         // console.log(mag)
     if (mag > 0) {
@@ -128,6 +130,9 @@ function checkSimilarity(c, v, min = 85) {
 
 
     return result;
+}
+function getVerseVector(c,v){
+    return surasVector.get(c - 1).get(v - 1).vector;
 }
 // start DOM functions
 function suraList() {
@@ -201,6 +206,8 @@ function createTable(arr) {
 }
 
 function createRow(ratio, ch, ve) {
+    let ayaList = document.getElementById("al");
+    let suraList = document.getElementById("sl");
     //tr ==> td ==> div ==> span
     let tr = document.createElement("tr");
 
@@ -210,10 +217,10 @@ function createRow(ratio, ch, ve) {
 
     let span = document.createElement("span")
     span.className = "arabic"
-    span.innerText = suraAr[ch - 1][ve - 1]
+    span.innerHTML = mark(ratio, suraAr[ch - 1][ve - 1],getVerseVector(suraList.value,ayaList.value))
     td.appendChild(span)
     let div = splitDown(ch, ve)
-    td.innerHTML += div
+    td.innerHTML +="<br>"+  div 
         // btn group...
     span = document.createElement("span")
     span.className = "badge badge-info col-1";
@@ -223,6 +230,39 @@ function createRow(ratio, ch, ve) {
 
     tr.appendChild(td)
     return tr;
+}
+function mark(ratio,verse,vector){
+    verse = verse.split(" ")
+    if(ratio >= 60 ){
+        // changeGreatColour("yellow")
+        verse = greatArray(vector,verse,0)
+    }else if(ratio < 60 && ratio >= 40){
+        // changeGreatColour("")
+        verse = greatArray(vector,verse,2)
+    }else {
+        // changeGreatColour("red")
+        verse = greatArray(vector,verse,1)
+    }
+    return verse.join(" ");
+}
+function greatArray(vector,wordArray,mode){
+    if(mode == 1){ // more than 60 
+      wordArray=   wordArray.map(e => {
+            if(vector.get(wordToRoot.get(toBuckwalter(e)))>= 1 ){
+                return `<great style="background-color:yellow">${e}</great>`
+            }else {return e}
+        })
+    }// less than 40
+    else if(mode == 0){
+        wordArray=   wordArray.map(e => {
+            let word = vector.get(wordToRoot.get(toBuckwalter(e)))
+            if( word < 1 || word == undefined){
+                return `<great style="background-color:red">${e}</great>`
+            }else {return e}
+        })
+    }
+    return wordArray;
+
 }
 
 function splitDown(c, v) {
@@ -281,7 +321,7 @@ function getHash() {
     let ayaListObj = document.getElementById("al");
     let suraList = document.getElementById("sl");
     suraList.selectedIndex = c - 1;
-    ayaList(0);
+    timer("Vectors counted in ", () => { ayaList(0) })
     ayaListObj.selectedIndex = v - 1;
     triggerSimilarity()
 
