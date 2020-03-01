@@ -11,9 +11,14 @@
  */
 let oneline = false;
 /**
- * Roots map
+ * Selected Page -- for chuncks of data.
  */
-let rootsMap = new Map();
+let dataIndex = 0;
+/**
+ * verseInPage of data in page.
+ */
+let verseInPage = 10;
+// toArabic(wordToRoot.get(toBuckwalter("أَتْقَىٰكُمْ"))) -- get word root.. 
 /**
  * Last opened function to go and visit. 
  */
@@ -32,6 +37,8 @@ let settings = {};
 /**
  * Clear html table and reset it to create the table for second word.
  */
+function mujam() {}
+
 function clearTable() {
     // translationHeader.style.display = "none"
     arabicHeader.style.width = "100vw"
@@ -90,6 +97,7 @@ function createArTd() {
  * @param {string} word the searched word string
  */
 function createRow(sn, an, word = "") {
+    // https://stackoverflow.com/questions/37924104/table-column-sizing -- to follow and fix.
     // array first element = sura number, second= aya number
     // the function be written in much prettier way but whatever.
     // why did not i use class name immedietyl at the set and call? idk? i only used it here.. .
@@ -112,7 +120,7 @@ function createRow(sn, an, word = "") {
      * @see displayState
      * @see getWordLocation
      */
-    if (isLatin(word) ) {
+    if (isLatin(word)) {
         // !isRoot(word)
         loc = getWordLocation(word, suraTr[sn][an], sn, an);
         state3.disabled = true
@@ -155,7 +163,7 @@ function createRow(sn, an, word = "") {
     // }
 
     if (isRoot(word)) {
-        let h = markRoot(word.substring(1), suraAr[sn][an], sn, an);
+        let h = markRoot(word.substring(2), suraAr[sn][an], sn, an);
         loc = h;
     } else {
 
@@ -194,7 +202,7 @@ function createRow(sn, an, word = "") {
 
 function markRoot(root, aya, sn, an) {
     // await readExternal("https://raw.githubusercontent.com/maeyler/Iqra3/master/data/words.txt",rootsMap,readRoots)
-    let words = rootsMap.get(toBuckwalter(root));
+    let words = rootsMap.get(root);
     words = words.map(e =>
         toArabic(e)
     )
@@ -208,13 +216,7 @@ function markRoot(root, aya, sn, an) {
 
 }
 
-function readRoots(text, target) {
-    text = text.split("\n")
-    text.forEach(e => {
-        e = e.split(" ")
-        target.set(e.shift(), e)
-    })
-}
+
 
 // mark specific words and return it. 
 // location of the word, length of the word string, and arabic aya with vowels.
@@ -298,6 +300,7 @@ function allOccurence(array, element) {
 function allOccurenceSub(array, element) {
     let indices = [];
     array.forEach(function(item, index) {
+        // localeCompare to use.
         if (item.indexOf(element) !== -1) {
             indices.push(index)
         }
@@ -393,18 +396,116 @@ function shrink(text, number = 5) {
     return text.slice(pre, post).join(" ");
 
 }
-
+let dataArr, wordCt;
 // arr is lsit of aya and sura, searched word.
 function createTable(arr, word) {
-    wordNumber.innerText = arr.length + parseInt(wordNumber.innerText)
+    dataArr = arr;
+    wordCt = word;
+    wordNumber.innerText = arr.length //+ parseInt(wordNumber.innerText)
     document.title += " " + wordNumber.innerText;
-    element = document.getElementById("dTable").getElementsByTagName('tbody')[0];
-    arr.forEach(e => {
-        element.appendChild(createRow(e[0], e[1], word))
-    });
-    addShowFunction();
+    // arr.forEach((e, i) => {
+    //     if (i > 100) { console.log(i); return; } else {
+    //         element.appendChild(createRow(e[0], e[1], word))
+    //     }
+    // });
+    setVersePerPage()
 }
 
+// wordLst[1].size --> get number of page   s
+
+
+
+function paginationControl(num) {
+    let element = document.getElementById("dTable").getElementsByTagName('tbody')[0];
+    element.innerHTML = ""
+    let numberOfPages = getPages()
+    if (num < 0) dataIndex = 0;
+    else if (num > numberOfPages) dataIndex = numberOfPages;
+    else dataIndex = num;
+    let chosenPageButton = document.getElementById("choosenPage")
+    chosenPageButton.value = dataIndex + 1;
+    // dataIndex = num <= 0 ? 0 : (Math.ceil(dataArr.length / verseInPage) <= num) ? num : Math.ceil(dataArr.length / verseInPage);
+    let min = dataIndex * verseInPage >= dataArr.length ? dataArr.length - dataArr.length % verseInPage : dataIndex * verseInPage;
+    let max = min + verseInPage >= dataArr.length ? dataArr.length : min + verseInPage;
+    if (isNaN(min)) min = 0;
+    if (isNaN(max)) max = dataArr.length;
+
+    for (let i = min; i < max; i++) {
+        element.appendChild(createRow(dataArr[i][0], dataArr[i][1], wordCt))
+    }
+    addShowFunction();
+    menuFn();
+    initPagination();
+    if(getPages()<=1){
+        document.getElementById("PaginationMenu").hidden=true
+    }else {
+        document.getElementById("PaginationMenu").hidden=false
+    } 
+}
+
+function paginationNext() {
+    paginationControl(dataIndex + 1)
+}
+
+function getPages() {
+    return Math.ceil(dataArr.length / verseInPage) - 1;
+}
+
+function setTotalVerses() {
+    verseInPage = document.getElementById("dataAmount").value
+    if (verseInPage == "All") {
+        verseInPage = dataArr.length - 1;
+    } else {
+        verseInPage = parseInt(verseInPage)
+    }
+    paginationControl(0)
+}
+
+function paginationPrev() {
+    paginationControl(dataIndex - 1)
+}
+
+function paginationFirst() {
+    paginationControl(0)
+}
+
+function paginationLast() {
+    paginationControl(getPages())
+}
+
+function setVersePerPage(mode) {
+    if(mode==0) dataIndex=0;// if dataindex it will go to the last page, now it will reset.
+    let controller = document.getElementById("dataAmount").value
+    let lastPageButton = document.getElementById("lastPage")
+    verseInPage = parseInt(controller);
+    lastPageButton.innerText = getPages() + 1;
+    paginationControl(dataIndex) 
+}
+
+function paginationSet() {
+    let chosenPageButton = document.getElementById("choosenPage")
+    paginationControl(chosenPageButton.value - 1)
+}
+
+function initPagination() {
+    let controller = document.getElementById("dataAmount")
+    controller.addEventListener("change", setVersePerPage)
+
+    let lastPageButton = document.getElementById("lastPage")
+    lastPageButton.addEventListener("click", paginationLast)
+
+    let chosenPageButton = document.getElementById("choosenPage")
+    chosenPageButton.addEventListener("change", paginationSet)
+
+    let firstPageButton = document.getElementById("firstPage")
+    firstPageButton.addEventListener("click", paginationFirst)
+
+    let pagePrevButton = document.getElementById("pagePrev")
+    pagePrevButton.addEventListener("click", paginationPrev)
+
+    let pageNextButton = document.getElementById("pageNext")
+    pageNextButton.addEventListener("click", paginationNext)
+}
 // TODO: simplify and re-read the code then.
 
 // get the sura and verses that has this word and the word location.
@@ -493,7 +594,7 @@ let wordLst;
 function isLatin(word) {
     // /([A-Za-z])+/
     // /^[A-Za-z0-9]*/i
-
+    if (isRoot(word)) return false;
     let regXenglish = /[A-Za-z0-9]+/
     let h = new RegExp(regXenglish, "ig")
     if (h.test(word)) {
@@ -541,11 +642,7 @@ function findAction(word = "") {
     setHash(word)
 }
 
-function timer(log, callback) {
-    let start = Date.now();
-    callback()
-    console.log(log, Date.now() - start, "ms");
-}
+
 
 function isRoot(word) {
     return word.includes(";") || word.includes("=");
@@ -624,6 +721,7 @@ function submitFeedBack() {
         msg = "empty";
     }
     submitData(searchQue.value, msg, email)
+    $('#FeedBackModal').modal('hide');
 
 }
 
@@ -664,6 +762,24 @@ function addSuggestions(wordList) {
 
 }
 
+// function rootToWords(rootB) {
+//     return rootsMap.get((decodeURI(rootB))).map(e => toArabic(e)).join("+")
+// }
+function rootToFinder(root) {
+    // wordCt = root;
+    // searchQue.value = root
+    let refs = getReferences(toArabic(root.slice(2)));
+    let refSet = new Set()
+    refs.forEach(e => refSet.add(e.index));
+    let rootArr = [];
+    refSet.forEach(e => {
+            let [c, v] = toCV(e)
+            rootArr.push([c - 1, v - 1])
+        })
+        // wordLst[0] = [];
+        // wordLst[1] = rootArr
+    createTable(rootArr, root)
+}
 
 function hashChanged() {
     let h = decodeURI(location.hash);
@@ -676,16 +792,20 @@ function hashChanged() {
             arabic = toArabic(decodeURI(arabic));
             break;
         case "w":
-
             break;
         case "t":
-            arabic = h.replace(/%20/g, " ");
             break;
         case "r":
-            arabic = h.replace(/%20/g, " ");
-            break;
+            // let arr=  ;
+            // arabic = rootToWords(arabic)
+            document.title = "R="+arabic;
+
+            rootToFinder(type + "=" + arabic);
+            return;
+
         default:
-            console.log(h)
+            console.log(h, type, arabic, "BROKEN")
+
             findAction('بسم الله')
             return;
     }
@@ -697,14 +817,17 @@ function hashChanged() {
     findActionH(arabic); //toArabicLetters(arabic));
 }
 
-function setHash(e) {
+function setHash(word, type) {
+    e = word;
+    if (e.split("+").length !== 1) return;
     if (!isLatin(e)) {
         e = "b=" + toBuckwalter(e);
     } else {
         e = "t=" + e;
     }
-
+    if (type == "r") e = "r=" + toBuckwalter(word);
     location.hash = e //toBuckwalter(e);
+        // console.trace();
 }
 /**
  * Ininitlise finder by adding serachbar keyup event (onsubmit)
@@ -719,7 +842,8 @@ function setHash(e) {
       s-->|yes| loadSettings
  */
 async function initFinder() {
-    await readExternal("https://raw.githubusercontent.com/maeyler/Iqra3/master/data/words.txt", rootsMap, readRoots);
+    // await readWords("words.txt");
+    await initMujam();
     console.log("Finder started...")
     searchQue.addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
@@ -738,6 +862,8 @@ async function initFinder() {
         }
     }
     menuFn();
+    initPagination();
+
 
 }
 // from: https://stackoverflow.com/questions/1409225/changing-a-css-rule-set-from-javascript
@@ -759,8 +885,12 @@ function getCSSRule(ruleName) {
 }
 
 function changeColour(col) {
-    getCSSRule("great").style.backgroundColor = col;
+    changeGreatColour(col)
     updateSettings("colour", col)
+}
+function changeGreatColour(col){
+    getCSSRule("great").style.backgroundColor = col;
+
 }
 
 function changeFont(language, size) {
@@ -783,7 +913,8 @@ async function loadTransF(n = 3) {
     await loadTrans(n.toString())
         // clearTable();
         // toCheck...
-    findAction(searchQue.value);
+    if (!location.hash.includes("r=")) findAction(searchQue.value);
+    else hashChanged();
     THtext.innerText = getTefsirText(n) + "\u2002";
     updateSettings("source", n)
     langSpeechSettings()
@@ -1212,7 +1343,6 @@ function language(val) {
 
     }
     updateSettings("lang", val)
-    loadLang();
 }
 /**
  * Load langugae file and change the UI based on it,
@@ -1224,19 +1354,12 @@ function loadLang() {
     fontAr.innerText = texts.font + " " + texts.size;
     txtTrans.innerText = texts.trans + " " + texts.size;
     markColour.innerText = texts.mark + " " + texts.colour;
-    // showHide.innerText=texts.show +"/"+ texts.hide;
-    // shTefsir.innerText=texts.show +"/"+ texts.hide +" " + texts.tefsir;
     settingsModelTitle.innerText = texts.pref;
-    // txtOneline.innerText=texts.oneLine;
-    // txtTefSource.innerText=texts.tefsir + " "+ texts.source;
-    txtLangs.innerText = texts.language;
     txtModelClose.innerText = texts.close;
     state1.labels[0].innerText = texts.show;
     state2.labels[0].innerText = texts.arabic;
     state3.labels[0].innerText = texts.oneLine;
     btnArabic.innerText = texts.arabic;
-    langSpeechSettings()
-        // btnOtherLang.innerText=texts.close; Had to move it inside loadTranF
     btnClose.innerText = texts.close;
     modelVoiceControl.innerText = texts.soundSettings;
     loadText.innerText = texts.listening;
@@ -1263,20 +1386,27 @@ function langSpeechSettings() {
             btnOtherLang.innerText = texts.english;
             break;
     }
+    loadLang();
 
 }
 
 
-
 function menuFn() {
+  
     const menu = document.getElementById("contextMenu");
     const menuOption = document.querySelector(".menu-option");
     let menuVisible = false;
-
+    document.addEventListener('keydown', keyPress);
     function select() {
         let s = getSelection().toString().trim()
         if (s) return s
-        else alert("Önce Arapça bir kelime seçin")
+        // else alert("Önce Arapça bir kelime seçin")
+    }
+    function keyPress (e) {
+        if(e.key === "Escape") {
+            // preventDefault();
+            if (menuVisible) toggleMenu("hide");
+        }
     }
 
     function addContextMenu() {
@@ -1327,18 +1457,22 @@ function menuFn() {
         if (!menuVisible) { return }
         let sel = select();
         console.log("worked..." + " sel =" + sel)
-        switch (e.target.innerText) {
-            case "Find":
+        switch (e.target.value) {
+            case 0: // Search in finder
                 findAction(sel)
                 break;
-            case "Google it":
+            case 1: // google search
                 window.open("https://google.com/search?q=" + sel)
                 break;
-            case "Copy":
+            case 2: // copy 
                 navigator.clipboard.writeText(sel)
                     .then(() => { console.log('Panoya:', sel) })
                     .catch(e => { alert('Panoya yazamadım\n' + sel) })
-                break
+                break;
+            case 3:// search for root
+                let root = wordToRoot.get(toBuckwalter(sel))
+                setHash(toArabic(root), "r")
+                    // findAction(rootToWords(root))
                 break;
         }
         toggleMenu("hide");

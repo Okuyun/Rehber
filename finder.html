@@ -7,17 +7,24 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+     <link href="./style/bootstrap-tour.css" rel="stylesheet">
+    <link href="./style/bootstrap-tour-standalone.css" rel="stylesheet">
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
+   
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
       crossorigin="anonymous"
     ></script>
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
       integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
@@ -36,70 +43,7 @@
       charset="UTF-8"
     ></script>
 
-    <style>
-      .arabic {
-        font: 20px me_quran, serif;
-      }
-      .container {
-        max-width: 95vw;
-      }
-      @font-face {
-        font-family: me_quran;
-        src: url("style/me_quran.ttf");
-      }
-
-      great {
-        cursor: pointer;
-        background-color: yellow;
-        color: black;
-      }
-      .translation {
-        font-size: 17px;
-      }
-      .tableTranslation {
-        display: table-cell;
-      }
-      .fullText{
-        display: table-cell;
-      }
-      .shrinkArabic{
-        display: none;
-        white-space: nowrap;
-    max-width: 80vw;
-    overflow-x: hidden;
-    /* overflow-x: scroll; */
-      }
-      #showHideFull {
-        display:none;
-      }
-
-#contextMenu {
-  width: 120px;
-  user-select: none;
-  z-index: 1;
-  box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
-  position: fixed;
-  display: none;
-  transition: 0.2s display ease-in;
-}
-#contextMenu .menu-options {
-  list-style: none;
-  padding: 10px 0;
-  z-index: 1;
-}
-#contextMenu .menu-options .menu-option {
-  font-weight: 500;
-  z-index: 1;
-  font-size: 14px;
-  padding: 10px 40px 10px 20px;
-  cursor: pointer;
-}
-#contextMenu .menu-options .menu-option:hover {
-  background: rgba(0, 0, 0, 0.2);
-}
-
-
-    </style>
+    <link rel="stylesheet" href="./style/common.css">
     <link rel="icon" href="images/search.png">
 
     <link rel="manifest" href="manifest.json">
@@ -153,8 +97,8 @@
             </div>
           </li>
         </ul>
-        <span class="navbar-text">
-          V00.06A
+        <span id="version" class="navbar-text">
+          
         </span>
       </div>
     </nav>
@@ -357,6 +301,34 @@
           </table>
         </div>
       </div>
+      <!-- pagination -->
+      <div id=PaginationMenu aria-label="Page navigation example " class="row justify-content-center">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <button id=pagePrev class="page-link" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </button>
+          </li>
+            <li class="page-item"><button  id=firstPage  class="page-link" >1</button></li>
+            <!-- <li class="page-item"><button class="page-link" href="#">2</button></li>
+            <li class="page-item"><button class="page-link" href="#">3</button></li>
+            <li class="page-item"><button class="page-link" href="#">4</button></li> -->
+            <!-- <li class="page-item"><button class="page-link" href="#">...</button></li> -->
+            <li class="page-item"><input  id=choosenPage  type="number" class="page-link" placeholder="Page" value="0"></input></li>
+            <!-- <li class="page-item"><button class="page-link" href="#">7</button></li>
+            <li class="page-item"><button class="page-link" href="#">8</button></li>
+            <li class="page-item"><button class="page-link" href="#">9</button></li>-->
+            <li  class="page-item"><button  id=lastPage  class="page-link">10</buton></li> 
+          <li class="page-item">
+            <button id=pageNext class="page-link" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <!-- end of pagination -->
     </div>
 
     <!-- Modal Settings-->
@@ -398,20 +370,21 @@
      
           <hr>
          
-          <label for="">Action button</label>
+          <label for="dataAmount">Number of Verse in page</label>
+          <select id="dataAmount" name="dataAmount" class="select col-3">
+            <option value="10" selected>10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="All">All</option>
+          </select>
           <hr>
      
           <!-- if you want to choose from multiple add only this keyword before class.. -->
          
           Tefsir cumbo box - how many times should it be
           pagination - for tefsir.
-          <hr>
-          <span id=txtLangs>Languages</span>
-          <select id=langsValue onchange="language(this.value)" class="browser-default custom-select form-control">
-            <option value="1" selected>TR</option>
-            <option value="2">AR</option>
-            <option value="3">EN</option>
-          </select>
+      
         </div>
         <div class="modal-footer">
           <button id=txtModelClose type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -491,13 +464,20 @@
 
 <div class="dropdown-menu dropdown-menu-sm" id="contextMenu">
   <ul class="menu-options">
-    <li class="menu-option dropdown-item">Find</li>
-    <li class="menu-option dropdown-item">Google it</li>
-    <li class="menu-option dropdown-item">Copy</li>
+    <li class="menu-option dropdown-item" value=2>Copy</li>
+    <li class="menu-option dropdown-item" value=0>Find Word</li>
+    <li class="menu-option dropdown-item" value=3>Find Root</li>
+    <li class="menu-option dropdown-item" value=1>Google Search</li>
    
   </ul>
 </div>
+<!-- <script src="./Iqra3/code/common.js"></script> -->
+<!-- <script src="./Iqra3/code/mujam.js"></script> -->
+<script src="./Iqra3/code/common.js"></script>
+<script src="./Iqra3/code/utilities.js"></script>
 
+<script src="./code/classes.js"></script>
+<script src="./code/mujam.js"></script>
   <script src="code/language.js"></script>
     <script src="code/common.js"></script>
     <script src="code/buckwalter.js"></script>
@@ -506,6 +486,11 @@
     <script src="code/quran-sura.js"></script>
     <script src="code/script.js"></script>
     <script src="code/presentation.js"></script>
+  <script src="./code/config.js"></script>
+  <script src="./code/bootstrap-tour.js"></script>
+    <script src="./code/bootstrap-tour-standalone.js"></script>
+
+
 
     <script>
     if ('serviceWorker' in navigator) {
@@ -516,7 +501,8 @@
     }
       window.name="finder";
       init().then(initFinder)
-     
+      // setVersePerPage() 
+      version.innerText= config.version;
       //initFinder();
       //setTimeout(findAction, 250, 'بسم الله');
     //  setTimeout(initFinder, 250, "بسم الله");

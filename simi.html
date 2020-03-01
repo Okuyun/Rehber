@@ -1,0 +1,197 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Bahis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- Source: http://www.arabic-keyboard.org/keyboard/ -->
+    <link rel="stylesheet" type="text/css" href="style/keyboard.css" />
+    <script type="text/javascript" src="code/keyboard.js" charset="UTF-8"></script>
+
+    <link rel="icon" href="images/search.png">
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="./style/common.css">
+
+    <style>
+        /* * {
+    border: 1px solid;
+} */
+    </style>
+</head>
+
+<body>
+    <!-- from bootstrap examples  -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Kuran Rehberi</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Bâhis <span class="sr-only">(current)</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" aria-disabled="true"
+              >Qurani</a
+            >
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Other
+            </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Proposal</a>
+                        <a class="dropdown-item" href="#">Source Code</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">About me</a>
+                    </div>
+                </li>
+            </ul>
+            <span class="navbar-text">
+          V00.06A
+        </span>
+        </div>
+    </nav>
+    <br />
+
+    <div class="container">
+        <div class="row bg-white sticky-top" style="z-index: 2;">
+            <label class="col-1">Sura</label>
+            <select id="sl" class="select col-2">
+          <option value="0">1 Al-Faatiha</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+            <label name="aya" class="col-1">Aya</label>
+            <select id="al" name="aya" class="select col-1">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+            <label name="percentage" class="col-1">Oran</label>
+            <input max="100" min="0" type="number" name="percentage" id="perc" class="col-1" value="70">
+            <label name="sort" class="col-1">Sort by</label>
+            <select id="sortBy" class="select col-2">
+              <option value="0">Oran Yukselen</option>
+              <option value="1" selected>Oran Dusen</option>
+              <option value="2">Ayet Yukselen</option>
+              <option value="3">Ayet Dusen</option>
+            </select>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table id="dTable" class="table">
+                    <caption style=" caption-side:top;">
+                        <span id="wordNumber">3</span>
+                        <span id="txtWordFound">ayet</span>
+                    </caption>
+                    <thead>
+                        <tr>
+
+                            <th id="arabicHeader" class="text-right">عربي
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td scope="col" class="text-right">
+                                <span class="arabic"><great onclick="openIqra(`1:1`)">بسم الله</great> الرحمن الرحيم</span>&nbsp;&nbsp;
+                                <!-- Example split danger button -->
+                                <div class="btn-group">
+                                    <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('1:1')">الفاتحة 1:1</button>
+                                    <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item" onclick="openCorpus('1:1')">Corpus</button>
+                                        <button class="dropdown-item" onclick="openQuran('1:1')">Quran</button>
+                                        <button class="dropdown-item" onclick="openMeali('1:1')">Meali</button>
+                                        <div class="dropdown-divider"></div>
+                                        <button class="dropdown-item" onclick="openIqra('1:1')">Reader</button>
+                                    </div>
+
+                                </div>
+                                <span class="badge badge-info col-1">100%</span>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+
+                            <td scope="col" class="text-right"><span class="arabic">وقال اركبوا فيها <great onclick="openIqra(`11:41`)">بسم الله</great> مجراها ومرساها إن ربي لغفور رحيم</span>&nbsp;&nbsp;
+                                <!-- Example split danger button -->
+                                <div class="btn-group">
+                                    <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('11:41')">هود 11:41</button>
+                                    <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item" onclick="openCorpus('11:41')">Corpus</button>
+                                        <button class="dropdown-item" onclick="openQuran('11:41')">Quran</button>
+                                        <button class="dropdown-item" onclick="openMeali('11:41')">Meali</button>
+                                        <div class="dropdown-divider"></div>
+                                        <button class="dropdown-item" onclick="openIqra('11:41')">Reader</button>
+                                    </div>
+                                </div>
+                                <span class="badge badge-info col-1">41%</span>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="col" class="text-right"><span class="arabic">إنه من سليمان وإنه <great onclick="openIqra(`27:30`)">بسم الله</great> الرحمن الرحيم</span>&nbsp;&nbsp;
+                                <!-- Example split danger button -->
+                                <div class="btn-group">
+                                    <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOne('27:30')">النمل 27:30</button>
+                                    <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item" onclick="openCorpus('27:30')">Corpus</button>
+                                        <button class="dropdown-item" onclick="openQuran('27:30')">Quran</button>
+                                        <button class="dropdown-item" onclick="openMeali('27:30')">Meali</button>
+                                        <div class="dropdown-divider"></div>
+                                        <button class="dropdown-item" onclick="openIqra('27:30')">Reader</button>
+                                    </div>
+
+                                </div>
+                                <span class="badge badge-info col-1">90% </span>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="./code/finder.js"></script>
+    <script src="./code/quran-sura.js"></script>
+    <script src="./code/buckwalter.js"></script>
+    <script src="./code/common.js"></script>
+    <script src="./code/script.js"></script>
+    <script src="./code/mujam.js"></script>
+    <script src="./code/simiTable.js"></script>
+    <script>
+        window.name = "simi"
+    </script>
+</body>
+
+</html>
