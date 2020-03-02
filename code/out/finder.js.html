@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: finder.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: finder.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * Clear HTML table without touching the headers.
  * https://stackoverflow.com/questions/18333427/how-to-insert-row-in-html-table-body-in-javascript
  * https://www.daniweb.com/programming/web-development/threads/113340/delete-all-rows-from-table-in-javascript
@@ -208,7 +236,7 @@ function markRoot(root, aya, sn, an) {
     )
     return aya.split(" ").map(e => {
         if (words.includes(e)) {
-            return `<great onclick="openWithBuck(` + sn + `,` + an + `,this,` + 1 + `)"> ${e}</great>`
+            return `&lt;great onclick="openWithBuck(` + sn + `,` + an + `,this,` + 1 + `)"> ${e}&lt;/great>`
         } else {
             return e;
         }
@@ -225,8 +253,8 @@ function markRoot(root, aya, sn, an) {
 // the trick is to split the AYA based on spaces and get location from no vowels then change it on the vowels one... 
 function markAr(loc, aya) {
     let wordLst = aya.split(" ");
-    wordLst[loc] = `<mark>` + wordLst[loc];
-    wordLst[loc + length - 1] = wordLst[loc + length - 1] + `</mark>`
+    wordLst[loc] = `&lt;mark>` + wordLst[loc];
+    wordLst[loc + length - 1] = wordLst[loc + length - 1] + `&lt;/mark>`
     return aya.replace(" ");
 }
 
@@ -251,12 +279,12 @@ function getWordLocation(word, aya, sn, an, cnt) {
     let index = subArrayIndexes(normAya, normWord).reverse();
     aya = aya.split(" ");
     for (let loc of index) {
-        aya.splice(loc + normWord.length, 0, `</great>`)
-        aya.splice(loc, 0, `<great onclick="openWithBuck(` + sn + `,` + an + `,this,` + cnt + `)">`);
+        aya.splice(loc + normWord.length, 0, `&lt;/great>`)
+        aya.splice(loc, 0, `&lt;great onclick="openWithBuck(` + sn + `,` + an + `,this,` + cnt + `)">`);
     }
     // let regx = RegExp(word,"gi");
     //  event on click 
-    // return aya.replace(regx, `<great onclick="openWithBuck(`+sn+`,`+an+`,'`+word+`',`+cnt+`)">$&</great>`)
+    // return aya.replace(regx, `&lt;great onclick="openWithBuck(`+sn+`,`+an+`,'`+word+`',`+cnt+`)">$&amp;&lt;/great>`)
     return aya.join(" ")
 }
 
@@ -339,7 +367,7 @@ function SpanAddEventListener(span, sn, an, cnt, word) {
     // its over annoying! 
     if (span.children[0] !== undefined) {
         let cv = (sn + 1) + ":" + (an + 1);
-        // if(cnt) cv += "&w=" + toBuckwalter(word)+"";
+        // if(cnt) cv += "&amp;w=" + toBuckwalter(word)+"";
         console.log("event listern added to", span.children[0].innerText)
             // span.children[0].onclick=function (){console.log("hello")}
         span.children[0].addEventListener("click", function(e) {
@@ -356,7 +384,7 @@ function openWithBuck(sn, an, word, cnt) {
     word = word.innerText;
     // console.log(word)
     // word = word.split(" ")[0]
-    if (cnt) cv += "&w=" + toBuckwalter(word) + "";
+    if (cnt) cv += "&amp;w=" + toBuckwalter(word) + "";
     openIqra(cv);
 }
 
@@ -373,20 +401,20 @@ function shrink(text, number = 5) {
      */
     text = text.split(" ");
 
-    let index = text.findIndex(e => e.includes("<great"))
-    let endIndex = text.findIndex(e => e.includes("</great>"))
+    let index = text.findIndex(e => e.includes("&lt;great"))
+    let endIndex = text.findIndex(e => e.includes("&lt;/great>"))
     number = number + (searchQue.value.split(" ").length);
 
-    if (text.length <= number) {
+    if (text.length &lt;= number) {
         return text.join(" ")
     }
-    if (index < 0) {
+    if (index &lt; 0) {
         return text.join(" ")
     }
     // let pre=index-number/2 ,post =endIndex+number/2 
     let post = text.length,
         pre = index - 3;
-    if (pre < 0) {
+    if (pre &lt; 0) {
         return text.slice(0, post).join(" ");
     }
     if (post > text.length) {
@@ -419,24 +447,24 @@ function paginationControl(num) {
     let element = document.getElementById("dTable").getElementsByTagName('tbody')[0];
     element.innerHTML = ""
     let numberOfPages = getPages()
-    if (num < 0) dataIndex = 0;
+    if (num &lt; 0) dataIndex = 0;
     else if (num > numberOfPages) dataIndex = numberOfPages;
     else dataIndex = num;
     let chosenPageButton = document.getElementById("choosenPage")
     chosenPageButton.value = dataIndex + 1;
-    // dataIndex = num <= 0 ? 0 : (Math.ceil(dataArr.length / verseInPage) <= num) ? num : Math.ceil(dataArr.length / verseInPage);
+    // dataIndex = num &lt;= 0 ? 0 : (Math.ceil(dataArr.length / verseInPage) &lt;= num) ? num : Math.ceil(dataArr.length / verseInPage);
     let min = dataIndex * verseInPage >= dataArr.length ? dataArr.length - dataArr.length % verseInPage : dataIndex * verseInPage;
     let max = min + verseInPage >= dataArr.length ? dataArr.length : min + verseInPage;
     if (isNaN(min)) min = 0;
     if (isNaN(max)) max = dataArr.length;
 
-    for (let i = min; i < max; i++) {
+    for (let i = min; i &lt; max; i++) {
         element.appendChild(createRow(dataArr[i][0], dataArr[i][1], wordCt))
     }
     addShowFunction();
     menuFn();
     initPagination();
-    if (getPages() <= 1) {
+    if (getPages() &lt;= 1) {
         document.getElementById("PaginationMenu").hidden = true
     } else {
         document.getElementById("PaginationMenu").hidden = false
@@ -514,9 +542,9 @@ function search(word, arr = suraSr) {
         loc = [];
 
     // loop all of suras.
-    for (i = 0; i < arr.length; i++) {
+    for (i = 0; i &lt; arr.length; i++) {
         // loop verses of each sura.
-        for (let j = 0; j < arr[i].length; j++) {
+        for (let j = 0; j &lt; arr[i].length; j++) {
             // 
             let aya = arr[i][j].toLowerCase();
             // aya = normlisation(aya)
@@ -541,7 +569,7 @@ function removeOddChar(string) {
 function nextWordLoc(word, arr = suraSr) {
     let wordLoc = search(word, arr);
     let nxtwrd, suraN, aya;
-    for (let i = 0; i < wordLoc.length; i++) {
+    for (let i = 0; i &lt; wordLoc.length; i++) {
         nxtwrd = wordLoc[i][2] + word.length
         suraN = wordLoc[i][0]
         aya = wordLoc[i][1]
@@ -551,7 +579,7 @@ function nextWordLoc(word, arr = suraSr) {
 }
 
 function removePunctions(word) {
-    return word.replace(/(~|`|!|@|#|$|%|^|&|\*|\(|\)|{|}|\[|\]|;|:|\"|'|<|,|\.|>|\?|\/|\\|\||-|_|\+|=)/g, "")
+    return word.replace(/(~|`|!|@|#|$|%|^|&amp;|\*|\(|\)|{|}|\[|\]|;|:|\"|'|&lt;|,|\.|>|\?|\/|\\|\||-|_|\+|=)/g, "")
 }
 
 function nextWordList(word, arr = suraSr) {
@@ -564,7 +592,7 @@ function nextWordList(word, arr = suraSr) {
         anls = new Set(),
         lastindex,
         sugwrd, ns, na, aya;
-    for (let i = 0; i < wordlocation.length; i++) {
+    for (let i = 0; i &lt; wordlocation.length; i++) {
         anls.add([wordlocation[i][0], wordlocation[i][1]])
         ns = wordlocation[i][0];
         na = wordlocation[i][1];
@@ -576,7 +604,7 @@ function nextWordList(word, arr = suraSr) {
         sugwrd = aya.substring(wordlocation[i][2], lastindex);
         sugwrd = removePunctions(sugwrd);
         // if end of aya, then check next aya, from the beging
-        if (sugwrd.length <= 1) {
+        if (sugwrd.length &lt;= 1) {
 
             continue;
 
@@ -619,7 +647,7 @@ function SearchBarRTL() {
 }
 
 function find(word = "") {
-    if (word.length <= 0) return;
+    if (word.length &lt;= 0) return;
     if (isRoot(word)) return;
     if (isLatin(word)) {
         wordLst = nextWordList(word, suraTr)
@@ -636,7 +664,7 @@ function find(word = "") {
 }
 
 function findAction(word = "") {
-    if (word.length <= 0) return;
+    if (word.length &lt;= 0) return;
     clearTable();
     serachedWordTable(word);
     setHash(word)
@@ -678,9 +706,9 @@ function serachedWordTable(word) {
 }
 
 function submitData(word, message = "no", email = "anon") {
-    // let link = "https://docs.google.com/forms/d/e/1FAIpQLSd7o_vx8kanr371NqY3ylGAmDHrht6APYLFg0g6rhJVDC2zdA/formResponse?usp=pp_url&entry.841595716="
-    // let link =  "https://docs.google.com/forms/d/e/1FAIpQLSd7o_vx8kanr371NqY3ylGAmDHrht6APYLFg0g6rhJVDC2zdA/formResponse?usp=pp_url&entry.364753965=email&entry.841595716=word&entry.1093518355=feedBackMessage&entry.2043746972=screen&entry.562870159=model&entry.709022821=settings&entry.1881015334=navigator"
-    let link = "https://docs.google.com/forms/d/e/1FAIpQLSd7o_vx8kanr371NqY3ylGAmDHrht6APYLFg0g6rhJVDC2zdA/formResponse?usp=pp_url&entry.364753965=email&entry.841595716=word&entry.1093518355=feedBackMessage&entry.2043746972=screen&entry.562870159=model&entry.709022821=settings&entry.1881015334=navigator"
+    // let link = "https://docs.google.com/forms/d/e/1FAIpQLSd7o_vx8kanr371NqY3ylGAmDHrht6APYLFg0g6rhJVDC2zdA/formResponse?usp=pp_url&amp;entry.841595716="
+    // let link =  "https://docs.google.com/forms/d/e/1FAIpQLSd7o_vx8kanr371NqY3ylGAmDHrht6APYLFg0g6rhJVDC2zdA/formResponse?usp=pp_url&amp;entry.364753965=email&amp;entry.841595716=word&amp;entry.1093518355=feedBackMessage&amp;entry.2043746972=screen&amp;entry.562870159=model&amp;entry.709022821=settings&amp;entry.1881015334=navigator"
+    let link = "https://docs.google.com/forms/d/e/1FAIpQLSd7o_vx8kanr371NqY3ylGAmDHrht6APYLFg0g6rhJVDC2zdA/formResponse?usp=pp_url&amp;entry.364753965=email&amp;entry.841595716=word&amp;entry.1093518355=feedBackMessage&amp;entry.2043746972=screen&amp;entry.562870159=model&amp;entry.709022821=settings&amp;entry.1881015334=navigator"
     link = link.replace("word", word);
     link = link.replace("feedBackMessage", message);
     link = link.replace("screen", screen.width + " x " + screen.height);
@@ -690,7 +718,7 @@ function submitData(word, message = "no", email = "anon") {
 
     link = link.replace("navigator", navigatorToString())
     link = decodeURI(link)
-    let submit = '&submit=Submit';
+    let submit = '&amp;submit=Submit';
     link = link + submit;
     let post = document.createElement("iframe")
     post.src = link;
@@ -714,10 +742,10 @@ function removeElementByID(elementID) {
 function submitFeedBack() {
     let email = inputEmail.value;
     let msg = feedBackMessage.value;
-    if (email.length <= 2) {
+    if (email.length &lt;= 2) {
         email = "anon"
     }
-    if (msg.length <= 2) {
+    if (msg.length &lt;= 2) {
         msg = "empty";
     }
     submitData(searchQue.value, msg, email)
@@ -811,7 +839,7 @@ function hashChanged() {
     }
 
     // arabic=toArabic(decodeURI(arabic)); // move the decode function to BuckWalter code... better approach
-    if (arabic.length <= 0) return;
+    if (arabic.length &lt;= 0) return;
     if (suraTr == undefined) return; // a little lovely bug.. faster way to solve it lol
     if (arabic == searchQue.value) return;
     findActionH(arabic); //toArabicLetters(arabic));
@@ -930,7 +958,7 @@ function openMeali(cv) {
     cv = cv.split(":");
     let c = cv[0],
         v = cv[1];
-    let link = `http://kuranmeali.com/AyetKarsilastirma.php?sure=${c}&ayet=${v}`
+    let link = `http://kuranmeali.com/AyetKarsilastirma.php?sure=${c}&amp;ayet=${v}`
     window.open(link, "meali")
     lastOne = "meal";
     warpLast()
@@ -958,7 +986,7 @@ function openCorpus(cv) {
     cv = cv.split(":");
     let c = cv[0],
         v = cv[1];
-    let link = `http://corpus.quran.com/translation.jsp?chapter=${c}&verse=${v}`
+    let link = `http://corpus.quran.com/translation.jsp?chapter=${c}&amp;verse=${v}`
     window.open(link, "Corpus")
     lastOne = "corpus";
     warpLast()
@@ -970,41 +998,41 @@ function createDropDownSplit(suraCV, control) {
     let cv = suraCV.split(" ");
     cv = cv[cv.length - 1]
     let x = `
-    <!-- Example split danger button -->
-<div class="btn-group">
-  <button id="showHideFull" type="button" class="btn badge badge-light align-text-bottom dropdown-toggle-split" aria-expanded="false" onlcick="toggleShow('test')">+</button>
-  <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOneF('${cv}')">${suraCV}</button>
-  <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <span class="sr-only">Toggle Dropdown</span>
-  </button>
-  <div class="dropdown-menu">
-    <button class="dropdown-item" onclick="openCorpus('${cv}')">Corpus</button>
-    <button class="dropdown-item" onclick="openQuran('${cv}')">Quran</button>
-    <button class="dropdown-item" onclick="openMeali('${cv}')">Meali</button>
-    <div class="dropdown-divider"></div>
-    <button class="dropdown-item" onclick="openIqra('${cv}')">Iqra</button>
-  </div>
-</div><br>
+    &lt;!-- Example split danger button -->
+&lt;div class="btn-group">
+  &lt;button id="showHideFull" type="button" class="btn badge badge-light align-text-bottom dropdown-toggle-split" aria-expanded="false" onlcick="toggleShow('test')">+&lt;/button>
+  &lt;button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOneF('${cv}')">${suraCV}&lt;/button>
+  &lt;button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    &lt;span class="sr-only">Toggle Dropdown&lt;/span>
+  &lt;/button>
+  &lt;div class="dropdown-menu">
+    &lt;button class="dropdown-item" onclick="openCorpus('${cv}')">Corpus&lt;/button>
+    &lt;button class="dropdown-item" onclick="openQuran('${cv}')">Quran&lt;/button>
+    &lt;button class="dropdown-item" onclick="openMeali('${cv}')">Meali&lt;/button>
+    &lt;div class="dropdown-divider">&lt;/div>
+    &lt;button class="dropdown-item" onclick="openIqra('${cv}')">Iqra&lt;/button>
+  &lt;/div>
+&lt;/div>&lt;br>
 `
     if (control) {
         x = `
-    <!-- Example split danger button -->
-<div class="btn-group">
-<button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-<span class="sr-only">Toggle Dropdown</span>
-</button>
-  <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOneF('${cv}')">${suraCV}</button>
+    &lt;!-- Example split danger button -->
+&lt;div class="btn-group">
+&lt;button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+&lt;span class="sr-only">Toggle Dropdown&lt;/span>
+&lt;/button>
+  &lt;button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOneF('${cv}')">${suraCV}&lt;/button>
  
-  <button id="showHideFull" type="button" class="btn badge badge-light align-text-bottom dropdown-toggle-split" aria-expanded="false" onlcick="toggleShow('test')">+</button>
+  &lt;button id="showHideFull" type="button" class="btn badge badge-light align-text-bottom dropdown-toggle-split" aria-expanded="false" onlcick="toggleShow('test')">+&lt;/button>
 
-  <div class="dropdown-menu">
-    <button class="dropdown-item" onclick="openCorpus('${cv}')">Corpus</button>
-    <button class="dropdown-item" onclick="openQuran('${cv}')">Quran</button>
-    <button class="dropdown-item" onclick="openMeali('${cv}')">Meali</button>
-    <div class="dropdown-divider"></div>
-    <button class="dropdown-item" onclick="openIqra('${cv}')">Iqra</button>
-  </div>    
-</div><br>
+  &lt;div class="dropdown-menu">
+    &lt;button class="dropdown-item" onclick="openCorpus('${cv}')">Corpus&lt;/button>
+    &lt;button class="dropdown-item" onclick="openQuran('${cv}')">Quran&lt;/button>
+    &lt;button class="dropdown-item" onclick="openMeali('${cv}')">Meali&lt;/button>
+    &lt;div class="dropdown-divider">&lt;/div>
+    &lt;button class="dropdown-item" onclick="openIqra('${cv}')">Iqra&lt;/button>
+  &lt;/div>    
+&lt;/div>&lt;br>
 `
     }
     return x;
@@ -1161,7 +1189,7 @@ function storageAvailable(type) {
         storage.removeItem(x);
         return true;
     } catch (e) {
-        return e instanceof DOMException && (
+        return e instanceof DOMException &amp;&amp; (
                 // everything except Firefox
                 e.code === 22 ||
                 // Firefox
@@ -1170,9 +1198,9 @@ function storageAvailable(type) {
                 // everything except Firefox
                 e.name === 'QuotaExceededError' ||
                 // Firefox
-                e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+                e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &amp;&amp;
             // acknowledge QuotaExceededError only if there's something already stored
-            (storage && storage.length !== 0);
+            (storage &amp;&amp; storage.length !== 0);
     }
 }
 
@@ -1193,7 +1221,7 @@ function initLocalStorage() {
     let translationSize = parseInt(getCSSRule(".translation").style.fontSize);
     let colour = getCSSRule("great").style.backgroundColor;
     let values = [arabicSize, translationSize, colour, 5, oneline, lastOne, "1"]
-    for (let i = 0; i < keys.length; i++) {
+    for (let i = 0; i &lt; keys.length; i++) {
         updateSettings(keys[i], values[i])
     }
 }
@@ -1484,4 +1512,26 @@ function menuFn() {
 }
 // TODO: write docs and split the code to more readable style.. 
 // bug:la habersiz
-// TODO: instead of removing/clearning diactricits( vowels - tashkeel) check if its there then search by another array.
+// TODO: instead of removing/clearning diactricits( vowels - tashkeel) check if its there then search by another array.</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addShowFunction">addShowFunction</a></li><li><a href="global.html#checkButton">checkButton</a></li><li><a href="global.html#createArPar">createArPar</a></li><li><a href="global.html#createArTd">createArTd</a></li><li><a href="global.html#createRow">createRow</a></li><li><a href="global.html#createSpan">createSpan</a></li><li><a href="global.html#createTd">createTd</a></li><li><a href="global.html#createTr">createTr</a></li><li><a href="global.html#data">data</a></li><li><a href="global.html#dataIndex">dataIndex</a></li><li><a href="global.html#dataToArray">dataToArray</a></li><li><a href="global.html#dataUrl">dataUrl</a></li><li><a href="global.html#displayArWr">displayArWr</a></li><li><a href="global.html#displayState">displayState</a></li><li><a href="global.html#displaySura">displaySura</a></li><li><a href="global.html#getReferences">getReferences</a></li><li><a href="global.html#getWordLocation">getWordLocation</a></li><li><a href="global.html#initFinder">initFinder</a></li><li><a href="global.html#langSpeechSettings">langSpeechSettings</a></li><li><a href="global.html#language">language</a></li><li><a href="global.html#lastOne">lastOne</a></li><li><a href="global.html#lastSura">lastSura</a></li><li><a href="global.html#letterToRoots">letterToRoots</a></li><li><a href="global.html#loadArabic">loadArabic</a></li><li><a href="global.html#loadLang">loadLang</a></li><li><a href="global.html#loadTrans">loadTrans</a></li><li><a href="global.html#mujam">mujam</a></li><li><a href="global.html#oneline">oneline</a></li><li><a href="global.html#parseRoots">parseRoots</a></li><li><a href="global.html#readExternal">readExternal</a></li><li><a href="global.html#resetTD">resetTD</a></li><li><a href="global.html#rootsMap">rootsMap</a></li><li><a href="global.html#setSura">setSura</a></li><li><a href="global.html#settings">settings</a></li><li><a href="global.html#SpanAddEventListener">SpanAddEventListener</a></li><li><a href="global.html#suraAr">suraAr</a></li><li><a href="global.html#suraSr">suraSr</a></li><li><a href="global.html#suraTr">suraTr</a></li><li><a href="global.html#texts">texts</a></li><li><a href="global.html#toArabic">toArabic</a></li><li><a href="global.html#toBuckwalter">toBuckwalter</a></li><li><a href="global.html#verseInPage">verseInPage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Mar 02 2020 05:57:12 GMT+0300 (GMT+03:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: mujam.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: mujam.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// const DATA_URL = "https://maeyler.github.io/Iqra3/data/"; //in maeyler/Iqra3/code/common.js
+
+/**
+ * Roots map
+ */
+let rootsMap = new Map();
+let wordToRoot = new Map();
+let rootToCounts = new Map();
+const wordToRefs = new Map();
+/**
+ * A map holds the letters and its roots.
+ * set at report2 @see report2
+ */
+const letterToRoots = new Map();
+
+const rootToWords = new Map();
+
+function readRoots(text, target) {
+    text = text.split("\n")
+    let root;
+    text.forEach(e => {
+        e = e.split(" ")
+        root = e.shift();
+        target.set(root, e)
+        rootToCounts.set(root, e.length);
+        for (let w of e) wordToRoot.set(w, root)
+
+    })
+}
+
+async function initMujam() {
+    await initMAE();
+    await readExternal("https://raw.githubusercontent.com/maeyler/Iqra3/master/data/words.txt", rootsMap, readRoots);
+    return new Promise((resolve, reject) => { resolve('Success!'); })
+}
+let wRefs = [];
+/**
+ * Make wRefs for specified roots
+ * 
+ * @param {Array} roots Array to be displayed
+ */
+function parseRoots(roots) { //root array in Arabic
+    wRefs = []
+    let [word, ...rest] = roots
+    let i1 = getReferences(word) //combined
+    if (rest) { //multiple roots, single RefSet
+        for (let r of rest) {
+            let i2 = getReferences(r)
+                //find intersection
+            i1 = i1.filter(v => //i2.includes(v)
+                i2.find(x => x.index == v.index))
+        }
+        word = roots.map(x => rootToCounts.get(x)).join(' + ')
+    }
+    let set = new RefSet(word, i1)
+    if (rest.length > 0) wRefs = [set]
+    return set
+}
+
+/**
+ * calculate the index array for given root.
+ * 
+ * @param {string} root to be displayed
+ * @returns {VerseRef[]} Array of VerseRef's
+ */
+function getReferences(root) {
+    if (!rootToWords) setTimeout(() => { console.log("World!"); }, 2000);
+
+    let cnt = rootToCounts.get(root);
+    let refA = []
+    for (let word of rootToWords.get(cnt)) {
+        let enc = wordToRefs.get(word)
+        let set = RefSet.fromEncoded(word, enc)
+        for (let v of set.list) refA.push(v)
+            //refA.concat(set.list)  concat returns another Array
+        wRefs.push(set)
+    }
+    return refA.sort((a, b) => (a.index - b.index))
+}
+
+async function initMAE() {
+    //showSelections(false);
+    sajda = [175, 250, 271, 292, 308, 333, 364, 378, 415, 453, 479, 527, 589, 597, 999]
+    let letters = [];
+    for (let c = 1575; c &lt; 1609; c++) letters.push(String.fromCharCode(c));
+    try {
+        await readData();
+    } catch (err) {
+        console.error("Could not read it", err)
+    }
+    if (!localStorage.topics)
+        localStorage.topics = 'Secde=1w82bu2i62ne2s430l38z3gg3pq42y4a74qm5k15q5'
+    return new Promise(function(resolve, reject) {
+        resolve('Success!');
+    })
+}
+
+async function readData() {
+    //const DATA_URL = "https://maeyler.github.io/Iqra3/data/" in common.js
+    const r = await fetch(DATA_URL + "refs.txt");
+    const t = await r.text();
+    return report2(t); //text
+}
+
+function report2(t) {
+    function convert(s) {
+        let [w, n] = s.split(' ')
+        let a = toArabic(w)
+            //convert space to em-space " "
+        return [a, a + EM_SPACE + n]
+    }
+    let line = t.split('\n')
+    let m = line.length - 1
+    console.log(t.length + " chars " + m + " lines");
+    let i = 0;
+    while (i &lt; m) { //for each line
+        let [root, number] = convert(line[i])
+        rootToCounts.set(root, number);
+        let j = i + 1
+        let list = []
+        while (j &lt; m) {
+            let [xxx, s] = convert(line[j])
+            let k = s.indexOf('\t')
+            if (k &lt;= 0) break;
+            let word = s.substring(0, k)
+            let refs = s.substring(k + 1)
+            wordToRefs.set(word, refs)
+            list.push(word);
+            j++;
+        }
+        i = j;
+        list.sort();
+        let ch = root[0]; //first char
+        let x = letterToRoots.get(ch);
+        if (x) x.push(number);
+        else letterToRoots.set(ch, [number]);
+        rootToWords.set(number, list);
+    }
+    let keys = [...letterToRoots.keys()];
+    // sort the root list for each letter
+    for (let k of keys) letterToRoots.get(k).sort()
+        // sort and set menu1 (letters)
+    return new Promise(function(resolve, reject) {
+        resolve('Success!');
+    })
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addShowFunction">addShowFunction</a></li><li><a href="global.html#checkButton">checkButton</a></li><li><a href="global.html#createArPar">createArPar</a></li><li><a href="global.html#createArTd">createArTd</a></li><li><a href="global.html#createRow">createRow</a></li><li><a href="global.html#createSpan">createSpan</a></li><li><a href="global.html#createTd">createTd</a></li><li><a href="global.html#createTr">createTr</a></li><li><a href="global.html#data">data</a></li><li><a href="global.html#dataIndex">dataIndex</a></li><li><a href="global.html#dataToArray">dataToArray</a></li><li><a href="global.html#dataUrl">dataUrl</a></li><li><a href="global.html#displayArWr">displayArWr</a></li><li><a href="global.html#displayState">displayState</a></li><li><a href="global.html#displaySura">displaySura</a></li><li><a href="global.html#getReferences">getReferences</a></li><li><a href="global.html#getWordLocation">getWordLocation</a></li><li><a href="global.html#initFinder">initFinder</a></li><li><a href="global.html#langSpeechSettings">langSpeechSettings</a></li><li><a href="global.html#language">language</a></li><li><a href="global.html#lastOne">lastOne</a></li><li><a href="global.html#lastSura">lastSura</a></li><li><a href="global.html#letterToRoots">letterToRoots</a></li><li><a href="global.html#loadArabic">loadArabic</a></li><li><a href="global.html#loadLang">loadLang</a></li><li><a href="global.html#loadTrans">loadTrans</a></li><li><a href="global.html#mujam">mujam</a></li><li><a href="global.html#oneline">oneline</a></li><li><a href="global.html#parseRoots">parseRoots</a></li><li><a href="global.html#readExternal">readExternal</a></li><li><a href="global.html#resetTD">resetTD</a></li><li><a href="global.html#rootsMap">rootsMap</a></li><li><a href="global.html#setSura">setSura</a></li><li><a href="global.html#settings">settings</a></li><li><a href="global.html#SpanAddEventListener">SpanAddEventListener</a></li><li><a href="global.html#suraAr">suraAr</a></li><li><a href="global.html#suraSr">suraSr</a></li><li><a href="global.html#suraTr">suraTr</a></li><li><a href="global.html#texts">texts</a></li><li><a href="global.html#toArabic">toArabic</a></li><li><a href="global.html#toBuckwalter">toBuckwalter</a></li><li><a href="global.html#verseInPage">verseInPage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Mar 02 2020 05:57:12 GMT+0300 (GMT+03:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
