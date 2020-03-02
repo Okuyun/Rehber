@@ -2,29 +2,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Bahis</title>
+    <title>Arama motoru</title>
+    <link rel="stylesheet" href="./style/introJs.css">
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-     <link href="./style/bootstrap-tour.css" rel="stylesheet">
-    <link href="./style/bootstrap-tour-standalone.css" rel="stylesheet">
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
-   
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
       crossorigin="anonymous"
     ></script>
-    <script
-  src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
       integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
@@ -53,6 +47,9 @@
     <!-- from bootstrap examples  -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="#">Kuran Rehberi</a>
+      <span id="version" class="navbar-text">
+          
+      </span>
       <button
         class="navbar-toggler"
         type="button"
@@ -69,7 +66,7 @@
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
             <a class="nav-link" href="#"
-              >Bâhis <span class="sr-only">(current)</span></a
+              >Arama motoru  <span class="sr-only">(current)</span></a
             >
           </li>
           <li class="nav-item">
@@ -97,9 +94,7 @@
             </div>
           </li>
         </ul>
-        <span id="version" class="navbar-text">
-          
-        </span>
+       
       </div>
     </nav>
     <br />
@@ -160,18 +155,20 @@
           </datalist>
         </div>
         <!-- <div class=col> -->
-         <div class="custom-control custom-radio custom-control-inline">
-            <input onchange="displayState(1)" type="radio" id="state1" name="state" class="custom-control-input">
-            <label class="custom-control-label" for="state1">Show all</label>
-          </div>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input onchange="displayState(2)"  type="radio" id="state2" name="state" class="custom-control-input">
-            <label class="custom-control-label" for="state2">Only arabic</label>
-          </div>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input onchange="displayState(3)" type="radio" id="state3" name="state" class="custom-control-input">
-            <label class="custom-control-label" for="state3">Only Oneline</label>
-          </div>
+       <div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input onchange="displayState(1)" type="radio" id="state1" name="state" class="custom-control-input">
+          <label class="custom-control-label" for="state1">Show all</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input onchange="displayState(2)"  type="radio" id="state2" name="state" class="custom-control-input">
+          <label class="custom-control-label" for="state2">Only arabic</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input onchange="displayState(3)" type="radio" id="state3" name="state" class="custom-control-input">
+          <label class="custom-control-label" for="state3">Only Oneline</label>
+        </div>
+       </div>
          
         
          <!-- </div> -->
@@ -487,11 +484,7 @@
     <script src="code/script.js"></script>
     <script src="code/presentation.js"></script>
   <script src="./code/config.js"></script>
-  <script src="./code/bootstrap-tour.js"></script>
-    <script src="./code/bootstrap-tour-standalone.js"></script>
-
-
-
+  <script src="./code/introJs.js"></script>
     <script>
     if ('serviceWorker' in navigator) {
       if (location.protocol.startsWith('http')) 
@@ -506,6 +499,88 @@
       //initFinder();
       //setTimeout(findAction, 250, 'بسم الله');
     //  setTimeout(initFinder, 250, "بسم الله");
+    </script>
+    <script>
+    document.onkeydown = (evt) => {
+      let k = evt.key.toUpperCase()
+      if (evt.key == 'F1') {
+       evt.preventDefault(); 
+       findAction("الله")
+       startIntro();
+      }
+  }
+      function startIntro(){
+        let intro = introJs();
+          intro.setOptions({
+            steps: [
+              { 
+                intro: "Kuran <b>Rehberine</b> Hos geldiniz!"
+              },
+              { 
+                intro: "Bu program kullanarak, kuran okuma ve ezberleme deneyniminiz daha iyi olacak :) "
+              },
+              {
+                element: document.querySelector('#searchQue'),
+                intro: "Bu bir Arama yeri, istediniz kelime aratabilirsiniz, Kurandan ya da tefsirden olur."
+              },
+              {
+                element: document.querySelector('#button-addon4 > button:nth-child(1)'),
+                intro: "Buradan ise programin ayarlari degistirebilirsiniz",
+                position: 'bottom'
+              },
+              {
+                element:  document.querySelector("#button-addon4 > button:nth-child(2)"),
+                intro: 'Buradan ise programciya iletisim kurabilirsiniz.',
+                position: 'left'
+              },
+              {
+                element: document.querySelector("#button-addon4 > button:nth-child(3)"),
+                intro: "Burdan sesli arama yapabilirsiniz.",
+                position: 'bottom'
+              },
+              {
+                element: document.querySelector("body > div.container > div.row.bg-white.sticky-top > div:nth-child(3)"),
+                intro: 'Bunlar ise prorgamin uc modulu, tefsir-kuran, sadece kuran, kuran tek satir modu.',
+                position: 'bottom'
+              },
+              {
+                element: document.querySelector("#translationHeader"),
+                intro: "Burdan hem istediginiz tefsir secebilirsiniz hem de dili degistirebilirsiniz.",
+                position: 'bottom'
+              },
+              {
+                element: document.querySelector("#dTable > tbody > tr:nth-child(1) > td.tableTranslation > div > button.btn.badge.badge-light.align-text-bottom.dropdown-toggle.dropdown-toggle-split"),
+                intro: "Gordugnuz ufacik butonlar diger kaynaklar yonlendirir size.",
+                position: 'bottom'
+              },
+              {
+                element: document.querySelector("#dTable > tbody > tr:nth-child(1) > td.tableTranslation > div > button:nth-child(2)"),
+                intro: "Burdan Gittiginiz son kaynaga gider.",
+                position: 'bottom'
+              },
+              {
+                element: document.querySelector("#dTable > tbody > tr:nth-child(1) > td.text-right > span > span.fullText > great"),
+                intro: "Buna tiklayarak Iqra adli uygulamasinda acar ve bu kelimeyi gosterir.",
+                position: 'bottom'
+              },
+              {
+                element: document.querySelector("#dTable > tbody > tr:nth-child(1) > td.text-right > span"),
+                intro: "Burdaki arapca kuran metninden her hangi bir kelime secip sag tiklarsaniz guzel secenekler cikar.",
+                position: 'bottom'
+              },
+              {
+                element: document.querySelector("#PaginationMenu > ul"),
+                intro: "Buradan var olan sayfalari goster ve istediniz sayfaya gidebilirsiniz",
+                position: 'bottom'
+              },
+              {
+                intro: "Umarim faydali ve guzel bir program olur sizin icin, bu bilgiler buradan da erisebilirsiniz.",
+              }
+            ]
+          });
+
+          intro.start();
+      }
     </script>
   </body>
 </html>
