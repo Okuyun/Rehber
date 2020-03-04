@@ -783,7 +783,7 @@ function rootToFinder(root) {
 
 function hashChanged() {
     let h = decodeURI(location.hash);
-    console.log("hashChanged...")
+    // console.log("hashChanged...")
     let type = h[1];
     h = h.slice(3);
     let arabic = h.replace(/%20/g, " ");;
@@ -1420,7 +1420,7 @@ function menuFn() {
                     left: e.x,
                     top: e.y
                 };
-                console.log(e)
+                // console.log(e)
                 setPosition(origin);
                 return false;
             })
@@ -1439,14 +1439,15 @@ function menuFn() {
 
 
     const toggleMenu = command => {
-        console.log("toggle" + command)
+        // console.log("toggle" + command)
+        if (!select() && command == "show") return;
         menu.style.display = command === "show" ? "block" : "none";
         menuVisible = !menuVisible;
     };
 
     const setPosition = ({ top, left }) => {
         if (window.innerWidth - left < 160) {
-            left = (window.innerWidth - 170)
+            left = (window.innerWidth - 190)
         }
         if (window.innerHeight - top < 220) {
             top -= 250
@@ -1465,7 +1466,7 @@ function menuFn() {
     contextMenu.addEventListener("click", e => {
         if (!menuVisible) { return }
         let sel = select();
-        console.log("worked..." + " sel =" + sel)
+        // console.log("worked..." + " sel =" + sel)
         switch (e.target.value) {
             case 0: // Search in finder
                 findAction(sel)
