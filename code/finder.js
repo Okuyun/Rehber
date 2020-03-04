@@ -1417,8 +1417,8 @@ function menuFn() {
             e.addEventListener("contextmenu", e => {
                 e.preventDefault();
                 const origin = {
-                    left: e.screenX,
-                    top: e.screenY
+                    left: e.x,
+                    top: e.y
                 };
                 console.log(e)
                 setPosition(origin);
@@ -1445,8 +1445,14 @@ function menuFn() {
     };
 
     const setPosition = ({ top, left }) => {
+        if (window.innerWidth - left < 160) {
+            left = (window.innerWidth - 170)
+        }
+        if (window.innerHeight - top < 220) {
+            top -= 250
+        }
         menu.style.left = `${left}px`;
-        menu.style.top = `${top-100}px`;
+        menu.style.top = `${top}px`;
         toggleMenu("show");
     };
 
