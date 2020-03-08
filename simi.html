@@ -72,8 +72,8 @@
     <br />
 
     <div class="container">
-        <div class="row bg-white sticky-top" style="z-index: 2;">
-            <div class="col-7 col-sm-4">
+        <div class="row bg-white sticky-top d-flex justify-content-start" style="z-index: 2;">
+            <div class="col-7 col-sm-4 col-xl-2">
                 <label class="row">Sura</label>
 
                 <select id="sl" class="select row">
@@ -83,7 +83,7 @@
           <option value="3">Three</option>
         </select>
             </div>
-            <div class="col-5 col-sm-2">
+            <div class="col-2 col-sm-2 col-xl-1">
                 <label name="aya" class="row">Aya</label>
                 <select id="al" name="aya" class="select row">
           <option value="1">1</option>
@@ -92,19 +92,33 @@
           <option value="4">4</option>
         </select>
             </div>
-            <div class="col-7 col-sm-3">
-                <label class="row" name="sort">Sort by</label>
-                <select class="row" id="sortBy" class="select">
-              <option value="0">Oran Yukselen</option>
-              <option value="1" selected>Oran Dusen</option>
-              <option value="2">Ayet Yukselen</option>
-              <option value="3">Ayet Dusen</option>
-            </select>
+         <div class="col-3 col-sm-1 col-xl-1">
+             <br>
+            <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseOptions" aria-expanded="false" aria-controls="collapseOptions">
+                ⚙️ 
+            </button>
+           
+              
+         </div>
+         <div class="collapse col-12 col-xl-6" id="collapseOptions">
+            <div class="card card-body">
+                <div>
+                    <label class="row" name="sort">Sort by</label>
+                    <select class="row" id="sortBy" class="select">
+                  <option value="0">Oran Yukselen</option>
+                  <option value="1" selected>Oran Dusen</option>
+                  <option value="2">Ayet Yukselen</option>
+                  <option value="3">Ayet Dusen</option>
+                </select>
+                </div>
+                <div >
+                    <label class="row" name="percentage">Oran</label>
+                    <input class="row" max="100" min="0" type="number" name="percentage" id="perc" value="70">
+                </div>   
+
+                
             </div>
-            <div class="col-5 col-sm-3">
-                <label class="row" name="percentage">Oran</label>
-                <input class="row" max="100" min="0" type="number" name="percentage" id="perc" value="70">
-            </div>
+        </div>
 
         </div>
         <div class="row">
