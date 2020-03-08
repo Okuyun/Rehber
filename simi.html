@@ -73,29 +73,39 @@
 
     <div class="container">
         <div class="row bg-white sticky-top" style="z-index: 2;">
-            <label class="col-1">Sura</label>
-            <select id="sl" class="select col-2">
+            <div class="col-7 col-sm-4">
+                <label class="row">Sura</label>
+
+                <select id="sl" class="select row">
           <option value="0">1 Al-Faatiha</option>
           <option value="1">One</option>
           <option value="2">Two</option>
           <option value="3">Three</option>
         </select>
-            <label name="aya" class="col-1">Aya</label>
-            <select id="al" name="aya" class="select col-1">
+            </div>
+            <div class="col-5 col-sm-2">
+                <label name="aya" class="row">Aya</label>
+                <select id="al" name="aya" class="select row">
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
         </select>
-            <label name="percentage" class="col-1">Oran</label>
-            <input max="100" min="0" type="number" name="percentage" id="perc" class="col-1" value="70">
-            <label name="sort" class="col-1">Sort by</label>
-            <select id="sortBy" class="select col-2">
+            </div>
+            <div class="col-7 col-sm-3">
+                <label class="row" name="sort">Sort by</label>
+                <select class="row" id="sortBy" class="select">
               <option value="0">Oran Yukselen</option>
               <option value="1" selected>Oran Dusen</option>
               <option value="2">Ayet Yukselen</option>
               <option value="3">Ayet Dusen</option>
             </select>
+            </div>
+            <div class="col-5 col-sm-3">
+                <label class="row" name="percentage">Oran</label>
+                <input class="row" max="100" min="0" type="number" name="percentage" id="perc" value="70">
+            </div>
+
         </div>
         <div class="row">
             <div class="col-12">
@@ -190,7 +200,8 @@
     <script src="./code/mujam.js"></script>
     <script src="./code/simiTable.js"></script>
     <script>
-        window.name = "simi"
+        window.name = "simi";
+        initTable();
     </script>
 </body>
 

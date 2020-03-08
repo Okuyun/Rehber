@@ -41,7 +41,7 @@ function mujam() {}
 
 function clearTable() {
     // translationHeader.style.display = "none"
-    arabicHeader.style.width = "100vw"
+    // arabicHeader.style.width = "100vw"
     element = document.getElementById("dTable").getElementsByTagName('tbody')[0];;
     while (element.firstChild) {
         element.removeChild(element.firstChild);
@@ -130,7 +130,7 @@ function createRow(sn, an, word = "") {
         loc = suraTr[sn][an];
         state3.disabled = ""
     }
-    arabicHeader.style.width = "47%"
+    // arabicHeader.style.width = "47%"
         // translationHeader.style.display="table-cell"
     let td = createTd();
     td.className = "tableTranslation"
@@ -149,7 +149,7 @@ function createRow(sn, an, word = "") {
 
     let arTd = createArTd();
     arTd.scope = "col"
-    arTd.className = "text-right"
+    arTd.className = "text-right w-50"
     arTd.dir = "rtl"
         // need to change the span thingy as well
     let arP = createArPar();
@@ -943,6 +943,12 @@ function openIqra(cv) {
     lastOne = "iqra";
     warpLast()
 }
+function openSimi(cv) {
+    let link = "https://a0m0rajab.github.io/BahisQurani/simi#" + cv;
+    window.open(link, "simi")
+    lastOne = "simi";
+    warpLast()
+}
 
 function openQuran(cv) {
     cv = cv.split(":");
@@ -1003,6 +1009,8 @@ function createDropDownSplit(suraCV, control) {
     <button class="dropdown-item" onclick="openMeali('${cv}')">Meali</button>
     <div class="dropdown-divider"></div>
     <button class="dropdown-item" onclick="openIqra('${cv}')">Iqra</button>
+    <button class="dropdown-item" onclick="openSimi('${cv}')">Simi</button>
+
   </div>    
 </div><br>
 `
@@ -1226,6 +1234,9 @@ function lastOneF(cv) {
             break;
         case "corpus":
             openCorpus(cv)
+            break;
+        case "simi":
+            openSimi(cv)
             break;
     }
 }

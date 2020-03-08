@@ -190,7 +190,6 @@ function initSimilarity() {
     initTable()
 
 }
-initTable();
 
 function createTable(arr) {
     let ayaList = document.getElementById("al");
