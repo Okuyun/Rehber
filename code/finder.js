@@ -664,7 +664,7 @@ function serachedWordTable(word) {
         wordLst[1] = [...wordLst];
     }
 
-    document.title = "finder - " + word;
+    document.title = "Kuran Rehber: Finder - " + word;
     wordNumber.innerText = 0;
     let words = word.split("+")
     words.forEach(e => {
@@ -890,6 +890,7 @@ function changeColour(col) {
 }
 
 function changeGreatColour(col) {
+    document.getElementById("greatColour").value = col;
     getCSSRule("great").style.backgroundColor = col;
 
 }
@@ -1199,7 +1200,7 @@ function initLocalStorage() {
     let keys = ["arabic", "translation", "colour", "source", "oneline", "lastOne", "lang"]
     let arabicSize = parseInt(getCSSRule(".arabic").style.fontSize);
     let translationSize = parseInt(getCSSRule(".translation").style.fontSize);
-    let colour = getCSSRule("great").style.backgroundColor;
+    let colour = "#ffff00";
     let values = [arabicSize, translationSize, colour, 5, oneline, lastOne, "1"]
     for (let i = 0; i < keys.length; i++) {
         updateSettings(keys[i], values[i])

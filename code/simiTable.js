@@ -248,7 +248,7 @@ function greatArray(vector,wordArray,mode){
     if(mode == 1){ // more than 60 
       wordArray=   wordArray.map(e => {
             if(vector.get(wordToRoot.get(toBuckwalter(e)))>= 1 ){
-                return `<great style="background-color:yellow">${e}</great>`
+                return `<span style="color:yellow">${e}</span>`
             }else {return e}
         })
     }// less than 40
@@ -256,7 +256,7 @@ function greatArray(vector,wordArray,mode){
         wordArray=   wordArray.map(e => {
             let word = vector.get(wordToRoot.get(toBuckwalter(e)))
             if( word < 1 || word == undefined){
-                return `<great style="background-color:red">${e}</great>`
+                return `<span style="color:red">${e}</span>`
             }else {return e}
         })
     }
