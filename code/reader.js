@@ -14,15 +14,17 @@ let suraCounter = 0;
  * @param {object} htmlEl html object to set its value to sura number 
  * 
  */
-function setSura(h = 0, htmlEl) {
+function setSura(h = 0) {
     h = Number(h)
         //console.log(h);
-    if (h > 113 || h < 0)
-        setSura(lastSura)
-        // return dataShow.innerText = "Please Choose a number between 1-114"
+    if (h > 110) {
+        lastSura = 110;
+        return;
+    } else if (h < 0) {
+        lastSura = 0;
+    }
+    // return dataShow.innerText = "Please Choose a number between 1-114"
     lastSura = h
-    htmlEl.value = h + 1;
-
 }
 
 function nextSura() {
@@ -87,9 +89,16 @@ function appendSura() {
     addSura(trtxt, suraTr[lastSura], lastSura);
     setNames(lastSura)
     lastSura++;
-    endOfScroll(artxt, appendSura)
-    if (lastSura > 3) {
+    // endOfScroll(artxt, appendSura)
+    // checkSuraHeight()
+    if (artxt.children.length > 4) {
         removeFirstSura()
+    }
+}
+
+function checkSuraHeight() {
+    if (artxt.firstChild.offsetHeight <= artxt.clientHeight) {
+        appendSura()
     }
 }
 
@@ -111,8 +120,8 @@ function PrePendSura() {
     artxt.insertBefore(loadSura(suraAr[lastSura - 2], lastSura - 2), artxt.firstChild)
     trtxt.insertBefore(loadSura(suraTr[lastSura - 2], lastSura - 2), trtxt.firstChild)
     removeLastSura()
-        // artxt.firstChild.scrollIntoView()
-        // trtxt.firstChild.scrollIntoView()
+    artxt.children[1].scrollIntoView()
+    trtxt.children[1].scrollIntoView()
     lastSura--;
 }
 
@@ -131,7 +140,13 @@ function syncOnclick(Event) {
     console.log(suraID, ayaID, event)
     document.querySelector(`#artxt > sura[id='${suraID}'] >  aya[id='${ayaID}']`).scrollIntoView()
     document.querySelector(`#trtxt > sura[id='${suraID}'] > aya[id='${ayaID}']`).scrollIntoView()
-        // element.scrollIntoView()
+    setHash(Number(suraID) + 1, Number(ayaID));
+    // element.scrollIntoView()
+}
+
+function setHash(c, v) {
+    console.log(c, v)
+    location.hash = c + ":" + v;
 }
 
 async function loadTransR(n) {
@@ -171,18 +186,24 @@ async function initReader() {
     artxt.innerHTML = ""
     trtxt.innerHTML = ""
     await init();
-    appendSura();
+    initSuras();
+    setNames(0)
     loadTrans();
+    window.addEventListener("hashchange", getHash);
+
     return new Promise(function(resolve, reject) {
         resolve('Success!');
     })
 }
 
+function initSuras() {
+    appendSura();
+    appendSura()
+    appendSura()
+}
 
 artxt.onscroll = function() {
-    endOfScroll(artxt, function() {
-        appendSura()
-    })
+    endOfScroll(artxt, function() { appendSura() })
     topOfScroll(artxt, e => PrePendSura())
 }
 
@@ -205,3 +226,27 @@ function topOfScroll(target, callBack) {
 }
 
 //document.querySelectorAll("#artxt > sura[id='0'] > aya")
+// Add hash reader to open a specific sura immediately
+function resetAll() {
+    artxt.innerHTML = ""
+    trtxt.innerHTML = ""
+}
+
+function loadhash(chapter) {
+    resetAll()
+    setSura(chapter)
+    initSuras()
+}
+
+function getHash() {
+    let h = decodeURI(location.hash).slice(1);
+    let [c, v] = h.split(":")
+    loadhash(c - 1)
+    setNames(c - 1)
+    scrollToCV(c, v)
+}
+
+function scrollToCV(c, v) {
+    document.querySelector(`#artxt > sura[id='${c-1}'] >  aya[id='${v}']`).scrollIntoView()
+    document.querySelector(`#trtxt > sura[id='${c-1}'] > aya[id='${v}']`).scrollIntoView()
+}

@@ -41,7 +41,7 @@ async function initTable() {
 
     if (location.hash) {
         getHash();
-    }else {
+    } else {
         ayaList();
     }
 
@@ -114,7 +114,7 @@ function checkSimilarity(c, v, min = 70) {
         // verse vector
     let ratio;
 
-    let vv = getVerseVector(c,v);
+    let vv = getVerseVector(c, v);
     let mag = magnitude(vv)
         // console.log(mag)
     if (mag > 0) {
@@ -131,7 +131,8 @@ function checkSimilarity(c, v, min = 70) {
 
     return result;
 }
-function getVerseVector(c,v){
+
+function getVerseVector(c, v) {
     return surasVector.get(c - 1).get(v - 1).vector;
 }
 // start DOM functions
@@ -216,10 +217,10 @@ function createRow(ratio, ch, ve) {
 
     let span = document.createElement("span")
     span.className = "arabic"
-    span.innerHTML = mark(ratio, suraAr[ch - 1][ve - 1],getVerseVector(suraList.value,ayaList.value))
+    span.innerHTML = mark(ratio, suraAr[ch - 1][ve - 1], getVerseVector(suraList.value, ayaList.value))
     td.appendChild(span)
     let div = splitDown(ch, ve)
-    td.innerHTML +="<br>"+  div 
+    td.innerHTML += "<br>" + div
         // btn group...
     span = document.createElement("span")
     span.className = "badge badge-info col-1";
@@ -230,34 +231,36 @@ function createRow(ratio, ch, ve) {
     tr.appendChild(td)
     return tr;
 }
-function mark(ratio,verse,vector){
+
+function mark(ratio, verse, vector) {
     verse = verse.split(" ")
-    if(ratio >= 60 ){
+    if (ratio >= 60) {
         // changeGreatColour("yellow")
-        verse = greatArray(vector,verse,0)
-    }else if(ratio < 60 && ratio >= 40){
+        verse = greatArray(vector, verse, 0)
+    } else if (ratio < 60 && ratio >= 40) {
         // changeGreatColour("")
-        verse = greatArray(vector,verse,2)
-    }else {
+        verse = greatArray(vector, verse, 2)
+    } else {
         // changeGreatColour("red")
-        verse = greatArray(vector,verse,1)
+        verse = greatArray(vector, verse, 1)
     }
     return verse.join(" ");
 }
-function greatArray(vector,wordArray,mode){
-    if(mode == 1){ // more than 60 
-      wordArray=   wordArray.map(e => {
-            if(vector.get(wordToRoot.get(toBuckwalter(e)))>= 1 ){
+
+function greatArray(vector, wordArray, mode) {
+    if (mode == 1) { // more than 60 
+        wordArray = wordArray.map(e => {
+            if (vector.get(wordToRoot.get(toBuckwalter(e))) >= 1) {
                 return `<span style="color:yellow">${e}</span>`
-            }else {return e}
+            } else { return e }
         })
-    }// less than 40
-    else if(mode == 0){
-        wordArray=   wordArray.map(e => {
+    } // less than 40
+    else if (mode == 0) {
+        wordArray = wordArray.map(e => {
             let word = vector.get(wordToRoot.get(toBuckwalter(e)))
-            if( word < 1 || word == undefined){
+            if (word < 1 || word == undefined) {
                 return `<span style="color:red">${e}</span>`
-            }else {return e}
+            } else { return e }
         })
     }
     return wordArray;
@@ -323,9 +326,6 @@ function getHash() {
     timer("Vectors counted in ", () => { ayaList(0) })
     ayaListObj.selectedIndex = v - 1;
     triggerSimilarity()
-
-
-
 }
 
 function setHash() {
