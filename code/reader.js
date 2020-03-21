@@ -47,6 +47,10 @@ function preSura() {
  */
 function addSura(target, arr, lastSura) {
     // side note: check which one is faster the innerHTML vs the createAppend 
+    target.appendChild(loadSura(arr, lastSura))
+}
+
+function loadSura(arr, lastSura) {
     let sura = document.createElement("sura")
     sura.id = lastSura;
     let aya
@@ -58,7 +62,7 @@ function addSura(target, arr, lastSura) {
         aya.appendChild(document.createElement("br"))
         sura.appendChild(aya)
     });
-    target.appendChild(sura)
+    return sura;
 }
 /**
  *
@@ -78,22 +82,43 @@ function displayArWr(number = 0) {
 }
 
 function appendSura() {
+    if (lastSura == 114) return
     addSura(artxt, suraAr[lastSura], lastSura);
     addSura(trtxt, suraTr[lastSura], lastSura);
     setNames(lastSura)
     lastSura++;
     endOfScroll(artxt, appendSura)
+    if (lastSura > 3) {
+        removeFirstSura()
+    }
 }
 
-function removeFirstSura() {}
+function removeFirstSura() {
+    artxt.removeChild(artxt.firstChild)
+    trtxt.removeChild(trtxt.firstChild)
+}
 
-function removeLastSura() {}
+function removeLastSura() {
+    artxt.removeChild(artxt.lastChild)
+    trtxt.removeChild(trtxt.lastChild)
+}
 
-function PrePendSura() {}
+function PrePendSura() {
+    if (artxt.firstChild.id == 0) {
+        return;
+    }
+    setNames(lastSura - 2)
+    artxt.insertBefore(loadSura(suraAr[lastSura - 2], lastSura - 2), artxt.firstChild)
+    trtxt.insertBefore(loadSura(suraTr[lastSura - 2], lastSura - 2), trtxt.firstChild)
+    removeLastSura()
+        // artxt.firstChild.scrollIntoView()
+        // trtxt.firstChild.scrollIntoView()
+    lastSura--;
+}
 
 function displayTranslation(t) {
     console.log(t)
-    for (let i = 0; i <= lastSura; i++)
+    for (let i = artxt.firstChild.id; i <= artxt.lastChild.id; i++)
         addSura(trtxt, suraTr[i], i);
 }
 
@@ -158,6 +183,7 @@ artxt.onscroll = function() {
     endOfScroll(artxt, function() {
         appendSura()
     })
+    topOfScroll(artxt, e => PrePendSura())
 }
 
 /**
@@ -168,6 +194,12 @@ artxt.onscroll = function() {
  */
 function endOfScroll(target, callBack) {
     if (target.scrollTop + target.clientHeight == target.scrollHeight) {
+        callBack();
+    }
+}
+
+function topOfScroll(target, callBack) {
+    if (target.scrollTop == 0) {
         callBack();
     }
 }
