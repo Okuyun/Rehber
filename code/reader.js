@@ -45,14 +45,20 @@ function preSura() {
  * @param {Object} target Target HTML elemet to set the inner text as the nested array elements
  * @param {Object} arr  Array of chosen text, can be arabic or the translation 
  */
-function displaySura(target, arr, lastSura) {
-    let text = "";
+function addSura(target, arr, lastSura) {
+    // side note: check which one is faster the innerHTML vs the createAppend 
+    let sura = document.createElement("sura")
+    sura.id = lastSura;
+    let aya
     arr.forEach((e, i) => {
-
-        text += `<aya id=${i+1}> ${e}</aya> <br>`
+        aya = document.createElement("aya")
+        aya.id = i + 1
+        aya.innerText = e
+        aya.addEventListener("click", syncOnclick)
+        aya.appendChild(document.createElement("br"))
+        sura.appendChild(aya)
     });
-    target.innerHTML += `<sura id=${lastSura}>${text}</sura>`;
-
+    target.appendChild(sura)
 }
 /**
  *
@@ -65,23 +71,43 @@ function displayArWr(number = 0) {
     if (Number.isNaN(Number(number)))
         return
         // setSura(number, setSuraNumber);
-    displaySura(artxt, suraAr[lastSura], lastSura);
-    displayTranslation();
-    setNames()
-    suraCounter++;
+
     lastSura++;
-    endOfScroll(artxt, displayArWr)
 
 
 }
+
+function appendSura() {
+    addSura(artxt, suraAr[lastSura], lastSura);
+    addSura(trtxt, suraTr[lastSura], lastSura);
+    setNames(lastSura)
+    lastSura++;
+    endOfScroll(artxt, appendSura)
+}
+
+function removeFirstSura() {}
+
+function removeLastSura() {}
+
+function PrePendSura() {}
 
 function displayTranslation(t) {
     console.log(t)
-    displaySura(trtxt, suraTr[lastSura], lastSura);
+    for (let i = 0; i <= lastSura; i++)
+        addSura(trtxt, suraTr[i], i);
 }
 
 
-
+function syncOnclick(Event) {
+    let element = event.srcElement
+    let suraID = element.parentElement.id
+    let ayaID = element.id
+    setNames(element.parentElement.id)
+    console.log(suraID, ayaID, event)
+    document.querySelector(`#artxt > sura[id='${suraID}'] >  aya[id='${ayaID}']`).scrollIntoView()
+    document.querySelector(`#trtxt > sura[id='${suraID}'] > aya[id='${ayaID}']`).scrollIntoView()
+        // element.scrollIntoView()
+}
 
 async function loadTransR(n) {
     trtxt.innerHTML = ""
@@ -104,21 +130,23 @@ async function loadTransR(n) {
     } else {
         removeTextRight()
     }
+    lastSura--;
     displayTranslation();
+    lastSura++;
 }
 
 
 
-function setNames() {
-    arname.innerText = quran.sura[lastSura].name
-    ename.innerText = quran.sura[lastSura].ename + " (" + quran.sura[lastSura].tname + ")"
+function setNames(number = lastSura) {
+    arname.innerText = quran.sura[number].name
+    ename.innerText = quran.sura[number].ename + " (" + quran.sura[number].tname + ")"
 }
 
 async function initReader() {
     artxt.innerHTML = ""
     trtxt.innerHTML = ""
     await init();
-    displayArWr();
+    appendSura();
     loadTrans();
     return new Promise(function(resolve, reject) {
         resolve('Success!');
@@ -128,7 +156,7 @@ async function initReader() {
 
 artxt.onscroll = function() {
     endOfScroll(artxt, function() {
-        displayArWr()
+        appendSura()
     })
 }
 
