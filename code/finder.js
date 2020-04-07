@@ -41,7 +41,7 @@ function mujam() {}
 
 function clearTable() {
     // translationHeader.style.display = "none"
-    arabicHeader.style.width = "100vw"
+    // arabicHeader.style.width = "100vw"
     element = document.getElementById("dTable").getElementsByTagName('tbody')[0];;
     while (element.firstChild) {
         element.removeChild(element.firstChild);
@@ -130,8 +130,8 @@ function createRow(sn, an, word = "") {
         loc = suraTr[sn][an];
         state3.disabled = ""
     }
-    arabicHeader.style.width = "47%"
-        // translationHeader.style.display="table-cell"
+    // arabicHeader.style.width = "47%"
+    // translationHeader.style.display="table-cell"
     let td = createTd();
     td.className = "tableTranslation"
     let tb = createDropDownSplit(quran.sura[sn].tname + " " + (sn + 1) + ":" + (an + 1));
@@ -149,7 +149,7 @@ function createRow(sn, an, word = "") {
 
     let arTd = createArTd();
     arTd.scope = "col"
-    arTd.className = "text-right"
+    arTd.className = "text-right w-50"
     arTd.dir = "rtl"
         // need to change the span thingy as well
     let arP = createArPar();
@@ -436,11 +436,11 @@ function paginationControl(num) {
     addShowFunction();
     menuFn();
     initPagination();
-    if(getPages()<=1){
-        document.getElementById("PaginationMenu").hidden=true
-    }else {
-        document.getElementById("PaginationMenu").hidden=false
-    } 
+    if (getPages() < 1) {
+        document.getElementById("PaginationMenu").hidden = true
+    } else {
+        document.getElementById("PaginationMenu").hidden = false
+    }
 }
 
 function paginationNext() {
@@ -474,12 +474,12 @@ function paginationLast() {
 }
 
 function setVersePerPage(mode) {
-    if(mode==0) dataIndex=0;// if dataindex it will go to the last page, now it will reset.
+    if (mode == 0) dataIndex = 0; // if dataindex it will go to the last page, now it will reset.
     let controller = document.getElementById("dataAmount").value
     let lastPageButton = document.getElementById("lastPage")
     verseInPage = parseInt(controller);
     lastPageButton.innerText = getPages() + 1;
-    paginationControl(dataIndex) 
+    paginationControl(dataIndex)
 }
 
 function paginationSet() {
@@ -664,7 +664,7 @@ function serachedWordTable(word) {
         wordLst[1] = [...wordLst];
     }
 
-    document.title = "finder - " + word;
+    document.title = "Kuran Rehber: Finder - " + word;
     wordNumber.innerText = 0;
     let words = word.split("+")
     words.forEach(e => {
@@ -783,7 +783,7 @@ function rootToFinder(root) {
 
 function hashChanged() {
     let h = decodeURI(location.hash);
-    console.log("hashChanged...")
+    // console.log("hashChanged...")
     let type = h[1];
     h = h.slice(3);
     let arabic = h.replace(/%20/g, " ");;
@@ -798,7 +798,7 @@ function hashChanged() {
         case "r":
             // let arr=  ;
             // arabic = rootToWords(arabic)
-            document.title = "R="+arabic;
+            document.title = "R=" + arabic;
 
             rootToFinder(type + "=" + arabic);
             return;
@@ -888,7 +888,9 @@ function changeColour(col) {
     changeGreatColour(col)
     updateSettings("colour", col)
 }
-function changeGreatColour(col){
+
+function changeGreatColour(col) {
+    document.getElementById("greatColour").value = col;
     getCSSRule("great").style.backgroundColor = col;
 
 }
@@ -940,6 +942,13 @@ function openIqra(cv) {
     let link = "https://maeyler.github.io/Iqra3/reader.html#v=" + cv;
     window.open(link, "iqra")
     lastOne = "iqra";
+    warpLast()
+}
+
+function openSimi(cv) {
+    let link = "https://a0m0rajab.github.io/BahisQurani/simi#" + cv;
+    window.open(link, "simi")
+    lastOne = "simi";
     warpLast()
 }
 
@@ -1002,6 +1011,8 @@ function createDropDownSplit(suraCV, control) {
     <button class="dropdown-item" onclick="openMeali('${cv}')">Meali</button>
     <div class="dropdown-divider"></div>
     <button class="dropdown-item" onclick="openIqra('${cv}')">Iqra</button>
+    <button class="dropdown-item" onclick="openSimi('${cv}')">Simi</button>
+
   </div>    
 </div><br>
 `
@@ -1035,7 +1046,7 @@ function toggleShow(e) {
 }
 /**
  * Rest all the show/hide buttons and get the original CSS style. 
- * @param {html element} e button
+ * @param {html} e button
  */
 function resetTD(e) {
     if (e.parentElement.parentElement.children[2].className == "translation")
@@ -1190,7 +1201,7 @@ function initLocalStorage() {
     let keys = ["arabic", "translation", "colour", "source", "oneline", "lastOne", "lang"]
     let arabicSize = parseInt(getCSSRule(".arabic").style.fontSize);
     let translationSize = parseInt(getCSSRule(".translation").style.fontSize);
-    let colour = getCSSRule("great").style.backgroundColor;
+    let colour = "#ffff00";
     let values = [arabicSize, translationSize, colour, 5, oneline, lastOne, "1"]
     for (let i = 0; i < keys.length; i++) {
         updateSettings(keys[i], values[i])
@@ -1225,6 +1236,9 @@ function lastOneF(cv) {
             break;
         case "corpus":
             openCorpus(cv)
+            break;
+        case "simi":
+            openSimi(cv)
             break;
     }
 }
@@ -1392,18 +1406,20 @@ function langSpeechSettings() {
 
 
 function menuFn() {
-  
+
     const menu = document.getElementById("contextMenu");
     const menuOption = document.querySelector(".menu-option");
     let menuVisible = false;
     document.addEventListener('keydown', keyPress);
+
     function select() {
         let s = getSelection().toString().trim()
         if (s) return s
-        // else alert("Önce Arapça bir kelime seçin")
+            // else alert("Önce Arapça bir kelime seçin")
     }
-    function keyPress (e) {
-        if(e.key === "Escape") {
+
+    function keyPress(e) {
+        if (e.key === "Escape") {
             // preventDefault();
             if (menuVisible) toggleMenu("hide");
         }
@@ -1414,10 +1430,10 @@ function menuFn() {
             e.addEventListener("contextmenu", e => {
                 e.preventDefault();
                 const origin = {
-                    left: e.screenX,
-                    top: e.screenY
+                    left: e.x,
+                    top: e.y
                 };
-                console.log(e)
+                // console.log(e)
                 setPosition(origin);
                 return false;
             })
@@ -1436,14 +1452,21 @@ function menuFn() {
 
 
     const toggleMenu = command => {
-        console.log("toggle" + command)
+        // console.log("toggle" + command)
+        if (!select() && command == "show") return;
         menu.style.display = command === "show" ? "block" : "none";
         menuVisible = !menuVisible;
     };
 
     const setPosition = ({ top, left }) => {
+        if (window.innerWidth - left < 160) {
+            left = (window.innerWidth - 190)
+        }
+        if (window.innerHeight - top < 220) {
+            top -= 250
+        }
         menu.style.left = `${left}px`;
-        menu.style.top = `${top-100}px`;
+        menu.style.top = `${top}px`;
         toggleMenu("show");
     };
 
@@ -1456,7 +1479,7 @@ function menuFn() {
     contextMenu.addEventListener("click", e => {
         if (!menuVisible) { return }
         let sel = select();
-        console.log("worked..." + " sel =" + sel)
+        // console.log("worked..." + " sel =" + sel)
         switch (e.target.value) {
             case 0: // Search in finder
                 findAction(sel)
@@ -1469,7 +1492,7 @@ function menuFn() {
                     .then(() => { console.log('Panoya:', sel) })
                     .catch(e => { alert('Panoya yazamadım\n' + sel) })
                 break;
-            case 3:// search for root
+            case 3: // search for root
                 let root = wordToRoot.get(toBuckwalter(sel))
                 setHash(toArabic(root), "r")
                     // findAction(rootToWords(root))

@@ -1,0 +1,8 @@
+    #artxt>sura>aya::before {
+        content: "﴾" attr(id) "﴿";
+        content: " (" attr(id) ") ";
+    }
+    
+    aya::before {
+        content: "" attr(id) "- ";
+    }

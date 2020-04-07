@@ -2,7 +2,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Arama motoru</title>
+    <title>Kuran Rehberi</title>
     <link rel="stylesheet" href="./style/introJs.css">
     <meta
       name="viewport"
@@ -41,12 +41,17 @@
     <link rel="icon" href="images/search.png">
 
     <link rel="manifest" href="manifest.json">
+    <style>
+      #introjs-button #introjs-nextbutton{
+        user-select: none;
+      }
+    </style>
   </head>
 
   <body>
     <!-- from bootstrap examples  -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Kuran Rehberi</a>
+      <a class="navbar-brand" style="user-select: none;">Kuran Rehberi</a>
       <span id="version" class="navbar-text">
           
       </span>
@@ -65,14 +70,41 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#"
-              >Arama motoru  <span class="sr-only">(current)</span></a
+            <a class="nav-link disabled" href="./finder.html" aria-disabled="true"
+              >Arama motoru<span class="sr-only">(current)</span></a
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" href="#" aria-disabled="true"
+            <a class="nav-link" href="./reader.html" 
               >Qurani</a
             >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./simi.html" 
+              >Simi</a
+            >
+          </li>
+          <li class="nav-item">
+            <button
+            data-toggle="modal" 
+            data-target="#FeedBackModal"
+            class="btn nav-link"
+            type="submit"
+          >
+          📝 İletişim
+          </button>
+         
+
+          </li>
+          <li class="nav-item">
+             <button
+          data-toggle="modal" 
+          data-target="#settingsModel"
+          class="btn nav-link"
+          type="submit"
+        >
+        ⚙️ Ayarlar
+        </button>
           </li>
           <li class="nav-item dropdown">
             <a
@@ -87,10 +119,10 @@
               Other
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Proposal</a>
-              <a class="dropdown-item" href="#">Source Code</a>
+              <a class="dropdown-item" href="./Projectproposal.html">Proposal</a>
+              <a class="dropdown-item" href="https://github.com/a0m0rajab/BahisQurani">Source Code</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">About me</a>
+              <a class="dropdown-item" href="../../">About me</a>            
             </div>
           </li>
         </ul>
@@ -100,12 +132,11 @@
     <br />
 
     <div class="container">
-      <div class="row bg-white sticky-top" style="z-index: 2;">
+      <div  id="stickySearch" class="row bg-white sticky-top" style="z-index: 2;">
         <div class="input-group">
            <input
  dir="rtl"
  list="suggestions"
- style="max-width: 80vw;"
  class="arabic form-control text-right" 
  
  value="بسم الله"
@@ -116,22 +147,8 @@
  aria-label="Search"
 />
           <div class="input-group-append" id="button-addon4">
-            <button
-            data-toggle="modal" 
-            data-target="#settingsModel"
-            class="btn btn-outline-success"
-            type="submit"
-          >
-          ⚙️
-          </button>
-          <button
-          data-toggle="modal" 
-          data-target="#FeedBackModal"
-          class="btn btn-outline-success"
-          type="submit"
-        >
-        📝 
-        </button>
+           
+       
           
           <button
           data-toggle="modal"
@@ -175,7 +192,7 @@
         
       </div>
       <div class="row">
-        <div class="col-12">
+        <div class="col-12 table-responsive">
           <table id="dTable" class="table">
             <caption style=" caption-side:top;">
              <span id="wordNumber">3</span>
@@ -183,25 +200,34 @@
             </caption>
             <thead>
               <tr>
-                <th id="translationHeader" style="width: 47%;"  class="tableTranslation">
-                  <div class="btn-group">
-                    <button id="THtext" type="button" class="btn badge badge-white align-text-bottom dropdown-toggle dropdown-toggle-split translation" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Türkçe: Diyanet Meali
-                    </button>
-                    <div class="dropdown-menu">
-                      <button class="dropdown-item" onclick="loadTransF(3)">Türkçe: Diyanet Meali</button>
-                      <button class="dropdown-item" onclick="loadTransF(5)">Türkçe: Elmalılı Hamdi Yazır</button>
-                      <button class="dropdown-item" onclick="loadTransF(6)">English: Abdullah Yusuf Ali</button>
-                      <button class="dropdown-item" onclick="loadTransF(4)">English: Ahmed Ali</button>
-                      <button class="dropdown-item" onclick="loadTransF(1)">تفسير الجلالين</button>
-                      <button class="dropdown-item" onclick="loadTransF(2)">تفسير الميسر</button>
+                <th id="translationHeader"  colspan="2"  class="tableTranslation justify-content-space-between">
+                  <div class="row justify-content-between">
+               <div class="col">
+                <div class="btn-group">
+                  <button id="THtext" type="button" class="btn badge badge-white align-text-bottom dropdown-toggle dropdown-toggle-split translation" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Türkçe: Diyanet Meali
+                  </button>
+                  <div class="dropdown-menu">
+                    <button class="dropdown-item" onclick="loadTransF(3)">Türkçe: Diyanet Meali</button>
+                    <button class="dropdown-item" onclick="loadTransF(5)">Türkçe: Elmalılı Hamdi Yazır</button>
+                    <button class="dropdown-item" onclick="loadTransF(6)">English: Abdullah Yusuf Ali</button>
+                    <button class="dropdown-item" onclick="loadTransF(4)">English: Ahmed Ali</button>
+                    <button class="dropdown-item" onclick="loadTransF(1)">تفسير الجلالين</button>
+                    <button class="dropdown-item" onclick="loadTransF(2)">تفسير الميسر</button>
 
-                    </div>
                   </div>
+                </div>        
+               </div>
+               <div class="col">
+                <span id="arabicHeader" class="float-right">عربي </span>
+
+               </div>
+                 
+                  </div>
+
                 </th>
-                <th id="arabicHeader" style="width: 47%;" class="text-right">عربي
+              
                 <!-- TODO: implement tefsir source here as well, it will be helpful to compare. -->
-                </th>
               </tr>
             </thead>
             <tbody><tr><td>
@@ -363,7 +389,7 @@
 
       
         <label for="" id=markColour>  Mark Colour: </label> &nbsp;
-        <input  type="color" class="form-control col-4" name="favcolor" value="#ffff00" onchange="changeColour(this.value)">
+        <input id="greatColour"  type="color" class="form-control col-4" name="favcolor" value="#ffff00" onchange="changeColour(this.value)">
      
           <hr>
          
@@ -505,6 +531,10 @@
       let k = evt.key.toUpperCase()
       if (evt.key == 'F1') {
        evt.preventDefault(); 
+      let searchQueParent =  document.querySelector("#stickySearch");
+      searchQueParent.classList.remove("sticky-top")
+
+       displayState(1)
        findAction("الله")
        startIntro();
       }
@@ -514,72 +544,83 @@
           intro.setOptions({
             steps: [
               { 
-                intro: "Kuran <b>Rehberine</b> Hos geldiniz!"
+                intro: "Bu program Kuran okuma ve ezberleme deneyimlerinizi iyileştirilecek."
               },
-              { 
-                intro: "Bu program kullanarak, kuran okuma ve ezberleme deneyniminiz daha iyi olacak :) "
+              
+              {
+                element: document.querySelector("#translationHeader"),
+                intro: "Buradan desteklenen seçeneklerde tefsiri ve dili seçebilirsiniz.",
+                position: 'bottom'
               },
               {
                 element: document.querySelector('#searchQue'),
-                intro: "Bu bir Arama yeri, istediniz kelime aratabilirsiniz, Kurandan ya da tefsirden olur."
+                intro: "Bu alanda aramak istediğiniz kelimeyi Kuran’dan Arapça olarak veya tefsir içinde seçtiğiniz tefsir dilinde aratabilirsiniz."
               },
+              // {
+              //   element: document.querySelector('#button-addon4 > button:nth-child(1)'),
+              //   intro: "Buradan program ayarlarını değiştirebilirsiniz.",
+              //   position: 'bottom'
+              // },
+              // {
+              //   element:  document.querySelector("#button-addon4 > button:nth-child(2)"),
+              //   intro: 'Buradan ise programciya iletisim kurabilirsiniz.',
+              //   position: 'left'
+              // },
               {
-                element: document.querySelector('#button-addon4 > button:nth-child(1)'),
-                intro: "Buradan ise programin ayarlari degistirebilirsiniz",
+                element: document.querySelector("#button-addon4 > button"),
+                intro: "Buradan sesli arama yapabilirsiniz.",
                 position: 'bottom'
               },
               {
-                element:  document.querySelector("#button-addon4 > button:nth-child(2)"),
-                intro: 'Buradan ise programciya iletisim kurabilirsiniz.',
-                position: 'left'
-              },
-              {
-                element: document.querySelector("#button-addon4 > button:nth-child(3)"),
-                intro: "Burdan sesli arama yapabilirsiniz.",
-                position: 'bottom'
-              },
-              {
-                element: document.querySelector("body > div.container > div.row.bg-white.sticky-top > div:nth-child(3)"),
-                intro: 'Bunlar ise prorgamin uc modulu, tefsir-kuran, sadece kuran, kuran tek satir modu.',
-                position: 'bottom'
-              },
-              {
-                element: document.querySelector("#translationHeader"),
-                intro: "Burdan hem istediginiz tefsir secebilirsiniz hem de dili degistirebilirsiniz.",
+                element: document.querySelector("body > div.container > div.row.bg-white > div:nth-child(3)"),
+                intro: 'Bunlar ise prorgamin üç modu, tefsir-kuran, sadece kuran, kuran tek satir modu.',
                 position: 'bottom'
               },
               {
                 element: document.querySelector("#dTable > tbody > tr:nth-child(1) > td.tableTranslation > div > button.btn.badge.badge-light.align-text-bottom.dropdown-toggle.dropdown-toggle-split"),
-                intro: "Gordugnuz ufacik butonlar diger kaynaklar yonlendirir size.",
+                intro: "Bu buton ile diğer kaynaklara yönlendirilirsiniz.",
                 position: 'bottom'
               },
               {
                 element: document.querySelector("#dTable > tbody > tr:nth-child(1) > td.tableTranslation > div > button:nth-child(2)"),
-                intro: "Burdan Gittiginiz son kaynaga gider.",
+                intro: "Buradan son kaynağınıza gidebilirsiniz.",
                 position: 'bottom'
               },
               {
                 element: document.querySelector("#dTable > tbody > tr:nth-child(1) > td.text-right > span > span.fullText > great"),
-                intro: "Buna tiklayarak Iqra adli uygulamasinda acar ve bu kelimeyi gosterir.",
+                intro: "İşaretli kelimeye tıklandığınızda Iqra uygulamasına yönlendirilirsiniz.",
                 position: 'bottom'
               },
               {
                 element: document.querySelector("#dTable > tbody > tr:nth-child(1) > td.text-right > span"),
-                intro: "Burdaki arapca kuran metninden her hangi bir kelime secip sag tiklarsaniz guzel secenekler cikar.",
+                intro: " Ayette herhangi bir kelime seçip sağ tıklama ile seçenekler açılır.",
                 position: 'bottom'
               },
               {
                 element: document.querySelector("#PaginationMenu > ul"),
-                intro: "Buradan var olan sayfalari goster ve istediniz sayfaya gidebilirsiniz",
+                intro: "Burada ilgili sayfaları görebilir ve istediğiniz sayfaya gidebilirsiniz.",
                 position: 'bottom'
               },
               {
-                intro: "Umarim faydali ve guzel bir program olur sizin icin, bu bilgiler buradan da erisebilirsiniz.",
+                intro: "Uygulamayı kullanmaya başlayabilirsiniz.",
               }
             ]
           });
+        let turkish = {  nextLabel: 'Sonraki &rarr;',
+            /* Previous button label in tooltip box */
+            prevLabel: '&larr; Önceki',
+            /* Skip button label in tooltip box */
+            skipLabel: 'Geç',
+            /* Done button label in tooltip box */
+            doneLabel: 'Bitti'}
+            intro.setOptions(turkish)
+          // intro.setOptions({overlayOpacity: 0})
 
           intro.start();
+          intro.onexit(function(){
+            let searchQueParent =  document.querySelector("#stickySearch");
+      searchQueParent.classList.add("sticky-top")
+          });
       }
     </script>
   </body>

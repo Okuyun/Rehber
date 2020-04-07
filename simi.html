@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Bahis</title>
+    <title>Kuran Rehberi: Simi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -28,22 +28,29 @@
 <body>
     <!-- from bootstrap examples  -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Kuran Rehberi</a>
+        <a class="navbar-brand" style="user-select: none;">Kuran Rehberi</a>
+        <span id="version" class="navbar-text">
+        </span>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Bâhis <span class="sr-only">(current)</span></a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#" aria-disabled="true"
-              >Qurani</a
-            >
-          </li>
+                <li class="nav-item ">
+                    <a class="nav-link " href="./finder.html">Arama motoru</a
+                    >
+                  </li>
+                  <li class="nav-item" >
+                    <a class="nav-link" href="./reader.html" 
+                      >Qurani</a
+                    >
+                  </li>
+                  <li class="nav-item active " aria-disabled="true">
+                    <a class="nav-link disabled" href="./simi.html" 
+                      >Simi <span class="sr-only">(current)</span></a
+                    >
+                  </li>
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
@@ -57,46 +64,64 @@
               Other
             </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Proposal</a>
-                        <a class="dropdown-item" href="#">Source Code</a>
+                        <a class="dropdown-item" href="./Projectproposal.html">Proposal</a>
+                        <a class="dropdown-item" href="https://github.com/a0m0rajab/BahisQurani">Source Code</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">About me</a>
+                        <a class="dropdown-item" href="../../">About me</a>
                     </div>
                 </li>
             </ul>
-            <span class="navbar-text">
-          V00.06A
-        </span>
         </div>
     </nav>
     <br />
 
     <div class="container">
-        <div class="row bg-white sticky-top" style="z-index: 2;">
-            <label class="col-1">Sura</label>
-            <select id="sl" class="select col-2">
-          <option value="0">1 Al-Faatiha</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </select>
-            <label name="aya" class="col-1">Aya</label>
-            <select id="al" name="aya" class="select col-1">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select>
-            <label name="percentage" class="col-1">Oran</label>
-            <input max="100" min="0" type="number" name="percentage" id="perc" class="col-1" value="70">
-            <label name="sort" class="col-1">Sort by</label>
-            <select id="sortBy" class="select col-2">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#search" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+
+
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <label> &emsp;Sura&emsp;</label>
+
+                    <select id="sl" class="select">
+  <option value="0">1 Al-Faatiha</option>
+  <option value="1">One</option>
+  <option value="2">Two</option>
+  <option value="3">Three</option>
+</select>
+                </li>
+                <li>
+                    <label name="aya">&emsp;Aya&emsp;&emsp;</label>
+                    <select id="al" name="aya" class="select">
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+</select>
+                </li>
+            </ul>
+
+
+            <div class="collapse navbar-collapse" id="search">
+                <div>
+                    <label name="sort">&emsp;Sort by &emsp;</label>
+                    <select id="sortBy" class="select">
               <option value="0">Oran Yukselen</option>
               <option value="1" selected>Oran Dusen</option>
               <option value="2">Ayet Yukselen</option>
               <option value="3">Ayet Dusen</option>
             </select>
-        </div>
+                </div>
+                <div>
+                    <label name="percentage">&emsp;Oran &emsp;</label>
+                    <input max="100" min="0" type="number" name="percentage" id="perc" value="70">
+                </div>
+            </div>
+        </nav>
+
         <div class="row">
             <div class="col-12">
                 <table id="dTable" class="table">
@@ -182,15 +207,20 @@
             </div>
         </div>
     </div>
-    <script src="./code/finder.js"></script>
+    <!-- <script src="./code/finder.js"></script>
     <script src="./code/quran-sura.js"></script>
     <script src="./code/buckwalter.js"></script>
     <script src="./code/common.js"></script>
     <script src="./code/script.js"></script>
     <script src="./code/mujam.js"></script>
     <script src="./code/simiTable.js"></script>
+    <script src="./data/versesVectorsFile.js"></script> -->
+    <script src="./code/config.js"></script>
     <script>
-        window.name = "simi"
+        window.name = "simi";
+        version.innerText = config.version;
+
+        // initTable();
     </script>
 </body>
 
