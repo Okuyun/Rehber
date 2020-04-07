@@ -131,7 +131,7 @@ function createRow(sn, an, word = "") {
         state3.disabled = ""
     }
     // arabicHeader.style.width = "47%"
-        // translationHeader.style.display="table-cell"
+    // translationHeader.style.display="table-cell"
     let td = createTd();
     td.className = "tableTranslation"
     let tb = createDropDownSplit(quran.sura[sn].tname + " " + (sn + 1) + ":" + (an + 1));
@@ -436,7 +436,7 @@ function paginationControl(num) {
     addShowFunction();
     menuFn();
     initPagination();
-    if (getPages() <= 1) {
+    if (getPages() < 1) {
         document.getElementById("PaginationMenu").hidden = true
     } else {
         document.getElementById("PaginationMenu").hidden = false
@@ -944,6 +944,7 @@ function openIqra(cv) {
     lastOne = "iqra";
     warpLast()
 }
+
 function openSimi(cv) {
     let link = "https://a0m0rajab.github.io/BahisQurani/simi#" + cv;
     window.open(link, "simi")

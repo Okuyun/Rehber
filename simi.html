@@ -29,6 +29,8 @@
     <!-- from bootstrap examples  -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" style="user-select: none;">Kuran Rehberi</a>
+        <span id="version" class="navbar-text">
+        </span>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -78,29 +80,30 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#search" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
-           
-        
-<ul class="navbar-nav mr-auto"><li class="nav-item">
-    <label> &emsp;Sura&emsp;</label>
-    
-    <select id="sl" class="select">
+
+
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <label> &emsp;Sura&emsp;</label>
+
+                    <select id="sl" class="select">
   <option value="0">1 Al-Faatiha</option>
   <option value="1">One</option>
   <option value="2">Two</option>
   <option value="3">Three</option>
 </select>
-</li>
-    <li>
-        <label name="aya">&emsp;Aya&emsp;&emsp;</label>
-        <select id="al" name="aya" class="select">
+                </li>
+                <li>
+                    <label name="aya">&emsp;Aya&emsp;&emsp;</label>
+                    <select id="al" name="aya" class="select">
   <option value="1">1</option>
   <option value="2">2</option>
   <option value="3">3</option>
   <option value="4">4</option>
 </select>
-    </li>
-</ul>
-         
+                </li>
+            </ul>
+
 
             <div class="collapse navbar-collapse" id="search">
                 <div>
@@ -212,8 +215,11 @@
     <script src="./code/mujam.js"></script>
     <script src="./code/simiTable.js"></script>
     <script src="./data/versesVectorsFile.js"></script> -->
+    <script src="./code/config.js"></script>
     <script>
         window.name = "simi";
+        version.innerText = config.version;
+
         // initTable();
     </script>
 </body>
