@@ -1,3 +1,8 @@
+/**
+ * @file Common function used in the files.
+ * <br>like the buckwalter and arabic transliteration
+ * @author Abdurrahman RAJAB 
+ */
 "use strict";
 
 /**
