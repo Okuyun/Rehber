@@ -458,3 +458,23 @@ function createRow(ratio, ch, ve) {
     tr.appendChild(td)
     return tr;
 }
+// ***********
+function writeToFile(){
+    let text="";
+    let perDesc = (a, b) => a[0] - b[0]
+    let str;
+    suraAr.forEach((ayas, indS) => {
+        console.log(indS);
+        ayas.forEach(
+            (words, indA) => {
+                result = checkSimilarity(indS+1, indA+1, 70)
+                result.sort(perDesc)
+                str = result.slice(0, 12)
+                str = str.join(" ")
+                text += str + "\n"
+            }
+            
+        );
+    })
+   return text;
+  }
