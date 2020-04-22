@@ -934,7 +934,7 @@ function openMeali(cv) {
 }
 // cv = chapter verses C:V 
 function openIqra(cv) {
-    let link = "https://maeyler.github.io/Iqra3/reader.html#v=" + cv;
+    let link = "https://maeyler.github.io/Kuran/reader.html#v=" + cv;
     window.open(link, "iqra")
     lastOne = "iqra";
     warpLast()
