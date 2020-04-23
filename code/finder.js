@@ -1,11 +1,8 @@
 /**
- * Clear HTML table without touching the headers.
- * https://stackoverflow.com/questions/18333427/how-to-insert-row-in-html-table-body-in-javascript
- * https://www.daniweb.com/programming/web-development/threads/113340/delete-all-rows-from-table-in-javascript
- * https://developer.mozilla.org/en-US/docs/Web/API/Node/removeChild
+ * @file The main functions of the search page.
+ * @author Abdurrahman RAJAB 
  */
-// TODO: merciful ... bug :( 
-// أتقاكم show google thingy.
+
 /**
  * Used to check one line function if its open or not.
  */
@@ -37,8 +34,6 @@ let settings = {};
 /**
  * Clear html table and reset it to create the table for second word.
  */
-function mujam() {}
-
 function clearTable() {
     // translationHeader.style.display = "none"
     // arabicHeader.style.width = "100vw"
@@ -939,7 +934,7 @@ function openMeali(cv) {
 }
 // cv = chapter verses C:V 
 function openIqra(cv) {
-    let link = "https://maeyler.github.io/Iqra3/reader.html#v=" + cv;
+    let link = "https://maeyler.github.io/Kuran/reader.html#v=" + cv;
     window.open(link, "iqra")
     lastOne = "iqra";
     warpLast()
@@ -1502,6 +1497,14 @@ function menuFn() {
     });
     addContextMenu();
 }
+/**
+ * Clear HTML table without touching the headers.
+ * https://stackoverflow.com/questions/18333427/how-to-insert-row-in-html-table-body-in-javascript
+ * https://www.daniweb.com/programming/web-development/threads/113340/delete-all-rows-from-table-in-javascript
+ * https://developer.mozilla.org/en-US/docs/Web/API/Node/removeChild
+ */
+// TODO: merciful ... bug :( 
+// أتقاكم show google thingy.
 // TODO: write docs and split the code to more readable style.. 
 // bug:la habersiz
 // TODO: instead of removing/clearning diactricits( vowels - tashkeel) check if its there then search by another array.

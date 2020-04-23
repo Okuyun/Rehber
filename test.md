@@ -23,6 +23,8 @@ You need to check the following:
   * Middle of Sura
   * First Aya of Quran
   * Last Aya of Quran
+  * Check other inputs: 
+w, t, b, rl.
 
 Direct Examples, with expected:
 

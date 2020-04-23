@@ -1,9 +1,26 @@
-// math stuff: https://youtu.be/5XVFQix8tAk?t=455
-const rootsVector = new Map();
-const surasVector = new Map();
-let result;
-// <!-- tum kurandan gecip 80% ustu var olan benzerlikleri bir yere yazdirmaya dusundum -->
+/**
+ * @file Manage the similarity page of the project. 
+ * The methods are based on cosine similarity and will be updated by the time. 
+ * You can get the mathematical explination from this link 
+ * <a href="https://youtu.be/5XVFQix8tAk?t=455">the mathematical explination from this link </a>
+ * @author Abdurrahman RAJAB 
+ */
 
+/**
+ * Roots vector to hold the words roots.
+ */
+const rootsVector = new Map();
+/** 
+ * Holds all suras vectors as map, which holds the vector, aya, chapter and verse numbers.
+ */
+const surasVector = new Map();
+/** 
+ * The results to print on the screen.
+ */
+let result;
+/**
+ * initialize the root vector of arabic words in Quran.
+ */
 function initRootVector() {
     [...rootsMap.keys()].forEach((key) => {
         if (rootsVector.get(key)) console.log("key")
@@ -15,54 +32,87 @@ function initRootVector() {
 function readHash() {}
 
 function parseHash() {}
-
+/**
+ * create the suras vectors, by: 
+ * 1- looping each Chapter <br>
+ * 2- looping each verses in each chapter  <br>
+ * 3- looping the words in Verse to create their count object.  <br>
+ * 4- Add the counted object to the surasVector map to use later. <br>
+ * Return a promise to follow up the end of the function. <br>
+ */
 function tableGenerator() {
+    /** Loop each chapter */
     suraAr.forEach((ayas, indS) => {
-        surasVector.set(indS, new Map())
-        ayas.forEach(
-            (words, indA) => {
-                let array = words.split(" ")
-                let temp = new Map(rootsVector);
-                array.forEach(e => { if (wordToRoot.get(toBuckwalter(e)) !== undefined) temp.set(wordToRoot.get(toBuckwalter(e)), temp.get(wordToRoot.get(toBuckwalter(e))) + 1) })
-                surasVector.get(indS).set(indA, { vector: temp, aya: words, ch: indS + 1, ver: indA + 1 })
-            }
-        );
-    })
+            surasVector.set(indS, new Map())
+                /**loop each vers in the chapter */
+            ayas.forEach(
+                (words, indA) => {
+                    let array = words.split(" ")
+                    let temp = new Map(rootsVector);
+                    /** looping the words in Verse to create their count object. */
+                    array.forEach(e => { if (wordToRoot.get(toBuckwalter(e)) !== undefined) temp.set(wordToRoot.get(toBuckwalter(e)), temp.get(wordToRoot.get(toBuckwalter(e))) + 1) })
+                        /** Add the counted object to the surasVector map to use later. */
+                    surasVector.get(indS).set(indA, { vector: temp, aya: words, ch: indS + 1, ver: indA + 1 })
+                }
+            );
+        })
+        /**Return a promise to follow up the end of the function. */
     return new Promise((resolve, reject) => { resolve("Horay") })
 
 }
+/**The initilize function to the page, which is 
+ * 1- init() -- from script, to init the suras and needed translations  <br>
+ * 2- initMujam() -- @todo why do i have this here?  <br>
+ * 3- initRootVector() -- to be able to compare the  <br>
+ * 4- tableGenerator() -- to get the whole quran Vectors  <br>
+ * 5- initEvents() --  start the events needed in the page <br>
+ * 6- suraLists() -- Get whole suras list to add in the option box <br>
+ * 7- getHash() or AyaList() --either read hash or show aya list, based on the link/hash that we got
+ */
 async function initTable() {
     await init()
     await initMujam();
     await initRootVector();
     await timer("All vectors created in ", tableGenerator)
+        // await timer("All vectors created in ", readVectorFile)
     initEvents()
     suraList()
-
     if (location.hash) {
         getHash();
     } else {
         ayaList();
     }
-
 }
-
+/**
+ * inner production of two vectors and return one result.
+ * @param {*} a first vector
+ * @param {*} b Second vector
+ */
 function innerProd(a, b) {
     let av = [...a.values()]
     let bv = [...b.values()]
     let reducer = (a, curr, ind) => curr ? a += curr * bv[ind] : a += 0;
+    // check reduce function in MDN docs
     return av.reduce(reducer, 0);
 }
-
+/**
+ * get a vector magnitude
+ * @param {*} a vector
+ */
 function magnitude(a) {
     return round_to_precision(Math.sqrt(([...a.values()].reduce((c, b) => b ? c += b * b : c, 0))), 0.2).toFixed(2)
 }
-
+/**
+ * number to round
+ * @param {*} x number
+ * @param {*} precision to round
+ */
 function round_to_precision(x, precision) {
     let y = +x + (precision === undefined ? 0.5 : precision / 2);
     return y - (y % (precision === undefined ? 1 : +precision));
 }
 
+/** Check magnitudes of all vectors, used as testing method */
 function allMag() {
     let temp;
     surasVector.forEach((sura) => {
@@ -76,6 +126,13 @@ function allMag() {
     })
 }
 // two map as vectors.
+
+/**
+ * Applying the cosine similarity function.
+ * @param {*} a first vector
+ * @param {*} b second vector 
+ * @param {*} magB magnitude B if we need to set it manually
+ */
 function similarity(a, b, magB) {
     return innerProd(a, b) / (magnitude(a) * (magB ? magB : magnitude(b)))
 }
@@ -83,7 +140,9 @@ function similarity(a, b, magB) {
 function test() {
     // allMag();
 }
-
+/**
+ * Get similairty of the same verses
+ */
 function similiartySimilarVerses() {
     // let a = surasVector.get(2).get(2)
     // console.log(a.aya)
@@ -91,7 +150,7 @@ function similiartySimilarVerses() {
     // console.log(similarity(a,a))
     surasVector.forEach((sura) => sura.forEach((aya) => console.log(similarity(aya.vector, aya.vector), aya.aya)))
 }
-
+/** used for testing to check if there is any NaN error in the verses */
 function similarityCheckNAN() {
     result = []
     let f = (aya, c, v) => (isNaN(similarity(aya.vector, aya.vector))) ? result.push([100, c + 1, v + 1]) : null;
@@ -99,7 +158,7 @@ function similarityCheckNAN() {
     return result;
 
 }
-
+/** testing manually */
 function similiartyError() {
     // let a = surasVector.get(2).get(2)
     // console.log(a.aya)
@@ -107,13 +166,17 @@ function similiartyError() {
     // console.log(similarity(a,a))
     surasVector.forEach((sura) => sura.forEach((aya) => Math.round(!similarity(aya.vector, aya.vector)) >= 1 ? console.log(aya.aya) : aya))
 }
-
+/**
+ * check similarity based on chapter and verse numbers
+ * @param {Number} c chapter
+ * @param {Number} v Verse
+ * @param {Number} min minimum similarity rate
+ */
 function checkSimilarity(c, v, min = 70) {
     result = [];
     min = min / 100
         // verse vector
     let ratio;
-
     let vv = getVerseVector(c, v);
     let mag = magnitude(vv)
         // console.log(mag)
@@ -127,15 +190,158 @@ function checkSimilarity(c, v, min = 70) {
     } else {
         result = similarityCheckNAN();
     }
-
-
     return result;
 }
-
+/**
+ * Returning the verse vector from an object, by providing the known numbers.
+ * @param {Number} c chapter number 
+ * @param {Number} v verse number
+ */
 function getVerseVector(c, v) {
     return surasVector.get(c - 1).get(v - 1).vector;
 }
-// start DOM functions
+/**
+ *  
+ * Starting the DOM functions
+ *   
+ * */
+
+
+/**
+ * Marking the verse based on the ratios.
+ * @param {Number} ratio  The result ratio.
+ * @param {String} verse The verse words.
+ * @param {*} vector The verse vector.
+ */
+function mark(ratio, verse, vector) {
+    verse = verse.split(" ")
+    if (ratio >= 60) {
+        // changeGreatColour("yellow")
+        verse = greatArray(vector, verse, 0)
+    } else if (ratio < 60 && ratio >= 40) {
+        // changeGreatColour("")
+        verse = greatArray(vector, verse, 2)
+    } else {
+        // changeGreatColour("red")
+        verse = greatArray(vector, verse, 1)
+    }
+    return verse.join(" ");
+}
+/**
+ * Create the graet span to colour.
+ * @param {*} vector 
+ * @param {*} wordArray 
+ * @param {*} mode 
+ */
+function greatArray(vector, wordArray, mode) {
+    if (mode == 1) { // more than 60 
+        wordArray = wordArray.map(e => {
+            if (vector.get(wordToRoot.get(toBuckwalter(e))) >= 1) {
+                return `<span style="color:yellow">${e}</span>`
+            } else { return e }
+        })
+    } // less than 40
+    else if (mode == 0) {
+        wordArray = wordArray.map(e => {
+            let word = vector.get(wordToRoot.get(toBuckwalter(e)))
+            if (word < 1 || word == undefined) {
+                return `<span style="color:red">${e}</span>`
+            } else { return e }
+        })
+    }
+    return wordArray;
+
+}
+/**
+ * generating the button to open extra sources
+ * @param {Number} c chapter number
+ * @param {Number} v Verse number
+ */
+function splitDown(c, v) {
+    let cv = c + ":" + v
+    return `
+    <!-- Example split danger button -->
+<div class="btn-group">
+<button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<span class="sr-only">Toggle Dropdown</span>
+</button>
+  <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOneF('${cv}')">${cv + " "+ quran.sura[c-1].name}</button>
+ 
+  <div class="dropdown-menu">
+    <button class="dropdown-item" onclick="openCorpus('${cv}')">Corpus</button>
+    <button class="dropdown-item" onclick="openQuran('${cv}')">Quran</button>
+    <button class="dropdown-item" onclick="openMeali('${cv}')">Meali</button>
+    <div class="dropdown-divider"></div>
+    <button class="dropdown-item" onclick="openIqra('${cv}')">Iqra</button>
+  </div>    
+</div>
+`
+}
+/**
+ * Warper for sorting functions.
+ */
+function sortWarp() {
+    sortReslts()
+    createTable(result)
+}
+/**
+ * Sorting resutls based on the option that a user choose, 
+ * options are percentage and index, decrement vs increment order.
+ */
+function sortReslts() {
+    let perDesc = (a, b) => a[0] - b[0]
+    let perAsc = (a, b) => b[0] - a[0]
+    let indDesc = (a, b) => (a[1] + a[2]) - (b[1] + b[2])
+    let indAsc = (a, b) => (b[1] + b[2]) - (a[1] + a[2])
+    switch (sortBy.value) {
+        case "0":
+            result.sort(perDesc)
+            break;
+        case "1":
+            result.sort(perAsc)
+            break;
+        case "2":
+            result.sort(indDesc)
+            break;
+        case "3":
+            result.sort(indAsc)
+            break;
+    }
+
+
+
+}
+/**
+ * reading the hash from the page to call the similarity function based on it.
+ */
+function getHash() {
+    let h = decodeURI(location.hash).slice(1);
+    let [c, v] = h.split(":")
+    let ayaListObj = document.getElementById("al");
+    let suraList = document.getElementById("sl");
+    suraList.selectedIndex = c - 1;
+    timer("Vectors counted in ", () => { ayaList(0) })
+    ayaListObj.selectedIndex = v - 1;
+    triggerSimilarity()
+}
+/**
+ * Set the page hash, from the Verse and chapter options.
+ */
+function setHash() {
+    let ayaList = document.getElementById("al").value;
+    let suraList = document.getElementById("sl").value;
+    location.hash = suraList + ":" + ayaList;
+    // console.trace();
+
+}
+// check full words, check the speed, time to get them, if its slow or not, or if it broken, need pagination...
+/**
+ * Starting the DOM functions
+ */
+
+/**
+ * Create the sura list options.
+ */
 function suraList() {
     let suraList = document.getElementById("sl");
     suraList.innerHTML = "";
@@ -143,14 +349,21 @@ function suraList() {
         suraList.appendChild(createOption(ind + 1 + " " + e.tname, ind + 1))
     })
 }
-
+/**
+ * Create option object
+ * @param {String} text text for option
+ * @param {Number} value option value
+ */
 function createOption(text, value) {
     let option = document.createElement("option");
     option.text = text;
     option.value = value;
     return option
 }
-
+/**
+ * Create Aya list.
+ * @param {Number} trigger to trigger an event
+ */
 function ayaList(trigger = 1) {
     let ayaList = document.getElementById("al");
     let suraList = document.getElementById("sl");
@@ -162,7 +375,9 @@ function ayaList(trigger = 1) {
         ayaList.dispatchEvent(new Event("change"));
     }
 }
-
+/**
+ * initlize the events of the html elements.
+ */
 function initEvents() {
     let aList = document.getElementById("al");
     let suraList = document.getElementById("sl");
@@ -176,7 +391,9 @@ function initEvents() {
     window.addEventListener("hashchange", getHash);
 
 }
-
+/**
+ * Trigger similarity function and start it, to get the results and set hashs.
+ */
 function triggerSimilarity() {
     let ayaList = document.getElementById("al");
     let suraList = document.getElementById("sl");
@@ -186,12 +403,17 @@ function triggerSimilarity() {
     sortReslts()
     createTable(result)
 }
-
+/**
+ * Init the table.
+ */
 function initSimilarity() {
     initTable()
 
 }
-
+/**
+ * create the table baesd on the results array.
+ * @param {*} arr results array.
+ */
 function createTable(arr) {
     let ayaList = document.getElementById("al");
     let suraList = document.getElementById("sl");
@@ -204,7 +426,12 @@ function createTable(arr) {
         element.appendChild(createRow(...e))
     });
 }
-
+/**
+ * create Row of the table.
+ * @param {Number} ratio the ration.
+ * @param {Number} ch the chapter number.
+ * @param {Number} ve the vercse number.
+ */
 function createRow(ratio, ch, ve) {
     let ayaList = document.getElementById("al");
     let suraList = document.getElementById("sl");
@@ -231,108 +458,23 @@ function createRow(ratio, ch, ve) {
     tr.appendChild(td)
     return tr;
 }
-
-function mark(ratio, verse, vector) {
-    verse = verse.split(" ")
-    if (ratio >= 60) {
-        // changeGreatColour("yellow")
-        verse = greatArray(vector, verse, 0)
-    } else if (ratio < 60 && ratio >= 40) {
-        // changeGreatColour("")
-        verse = greatArray(vector, verse, 2)
-    } else {
-        // changeGreatColour("red")
-        verse = greatArray(vector, verse, 1)
-    }
-    return verse.join(" ");
-}
-
-function greatArray(vector, wordArray, mode) {
-    if (mode == 1) { // more than 60 
-        wordArray = wordArray.map(e => {
-            if (vector.get(wordToRoot.get(toBuckwalter(e))) >= 1) {
-                return `<span style="color:yellow">${e}</span>`
-            } else { return e }
-        })
-    } // less than 40
-    else if (mode == 0) {
-        wordArray = wordArray.map(e => {
-            let word = vector.get(wordToRoot.get(toBuckwalter(e)))
-            if (word < 1 || word == undefined) {
-                return `<span style="color:red">${e}</span>`
-            } else { return e }
-        })
-    }
-    return wordArray;
-
-}
-
-function splitDown(c, v) {
-    let cv = c + ":" + v
-    return `
-    <!-- Example split danger button -->
-<div class="btn-group">
-<button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-<span class="sr-only">Toggle Dropdown</span>
-</button>
-  <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOneF('${cv}')">${cv + " "+ quran.sura[c-1].name}</button>
- 
-  <div class="dropdown-menu">
-    <button class="dropdown-item" onclick="openCorpus('${cv}')">Corpus</button>
-    <button class="dropdown-item" onclick="openQuran('${cv}')">Quran</button>
-    <button class="dropdown-item" onclick="openMeali('${cv}')">Meali</button>
-    <div class="dropdown-divider"></div>
-    <button class="dropdown-item" onclick="openIqra('${cv}')">Iqra</button>
-  </div>    
-</div>
-`
-}
-
-function sortWarp() {
-    sortReslts()
-    createTable(result)
-}
-
-function sortReslts() {
+// ***********
+function writeToFile(){
+    let text="";
     let perDesc = (a, b) => a[0] - b[0]
-    let perAsc = (a, b) => b[0] - a[0]
-    let indDesc = (a, b) => (a[1] + a[2]) - (b[1] + b[2])
-    let indAsc = (a, b) => (b[1] + b[2]) - (a[1] + a[2])
-    switch (sortBy.value) {
-        case "0":
-            result.sort(perDesc)
-            break;
-        case "1":
-            result.sort(perAsc)
-            break;
-        case "2":
-            result.sort(indDesc)
-            break;
-        case "3":
-            result.sort(indAsc)
-            break;
-    }
-
-
-
-}
-
-function getHash() {
-    let h = decodeURI(location.hash).slice(1);
-    let [c, v] = h.split(":")
-    let ayaListObj = document.getElementById("al");
-    let suraList = document.getElementById("sl");
-    suraList.selectedIndex = c - 1;
-    timer("Vectors counted in ", () => { ayaList(0) })
-    ayaListObj.selectedIndex = v - 1;
-    triggerSimilarity()
-}
-
-function setHash() {
-    let ayaList = document.getElementById("al").value;
-    let suraList = document.getElementById("sl").value;
-    location.hash = suraList + ":" + ayaList;
-    // console.trace();
-
-}
-// check full words, check the speed, time to get them, if its slow or not, or if it broken, need pagination...
+    let str;
+    suraAr.forEach((ayas, indS) => {
+        console.log(indS);
+        ayas.forEach(
+            (words, indA) => {
+                result = checkSimilarity(indS+1, indA+1, 70)
+                result.sort(perDesc)
+                str = result.slice(0, 12)
+                str = str.join(" ")
+                text += str + "\n"
+            }
+            
+        );
+    })
+   return text;
+  }
