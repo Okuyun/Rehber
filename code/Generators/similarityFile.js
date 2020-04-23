@@ -20,17 +20,20 @@ function appendFile(text,filename="similarity.txt"){
     
       });
 }
-  function writeToFile(){
+function writeToFile(){
     let text="";
     let perDesc = (a, b) => a[0] - b[0]
     let str;
+    const reducer = (accumulator, currentValue) => accumulator+' ' + (currentValue[1] + ':'+currentValue[2] );
     suraAr.forEach((ayas, indS) => {
+        console.log(indS);
         ayas.forEach(
             (words, indA) => {
-                result = checkSimilarity(indS, indA, 70)
-                result.sort(perDesc)
+                result = checkSimilarity(indS+1, indA+1, 70)
+                result =result.sort(perDesc)
                 str = result.slice(0, 12)
-                str = str.join(" ")
+                str= str.reduce(reducer, ' ')
+                
                 text += str + "\n"
             }
             
