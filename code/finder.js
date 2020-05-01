@@ -514,6 +514,8 @@ function search(word, arr = suraSr) {
         for (let j = 0; j < arr[i].length; j++) {
             // 
             let aya = arr[i][j].toLowerCase();
+            aya = aya.normalize();
+            word = word.normalize();
             // aya = normlisation(aya)
             // working :) -- the insan error is caused by the RegEx
             let locs = removeOddChar(aya).indexOf(removeOddChar(word.toLowerCase()))
