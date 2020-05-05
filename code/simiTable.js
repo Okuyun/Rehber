@@ -13,7 +13,7 @@ const rootsVector = new Map();
 /** 
  * Holds all suras vectors as map, which holds the vector, aya, chapter and verse numbers.
  */
-const surasVector = new Map();
+let surasVector = new Map();
 /** 
  * The results to print on the screen.
  */
@@ -32,34 +32,6 @@ function initRootVector() {
 function readHash() {}
 
 function parseHash() {}
-/**
- * create the suras vectors, by: 
- * 1- looping each Chapter <br>
- * 2- looping each verses in each chapter  <br>
- * 3- looping the words in Verse to create their count object.  <br>
- * 4- Add the counted object to the surasVector map to use later. <br>
- * Return a promise to follow up the end of the function. <br>
- */
-function tableGenerator() {
-    /** Loop each chapter */
-    suraAr.forEach((ayas, indS) => {
-            surasVector.set(indS, new Map())
-                /**loop each vers in the chapter */
-            ayas.forEach(
-                (words, indA) => {
-                    let array = words.split(" ")
-                    let temp = new Map(rootsVector);
-                    /** looping the words in Verse to create their count object. */
-                    array.forEach(e => { if (wordToRoot.get(toBuckwalter(e)) !== undefined) temp.set(wordToRoot.get(toBuckwalter(e)), temp.get(wordToRoot.get(toBuckwalter(e))) + 1) })
-                        /** Add the counted object to the surasVector map to use later. */
-                    surasVector.get(indS).set(indA, { vector: temp, aya: words, ch: indS + 1, ver: indA + 1 })
-                }
-            );
-        })
-        /**Return a promise to follow up the end of the function. */
-    return new Promise((resolve, reject) => { resolve("Horay") })
-
-}
 /**The initilize function to the page, which is 
  * 1- init() -- from script, to init the suras and needed translations  <br>
  * 2- initMujam() -- @todo why do i have this here?  <br>
@@ -70,10 +42,12 @@ function tableGenerator() {
  * 7- getHash() or AyaList() --either read hash or show aya list, based on the link/hash that we got
  */
 async function initTable() {
+       
     await init()
     await initMujam();
     await initRootVector();
-    await timer("All vectors created in ", tableGenerator)
+    callWorker()
+    // await timer("All vectors created in ", tableGenerator)
         // await timer("All vectors created in ", readVectorFile)
     initEvents()
     suraList()
@@ -82,6 +56,26 @@ async function initTable() {
     } else {
         ayaList();
     }
+}
+function callWorker(){
+    let worker = new Worker('code/worker/simiWorker.js')
+    worker.postMessage({sura:suraAr,suraV:surasVector,rootV:rootsVector, wordsRoots:wordToRoot})
+    worker.addEventListener('message', function(e) {
+        var data = e.data;
+        switch (data.cmd) {
+          case 'log':
+            console.log('WORKER message: ' + data.msg);
+            break;
+          case 'assign':
+            console.log('Data assigned: ' + data.msg);
+            surasVector = data.msg;
+            worker.terminate(); // Terminates the worker.
+            break;
+          default:
+            self.postMessage('Unknown command: ' + data.msg);
+        };
+      });
+    worker.onerror = console.error
 }
 /**
  * inner production of two vectors and return one result.

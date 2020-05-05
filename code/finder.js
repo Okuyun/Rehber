@@ -394,6 +394,7 @@ function shrink(text, number = 5) {
 let dataArr, wordCt;
 // arr is lsit of aya and sura, searched word.
 function createTable(arr, word) {
+    if(arr.length==0) {   document.getElementById("PaginationMenu").hidden = true; return} ; // empty array. TODO: can make a message for the user to show that its not found
     dataArr = arr;
     wordCt = word;
     wordNumber.innerText = arr.length //+ parseInt(wordNumber.innerText)
@@ -705,7 +706,11 @@ function navigatorToString() {
 
 function removeElementByID(elementID) {
     let el = document.getElementById(elementID);
-    el.parentNode.removeChild(el);
+    while (el != null ) {
+        el.parentNode.removeChild(el);
+        el = document.getElementById(elementID);
+    }
+    
 }
 
 function submitFeedBack() {
