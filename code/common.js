@@ -4,6 +4,13 @@
  * @author Abdurrahman RAJAB 
  */
 "use strict";
+const DATA_URL = "https://maeyler.github.io/Iqra3/data/" // in common.js
+
+/**
+ * &emsp; used in both Mujam
+ * used at report2 @see report2
+ */
+const EM_SPACE = String.fromCharCode(8195)
 
 /**
  * Translating Arabic letters to Buckwalter.

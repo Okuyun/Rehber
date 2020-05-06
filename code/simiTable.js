@@ -5,7 +5,37 @@
  * <a href="https://youtu.be/5XVFQix8tAk?t=455">the mathematical explination from this link </a>
  * @author Abdurrahman RAJAB 
  */
-
+/**
+ * The web worker to control outside the function and have access to it.
+ */
+let worker = new Worker('code/worker/simiWorker.js');
+worker.addEventListener('message', function(e) {
+    var data = e.data;
+    switch (data.cmd) {
+      case 'log':
+        console.log('WORKER message: ' + data.msg);
+        break;
+      case 'assign':
+        console.log('Data assigned: ' + data.msg);
+        surasVector = data.msg;
+        worker.terminate(); // Terminates the worker.
+        break;
+    case 'done':
+        console.log('Table generated: ' + data.msg);
+        document.getElementById("loading").hidden = true;
+        document.getElementById("dataSection").hidden = false;
+        break;
+    case 'result':
+        console.log('result is here');
+        result = data.msg;
+        sortReslts()
+        createTable(result)
+        break;
+      default:
+        self.postMessage('Unknown command: ' + data.msg);
+    };
+  });
+worker.onerror = console.error
 /**
  * Roots vector to hold the words roots.
  */
@@ -42,157 +72,22 @@ function parseHash() {}
  * 7- getHash() or AyaList() --either read hash or show aya list, based on the link/hash that we got
  */
 async function initTable() {
-       
     await init()
     await initMujam();
     await initRootVector();
     callWorker()
     // await timer("All vectors created in ", tableGenerator)
         // await timer("All vectors created in ", readVectorFile)
-    initEvents()
-    suraList()
-    if (location.hash) {
-        getHash();
-    } else {
-        ayaList();
-    }
+    // initEvents()
+    // suraList()
+    // if (location.hash) {
+    //     getHash();  
+    // } else {
+    //     ayaList();
+    // }
 }
 function callWorker(){
-    let worker = new Worker('code/worker/simiWorker.js')
-    worker.postMessage({sura:suraAr,suraV:surasVector,rootV:rootsVector, wordsRoots:wordToRoot})
-    worker.addEventListener('message', function(e) {
-        var data = e.data;
-        switch (data.cmd) {
-          case 'log':
-            console.log('WORKER message: ' + data.msg);
-            break;
-          case 'assign':
-            console.log('Data assigned: ' + data.msg);
-            surasVector = data.msg;
-            worker.terminate(); // Terminates the worker.
-            break;
-          default:
-            self.postMessage('Unknown command: ' + data.msg);
-        };
-      });
-    worker.onerror = console.error
-}
-/**
- * inner production of two vectors and return one result.
- * @param {*} a first vector
- * @param {*} b Second vector
- */
-function innerProd(a, b) {
-    let av = [...a.values()]
-    let bv = [...b.values()]
-    let reducer = (a, curr, ind) => curr ? a += curr * bv[ind] : a += 0;
-    // check reduce function in MDN docs
-    return av.reduce(reducer, 0);
-}
-/**
- * get a vector magnitude
- * @param {*} a vector
- */
-function magnitude(a) {
-    return round_to_precision(Math.sqrt(([...a.values()].reduce((c, b) => b ? c += b * b : c, 0))), 0.2).toFixed(2)
-}
-/**
- * number to round
- * @param {*} x number
- * @param {*} precision to round
- */
-function round_to_precision(x, precision) {
-    let y = +x + (precision === undefined ? 0.5 : precision / 2);
-    return y - (y % (precision === undefined ? 1 : +precision));
-}
-
-/** Check magnitudes of all vectors, used as testing method */
-function allMag() {
-    let temp;
-    surasVector.forEach((sura) => {
-        sura.forEach(
-            (aya) => {
-                if ((temp = magnitude(aya.vector)) != 1) {
-                    console.log("found", temp, aya.aya)
-                }
-            }
-        )
-    })
-}
-// two map as vectors.
-
-/**
- * Applying the cosine similarity function.
- * @param {*} a first vector
- * @param {*} b second vector 
- * @param {*} magB magnitude B if we need to set it manually
- */
-function similarity(a, b, magB) {
-    return innerProd(a, b) / (magnitude(a) * (magB ? magB : magnitude(b)))
-}
-
-function test() {
-    // allMag();
-}
-/**
- * Get similairty of the same verses
- */
-function similiartySimilarVerses() {
-    // let a = surasVector.get(2).get(2)
-    // console.log(a.aya)
-    // a=a.vector;
-    // console.log(similarity(a,a))
-    surasVector.forEach((sura) => sura.forEach((aya) => console.log(similarity(aya.vector, aya.vector), aya.aya)))
-}
-/** used for testing to check if there is any NaN error in the verses */
-function similarityCheckNAN() {
-    result = []
-    let f = (aya, c, v) => (isNaN(similarity(aya.vector, aya.vector))) ? result.push([100, c + 1, v + 1]) : null;
-    surasVector.forEach((sura, c) => sura.forEach((aya, v) => f(aya, c, v)))
-    return result;
-
-}
-/** testing manually */
-function similiartyError() {
-    // let a = surasVector.get(2).get(2)
-    // console.log(a.aya)
-    // a=a.vector;
-    // console.log(similarity(a,a))
-    surasVector.forEach((sura) => sura.forEach((aya) => Math.round(!similarity(aya.vector, aya.vector)) >= 1 ? console.log(aya.aya) : aya))
-}
-/**
- * check similarity based on chapter and verse numbers
- * @param {Number} c chapter
- * @param {Number} v Verse
- * @param {Number} min minimum similarity rate
- */
-function checkSimilarity(c, v, min = 70) {
-    result = [];
-    min = min / 100
-        // verse vector
-    let ratio;
-    let vv = getVerseVector(c, v);
-    let mag = magnitude(vv)
-        // console.log(mag)
-    if (mag > 0) {
-        surasVector.forEach(s => s.forEach(v => {
-            if ((ratio = similarity(v.vector, vv, mag)) >= min) {
-                // console.log(v.aya, (ratio = parseInt(ratio * 100)) > 100 ? 100 : ratio, v.ch, v.ver)
-                result.push([(ratio = parseInt(ratio * 100)) > 100 ? 100 : ratio, v.ch, v.ver])
-            }
-        }))
-    } else {
-        result = similarityCheckNAN();
-    }
-    return result;
-}
-/**
- * Returning the verse vector from an object, by providing the known numbers.
- * @param {Number} c chapter number 
- * @param {Number} v verse number
- */
-function getVerseVector(c, v) {
-    return surasVector.get(c - 1).get(v - 1).vector;
+    worker.postMessage({"cmd":"init", "data":{sura:suraAr,suraV:surasVector,rootV:rootsVector, wordsRoots:wordToRoot}})
 }
 /**
  *  
@@ -389,13 +284,16 @@ function initEvents() {
  * Trigger similarity function and start it, to get the results and set hashs.
  */
 function triggerSimilarity() {
-    let ayaList = document.getElementById("al");
-    let suraList = document.getElementById("sl");
-    let perc = document.getElementById("perc");
+    let ayaList = document.getElementById("al").value;
+    let suraList = document.getElementById("sl").value;
+    let perc = document.getElementById("perc").value;
     setHash()
-    result = checkSimilarity(suraList.value, ayaList.value, perc.value)
-    sortReslts()
-    createTable(result)
+    // worker.postMessage("test")
+    worker.postMessage({"cmd":"compare","msg":{c:suraList,v:ayaList,min:perc}})
+    // worker.postMessage({"cmd":"compare", "msg":{c:3,v:3}})
+    // worker.postMessage({"cmd":"init", "data":{sura:suraAr,suraV:surasVector,rootV:rootsVector, wordsRoots:wordToRoot}})
+
+    // result = checkSimilarity(suraList.value, ayaList.value, perc.value)
 }
 /**
  * Init the table.
