@@ -9,32 +9,41 @@
  * The web worker to control outside the function and have access to it.
  */
 let worker = new Worker('code/worker/simiWorker.js');
-worker.addEventListener('message', function(e) {
+worker.addEventListener('message', function (e) {
     var data = e.data;
     switch (data.cmd) {
-      case 'log':
-        console.log('WORKER message: ' + data.msg);
-        break;
-      case 'assign':
-        console.log('Data assigned: ' + data.msg);
-        surasVector = data.msg;
-        worker.terminate(); // Terminates the worker.
-        break;
-    case 'done':
-        console.log('Table generated: ' + data.msg);
-        document.getElementById("loading").hidden = true;
-        document.getElementById("dataSection").hidden = false;
-        break;
-    case 'result':
-        console.log('result is here');
-        result = data.msg;
-        sortReslts()
-        createTable(result)
-        break;
-      default:
-        self.postMessage('Unknown command: ' + data.msg);
+        case 'log':
+            console.log('WORKER message: ' + data.msg);
+            break;
+        case 'assign':
+            console.log('Data assigned: ' + data.msg);
+            surasVector = data.msg;
+            worker.terminate(); // Terminates the worker.
+            break;
+        case 'done':
+            console.log('Table generated: ' + data.msg);
+            document.getElementById("loading").hidden = true;
+            document.getElementById("dataSection").hidden = false;
+            let date2 = new Date()
+            console.log(date2 - date1)
+            initUI();
+            break;
+        case 'result':
+            console.log('result is here');
+            result = data.msg;
+            sortResults()
+            createTable(result)
+            break;
+        case 'vectorReturned':
+            console.log('vectorReturned');
+            verseVector = data.msg;
+
+            break;
+        default:
+            self.postMessage('Unknown command: ' + data.msg);
     };
-  });
+});
+let verseVector;
 worker.onerror = console.error
 /**
  * Roots vector to hold the words roots.
@@ -59,9 +68,9 @@ function initRootVector() {
     return new Promise((resolve, reject) => { resolve("Horay") })
 }
 
-function readHash() {}
+function readHash() { }
 
-function parseHash() {}
+function parseHash() { }
 /**The initilize function to the page, which is 
  * 1- init() -- from script, to init the suras and needed translations  <br>
  * 2- initMujam() -- @todo why do i have this here?  <br>
@@ -77,17 +86,21 @@ async function initTable() {
     await initRootVector();
     callWorker()
     // await timer("All vectors created in ", tableGenerator)
-        // await timer("All vectors created in ", readVectorFile)
-    // initEvents()
-    // suraList()
-    // if (location.hash) {
-    //     getHash();  
-    // } else {
-    //     ayaList();
-    // }
+    // await timer("All vectors created in ", readVectorFile)
 }
-function callWorker(){
-    worker.postMessage({"cmd":"init", "data":{sura:suraAr,suraV:surasVector,rootV:rootsVector, wordsRoots:wordToRoot}})
+function initUI() {
+    initEvents()
+    suraList()
+    if (location.hash) {
+        getHash();
+    } else {
+        ayaList();
+    }
+}
+let date1;
+function callWorker() {
+    date1 = new Date();
+    worker.postMessage({ "cmd": "init", "data": { sura: suraAr, suraV: surasVector, rootV: rootsVector, wordsRoots: wordToRoot } })
 }
 /**
  *  
@@ -154,7 +167,7 @@ function splitDown(c, v) {
 <button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 <span class="sr-only">Toggle Dropdown</span>
 </button>
-  <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOneF('${cv}')">${cv + " "+ quran.sura[c-1].name}</button>
+  <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOneF('${cv}')">${cv + " " + quran.sura[c - 1].name}</button>
  
   <div class="dropdown-menu">
     <button class="dropdown-item" onclick="openCorpus('${cv}')">Corpus</button>
@@ -170,14 +183,14 @@ function splitDown(c, v) {
  * Warper for sorting functions.
  */
 function sortWarp() {
-    sortReslts()
+    sortResults()
     createTable(result)
 }
 /**
  * Sorting resutls based on the option that a user choose, 
  * options are percentage and index, decrement vs increment order.
  */
-function sortReslts() {
+function sortResults() {
     let perDesc = (a, b) => a[0] - b[0]
     let perAsc = (a, b) => b[0] - a[0]
     let indDesc = (a, b) => (a[1] + a[2]) - (b[1] + b[2])
@@ -288,8 +301,9 @@ function triggerSimilarity() {
     let suraList = document.getElementById("sl").value;
     let perc = document.getElementById("perc").value;
     setHash()
+    getVerseVector(suraList, ayaList)
     // worker.postMessage("test")
-    worker.postMessage({"cmd":"compare","msg":{c:suraList,v:ayaList,min:perc}})
+    worker.postMessage({ "cmd": "compare", "msg": { c: suraList, v: ayaList, min: perc } })
     // worker.postMessage({"cmd":"compare", "msg":{c:3,v:3}})
     // worker.postMessage({"cmd":"init", "data":{sura:suraAr,suraV:surasVector,rootV:rootsVector, wordsRoots:wordToRoot}})
 
@@ -309,7 +323,6 @@ function initSimilarity() {
 function createTable(arr) {
     let ayaList = document.getElementById("al");
     let suraList = document.getElementById("sl");
-
     wordNumber.innerText = arr.length
     document.title = suraList.value + " " + ayaList.value + " " + arr.length
     element = document.getElementById("dTable").getElementsByTagName('tbody')[0];
@@ -317,6 +330,7 @@ function createTable(arr) {
     arr.forEach(e => {
         element.appendChild(createRow(...e))
     });
+    // triggerSimilarity();
 }
 /**
  * create Row of the table.
@@ -325,48 +339,47 @@ function createTable(arr) {
  * @param {Number} ve the vercse number.
  */
 function createRow(ratio, ch, ve) {
-    let ayaList = document.getElementById("al");
-    let suraList = document.getElementById("sl");
     //tr ==> td ==> div ==> span
     let tr = document.createElement("tr");
-
     let td = document.createElement("td");
     td.scope = "col"
     td.className = "text-right"
-
     let span = document.createElement("span")
     span.className = "arabic"
-    span.innerHTML = mark(ratio, suraAr[ch - 1][ve - 1], getVerseVector(suraList.value, ayaList.value))
+    //    continue after the worker message, with rowVector function
+    span.innerHTML = mark(ratio, suraAr[ch - 1][ve - 1], verseVector)
     td.appendChild(span)
     let div = splitDown(ch, ve)
     td.innerHTML += "<br>" + div
-        // btn group...
+    // btn group...
     span = document.createElement("span")
     span.className = "badge badge-info col-1";
     span.innerText = ratio + "%"
     td.appendChild(span)
-
-
     tr.appendChild(td)
     return tr;
 }
+
+function getVerseVector(chapterValue, verseValue) {
+    worker.postMessage({ 'cmd': 'getVector', msg: { chapter: chapterValue, verse: verseValue } })
+}
 // ***********
-function writeToFile(){
-    let text="";
+function writeToFile() {
+    let text = "";
     let perDesc = (a, b) => a[0] - b[0]
     let str;
     suraAr.forEach((ayas, indS) => {
         console.log(indS);
         ayas.forEach(
             (words, indA) => {
-                result = checkSimilarity(indS+1, indA+1, 70)
+                result = checkSimilarity(indS + 1, indA + 1, 70)
                 result.sort(perDesc)
                 str = result.slice(0, 12)
                 str = str.join(" ")
                 text += str + "\n"
             }
-            
+
         );
     })
-   return text;
-  }
+    return text;
+}

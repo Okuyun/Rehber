@@ -68,11 +68,16 @@ onmessage = (e) => {
             surasVector = data.msg;
             worker.terminate(); // Terminates the worker.
             break;
-            case 'compare':
-                console.log('Data assigned: ' + data.msg);
-                checkSimilarity( data.msg.c,  data.msg.v,  data.msg.min) 
-                postMessage({ 'cmd': 'resultbroken', msg:  checkSimilarity(data.msg.c, data.msg.v, data.msg.min) })
-                break;
+        case 'compare':
+            console.log('Data assigned: ' + data.msg);
+            // checkSimilarity( data.msg.c,  data.msg.v,  data.msg.min) 
+            postMessage({ 'cmd': 'result', msg: checkSimilarity(data.msg.c, data.msg.v, data.msg.min) })
+            // postMessage({ 'cmd': 'log', 'msg': "" })
+            break;
+        // broken
+        case 'getVector':
+            postMessage({ 'cmd': 'vectorReturned', msg: getVerseVector(data.msg.chapter, data.msg.verse) })
+            break;
         default:
             self.postMessage('Unknown command: ' + data.msg);
     };
