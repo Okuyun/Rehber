@@ -770,8 +770,8 @@ function addSuggestions(wordList) {
 function rootToFinder(root) {
     // wordCt = root;
     // searchQue.value = root
-    let refs = getReferences(toArabic(root.slice(2)));
     let refSet = new Set()
+    let refs = getReferences(toArabic(root.slice(2)));
     refs.forEach(e => refSet.add(e.index));
     let rootArr = [];
     refSet.forEach(e => {
