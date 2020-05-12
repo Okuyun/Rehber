@@ -14,7 +14,7 @@ You need to check the following:
 * Redirecting for different webistes: 
   * Iqra 
   * Quran.com 
-  * Meali
+  * Meali /
 * OneLine mode
   * First of aya
   * End of Aya

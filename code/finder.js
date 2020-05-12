@@ -654,7 +654,7 @@ function mujamList(rl) {
 }
 
 function serachedWordTable(word) {
-    submitData(word);
+    // submitData(word);
     word = word.trim();
     // word = normlisation(word)
     if (isRoot(word)) {
@@ -674,7 +674,12 @@ function serachedWordTable(word) {
     removeElementByID("postID")
 
 }
-
+/**
+ * not active anymore... removed since version 1.11
+ * @param {*} word 
+ * @param {*} message 
+ * @param {*} email 
+ */
 function submitData(word, message = "no", email = "anon") {
     // let link = "https://docs.google.com/forms/d/e/1FAIpQLSd7o_vx8kanr371NqY3ylGAmDHrht6APYLFg0g6rhJVDC2zdA/formResponse?usp=pp_url&entry.841595716="
     // let link =  "https://docs.google.com/forms/d/e/1FAIpQLSd7o_vx8kanr371NqY3ylGAmDHrht6APYLFg0g6rhJVDC2zdA/formResponse?usp=pp_url&entry.364753965=email&entry.841595716=word&entry.1093518355=feedBackMessage&entry.2043746972=screen&entry.562870159=model&entry.709022821=settings&entry.1881015334=navigator"

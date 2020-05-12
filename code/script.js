@@ -22,6 +22,8 @@ let data = {
     trTr: "tr.diyanet.txt",
     trEl: "tr.yazir.txt",
     trYL: "en.yusufali.txt",
+    fr: "fr.hamidullah.txt",
+
 }
 
 /**
@@ -161,6 +163,10 @@ function loadTrans(choosen = "1") {
             translate = data.trYL;
 
             break;
+            case "7":
+                translate = data.fr;
+    
+                break;
 
     }
     return readExternal(dataUrl + translate, suraTr, dataToArray)
