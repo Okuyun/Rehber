@@ -29,21 +29,21 @@ w, t, b, rl.
 Direct Examples, with expected:
 
 
-<a href="/finder.html#w=بِغَيْرِ%20عَمَدٍ" target="finder">bigayri ‘amedin -2</a>
+<a href="finder.html#w=بِغَيْرِ%20عَمَدٍ" target="finder">bigayri ‘amedin -2</a>
 
-<a href="/finder.html#w=أَرْذَلِ%20ٱلْعُمُرِ" target="finder">erzelil-‘umur 2</a>
+<a href="finder.html#w=أَرْذَلِ%20ٱلْعُمُرِ" target="finder">erzelil-‘umur 2</a>
 
-<a href="/finder.html#w=ٱهْتَزَّتْ%20وَرَبَتْ" target="finder">ihtezzet verebet 2</a>
+<a href="finder.html#w=ٱهْتَزَّتْ%20وَرَبَتْ" target="finder">ihtezzet verebet 2</a>
 
-<a href="/finder.html#w=هُدًى%20مِّن%20رَّبِّهِمْ" target="finder">hudemmirrabbihim 2</a>
+<a href="finder.html#w=هُدًى%20مِّن%20رَّبِّهِمْ" target="finder">hudemmirrabbihim 2</a>
 
-<a href="/finder.html#w=لَآ%20إِلَٰهَ%20إِلَّا%20ٱللَّهُ" target="finder">lâ ilâhe illallâh 2</a>
+<a href="finder.html#w=لَآ%20إِلَٰهَ%20إِلَّا%20ٱللَّهُ" target="finder">lâ ilâhe illallâh 2</a>
 
-<a href="/finder.html#w=شَتَّىٰ" target="finder">şettâ - 3</a> 
+<a href="finder.html#w=شَتَّىٰ" target="finder">şettâ - 3</a> 
 
-<a href="/finder.html#w=رَزَقْنَٰهُمْ%20سِرًّا%20وَعَلَانِيَةً" target="finder">sirren ve’alâniye 3</a>
+<a href="finder.html#w=رَزَقْنَٰهُمْ%20سِرًّا%20وَعَلَانِيَةً" target="finder">sirren ve’alâniye 3</a>
 
-<a href="/finder.html#w=خَوْفًا%20وَطَمَعًا" target="finder">havfen vetama'an 4</a>
+<a href="finder.html#w=خَوْفًا%20وَطَمَعًا" target="finder">havfen vetama'an 4</a>
 
-<a href="/finder.html#w=ٱسْجُدُوا۟%20لِءَادَمَ" target="finder">uscudû li-âdeme 5</a>
+<a href="finder.html#w=ٱسْجُدُوا۟%20لِءَادَمَ" target="finder">uscudû li-âdeme 5</a>
 

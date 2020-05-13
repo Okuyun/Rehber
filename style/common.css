@@ -32,6 +32,7 @@ great {
 .shrinkArabic {
     display: none;
     white-space: nowrap;
+    text-overflow: ellipsis;
     max-width: 80vw;
     overflow-x: hidden;
     /* overflow-x: scroll; */
