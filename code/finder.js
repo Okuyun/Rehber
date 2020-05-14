@@ -822,9 +822,9 @@ function hashChanged() {
     if (suraTr == undefined) {
         console.log("suraTr undefeined")
         return}; // a little lovely bug.. faster way to solve it lol
-    if (arabic == searchQue.value) {
-        console.log("Search value and arabic are equal")
-        return};
+    // if (arabic == searchQue.value) {
+    //     console.log("Search value and arabic are equal")
+    //     return};
     findActionH(arabic); //toArabicLetters(arabic));
 }
 
