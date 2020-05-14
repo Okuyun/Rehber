@@ -513,7 +513,7 @@
         .catch(alert)
     }
       window.name="finder";
-      init().then(initFinder)
+      timer("Loading Arabic",() => loadArabic().then(() => timer("Init finder",initFinder)))
       // setVersePerPage() 
       version.innerText= config.version;
       //initFinder();

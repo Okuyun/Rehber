@@ -97,12 +97,12 @@ function dataToArray(t, targetArray) {
  * Set Arabic arrays and initialize it.
  */
 function loadArabic() {
+    let date1= new Date()
     // set uthmani array.
     let p1 = readExternal(dataUrl + data.aruthman, suraAr, dataToArray)
-        // set clean array.
-
+        // set clean array. 
     let p2 = readExternal(dataUrl + data.arclean, suraSr, dataToArray)
-
+    Promise.all([p1,p2]).then( console.log( "Arabic Loading time",new Date()-date1))
     return Promise.all([p1, p2])
 
 }

@@ -154,3 +154,7 @@ https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_input_type_checkbox
 https://stackoverflow.com/questions/11599666/get-the-value-of-checked-checkbox
 https://www.w3schools.com/tags/att_global_data.asp
 https://www.flaticon.com/free-icons/book
+
+Change the way of loading the page to make it faster, based on the needs instead of static one, write it in the Thesis -- just like that.
+Speed, reading thingy you can write about it as well
+history of the Search engines, single purpose search engine Covid-19 and other things.

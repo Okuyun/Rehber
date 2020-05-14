@@ -636,7 +636,8 @@ function find(word = "") {
 function findAction(word = "") {
     if (word.length <= 0) return;
     clearTable();
-    serachedWordTable(word);
+    // already triggered when the hash changed, they are connected together 
+    // serachedWordTable(word);
     setHash(word)
 }
 
@@ -852,8 +853,11 @@ function setHash(word, type) {
       s-->|yes| loadSettings
  */
 async function initFinder() {
-    // await readWords("words.txt");
-    await initMujam();
+    let h = decodeURI(location.hash);
+    let type = h[1];
+    if(type == "r"){
+        await loadMujam();
+    }
     console.log("Finder started...")
     searchQue.addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
@@ -862,19 +866,27 @@ async function initFinder() {
         }
     });
     window.addEventListener("hashchange", hashChanged);
-    hashChanged();
 
     if (storageAvailable("localStorage")) {
         if (window.localStorage.settings === undefined) {
             initLocalStorage();
+            await loadTransF();
         } else {
-            loadSettings()
+            await loadSettings()
         }
     }
+    hashChanged();
     menuFn();
     initPagination();
-
-
+    if(type != "r"){
+       await loadMujam();
+     }
+}
+async function loadMujam(){
+    let date = new Date()
+    let p = await initMujam();
+    console.log("Mujam load time",new Date() - date)
+    return p
 }
 // from: https://stackoverflow.com/questions/1409225/changing-a-css-rule-set-from-javascript
 // Add variables array then use destrutctor to call it for once! only one time... 
@@ -925,8 +937,12 @@ async function loadTransF(n = 3) {
     await loadTrans(n.toString())
         // clearTable();
         // toCheck...
-    if (!location.hash.includes("r=")) findAction(searchQue.value);
-    else hashChanged();
+    // if (!location.hash.includes("r=")) findAction(searchQue.value);
+    // else hashChanged();
+    // can be added from the url? - or even modified to be more generic by having data collection for it to create the whole thingy, like the tefsir and even the list... 
+    // will need an object of the link and name of each tefsir, to get them from there, and parse them.
+    // the object will be looped through to create the select option list, then would be used to parse the name and even the data.
+    // maybe better approach to manage them from one place, when you change the object you will have to change the data as a whole. TODO
     THtext.innerText = getTefsirText(n) + "\u2002";
     updateSettings("source", n)
     langSpeechSettings()
@@ -1259,11 +1275,11 @@ function loadSettings() {
         changeColour(settings.colour)
         changeFont("arabic", 0)
         changeFont("x", 0)
-        loadTransF(settings.source);
         lastOne = settings.lastOne;
         language(settings.lang)
         showState(settings.dstate)
         displayState(settings.dstate)
+        return loadTransF(settings.source);
     }
 }
 
