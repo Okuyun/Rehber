@@ -806,21 +806,24 @@ function hashChanged() {
             // let arr=  ;
             // arabic = rootToWords(arabic)
             document.title = "R=" + arabic;
-
             rootToFinder(type + "=" + arabic);
             return;
-
         default:
             console.log(h, type, arabic, "BROKEN")
-
             findAction('بسم الله')
             return;
     }
 
     // arabic=toArabic(decodeURI(arabic)); // move the decode function to BuckWalter code... better approach
-    if (arabic.length <= 0) return;
-    if (suraTr == undefined) return; // a little lovely bug.. faster way to solve it lol
-    if (arabic == searchQue.value) return;
+    if (arabic.length <= 0) {
+        console.log("arabic length", arabic.length)
+        return;}
+    if (suraTr == undefined) {
+        console.log("suraTr undefeined")
+        return}; // a little lovely bug.. faster way to solve it lol
+    if (arabic == searchQue.value) {
+        console.log("Search value and arabic are equal")
+        return};
     findActionH(arabic); //toArabicLetters(arabic));
 }
 
@@ -930,7 +933,7 @@ async function loadTransF(n = 3) {
 }
 
 function getTefsirText(n) {
-    let tefsir = ["تفسير الجلالين", "تفسير الميسر", "Türkçe: Diyanet Meali", "English: Ahmed Ali", "Türkçe: Elmalılı Hamdi Yazır", "English: Abdullah Yusuf Ali"]
+    let tefsir = ["تفسير الجلالين", "تفسير الميسر", "Türkçe: Diyanet Meali", "English: Ahmed Ali", "Türkçe: Elmalılı Hamdi Yazır", "English: Abdullah Yusuf Ali","French"]
     return tefsir[n - 1];
 }
 
