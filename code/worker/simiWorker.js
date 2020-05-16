@@ -203,3 +203,32 @@ function checkSimilarity(c, v, min = 70) {
 function getVerseVector(c, v) {
     return surasVector.get(c - 1).get(v - 1).vector;
 }
+
+/** The TF*IDF algorthm based on https://janav.wordpress.com/2013/10/27/tf-idf-and-cosine-similarity/ */
+function termFrequency(verseVector){
+    let total = 0
+    verseVector.forEach((v,k,m) => {total+=v})
+    verseVector.forEach((v,k,m) => {
+        verseVector.set(k,v/total)   
+    })
+    return verseVector;
+    }
+
+function totalNumberOfDocs(){
+//     total =0
+//    suraAr.forEach(e=> total+=e.length)
+    return 6236;
+}
+function numberOFdocsWithTerm(word){
+    let total = 0;
+    surasVector.forEach(sura => {
+        sura.forEach(verse =>{
+            if(verse.vector.get(word) > 0) total+=1;
+        })
+    })
+    return total;
+}
+function inverseDF(word){
+    return 1 + Math.log(totalNumberOfDocs()/numberOFdocsWithTerm(word))
+}
+
