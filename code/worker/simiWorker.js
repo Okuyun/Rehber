@@ -9,8 +9,17 @@ importScripts('/code/buckwalter.js')
 importScripts('/code/mujam.js')
 importScripts('/code/common.js')
 let sv = new Map()
-let surasVector;
+let rootsVector = new Map();
+let surasVectorG;
 postMessage({ 'cmd': 'log', 'msg': 'worker started' })
+
+function wordsToVector(words){
+    let array = words.split(" ")
+    let temp = new Map(rootsVector);
+    /** looping the words in Verse to create their count object. */
+    array.forEach(e => { if (wordToRoot.get(toBuckwalter(e)) !== undefined) temp.set(wordToRoot.get(toBuckwalter(e)), temp.get(wordToRoot.get(toBuckwalter(e))) + 1) })
+    return temp
+}
 // toBuckwalter = BWC.toBuckwalter
 /**
  * create the suras vectors, by: 
@@ -27,15 +36,14 @@ function tableGenerator(suraAr, surasVector, rootsVector) {
         /**loop each vers in the chapter */
         ayas.forEach(
             (words, indA) => {
-                let array = words.split(" ")
-                let temp = new Map(rootsVector);
-                /** looping the words in Verse to create their count object. */
-                array.forEach(e => { if (wordToRoot.get(toBuckwalter(e)) !== undefined) temp.set(wordToRoot.get(toBuckwalter(e)), temp.get(wordToRoot.get(toBuckwalter(e))) + 1) })
-                /** Add the counted object to the surasVector map to use later. */
+                temp = wordsToVector(words);
+                             /** Add the counted object to the surasVector map to use later. */
                 surasVector.get(indS).set(indA, { vector: temp, aya: words, ch: indS + 1, ver: indA + 1 })
             }
         );
     })
+    surasVectorG = surasVector
+    IDFvector = idfVector();
     /**Return surasVector to send */
     // sv = surasVector;
     // surasVector.get(0).get(0).vector.forEach(e=>{console.log(e)})
@@ -137,14 +145,17 @@ function allMag() {
  * @param {*} magB magnitude B if we need to set it manually
  */
 function similarity(a, b, magB) {
-    return innerProd(a, b) / (magnitude(a) * (magB ? magB : magnitude(b)))
+    let date= new Date();
+    let result = innerProd(a, b) / (magnitude(a) * (magB ? magB : magnitude(b)))
+    console.log(new Date()-date)
+    return result
 }
 
 function test() {
     // allMag();
 }
 /**
- * Get similairty of the same verses
+ * Get similarity of the same verses
  */
 function similiartySimilarVerses() {
     // let a = surasVector.get(2).get(2)
@@ -177,22 +188,27 @@ function similiartyError() {
  */
 function checkSimilarity(c, v, min = 70) {
     result = [];
-    min = min / 100
     // verse vector
-    let ratio;
     let vv = getVerseVector(c, v);
     let mag = magnitude(vv)
     // console.log(mag)
     if (mag > 0) {
-        surasVector.forEach(s => s.forEach(v => {
-            if ((ratio = similarity(v.vector, vv, mag)) >= min) {
-                // console.log(v.aya, (ratio = parseInt(ratio * 100)) > 100 ? 100 : ratio, v.ch, v.ver)
-                result.push([(ratio = parseInt(ratio * 100)) > 100 ? 100 : ratio, v.ch, v.ver])
-            }
-        }))
+       return wholeQuranLoop(vv,mag,min,similarity);
     } else {
         result = similarityCheckNAN();
     }
+    return result;
+}
+function wholeQuranLoop(vv,mag,min,similarityFunction){
+    let ratio;
+    min = min/100
+    let result = []
+    surasVector.forEach(s => s.forEach(v => {
+        if ((ratio = similarityFunction(v.vector, vv, mag)) >= min) {
+            // console.log(v.aya, (ratio = parseInt(ratio * 100)) > 100 ? 100 : ratio, v.ch, v.ver)
+            result.push([(ratio = parseInt(ratio * 100)) > 100 ? 100 : ratio, v.ch, v.ver])
+        }
+    }))
     return result;
 }
 /**
@@ -205,30 +221,99 @@ function getVerseVector(c, v) {
 }
 
 /** The TF*IDF algorthm based on https://janav.wordpress.com/2013/10/27/tf-idf-and-cosine-similarity/ */
-function termFrequency(verseVector){
+function termFrequency(verseVector) {
     let total = 0
-    verseVector.forEach((v,k,m) => {total+=v})
-    verseVector.forEach((v,k,m) => {
-        verseVector.set(k,v/total)   
+    verseVector.forEach((v, k, m) => { total += v })
+    verseVector.forEach((v, k, m) => {
+        verseVector.set(k, v / total)
     })
     return verseVector;
-    }
+}
 
-function totalNumberOfDocs(){
-//     total =0
-//    suraAr.forEach(e=> total+=e.length)
+function totalNumberOfDocs() {
+    //     total =0
+    //    suraAr.forEach(e=> total+=e.length)
     return 6236;
 }
-function numberOFdocsWithTerm(word){
+function numberOFdocsWithTerm(word) {
     let total = 0;
-    surasVector.forEach(sura => {
-        sura.forEach(verse =>{
-            if(verse.vector.get(word) > 0) total+=1;
+    surasVectorG.forEach(sura => {
+        sura.forEach(verse => {
+            if (verse.vector.get(word) > 0) total += 1;
         })
     })
     return total;
 }
-function inverseDF(word){
-    return 1 + Math.log(totalNumberOfDocs()/numberOFdocsWithTerm(word))
+function inverseDF(word) {
+    return 1 + Math.log(totalNumberOfDocs() / numberOFdocsWithTerm(word))
 }
 
+let IDFvector = new Map();
+
+function idfVector() {
+    let idfVector = new Map()
+    rootsVector.forEach((v, k, m) => {
+        idfVector.set(k, inverseDF(k))
+    })
+    return idfVector;
+}
+
+function tfidfVector(a) {
+    let tfidf = new Map()
+    a.forEach((v, k, m) => {
+        tfidf.set(k, v * IDFvector.get(k))
+    })
+    return tfidf;
+}
+
+function tfidfResult(a, b) {
+    return [tfidfVector(a), tfidfVector(b)]
+}
+function termFwarper(a, b) {
+    return [termFrequency(a), termFrequency(b)]
+}
+function getInterSection(a,b){
+    let intersection = new Map();
+    a.forEach((v,k,m)=>{
+        if(b.get(k)>0){
+            intersection.set(k,1);
+        }
+    })
+    return intersection;
+}
+function updateVectors(a,b,inter){
+    let an = new Map()
+    let bn = new Map();
+    inter.forEach((v,k,m)=>{
+        an.set(k,a.get(k))
+        bn.set(k,b.get(k))
+    })
+    return [an,bn]
+}
+function checkSmaller(a,b){
+    let totalA = 0
+    a.forEach((v, k, m) => { if(v>0) totalA += 1  })
+    let totalb = 0
+    b.forEach((v, k, m) => { if(v>0) totalb += 1  })
+    if(totalA > totalb ) return [b,a]
+    else return [a,b]
+}
+
+/** why it does not work without the intersection...? it could work but the magnitudde need to be calcuated based on the inner production other wise its a logical error */
+function cosineTFIDF(a, b) {
+    // could save the mutakerrer in table to make it faster, or maybe use a similar model to finder and just show 10 results instead of the whole collections :) TODO
+    /**term frequency */
+    // let date= new Date();
+    [a,b] =checkSmaller(a,b)
+    let [at, bt] = termFwarper(a, b);
+    let [atidf, btidf] = tfidfResult(at, bt);
+    let inters = getInterSection(a,b)
+    let [a1,b1]= updateVectors(atidf,btidf,inters)
+    
+    let result= innerProd(a1,b1)/ (magnitude(a1) * magnitude(b1));
+    // console.log(new Date()-date)
+    return result
+}
+/**
+ * get interseection based on the smalleset would it matter?
+ */
