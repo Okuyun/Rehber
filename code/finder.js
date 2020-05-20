@@ -260,15 +260,20 @@ function subArrayIndexes(master, sub) {
 
     //collect all master indexes matching first element of sub-array
     let matched_index = allOccurenceSub(master, sub[0])
-
-    for (let index of matched_index) {
-        for (let [j, element] of sub.entries()) {
-            if (!master[j + index].includes(element)) {
-                matched_index = removeElement(matched_index, index)
-                break;
+    try {
+        for (let index of matched_index) {
+            for (let [j, element] of sub.entries()) {
+                let masterWord = master[j + index];
+                if ( !masterWord || !masterWord.includes(element)) {
+                    matched_index = removeElement(matched_index, index)
+                    break;
+                }
             }
         }
+    } catch (error) {
+        console.error(error,matched_index)
     }
+   
     return matched_index;
 }
 
@@ -944,6 +949,7 @@ async function loadTransF(n = 3) {
     // the object will be looped through to create the select option list, then would be used to parse the name and even the data.
     // maybe better approach to manage them from one place, when you change the object you will have to change the data as a whole. TODO
     THtext.innerText = getTefsirText(n) + "\u2002";
+    findActionH(searchQue.value)
     updateSettings("source", n)
     langSpeechSettings()
 }
