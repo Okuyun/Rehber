@@ -24,8 +24,8 @@ worker.addEventListener('message', function (e) {
             console.log('Table generated: ' + data.msg);
             document.getElementById("loading").hidden = true;
             document.getElementById("dataSection").hidden = false;
-            let date2 = new Date()
-            console.log(date2 - date1)
+            // let date2 = new Date()
+            // console.log(date2 - date1)
             initUI();
             break;
         case 'result':

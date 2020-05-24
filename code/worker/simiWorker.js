@@ -145,9 +145,9 @@ function allMag() {
  * @param {*} magB magnitude B if we need to set it manually
  */
 function similarity(a, b, magB) {
-    let date= new Date();
+    // let date= new Date();
     let result = innerProd(a, b) / (magnitude(a) * (magB ? magB : magnitude(b)))
-    console.log(new Date()-date)
+    // console.log(new Date()-date)
     return result
 }
 
