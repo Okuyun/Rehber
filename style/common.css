@@ -1,5 +1,6 @@
 .arabic {
-    font: 20px me_quran, serif;
+    
+    font: 20px noorfont, serif;
 }
 
 .container {
@@ -9,6 +10,10 @@
 @font-face {
     font-family: me_quran;
     src: url("./me_quran.ttf");
+}
+@font-face {
+    font-family: noorfont;
+    src: url("./noorehidayat.ttf");
 }
 
 great {

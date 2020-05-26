@@ -639,7 +639,9 @@ function find(word = "") {
 }
 
 function findAction(word = "") {
+    let [h,type,arabic] = readHash()
     if (word.length <= 0) return;
+    if(searchQue.value == arabic ) return;
     clearTable();
     // already triggered when the hash changed, they are connected together 
     // serachedWordTable(word);
@@ -793,13 +795,17 @@ function rootToFinder(root) {
         // wordLst[1] = rootArr
     createTable(rootArr, root)
 }
-
-function hashChanged() {
+function readHash(){
     let h = decodeURI(location.hash);
     // console.log("hashChanged...")
     let type = h[1];
     h = h.slice(3);
-    let arabic = h.replace(/%20/g, " ");;
+    let arabic = h.replace(/%20/g, " ");
+    return [h,type,arabic]
+}
+
+function hashChanged() {
+  let [h,type,arabic] = readHash()
     switch (type) {
         case "b":
             arabic = toArabic(decodeURI(arabic));
