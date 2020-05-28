@@ -5,9 +5,9 @@
 
 // instead of transferring the whole object just try to get the results and see how is it.
 
-importScripts('/code/buckwalter.js')
-importScripts('/code/mujam.js')
-importScripts('/code/common.js')
+importScripts('../buckwalter.js')
+importScripts('../mujam.js')
+importScripts('../common.js')
 let sv = new Map()
 let rootsVector = new Map();
 let surasVectorG;
