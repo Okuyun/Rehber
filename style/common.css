@@ -1,6 +1,6 @@
 .arabic {
     
-    font: 20px noorfont, serif;
+    font: x-large srotFont, serif;
 }
 
 .container {
@@ -11,10 +11,37 @@
     font-family: me_quran;
     src: url("./me_quran.ttf");
 }
+
+@font-face {
+    font-family: srotFont;
+    src: url("./ScheherazadeRegOT.ttf");
+}
+@font-face {
+    font-family: whynot;
+    src: url("https://quran-1f14.kxcdn.com/fonts/ttf/p11.ttf") format('truetype');
+}
+
 @font-face {
     font-family: noorfont;
     src: url("./noorehidayat.ttf");
 }
+@font-face {
+    font-family: quranicfont;
+    src: url("./arQuran1.ttf");
+}
+@font-face {
+    font-family: qlmMajeed;
+    src: url("./Al-Qalam-Quran-Majeed-1/Al\ Qalam\ Quran\ Majeed\ 1.ttf");
+}
+
+@font-face {
+    font-family: hafs;
+    src: url("./Hafs-ver13/UthmanicHafs1\ Ver13.otf");
+}
+
+
+
+
 
 great {
     cursor: pointer;
