@@ -1,0 +1,1905 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                width="585" height="4206" shape-rendering="optimizeSpeed">
+                
+                <g>
+                   <rect x="50" y="65"
+            width="443.4" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>let dataUrl = &quot;https://a0m0rajab.github.io/BahisQurani/data/&quot;</title>
+            <text x="65" y="85"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="65" y="85">let dataUrl = &quot;https://a0m0rajab.github.io/BahisQu...</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="50" y="113.5"
+            width="139.2" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>let data = {*}</title>
+            <text x="65" y="133.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="65" y="133.5">let data = {*}</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="162"
+            width="287.4" height="30"
+            rx="2" ry="2"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>arclean: &quot;quran-simple-clean.txt&quot;</title>
+            <text x="102" y="182"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="182">arclean: &quot;quran-simple-clean.txt&quot;</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="210.5"
+            width="256.2" height="30"
+            rx="2" ry="2"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>aruthman: &quot;quran-uthmani.txt&quot;</title>
+            <text x="102" y="230.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="230.5">aruthman: &quot;quran-uthmani.txt&quot;</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="259"
+            width="232.79999999999998" height="30"
+            rx="2" ry="2"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>tfArJal: &quot;ar.jalalayn.txt&quot;</title>
+            <text x="102" y="279"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="279">tfArJal: &quot;ar.jalalayn.txt&quot;</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="307.5"
+            width="225" height="30"
+            rx="2" ry="2"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>tfArMu: &quot;ar.muyassar.txt&quot;</title>
+            <text x="102" y="327.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="327.5">tfArMu: &quot;ar.muyassar.txt&quot;</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="356"
+            width="209.4" height="30"
+            rx="2" ry="2"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>trEn: &quot;en.ahmedali.txt&quot;</title>
+            <text x="102" y="376"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="376">trEn: &quot;en.ahmedali.txt&quot;</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="404.5"
+            width="201.6" height="30"
+            rx="2" ry="2"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>trTr: &quot;tr.diyanet.txt&quot;</title>
+            <text x="102" y="424.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="424.5">trTr: &quot;tr.diyanet.txt&quot;</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="453"
+            width="186" height="30"
+            rx="2" ry="2"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>trEl: &quot;tr.yazir.txt&quot;</title>
+            <text x="102" y="473"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="473">trEl: &quot;tr.yazir.txt&quot;</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="501.5"
+            width="209.4" height="30"
+            rx="2" ry="2"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>trYL: &quot;en.yusufali.txt&quot;</title>
+            <text x="102" y="521.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="521.5">trYL: &quot;en.yusufali.txt&quot;</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="550"
+            width="427.8" height="30"
+            rx="2" ry="2"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>fr: &quot;fr.hamidullah.txt&quot;
+/**
+ * Arabic sura array hold nested array of suras and aya,
+ * This is the base array of Quran with uthmani font. 
+ * suraAr[X][Y] =&gt; x number of sura, Y number of aya
+ */</title>
+            <text x="102" y="570"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="570">fr: &quot;fr.hamidullah.txt&quot;
+/**
+ * Arabic sura array h...</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="50" y="598.5"
+            width="147" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>let suraAr = []</title>
+            <text x="65" y="618.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="65" y="618.5">let suraAr = []</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="50" y="647"
+            width="147" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>let suraSr = []</title>
+            <text x="65" y="667"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="65" y="667">let suraSr = []</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="50" y="695.5"
+            width="147" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>let suraTr = []</title>
+            <text x="65" y="715.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="65" y="715.5">let suraTr = []</tspan>
+            </text>
+                   
+                   
+                </g>
+            <g>
+                <rect x="50" y="759"
+            width="393.2" height="30"
+            style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                    
+                <line x1="60" y1="759" x2="60" y2="789"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                <line x1="433.2" y1="759" x2="433.2" y2="789"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+             
+                <title>function readExternal(url, target, callBack)</title>
+            <text x="75" y="779"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="75" y="779">function readExternal(url, target, callBack)</tspan>
+            </text>
+                
+            </g>
+                <g>
+                   <rect x="87" y="807.5"
+            width="404.4" height="30"
+            rx="2" ry="2"
+            style="fill:#C5E1A5; stroke:#444; stroke-width:1" />
+                   <title>console.log(&quot;reading external data from &quot; + url)</title>
+            <text x="102" y="827.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="827.5">console.log(&quot;reading external data from &quot; + url)</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="856"
+            width="232.79999999999998" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>const r = await fetch(url)</title>
+            <text x="102" y="876"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="876">const r = await fetch(url)</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="904.5"
+            width="217.2" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>const t = await r.text()</title>
+            <text x="102" y="924.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="924.5">const t = await r.text()</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="953"
+            width="271.79999999999995" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>const r_1 = callBack(t, target)</title>
+            <text x="102" y="973"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="973">const r_1 = callBack(t, target)</tspan>
+            </text>
+                   
+                   
+                </g>
+            <g>
+                <rect x="87" y="1001.5"
+            width="108" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                
+                <line x1="195" y1="1011.5" x2="200" y2="1011.5"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                
+                <line x1="195" y1="1021.5" x2="200" y2="1021.5"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+
+                <path d="M200, 1005.5 L216, 1016.5 L200, 1027.5 Z" 
+        fill="#a5d6a7" stroke="#444" stroke-width="1" />
+                             
+                <title>return r_1</title>
+            <text x="102" y="1021.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="1021.5">return r_1</tspan>
+            </text>
+                
+            </g>
+            <g>
+                <rect x="50" y="1065"
+            width="330.8" height="30"
+            style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                    
+                <line x1="60" y1="1065" x2="60" y2="1095"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                <line x1="370.8" y1="1065" x2="370.8" y2="1095"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+             
+                <title>function dataToArray(t, targetArray)</title>
+            <text x="75" y="1085"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="75" y="1085">function dataToArray(t, targetArray)</tspan>
+            </text>
+                
+            </g>
+                <g>
+                   <rect x="87" y="1113.5"
+            width="186" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>let parsedArray = []</title>
+            <text x="102" y="1133.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="1133.5">let parsedArray = []</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="1162"
+            width="209.4" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>let lines = t.split(&apos;
+&apos;)</title>
+            <text x="102" y="1182"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="1182">let lines = t.split(&apos;
+&apos;)</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="1210.5"
+            width="373.2" height="30"
+            rx="2" ry="2"
+            style="fill:#C5E1A5; stroke:#444; stroke-width:1" />
+                   <title>console.log(&quot;Quran Verses= &quot; + lines.length)</title>
+            <text x="102" y="1230.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="1230.5">console.log(&quot;Quran Verses= &quot; + lines.length)</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="1259"
+            width="186" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>let versesArray = []</title>
+            <text x="102" y="1279"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="1279">let versesArray = []</tspan>
+            </text>
+                   
+                   
+                </g><g>
+
+            <rect x="117" y="1342.5"
+            width="169.2" height="30"
+            rx="3" ry="3"
+            style="fill:#b39ddb; stroke:#444; stroke-width:1" />
+            <polygon points="87,1357.5 117,1327.5 147,1357.5 117,1387.5"
+            style="fill:#b39ddb; stroke:#444; stroke-width:1" />
+                
+            <title> line of lines</title>
+            <text x="162" y="1362.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="162" y="1362.5"> line of lines</tspan>
+            </text>
+            
+            <text x="105.3" y="1362.5"
+        font-family="monospace" font-size="13" fill="#222">for</text>
+        </g>
+                <g>
+                   <rect x="137" y="1397.5"
+            width="201.6" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>line = line.split(&apos;|&apos;)</title>
+            <text x="152" y="1417.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="152" y="1417.5">line = line.split(&apos;|&apos;)</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="137" y="1446"
+            width="178.2" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>suraN = line[0] - 1</title>
+            <text x="152" y="1466"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="152" y="1466">suraN = line[0] - 1</tspan>
+            </text>
+                   
+                   
+                </g><g>
+            <rect x="167" y="1509.5"
+            width="317.4" height="30"
+            rx="3" ry="3"
+            style="fill:#ce93d8; stroke:#444; stroke-width:1" />                
+            <polygon points="137,1524.5 167,1494.5 197,1524.5 167,1554.5"
+            style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+            <title>(targetArray[suraN] == undefined)</title>
+            <text x="212" y="1529.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="212" y="1529.5">(targetArray[suraN] == undefined)</tspan>
+            </text>
+            
+            <text x="159.2" y="1529.5"
+        font-family="monospace" font-size="13" fill="#222">if</text> <text x="174.8" y="1556.45"
+        font-family="monospace" font-size="13" fill="#222">+</text> 
+        </g>
+                <g>
+                   <rect x="187" y="1564.5"
+            width="209.4" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>targetArray[suraN] = []</title>
+            <text x="202" y="1584.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="202" y="1584.5">targetArray[suraN] = []</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="137" y="1614.5"
+            width="279.6" height="30"
+            rx="2" ry="2"
+            style="fill:#C5E1A5; stroke:#444; stroke-width:1" />
+                   <title>targetArray[suraN].push(line[2])</title>
+            <text x="152" y="1634.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="152" y="1634.5">targetArray[suraN].push(line[2])</tspan>
+            </text>
+                   
+                   
+                </g>
+            <g>
+                <rect x="87" y="1663"
+            width="435.59999999999997" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                
+                <line x1="522.5999999999999" y1="1673" x2="527.5999999999999" y2="1673"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                
+                <line x1="522.5999999999999" y1="1683" x2="527.5999999999999" y2="1683"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+
+                <path d="M527.5999999999999, 1667 L543.5999999999999, 1678 L527.5999999999999, 1689 Z" 
+        fill="#a5d6a7" stroke="#444" stroke-width="1" />
+                             
+                <title>return new Promise(function (resolve, reject) {
+  resolve(&apos;Success!&apos;);
+})</title>
+            <text x="102" y="1683"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="1683">return new Promise(function (resolve, reject) {
+  ...</tspan>
+            </text>
+                
+            </g>
+                <g>
+                   <rect x="124" y="1711.5"
+            width="435.59999999999997" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>new Promise(function (resolve, reject) {
+  resolve(&apos;Success!&apos;);
+})</title>
+            <text x="139" y="1731.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="139" y="1731.5">new Promise(function (resolve, reject) {
+  resolve...</tspan>
+            </text>
+                   
+                   
+                </g>
+            <g>
+                <rect x="124" y="1775"
+            width="245" height="30"
+            style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                    
+                <line x1="134" y1="1775" x2="134" y2="1805"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                <line x1="359" y1="1775" x2="359" y2="1805"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+             
+                <title>function(resolve, reject)</title>
+            <text x="149" y="1795"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="149" y="1795">function(resolve, reject)</tspan>
+            </text>
+                
+            </g>
+                <g>
+                   <rect x="161" y="1823.5"
+            width="178.2" height="30"
+            rx="2" ry="2"
+            style="fill:#C5E1A5; stroke:#444; stroke-width:1" />
+                   <title>resolve(&apos;Success!&apos;)</title>
+            <text x="176" y="1843.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="176" y="1843.5">resolve(&apos;Success!&apos;)</tspan>
+            </text>
+                   
+                   
+                </g>
+            <g>
+                <rect x="50" y="1887"
+            width="213.79999999999998" height="30"
+            style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                    
+                <line x1="60" y1="1887" x2="60" y2="1917"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                <line x1="253.79999999999995" y1="1887" x2="253.79999999999995" y2="1917"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+             
+                <title>function loadArabic()</title>
+            <text x="75" y="1907"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="75" y="1907">function loadArabic()</tspan>
+            </text>
+                
+            </g>
+                <g>
+                   <rect x="87" y="1935.5"
+            width="201.6" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>let date1 = new Date()</title>
+            <text x="102" y="1955.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="1955.5">let date1 = new Date()</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="1984"
+            width="443.4" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>let p1 = readExternal(dataUrl + data.aruthman, suraAr, dataToArray)</title>
+            <text x="102" y="2004"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="2004">let p1 = readExternal(dataUrl + data.aruthman, sur...</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="2032.5"
+            width="443.4" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>let p2 = readExternal(dataUrl + data.arclean, suraSr, dataToArray)</title>
+            <text x="102" y="2052.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="2052.5">let p2 = readExternal(dataUrl + data.arclean, sura...</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="2081"
+            width="193.79999999999998" height="30"
+            rx="2" ry="2"
+            style="fill:#C5E1A5; stroke:#444; stroke-width:1" />
+                   <title>Promise.all([p1, p2])</title>
+            <text x="102" y="2101"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="2101">Promise.all([p1, p2])</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="2129.5"
+            width="108" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>new Date()</title>
+            <text x="102" y="2149.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="2149.5">new Date()</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="2178"
+            width="443.4" height="30"
+            rx="2" ry="2"
+            style="fill:#C5E1A5; stroke:#444; stroke-width:1" />
+                   <title>.then(console.log(&quot;Arabic Loading time&quot;, new Date() - date1))</title>
+            <text x="102" y="2198"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="2198">.then(console.log(&quot;Arabic Loading time&quot;, new Date(...</tspan>
+            </text>
+                   <circle cx="93" cy="2202" r="4"
+        style="fill:#ede7f6; stroke:#444; stroke-width:1" />
+                   
+                </g>
+            <g>
+                <rect x="87" y="2226.5"
+            width="248.39999999999998" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                
+                <line x1="335.4" y1="2236.5" x2="340.4" y2="2236.5"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                
+                <line x1="335.4" y1="2246.5" x2="340.4" y2="2246.5"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+
+                <path d="M340.4, 2230.5 L356.4, 2241.5 L340.4, 2252.5 Z" 
+        fill="#a5d6a7" stroke="#444" stroke-width="1" />
+                             
+                <title>return Promise.all([p1, p2])</title>
+            <text x="102" y="2246.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="2246.5">return Promise.all([p1, p2])</tspan>
+            </text>
+                
+            </g>
+            <g>
+                <rect x="50" y="2290"
+            width="167" height="30"
+            style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                    
+                <line x1="60" y1="2290" x2="60" y2="2320"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                <line x1="207" y1="2290" x2="207" y2="2320"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+             
+                <title>function init()</title>
+            <text x="75" y="2310"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="75" y="2310">function init()</tspan>
+            </text>
+                
+            </g>
+                <g>
+                   <rect x="87" y="2338.5"
+            width="193.79999999999998" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>let p1 = loadArabic()</title>
+            <text x="102" y="2358.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="2358.5">let p1 = loadArabic()</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="2387"
+            width="232.79999999999998" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>let p2 = initTranslation()</title>
+            <text x="102" y="2407"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="2407">let p2 = initTranslation()</tspan>
+            </text>
+                   
+                   
+                </g>
+            <g>
+                <rect x="87" y="2435.5"
+            width="248.39999999999998" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                
+                <line x1="335.4" y1="2445.5" x2="340.4" y2="2445.5"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                
+                <line x1="335.4" y1="2455.5" x2="340.4" y2="2455.5"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+
+                <path d="M340.4, 2439.5 L356.4, 2450.5 L340.4, 2461.5 Z" 
+        fill="#a5d6a7" stroke="#444" stroke-width="1" />
+                             
+                <title>return Promise.all([p1, p2])</title>
+            <text x="102" y="2455.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="2455.5">return Promise.all([p1, p2])</tspan>
+            </text>
+                
+            </g>
+            <g>
+                <rect x="50" y="2499"
+            width="252.79999999999998" height="30"
+            style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                    
+                <line x1="60" y1="2499" x2="60" y2="2529"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                <line x1="292.79999999999995" y1="2499" x2="292.79999999999995" y2="2529"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+             
+                <title>function initTranslation()</title>
+            <text x="75" y="2519"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="75" y="2519">function initTranslation()</tspan>
+            </text>
+                
+            </g>
+            <g>
+                <rect x="87" y="2547.5"
+            width="443.4" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                
+                <line x1="530.4" y1="2557.5" x2="535.4" y2="2557.5"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                
+                <line x1="530.4" y1="2567.5" x2="535.4" y2="2567.5"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+
+                <path d="M535.4, 2551.5 L551.4, 2562.5 L535.4, 2573.5 Z" 
+        fill="#a5d6a7" stroke="#444" stroke-width="1" />
+                             
+                <title>return readExternal(dataUrl + data.trTr, suraTr, dataToArray)</title>
+            <text x="102" y="2567.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="2567.5">return readExternal(dataUrl + data.trTr, suraTr, d...</tspan>
+            </text>
+                
+            </g>
+            <g>
+                <rect x="50" y="2611"
+            width="276.2" height="30"
+            style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                    
+                <line x1="60" y1="2611" x2="60" y2="2641"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                <line x1="316.2" y1="2611" x2="316.2" y2="2641"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+             
+                <title>function timer(log, callback)</title>
+            <text x="75" y="2631"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="75" y="2631">function timer(log, callback)</tspan>
+            </text>
+                
+            </g>
+                <g>
+                   <rect x="87" y="2659.5"
+            width="201.6" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>let start = Date.now()</title>
+            <text x="102" y="2679.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="2679.5">let start = Date.now()</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="2708"
+            width="170.4" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>let h = callback()</title>
+            <text x="102" y="2728"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="2728">let h = callback()</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="2756.5"
+            width="357.59999999999997" height="30"
+            rx="2" ry="2"
+            style="fill:#C5E1A5; stroke:#444; stroke-width:1" />
+                   <title>console.log(log, Date.now() - start, &apos;ms&apos;)</title>
+            <text x="102" y="2776.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="2776.5">console.log(log, Date.now() - start, &apos;ms&apos;)</tspan>
+            </text>
+                   
+                   
+                </g>
+            <g>
+                <rect x="87" y="2805"
+            width="92.4" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                
+                <line x1="179.4" y1="2815" x2="184.4" y2="2815"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                
+                <line x1="179.4" y1="2825" x2="184.4" y2="2825"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+
+                <path d="M184.4, 2809 L200.4, 2820 L184.4, 2831 Z" 
+        fill="#a5d6a7" stroke="#444" stroke-width="1" />
+                             
+                <title>return h</title>
+            <text x="102" y="2825"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="2825">return h</tspan>
+            </text>
+                
+            </g>
+            <g>
+                <rect x="50" y="2868.5"
+            width="307.4" height="30"
+            style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                    
+                <line x1="60" y1="2868.5" x2="60" y2="2898.5"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                <line x1="347.4" y1="2868.5" x2="347.4" y2="2898.5"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+             
+                <title>function loadTrans(choosen = &quot;1&quot;)</title>
+            <text x="75" y="2888.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="75" y="2888.5">function loadTrans(choosen = &quot;1&quot;)</tspan>
+            </text>
+                
+            </g>
+                <g>
+                   <rect x="87" y="2917"
+            width="186" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>choosenGen = choosen</title>
+            <text x="102" y="2937"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="2937">choosenGen = choosen</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="2965.5"
+            width="115.8" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>suraTr = []</title>
+            <text x="102" y="2985.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="2985.5">suraTr = []</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="87" y="3014"
+            width="248.4" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>let translate = data.tfArJal</title>
+            <text x="102" y="3034"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="3034">let translate = data.tfArJal</tspan>
+            </text>
+                   
+                   
+                </g><g>
+            <rect x="117" y="3077.5"
+            width="184.8" height="30"
+            rx="3" ry="3"
+            style="fill:#ce93d8; stroke:#444; stroke-width:1" />                
+            <polygon points="87,3092.5 117,3062.5 147,3092.5 117,3122.5"
+            style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+            <title>switch (choosen)</title>
+            <text x="162" y="3097.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="162" y="3097.5">switch (choosen)</tspan>
+            </text>
+            
+            <text x="109.2" y="3097.5"
+        font-family="monospace" font-size="13" fill="#222">if</text> <text x="124.8" y="3124.45"
+        font-family="monospace" font-size="13" fill="#222">+</text> 
+        </g>
+                <g>
+                   <rect x="137" y="3132.5"
+            width="100.2" height="30"
+            rx="2" ry="2"
+            style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+                   <title>case &quot;1&quot;:</title>
+            <text x="152" y="3152.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="152" y="3152.5">case &quot;1&quot;:</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="174" y="3181"
+            width="217.2" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>translate = data.tfArJal</title>
+            <text x="189" y="3201"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="189" y="3201">translate = data.tfArJal</tspan>
+            </text>
+                   
+                   
+                </g>
+            <g>
+                <rect x="174" y="3229.5"
+            width="69" height="30"
+            rx="2" ry="2"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                
+                <line x1="243" y1="3239.5" x2="248" y2="3239.5"
+                style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+                
+                <line x1="243" y1="3249.5" x2="248" y2="3249.5"
+                style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+
+                <path d="M248, 3230.5 L264, 3244.5 L248, 3258.5 Z" 
+        fill="#ce93d8" stroke="#444" stroke-width="1" />
+                             
+                <title>break</title>
+            <text x="189" y="3249.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="189" y="3249.5">break</tspan>
+            </text>
+                
+            </g>
+                <g>
+                   <rect x="137" y="3278"
+            width="100.2" height="30"
+            rx="2" ry="2"
+            style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+                   <title>case &quot;2&quot;:</title>
+            <text x="152" y="3298"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="152" y="3298">case &quot;2&quot;:</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="174" y="3326.5"
+            width="209.4" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>translate = data.tfArMu</title>
+            <text x="189" y="3346.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="189" y="3346.5">translate = data.tfArMu</tspan>
+            </text>
+                   
+                   
+                </g>
+            <g>
+                <rect x="174" y="3375"
+            width="69" height="30"
+            rx="2" ry="2"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                
+                <line x1="243" y1="3385" x2="248" y2="3385"
+                style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+                
+                <line x1="243" y1="3395" x2="248" y2="3395"
+                style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+
+                <path d="M248, 3376 L264, 3390 L248, 3404 Z" 
+        fill="#ce93d8" stroke="#444" stroke-width="1" />
+                             
+                <title>break</title>
+            <text x="189" y="3395"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="189" y="3395">break</tspan>
+            </text>
+                
+            </g>
+                <g>
+                   <rect x="137" y="3423.5"
+            width="100.2" height="30"
+            rx="2" ry="2"
+            style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+                   <title>case &quot;3&quot;:</title>
+            <text x="152" y="3443.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="152" y="3443.5">case &quot;3&quot;:</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="174" y="3472"
+            width="193.79999999999998" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>translate = data.trTr</title>
+            <text x="189" y="3492"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="189" y="3492">translate = data.trTr</tspan>
+            </text>
+                   
+                   
+                </g>
+            <g>
+                <rect x="174" y="3520.5"
+            width="69" height="30"
+            rx="2" ry="2"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                
+                <line x1="243" y1="3530.5" x2="248" y2="3530.5"
+                style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+                
+                <line x1="243" y1="3540.5" x2="248" y2="3540.5"
+                style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+
+                <path d="M248, 3521.5 L264, 3535.5 L248, 3549.5 Z" 
+        fill="#ce93d8" stroke="#444" stroke-width="1" />
+                             
+                <title>break</title>
+            <text x="189" y="3540.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="189" y="3540.5">break</tspan>
+            </text>
+                
+            </g>
+                <g>
+                   <rect x="137" y="3569"
+            width="100.2" height="30"
+            rx="2" ry="2"
+            style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+                   <title>case &quot;4&quot;:</title>
+            <text x="152" y="3589"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="152" y="3589">case &quot;4&quot;:</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="174" y="3617.5"
+            width="193.79999999999998" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>translate = data.trEn</title>
+            <text x="189" y="3637.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="189" y="3637.5">translate = data.trEn</tspan>
+            </text>
+                   
+                   
+                </g>
+            <g>
+                <rect x="174" y="3666"
+            width="69" height="30"
+            rx="2" ry="2"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                
+                <line x1="243" y1="3676" x2="248" y2="3676"
+                style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+                
+                <line x1="243" y1="3686" x2="248" y2="3686"
+                style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+
+                <path d="M248, 3667 L264, 3681 L248, 3695 Z" 
+        fill="#ce93d8" stroke="#444" stroke-width="1" />
+                             
+                <title>break</title>
+            <text x="189" y="3686"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="189" y="3686">break</tspan>
+            </text>
+                
+            </g>
+                <g>
+                   <rect x="137" y="3714.5"
+            width="100.2" height="30"
+            rx="2" ry="2"
+            style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+                   <title>case &quot;5&quot;:</title>
+            <text x="152" y="3734.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="152" y="3734.5">case &quot;5&quot;:</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="174" y="3763"
+            width="193.79999999999998" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>translate = data.trEl</title>
+            <text x="189" y="3783"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="189" y="3783">translate = data.trEl</tspan>
+            </text>
+                   
+                   
+                </g>
+            <g>
+                <rect x="174" y="3811.5"
+            width="69" height="30"
+            rx="2" ry="2"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                
+                <line x1="243" y1="3821.5" x2="248" y2="3821.5"
+                style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+                
+                <line x1="243" y1="3831.5" x2="248" y2="3831.5"
+                style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+
+                <path d="M248, 3812.5 L264, 3826.5 L248, 3840.5 Z" 
+        fill="#ce93d8" stroke="#444" stroke-width="1" />
+                             
+                <title>break</title>
+            <text x="189" y="3831.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="189" y="3831.5">break</tspan>
+            </text>
+                
+            </g>
+                <g>
+                   <rect x="137" y="3860"
+            width="100.2" height="30"
+            rx="2" ry="2"
+            style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+                   <title>case &quot;6&quot;:</title>
+            <text x="152" y="3880"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="152" y="3880">case &quot;6&quot;:</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="174" y="3908.5"
+            width="193.79999999999998" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>translate = data.trYL</title>
+            <text x="189" y="3928.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="189" y="3928.5">translate = data.trYL</tspan>
+            </text>
+                   
+                   
+                </g>
+            <g>
+                <rect x="174" y="3957"
+            width="69" height="30"
+            rx="2" ry="2"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                
+                <line x1="243" y1="3967" x2="248" y2="3967"
+                style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+                
+                <line x1="243" y1="3977" x2="248" y2="3977"
+                style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+
+                <path d="M248, 3958 L264, 3972 L248, 3986 Z" 
+        fill="#ce93d8" stroke="#444" stroke-width="1" />
+                             
+                <title>break</title>
+            <text x="189" y="3977"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="189" y="3977">break</tspan>
+            </text>
+                
+            </g>
+                <g>
+                   <rect x="137" y="4005.5"
+            width="100.2" height="30"
+            rx="2" ry="2"
+            style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+                   <title>case &quot;7&quot;:</title>
+            <text x="152" y="4025.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="152" y="4025.5">case &quot;7&quot;:</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="174" y="4054"
+            width="178.2" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>translate = data.fr</title>
+            <text x="189" y="4074"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="189" y="4074">translate = data.fr</tspan>
+            </text>
+                   
+                   
+                </g>
+            <g>
+                <rect x="174" y="4102.5"
+            width="69" height="30"
+            rx="2" ry="2"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                
+                <line x1="243" y1="4112.5" x2="248" y2="4112.5"
+                style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+                
+                <line x1="243" y1="4122.5" x2="248" y2="4122.5"
+                style="fill:#ce93d8; stroke:#444; stroke-width:1" />
+
+                <path d="M248, 4103.5 L264, 4117.5 L248, 4131.5 Z" 
+        fill="#ce93d8" stroke="#444" stroke-width="1" />
+                             
+                <title>break</title>
+            <text x="189" y="4122.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="189" y="4122.5">break</tspan>
+            </text>
+                
+            </g>
+            <g>
+                <rect x="87" y="4151"
+            width="443.4" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                
+                <line x1="530.4" y1="4161" x2="535.4" y2="4161"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                
+                <line x1="530.4" y1="4171" x2="535.4" y2="4171"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+
+                <path d="M535.4, 4155 L551.4, 4166 L535.4, 4177 Z" 
+        fill="#a5d6a7" stroke="#444" stroke-width="1" />
+                             
+                <title>return readExternal(dataUrl + translate, suraTr, dataToArray)</title>
+            <text x="102" y="4171"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="4171">return readExternal(dataUrl + translate, suraTr, d...</tspan>
+            </text>
+                
+            </g>
+            <g>
+               <rect x="25" y="13.75"
+            width="216.6" height="24"
+            style="fill:#fff59d; stroke:#444; stroke-width:1" />
+               <circle cx="25" cy="25" r="15"
+        style="fill:#fff59d; stroke:#444; stroke-width:1" />
+               <title>Program: source module</title>
+            <text x="55" y="30"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="55" y="30">Program: source module</tspan>
+            </text>
+            </g>
+            <g>
+               <path d="M25, 40 L25 76 Q25 80
+                29 80
+                L42 80 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M42, 77 L50, 80 L42, 83 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M25, 40 L25 124.5 Q25 128.5
+                29 128.5
+                L42 128.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M42, 125.5 L50, 128.5 L42, 131.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 143.5 L68.5 173 Q68.5 177
+                72.5 177
+                L87 177 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               false
+            </g>
+            <g>
+               <path d="M68.5, 143.5 L68.5 221.5 Q68.5 225.5
+                72.5 225.5
+                L87 225.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               false
+            </g>
+            <g>
+               <path d="M68.5, 143.5 L68.5 270 Q68.5 274
+                72.5 274
+                L87 274 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               false
+            </g>
+            <g>
+               <path d="M68.5, 143.5 L68.5 318.5 Q68.5 322.5
+                72.5 322.5
+                L87 322.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               false
+            </g>
+            <g>
+               <path d="M68.5, 143.5 L68.5 367 Q68.5 371
+                72.5 371
+                L87 371 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               false
+            </g>
+            <g>
+               <path d="M68.5, 143.5 L68.5 415.5 Q68.5 419.5
+                72.5 419.5
+                L87 419.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               false
+            </g>
+            <g>
+               <path d="M68.5, 143.5 L68.5 464 Q68.5 468
+                72.5 468
+                L87 468 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               false
+            </g>
+            <g>
+               <path d="M68.5, 143.5 L68.5 512.5 Q68.5 516.5
+                72.5 516.5
+                L87 516.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               false
+            </g>
+            <g>
+               <path d="M68.5, 143.5 L68.5 561 Q68.5 565
+                72.5 565
+                L87 565 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               false
+            </g>
+            <g>
+               <path d="M25, 40 L25 609.5 Q25 613.5
+                29 613.5
+                L42 613.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M42, 610.5 L50, 613.5 L42, 616.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M25, 40 L25 658 Q25 662
+                29 662
+                L42 662 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M42, 659 L50, 662 L42, 665 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M25, 40 L25 706.5 Q25 710.5
+                29 710.5
+                L42 710.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M42, 707.5 L50, 710.5 L42, 713.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M25, 40 L25 770 Q25 774
+                29 774
+                L42 774 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M42, 771 L50, 774 L42, 777 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 789 L68.5 818.5 Q68.5 822.5
+                72.5 822.5
+                L79 822.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 819.5 L87, 822.5 L79, 825.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 789 L68.5 867 Q68.5 871
+                72.5 871
+                L79 871 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 868 L87, 871 L79, 874 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 789 L68.5 915.5 Q68.5 919.5
+                72.5 919.5
+                L79 919.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 916.5 L87, 919.5 L79, 922.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 789 L68.5 964 Q68.5 968
+                72.5 968
+                L79 968 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 965 L87, 968 L79, 971 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 789 L68.5 1012.5 Q68.5 1016.5
+                72.5 1016.5
+                L79 1016.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 1013.5 L87, 1016.5 L79, 1019.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M25, 40 L25 1076 Q25 1080
+                29 1080
+                L42 1080 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M42, 1077 L50, 1080 L42, 1083 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 1095 L68.5 1124.5 Q68.5 1128.5
+                72.5 1128.5
+                L79 1128.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 1125.5 L87, 1128.5 L79, 1131.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 1095 L68.5 1173 Q68.5 1177
+                72.5 1177
+                L79 1177 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 1174 L87, 1177 L79, 1180 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 1095 L68.5 1221.5 Q68.5 1225.5
+                72.5 1225.5
+                L79 1225.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 1222.5 L87, 1225.5 L79, 1228.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 1095 L68.5 1270 Q68.5 1274
+                72.5 1274
+                L79 1274 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 1271 L87, 1274 L79, 1277 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 1095 L68.5 1353.5 Q68.5 1357.5
+                72.5 1357.5
+                L79 1357.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 1354.5 L87, 1357.5 L79, 1360.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M117, 1387.5 L117 1408.5 Q117 1412.5
+                121 1412.5
+                L129 1412.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M129, 1409.5 L137, 1412.5 L129, 1415.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M117, 1387.5 L117 1457 Q117 1461
+                121 1461
+                L129 1461 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M129, 1458 L137, 1461 L129, 1464 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M117, 1387.5 L117 1520.5 Q117 1524.5
+                121 1524.5
+                L129 1524.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M129, 1521.5 L137, 1524.5 L129, 1527.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M167, 1554.5 L167 1575.5 Q167 1579.5
+                171 1579.5
+                L179 1579.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M179, 1576.5 L187, 1579.5 L179, 1582.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M117, 1387.5 L117 1625.5 Q117 1629.5
+                121 1629.5
+                L129 1629.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M129, 1626.5 L137, 1629.5 L129, 1632.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M416.6, 1629.5 L500.4 1629.5  Q504.4 1629.5
+                504.4 1625.5
+                L504.4 1315.5 Q504.4 1307.5
+                500.4 1307.5
+                L125 1307.5  Q117 1307.5
+                117 1311.5
+                L117 1319.5"
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M114, 1319.5 L117, 1327.5 L120, 1319.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 1095 L68.5 1674 Q68.5 1678
+                72.5 1678
+                L79 1678 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 1675 L87, 1678 L79, 1681 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M105.5, 1693 L105.5 1722.5 Q105.5 1726.5
+                109.5 1726.5
+                L116 1726.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M116, 1723.5 L124, 1726.5 L116, 1729.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M105.5, 1693 L105.5 1786 Q105.5 1790
+                109.5 1790
+                L116 1790 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M116, 1787 L124, 1790 L116, 1793 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M142.5, 1805 L142.5 1834.5 Q142.5 1838.5
+                146.5 1838.5
+                L153 1838.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M153, 1835.5 L161, 1838.5 L153, 1841.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M25, 40 L25 1898 Q25 1902
+                29 1902
+                L42 1902 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M42, 1899 L50, 1902 L42, 1905 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 1917 L68.5 1946.5 Q68.5 1950.5
+                72.5 1950.5
+                L79 1950.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 1947.5 L87, 1950.5 L79, 1953.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 1917 L68.5 1995 Q68.5 1999
+                72.5 1999
+                L79 1999 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 1996 L87, 1999 L79, 2002 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 1917 L68.5 2043.5 Q68.5 2047.5
+                72.5 2047.5
+                L79 2047.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 2044.5 L87, 2047.5 L79, 2050.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 1917 L68.5 2092 Q68.5 2096
+                72.5 2096
+                L79 2096 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 2093 L87, 2096 L79, 2099 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 1917 L68.5 2140.5 Q68.5 2144.5
+                72.5 2144.5
+                L79 2144.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 2141.5 L87, 2144.5 L79, 2147.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 1917 L68.5 2189 Q68.5 2193
+                72.5 2193
+                L79 2193 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 2190 L87, 2193 L79, 2196 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 1917 L68.5 2237.5 Q68.5 2241.5
+                72.5 2241.5
+                L79 2241.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 2238.5 L87, 2241.5 L79, 2244.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M25, 40 L25 2301 Q25 2305
+                29 2305
+                L42 2305 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M42, 2302 L50, 2305 L42, 2308 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 2320 L68.5 2349.5 Q68.5 2353.5
+                72.5 2353.5
+                L79 2353.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 2350.5 L87, 2353.5 L79, 2356.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 2320 L68.5 2398 Q68.5 2402
+                72.5 2402
+                L79 2402 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 2399 L87, 2402 L79, 2405 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 2320 L68.5 2446.5 Q68.5 2450.5
+                72.5 2450.5
+                L79 2450.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 2447.5 L87, 2450.5 L79, 2453.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M25, 40 L25 2510 Q25 2514
+                29 2514
+                L42 2514 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M42, 2511 L50, 2514 L42, 2517 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 2529 L68.5 2558.5 Q68.5 2562.5
+                72.5 2562.5
+                L79 2562.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 2559.5 L87, 2562.5 L79, 2565.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M25, 40 L25 2622 Q25 2626
+                29 2626
+                L42 2626 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M42, 2623 L50, 2626 L42, 2629 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 2641 L68.5 2670.5 Q68.5 2674.5
+                72.5 2674.5
+                L79 2674.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 2671.5 L87, 2674.5 L79, 2677.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 2641 L68.5 2719 Q68.5 2723
+                72.5 2723
+                L79 2723 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 2720 L87, 2723 L79, 2726 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 2641 L68.5 2767.5 Q68.5 2771.5
+                72.5 2771.5
+                L79 2771.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 2768.5 L87, 2771.5 L79, 2774.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 2641 L68.5 2816 Q68.5 2820
+                72.5 2820
+                L79 2820 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 2817 L87, 2820 L79, 2823 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M25, 40 L25 2879.5 Q25 2883.5
+                29 2883.5
+                L42 2883.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M42, 2880.5 L50, 2883.5 L42, 2886.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 2898.5 L68.5 2928 Q68.5 2932
+                72.5 2932
+                L79 2932 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 2929 L87, 2932 L79, 2935 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 2898.5 L68.5 2976.5 Q68.5 2980.5
+                72.5 2980.5
+                L79 2980.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 2977.5 L87, 2980.5 L79, 2983.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 2898.5 L68.5 3025 Q68.5 3029
+                72.5 3029
+                L79 3029 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 3026 L87, 3029 L79, 3032 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 2898.5 L68.5 3088.5 Q68.5 3092.5
+                72.5 3092.5
+                L79 3092.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 3089.5 L87, 3092.5 L79, 3095.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M117, 3122.5 L117 3143.5 Q117 3147.5
+                121 3147.5
+                L129 3147.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M129, 3144.5 L137, 3147.5 L129, 3150.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M155.5, 3162.5 L155.5 3192 Q155.5 3196
+                159.5 3196
+                L166 3196 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M166, 3193 L174, 3196 L166, 3199 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M155.5, 3162.5 L155.5 3240.5 Q155.5 3244.5
+                159.5 3244.5
+                L166 3244.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M166, 3241.5 L174, 3244.5 L166, 3247.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M117, 3122.5 L117 3289 Q117 3293
+                121 3293
+                L129 3293 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M129, 3290 L137, 3293 L129, 3296 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M155.5, 3308 L155.5 3337.5 Q155.5 3341.5
+                159.5 3341.5
+                L166 3341.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M166, 3338.5 L174, 3341.5 L166, 3344.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M155.5, 3308 L155.5 3386 Q155.5 3390
+                159.5 3390
+                L166 3390 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M166, 3387 L174, 3390 L166, 3393 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M117, 3122.5 L117 3434.5 Q117 3438.5
+                121 3438.5
+                L129 3438.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M129, 3435.5 L137, 3438.5 L129, 3441.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M155.5, 3453.5 L155.5 3483 Q155.5 3487
+                159.5 3487
+                L166 3487 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M166, 3484 L174, 3487 L166, 3490 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M155.5, 3453.5 L155.5 3531.5 Q155.5 3535.5
+                159.5 3535.5
+                L166 3535.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M166, 3532.5 L174, 3535.5 L166, 3538.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M117, 3122.5 L117 3580 Q117 3584
+                121 3584
+                L129 3584 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M129, 3581 L137, 3584 L129, 3587 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M155.5, 3599 L155.5 3628.5 Q155.5 3632.5
+                159.5 3632.5
+                L166 3632.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M166, 3629.5 L174, 3632.5 L166, 3635.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M155.5, 3599 L155.5 3677 Q155.5 3681
+                159.5 3681
+                L166 3681 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M166, 3678 L174, 3681 L166, 3684 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M117, 3122.5 L117 3725.5 Q117 3729.5
+                121 3729.5
+                L129 3729.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M129, 3726.5 L137, 3729.5 L129, 3732.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M155.5, 3744.5 L155.5 3774 Q155.5 3778
+                159.5 3778
+                L166 3778 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M166, 3775 L174, 3778 L166, 3781 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M155.5, 3744.5 L155.5 3822.5 Q155.5 3826.5
+                159.5 3826.5
+                L166 3826.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M166, 3823.5 L174, 3826.5 L166, 3829.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M117, 3122.5 L117 3871 Q117 3875
+                121 3875
+                L129 3875 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M129, 3872 L137, 3875 L129, 3878 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M155.5, 3890 L155.5 3919.5 Q155.5 3923.5
+                159.5 3923.5
+                L166 3923.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M166, 3920.5 L174, 3923.5 L166, 3926.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M155.5, 3890 L155.5 3968 Q155.5 3972
+                159.5 3972
+                L166 3972 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M166, 3969 L174, 3972 L166, 3975 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M117, 3122.5 L117 4016.5 Q117 4020.5
+                121 4020.5
+                L129 4020.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M129, 4017.5 L137, 4020.5 L129, 4023.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M155.5, 4035.5 L155.5 4065 Q155.5 4069
+                159.5 4069
+                L166 4069 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M166, 4066 L174, 4069 L166, 4072 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M155.5, 4035.5 L155.5 4113.5 Q155.5 4117.5
+                159.5 4117.5
+                L166 4117.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M166, 4114.5 L174, 4117.5 L166, 4120.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 2898.5 L68.5 4162 Q68.5 4166
+                72.5 4166
+                L79 4166 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 4163 L87, 4166 L79, 4169 Z" 
+        fill="#333" />
+            </g>
+            </svg>

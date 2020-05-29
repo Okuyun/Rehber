@@ -1,0 +1,211 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                width="519" height="490" shape-rendering="optimizeSpeed">
+                
+                <g>
+                   <rect x="50" y="65"
+            width="443.4" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>const DATA_URL = &quot;https://maeyler.github.io/Iqra3/data/&quot;</title>
+            <text x="65" y="85"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="65" y="85">const DATA_URL = &quot;https://maeyler.github.io/Iqra3/...</tspan>
+            </text>
+                   
+                   
+                </g>
+                <g>
+                   <rect x="50" y="113.5"
+            width="357.59999999999997" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                   <title>const EM_SPACE = String.fromCharCode(8195)</title>
+            <text x="65" y="133.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="65" y="133.5">const EM_SPACE = String.fromCharCode(8195)</tspan>
+            </text>
+                   
+                   
+                </g>
+            <g>
+                <rect x="50" y="177"
+            width="237.2" height="30"
+            style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                    
+                <line x1="60" y1="177" x2="60" y2="207"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                <line x1="277.2" y1="177" x2="277.2" y2="207"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+             
+                <title>function toBuckwalter(s)</title>
+            <text x="75" y="197"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="75" y="197">function toBuckwalter(s)</tspan>
+            </text>
+                
+            </g>
+            <g>
+                <rect x="87" y="225.5"
+            width="342" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                
+                <line x1="429" y1="235.5" x2="434" y2="235.5"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                
+                <line x1="429" y1="245.5" x2="434" y2="245.5"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+
+                <path d="M434, 229.5 L450, 240.5 L434, 251.5 Z" 
+        fill="#a5d6a7" stroke="#444" stroke-width="1" />
+                             
+                <title>return BWC.convert(BWC.a2bMap, s).output</title>
+            <text x="102" y="245.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="245.5">return BWC.convert(BWC.a2bMap, s).output</tspan>
+            </text>
+                
+            </g>
+                <g>
+                   <rect x="124" y="274"
+            width="232.79999999999998" height="30"
+            rx="2" ry="2"
+            style="fill:#C5E1A5; stroke:#444; stroke-width:1" />
+                   <title>BWC.convert(BWC.a2bMap, s)</title>
+            <text x="139" y="294"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="139" y="294">BWC.convert(BWC.a2bMap, s)</tspan>
+            </text>
+                   
+                   
+                </g>
+            <g>
+                <rect x="50" y="337.5"
+            width="206" height="30"
+            style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                    
+                <line x1="60" y1="337.5" x2="60" y2="367.5"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                <line x1="246" y1="337.5" x2="246" y2="367.5"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+             
+                <title>function toArabic(s)</title>
+            <text x="75" y="357.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="75" y="357.5">function toArabic(s)</tspan>
+            </text>
+                
+            </g>
+            <g>
+                <rect x="87" y="386"
+            width="342" height="30"
+            rx="3" ry="3"
+            style="fill:#90caf9; stroke:#444; stroke-width:1" />
+                
+                <line x1="429" y1="396" x2="434" y2="396"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+                
+                <line x1="429" y1="406" x2="434" y2="406"
+                style="fill:#a5d6a7; stroke:#444; stroke-width:1" />
+
+                <path d="M434, 390 L450, 401 L434, 412 Z" 
+        fill="#a5d6a7" stroke="#444" stroke-width="1" />
+                             
+                <title>return BWC.convert(BWC.b2aMap, s).output</title>
+            <text x="102" y="406"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="102" y="406">return BWC.convert(BWC.b2aMap, s).output</tspan>
+            </text>
+                
+            </g>
+                <g>
+                   <rect x="124" y="434.5"
+            width="232.79999999999998" height="30"
+            rx="2" ry="2"
+            style="fill:#C5E1A5; stroke:#444; stroke-width:1" />
+                   <title>BWC.convert(BWC.b2aMap, s)</title>
+            <text x="139" y="454.5"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="139" y="454.5">BWC.convert(BWC.b2aMap, s)</tspan>
+            </text>
+                   
+                   
+                </g>
+            <g>
+               <rect x="25" y="13.75"
+            width="216.6" height="24"
+            style="fill:#fff59d; stroke:#444; stroke-width:1" />
+               <circle cx="25" cy="25" r="15"
+        style="fill:#fff59d; stroke:#444; stroke-width:1" />
+               <title>Program: source module</title>
+            <text x="55" y="30"
+                font-family="monospace" font-size="13" fill="#222">
+                <tspan x="55" y="30">Program: source module</tspan>
+            </text>
+            </g>
+            <g>
+               <path d="M25, 40 L25 76 Q25 80
+                29 80
+                L42 80 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M42, 77 L50, 80 L42, 83 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M25, 40 L25 124.5 Q25 128.5
+                29 128.5
+                L42 128.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M42, 125.5 L50, 128.5 L42, 131.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M25, 40 L25 188 Q25 192
+                29 192
+                L42 192 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M42, 189 L50, 192 L42, 195 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 207 L68.5 236.5 Q68.5 240.5
+                72.5 240.5
+                L79 240.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 237.5 L87, 240.5 L79, 243.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M105.5, 255.5 L105.5 285 Q105.5 289
+                109.5 289
+                L116 289 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M116, 286 L124, 289 L116, 292 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M25, 40 L25 348.5 Q25 352.5
+                29 352.5
+                L42 352.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M42, 349.5 L50, 352.5 L42, 355.5 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M68.5, 367.5 L68.5 397 Q68.5 401
+                72.5 401
+                L79 401 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M79, 398 L87, 401 L79, 404 Z" 
+        fill="#333" />
+            </g>
+            <g>
+               <path d="M105.5, 416 L105.5 445.5 Q105.5 449.5
+                109.5 449.5
+                L116 449.5 "
+        style="fill:none; stroke:#444; stroke-width:1" />
+               <path d="M116, 446.5 L124, 449.5 L116, 452.5 Z" 
+        fill="#333" />
+            </g>
+            </svg>
