@@ -415,28 +415,56 @@ function createTable(arr, word) {
 // wordLst[1].size --> get number of page   s
 
 
-
+/**
+ * A function to go a dsired page and show the verese of that page.
+ * 
+ * Need refactoring. seperate of concern and do not call same function twice.
+ * 
+ * @param {int} num the desired page number
+ */
 function paginationControl(num) {
+   /**
+    * Clear table
+    */
     let element = document.getElementById("dTable").getElementsByTagName('tbody')[0];
     element.innerHTML = ""
+    /**
+     * Get the search pages number - check get pages functions to understand it.
+     */
     let numberOfPages = getPages()
+    /**
+     * Check the desired page feasability. 
+     * if less then zero then we should show the first page.
+     * if its larger than the results length then it will show the last number of pages.
+     * else it will be used without modification
+     */
     if (num < 0) dataIndex = 0;
     else if (num > numberOfPages) dataIndex = numberOfPages;
     else dataIndex = num;
+    /**
+     * Set the chosen page view for the user, added one to show numbers starting from 1 not 0.
+     */
     let chosenPageButton = document.getElementById("choosenPage")
     chosenPageButton.value = dataIndex + 1;
+    /** min is the number of first verse to show based on the chosen page, which it should be the desiredPage multiplied by the number of verses in a page. 
+     * if the minum number is 
+     */
     // dataIndex = num <= 0 ? 0 : (Math.ceil(dataArr.length / verseInPage) <= num) ? num : Math.ceil(dataArr.length / verseInPage);
     let min = dataIndex * verseInPage >= dataArr.length ? dataArr.length - dataArr.length % verseInPage : dataIndex * verseInPage;
+    /** max is the number of the last verse to show based on the minimum number which it's min+desired number of verses. But needed small modification to overcome errors */
     let max = min + verseInPage >= dataArr.length ? dataArr.length : min + verseInPage;
+    /** if any error occuered then we can se them to defaults, the eror occuers cause of one page */
     if (isNaN(min)) min = 0;
     if (isNaN(max)) max = dataArr.length;
-
+    /** show the results.  */
     for (let i = min; i < max; i++) {
         element.appendChild(createRow(dataArr[i][0], dataArr[i][1], wordCt))
     }
+    /**start the needed functions */
     addShowFunction();
     menuFn();
     initPagination();
+    /** if pages is less than one then we dont have to show it. */
     if (getPages() < 1) {
         document.getElementById("PaginationMenu").hidden = true
     } else {
@@ -448,6 +476,15 @@ function paginationNext() {
     paginationControl(dataIndex + 1)
 }
 
+/**
+ * Get the search pages number, the pages number is 
+ * number of results divided on the number of verses in a page. 
+ * 
+ * The return result is a real number
+ * 
+ * (results.length/desiredVerses)
+ * 
+ */
 function getPages() {
     return Math.ceil(dataArr.length / verseInPage) - 1;
 }
