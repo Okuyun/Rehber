@@ -36,6 +36,45 @@
       w --> createTable
     </div>
 
+    Hash reading
+    <div class="mermaid">
+      graph TD
+	A[Read Data] -->B(check user inputs)
+	B --> C{input type}
+	C -->|r| D[root]
+	C -->|w| E[word]
+	C -->|b| F[buckwalter]
+  C -->|t| g[translation]					
+    </div>
+
+    flow chart 1
+    <div class="mermaid">
+      graph TD
+	A[Search] -->|Get data| B(Read hash)
+	B --> C{type}
+	C -->|t| D[translitaion]
+	C -->|b| E[buckwalter]
+	C -->|w| F[word]
+  	C -->|r| G[root]
+    </div>
+
+    flow chart 2
+    <div class="mermaid">
+      graph TD
+	A[Simi] -->|Get data| B(Read hash)
+	B --> c(prepare vectors)
+  c --> d(check inputs)
+    d --> g(similarity function)
+    </div>
+
+    flow chart arabic
+    <div class="mermaid">
+      graph TD
+	B[Search] --> C{diacritics}
+	C -->|yes| D[Action]
+	C -->|no| E[Process]
+    </div>
+
 
   </body>
 
