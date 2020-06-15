@@ -7,7 +7,7 @@ let config = {
     finder: "Ara",
     reader: "Oku",
     similarity: "simi",
-    version: "ÖZLEDİK V01.15",
+    version: "V01.16",
     author: "Abdurrahman Rajab",
     gitHub: "a0m0rajab",
     idea: "Mehmet Akif Eyler"
