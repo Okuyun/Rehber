@@ -242,13 +242,28 @@ function loadhash(chapter) {
 
 function getHash() {
     let h = decodeURI(location.hash).slice(1);
-    let [c, v] = h.split(":")
+   
+    getChapterVerse(h);
+}
+/**
+ * a function to go to specific chapter and page.
+ * 
+ * @param {string} text chapter and verse number.
+ * 
+ */
+function getChapterVerse(text){
+    let [c, v] = text.split(":")
     loadhash(c - 1)
     setNames(c - 1)
     scrollToCV(c, v)
 }
-
+function gotosura(){
+   let [c,v] = document.getElementById("suraCV").value.split(":")
+   if(!v) v = 1;
+   setHash(Number(c), Number(v));
+}
 function scrollToCV(c, v) {
+    if(!v) v = 0;
     document.querySelector(`#artxt > sura[id='${c-1}'] >  aya[id='${v}']`).scrollIntoView()
     document.querySelector(`#trtxt > sura[id='${c-1}'] > aya[id='${v}']`).scrollIntoView()
 }
@@ -307,9 +322,7 @@ function responsiveMode(){
             break;
             case "medium":
         case "large":
-          
             displayState(1)
-
         break;
     }
 }
