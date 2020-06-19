@@ -82,32 +82,51 @@
     <div class="container">
         <div class="row">
 
-            <div id=ename class="col">
+<div class="row w-100">
+    <div id=ename class="col">
 
-                Fatiha
+        Fatiha
 
-            </div>
-            <div class="col">
-                <select onchange="loadTransR(this.value)" class="browser-default custom-select">
-                            <option value="1" selected>تفسير الجلالين</option>
-                            <option value="2">تفسير الميسر</option>
-                            <option value="3">Türkçe Meali</option>
-                            <option value="4">English Translation</option>
-                          </select>
+    </div>
+    <div class="col" id="tefsirController">
+        <select id="selectedTranslation" onchange="loadTransR(this.value)" class="browser-default custom-select">
+                    <option value="1" selected>تفسير الجلالين</option>
+                    <option value="2">تفسير الميسر</option>
+                    <option value="3">Türkçe Meali</option>
+                    <option value="4">English Translation</option>
+                  </select>
 
-            </div>
-            <div id=arname class="col text-right">الفاتحة</div>
+    </div>
+    <div id=arname class="col text-right">الفاتحة</div>
+</div>
+
+<div class="row w-100 d-flex justify-content-center">
+        <div class="custom-control custom-radio custom-control-inline">
+          <input onchange="displayState(1)" type="radio" id="state1" name="state" class="custom-control-input">
+          <label class="custom-control-label" for="state1">Show all</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input onchange="displayState(2)"  type="radio" id="state2" name="state" class="custom-control-input">
+          <label class="custom-control-label" for="state2">Only arabic</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input onchange="displayState(3)" type="radio" id="state3" name="state" class="custom-control-input">
+          <label class="custom-control-label" for="state3">Only tefsir</label>
+        </div>
+</div>
             <div class="w-100"></div>
             <!-- max-width: 260px; max-height: 100px; -->
-            <div id=trtxt class="col  border bg-light overflow-auto" style="height: 70vh;">
-                In the name of Allah, most benevolent, ever-merciful. <br> ALL PRAISE BE to Allah, Lord of all the worlds,<br> Most beneficent, ever-merciful,<br> King of the Day of Judgement. <br> You alone we worship, and to You alone turn for help.
-                <br> Guide us (O Lord) to the path that is straight, <br> The path of those You have blessed, Not of those who have earned Your anger, nor those who have gone astray.
-            </div>
+<div class="row">
+    <div id=trtxt class="col  border bg-light overflow-auto" style="height: 70vh;">
+        In the name of Allah, most benevolent, ever-merciful. <br> ALL PRAISE BE to Allah, Lord of all the worlds,<br> Most beneficent, ever-merciful,<br> King of the Day of Judgement. <br> You alone we worship, and to You alone turn for help.
+        <br> Guide us (O Lord) to the path that is straight, <br> The path of those You have blessed, Not of those who have earned Your anger, nor those who have gone astray.
+    </div>
 
-            <div id=artxt class="col arabic text-right border bg-light overflow-auto" style="height: 70vh;">
-                بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ<br>,ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ<br>,ٱلرَّحْمَٰنِ ٱلرَّحِيمِ<br>,مَٰلِكِ يَوْمِ ٱلدِّينِ<br>,إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ<br>,ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ<br>,صِرَٰطَ ٱلَّذِينَ
-                أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ<br>
-            </div>
+    <div id=artxt class="col arabic text-right border bg-light overflow-auto" style="height: 70vh;">
+        بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ<br>,ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ<br>,ٱلرَّحْمَٰنِ ٱلرَّحِيمِ<br>,مَٰلِكِ يَوْمِ ٱلدِّينِ<br>,إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ<br>,ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ<br>,صِرَٰطَ ٱلَّذِينَ
+        أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ<br>
+    </div>
+</div>
         </div>
         <!-- <div class="container">
             <div class="row justify-content-between">

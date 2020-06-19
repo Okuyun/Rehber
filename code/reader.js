@@ -190,6 +190,8 @@ async function initReader() {
     setNames(0)
     loadTrans();
     window.addEventListener("hashchange", getHash);
+    responsiveMode()
+    loadTransR(selectedTranslation.value)
 
     return new Promise(function(resolve, reject) {
         resolve('Success!');
@@ -249,4 +251,110 @@ function getHash() {
 function scrollToCV(c, v) {
     document.querySelector(`#artxt > sura[id='${c-1}'] >  aya[id='${v}']`).scrollIntoView()
     document.querySelector(`#trtxt > sura[id='${c-1}'] > aya[id='${v}']`).scrollIntoView()
+}
+/**
+ * A warper function of visibility for arabic only/
+ */
+function showArabic(){
+    visibility(["arname","artxt"],false)
+
+}
+/**
+ * A warper function of visibility for arabic only/
+ */
+function hideArabic(){
+    visibility(["arname","artxt"],true)
+
+}
+/**
+ * A function to set the hidden attributes of the elements.
+ * 
+ * @param {string array} listID a string array of the ids to control
+ * @param {boolean} control a controller of hiding or showing the element.
+ */
+function visibility(listID,control){
+    listID.forEach(e => document.getElementById(e).hidden =control )
+}
+/**
+ * A warper function of visibility for Tefsir only/
+ */
+function showTefsir(){
+    visibility(["tefsirController","ename","trtxt"],false)
+}
+/**
+ * A warper function of visibility for Tefsir only/
+ */
+function hideTefsir(){
+    visibility(["tefsirController","ename","trtxt"],true)
+}
+
+function checkSize() {
+    let width= window.innerWidth;
+    switch (true) {
+        case (width < 770):
+            return "small"
+        case (width < 990):
+            return "medium"
+        case (width < 1200):
+            return "large"
+    }
+}
+
+function responsiveMode(){
+    switch(checkSize()){
+        case "small":
+            displayState(2)
+            break;
+            case "medium":
+        case "large":
+          
+            displayState(1)
+
+        break;
+    }
+}
+window.onresize = () => {
+    responsiveMode();
+}
+
+function displayState(state){
+    switch (state){
+        case 1:
+            checkState(1)
+            break;
+        case 2:
+           checkState(2)
+            break;
+        case 3:
+checkState(3)
+        break;
+    }
+}
+
+function checkState(number){
+   switch(number){
+       case 1:
+        showArabic()
+        showTefsir()
+        state1.checked = true
+        state2.checked = false
+        state3.checked = false
+           break;
+        case 2:
+            hideTefsir();
+            showArabic()
+            state1.checked = false
+            state2.checked = true
+            state3.checked = false
+            break;
+            case 3:
+                showTefsir()
+                hideArabic()
+                state1.checked = false
+                state2.checked = false
+                state3.checked = true
+                break;
+ 
+   }
+
 }
