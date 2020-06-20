@@ -173,6 +173,7 @@ async function loadTransR(n) {
     lastSura--;
     displayTranslation();
     lastSura++;
+    getHash()
 }
 
 
@@ -189,9 +190,9 @@ async function initReader() {
     initSuras();
     setNames(0)
     loadTrans();
+    loadTransR(selectedTranslation.value)
     window.addEventListener("hashchange", getHash);
     responsiveMode()
-    loadTransR(selectedTranslation.value)
 
     return new Promise(function(resolve, reject) {
         resolve('Success!');
@@ -347,11 +348,12 @@ checkState(3)
 function checkState(number){
    switch(number){
        case 1:
-        showArabic()
-        showTefsir()
+       
         state1.checked = true
         state2.checked = false
         state3.checked = false
+        showArabic()
+        showTefsir()
            break;
         case 2:
             hideTefsir();
@@ -371,3 +373,46 @@ function checkState(number){
    }
 
 }
+// let lastScrollTopTr=0
+// trtxt.onscroll = e=> {
+//     lastScrollTopTr  = scrollDirectionElement("artxt",lastScrollTopTr)
+
+// }
+
+// trtxt.onscroll = e => scr
+// https://stackoverflow.com/questions/4326845/how-can-i-determine-the-direction-of-a-jquery-scroll-event
+function scrollDirectionElement(elementID){
+        let st =  document.getElementById(elementID).scrollTop;
+        if (st > lastScrollTopTr){
+            // downscroll code
+            console.log("down")
+            document.getElementById(elementID).scrollTop+=Math.round(h)*2 ;
+        } else {
+           // upscroll code
+           console.log("top")
+        document.getElementById(elementID).scrollTop-=Math.round(h)*2 ;
+
+        }
+    lastScrollTopTr = st;
+
+
+}
+
+let h= trtxt.scrollHeight/artxt.scrollHeight
+// Initial state
+var scrollPos = 0;
+// adding scroll event
+trtxt.addEventListener('scroll', function(){
+  // detects new state and compares it with the new one
+    if (trtxt.scrollTop > scrollPos)
+        {
+            document.getElementById("artxt").scrollTop+=Math.round(h)*5  ;
+            console.log("down")}
+    else{
+        document.getElementById("artxt").scrollTop-=Math.round(h)*5 ;
+        console.log("up")
+
+    }
+	// saves the new position for iteration.
+	scrollPos = (trtxt.scrollTop);
+});
