@@ -29,6 +29,15 @@
             font-family: me_quran;
             src: url("style/me_quran.ttf")
         }
+        :root {
+  --sticky-pos: 1px;
+}
+.sticky {
+  position: sticky;
+  top: var(--sticky-pos); /* Sentinels adjust based on this position. */
+  background-color: #f8f9fa;
+}
+
     </style>
 </head>
 

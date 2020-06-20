@@ -17,8 +17,8 @@ let suraCounter = 0;
 function setSura(h = 0) {
     h = Number(h)
         //console.log(h);
-    if (h > 110) {
-        lastSura = 110;
+    if (h >= 112) {
+        lastSura = 112;
         return;
     } else if (h < 0) {
         lastSura = 0;
@@ -37,7 +37,7 @@ function nextSura() {
 
 function preSura() {
     lastSura--;
-    if (lastSura == -1)
+    if (lastSura <= -1)
         lastSura = 113;
     displayArWr(lastSura)
 }
@@ -47,13 +47,14 @@ function addSura( lastSura) {
 }
 
 function createTableHeader(suraNumber){ 
-     let header = document.createElement("thead")
+    if(suraNumber < 0 ) suraNumber=0; 
+let header = document.createElement("thead")
 let tr =  document.createElement("tr")
 let thTr = createTh(quran.sura[suraNumber].ename)
-thTr.className ="w-50 text-center"
+thTr.className ="w-50 text-center sticky"
 tr.appendChild(thTr)
 let thAr = createTh(quran.sura[suraNumber].name)
-thAr.className ="arabic text-center"
+thAr.className ="arabic text-center sticky"
 tr.appendChild(thAr)
 header.appendChild(tr)
 return header;
@@ -67,7 +68,7 @@ function createTh(data){
 function loadSura(lastSura) {
     let sura = document.createElement("table")
     sura.appendChild(createTableHeader(lastSura))    
-    sura.id = lastSura;
+    sura.id = lastSura + 1;
     sura.className= "table table-hover table-sm"
     let tbody = document.createElement("tbody");
     let aya
@@ -84,7 +85,7 @@ function loadSura(lastSura) {
         aya.appendChild(td)
         td = document.createElement("td");
         td.innerText=e
-        td.className="arabic text-right"
+        td.className="arabic text-right w-50"
         aya.appendChild(td)
         tbody.appendChild(aya)
     });
@@ -109,13 +110,14 @@ function displayArWr(number = 0) {
 }
 
 function appendSura() {
-    if (lastSura == 114) return
+    if (lastSura == 114) {
+        return
+    }
     addSura(lastSura);
-    setNames(lastSura)
     lastSura++;
     // endOfScroll(artxt, appendSura)
     // checkSuraHeight()
-    if (artxt.children.length > 4) {
+    if (scrollingChapters.childElementCount > 4) {
         removeFirstSura()
     }
 }
@@ -127,26 +129,24 @@ function checkSuraHeight() {
 }
 
 function removeFirstSura() {
-    artxt.removeChild(artxt.firstChild)
-    trtxt.removeChild(trtxt.firstChild)
+    scrollingChapters.removeChild(scrollingChapters.firstChild)
 }
 
 function removeLastSura() {
-    artxt.removeChild(artxt.lastChild)
-    trtxt.removeChild(trtxt.lastChild)
+    scrollingChapters.removeChild(scrollingChapters.lastChild)
+    lastSura--;
 }
 
 function PrePendSura() {
-    if (artxt.firstChild.id == 0) {
+    if (scrollingChapters.firstChild.id == 1) {
         return;
     }
-    setNames(lastSura - 2)
-    artxt.insertBefore(loadSura(suraAr[lastSura - 2], lastSura - 2), artxt.firstChild)
-    trtxt.insertBefore(loadSura(suraTr[lastSura - 2], lastSura - 2), trtxt.firstChild)
+    if(scrollingChapters.firstChild.id == 111){
+
+    }
+    scrollingChapters.insertBefore(loadSura(lastSura - 3), scrollingChapters.firstChild)
     removeLastSura()
-    artxt.children[1].scrollIntoView()
-    trtxt.children[1].scrollIntoView()
-    lastSura--;
+    scrollingChapters.children[1].scrollIntoView()
 }
 
 
@@ -156,10 +156,8 @@ function syncOnclick(Event) {
     let element = event.srcElement
     let suraID = element.parentElement.id
     let ayaID = element.id
-    setNames(element.parentElement.id)
     console.log(suraID, ayaID, event)
-    document.querySelector(`#artxt > sura[id='${suraID}'] >  aya[id='${ayaID}']`).scrollIntoView()
-    document.querySelector(`#trtxt > sura[id='${suraID}'] > aya[id='${ayaID}']`).scrollIntoView()
+    scrollToCV(suraID,ayaID)
     setHash(Number(suraID) + 1, Number(ayaID));
     // element.scrollIntoView()
 }
@@ -191,16 +189,11 @@ async function loadTransR(n) {
         removeTextRight()
     }
     clearSura()
-    addAll()
+    initSuras()
     getHash()
 }
 
 
-
-function setNames(number = lastSura) {
-    arname.innerText = quran.sura[number].name
-    ename.innerText = quran.sura[number].ename + " (" + quran.sura[number].tname + ")"
-}
 
 async function initReader() {
     // artxt.innerHTML = ""
@@ -208,9 +201,9 @@ async function initReader() {
     clearSura()
     await init();
     await loadTrans();
-    // addSura(0)
-    addAll()
-
+  
+    // addAll()
+    initSuras()
     loadTransR(selectedTranslation.value)
     window.addEventListener("hashchange", getHash);
     responsiveMode()
@@ -220,14 +213,14 @@ async function initReader() {
 }
 
 function initSuras() {
+  for (let index = 0; index < 4; index++) {
     appendSura();
-    appendSura()
-    appendSura()
+  }
 }
 
  scrollingChapters.onscroll = function() {
-     endOfScroll(artxt, function() { appendSura() })
-     topOfScroll(artxt, e => PrePendSura())
+     endOfScroll(scrollingChapters, function() { appendSura() })
+     topOfScroll(scrollingChapters, e => PrePendSura())
  }
 
 /**
@@ -251,8 +244,7 @@ function topOfScroll(target, callBack) {
 //document.querySelectorAll("#artxt > sura[id='0'] > aya")
 // Add hash reader to open a specific sura immediately
 function resetAll() {
-    artxt.innerHTML = ""
-    trtxt.innerHTML = ""
+  scrollingChapters.innerHTML = ""; 
 }
 
 function loadhash(chapter) {
@@ -275,18 +267,17 @@ function getHash() {
 function getChapterVerse(text){
     let [c, v] = text.split(":")
     loadhash(c - 1)
-    setNames(c - 1)
     scrollToCV(c, v)
 }
 function gotosura(){
    let [c,v] = document.getElementById("suraCV").value.split(":")
    if(!v) v = 1;
-   setHash(Number(c), Number(v));
+   setHash(Number(c)  , Number(v) );
 }
 function scrollToCV(c, v) {
-    if(!v) v = 0;
-    document.querySelector(`#artxt > sura[id='${c-1}'] >  aya[id='${v}']`).scrollIntoView()
-    document.querySelector(`#trtxt > sura[id='${c-1}'] > aya[id='${v}']`).scrollIntoView()
+    if(!v) v = 1;
+    if(c=="") c=0;
+    document.querySelector(`#scrollingChapters > table[id='${c}'] > tbody >  tr[id='${v}']`).scrollIntoView()
 }
 
 function checkSize() {
@@ -331,28 +322,28 @@ checkState(3)
 }
 
 function checkState(number){
-   switch(number){
-       case 1:
+//    switch(number){
+//        case 1:
        
-        state1.checked = true
-        state2.checked = false
-        state3.checked = false
+//         state1.checked = true
+//         state2.checked = false
+//         state3.checked = false
      
-           break;
-        case 2:
+//            break;
+//         case 2:
           
-            state1.checked = false
-            state2.checked = true
-            state3.checked = false
-            break;
-            case 3:
+//             state1.checked = false
+//             state2.checked = true
+//             state3.checked = false
+//             break;
+//             case 3:
               
-                state1.checked = false
-                state2.checked = false
-                state3.checked = true
-                break;
+//                 state1.checked = false
+//                 state2.checked = false
+//                 state3.checked = true
+//                 break;
  
-   }
+//    }
 
 }
 
