@@ -41,29 +41,54 @@ function preSura() {
         lastSura = 113;
     displayArWr(lastSura)
 }
-/**
- * Display choosen sura from the array on the target HTML element, 
- * 
- * @param {Object} target Target HTML elemet to set the inner text as the nested array elements
- * @param {Object} arr  Array of chosen text, can be arabic or the translation 
- */
-function addSura(target, arr, lastSura) {
-    // side note: check which one is faster the innerHTML vs the createAppend 
-    target.appendChild(loadSura(arr, lastSura))
+
+function addSura( lastSura) {
+    scrollingChapters.appendChild(loadSura(lastSura))
 }
 
-function loadSura(arr, lastSura) {
-    let sura = document.createElement("sura")
+function createTableHeader(suraNumber){ 
+     let header = document.createElement("thead")
+let tr =  document.createElement("tr")
+let thTr = createTh(quran.sura[suraNumber].ename)
+thTr.className ="w-50 text-center"
+tr.appendChild(thTr)
+let thAr = createTh(quran.sura[suraNumber].name)
+thAr.className ="arabic text-center"
+tr.appendChild(thAr)
+header.appendChild(tr)
+return header;
+}
+function createTh(data){
+    let th =  document.createElement("th")
+    th.innerText=data
+    return th;
+}
+
+function loadSura(lastSura) {
+    let sura = document.createElement("table")
+    sura.appendChild(createTableHeader(lastSura))    
     sura.id = lastSura;
+    sura.className= "table table-hover table-sm"
+    let tbody = document.createElement("tbody");
     let aya
-    arr.forEach((e, i) => {
-        aya = document.createElement("aya")
+    // suraTr
+//     <tr>
+//     <td>Rahmân ve Rahîm olan Allah'ın ismiyle.</td>
+//     <td class="arabic text-right">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</td>
+//   </tr>
+    suraAr[lastSura].forEach((e, i) => {
+        aya = document.createElement("tr")
         aya.id = i + 1
-        aya.innerText = e
-        aya.addEventListener("click", syncOnclick)
-        aya.appendChild(document.createElement("br"))
-        sura.appendChild(aya)
+        let td = document.createElement("td");
+        td.innerText=suraTr[lastSura][i]
+        aya.appendChild(td)
+        td = document.createElement("td");
+        td.innerText=e
+        td.className="arabic text-right"
+        aya.appendChild(td)
+        tbody.appendChild(aya)
     });
+    sura.appendChild(tbody)
     return sura;
 }
 /**
@@ -85,8 +110,7 @@ function displayArWr(number = 0) {
 
 function appendSura() {
     if (lastSura == 114) return
-    addSura(artxt, suraAr[lastSura], lastSura);
-    addSura(trtxt, suraTr[lastSura], lastSura);
+    addSura(lastSura);
     setNames(lastSura)
     lastSura++;
     // endOfScroll(artxt, appendSura)
@@ -125,11 +149,7 @@ function PrePendSura() {
     lastSura--;
 }
 
-function displayTranslation(t) {
-    console.log(t)
-    for (let i = artxt.firstChild.id; i <= artxt.lastChild.id; i++)
-        addSura(trtxt, suraTr[i], i);
-}
+
 
 
 function syncOnclick(Event) {
@@ -150,19 +170,19 @@ function setHash(c, v) {
 }
 
 async function loadTransR(n) {
-    trtxt.innerHTML = ""
+    // trtxt.innerHTML = ""
         /**
          * Add text right to the tranlsation dislpay to set it for RTL text type (arabic)
          */
     function addTextRight() {
-        trtxt.classList.add("text-right")
+        // trtxt.classList.add("text-right")
             //  trtxt.classList.toggle("text-right")
     }
     /**
      * Removed class text right from translation display, to set it for LTR text type
      */
     function removeTextRight() {
-        trtxt.classList.remove("text-right")
+        // trtxt.classList.remove("text-right")
     }
     await loadTrans(n)
     if (choosenGen <= 2) {
@@ -170,9 +190,8 @@ async function loadTransR(n) {
     } else {
         removeTextRight()
     }
-    lastSura--;
-    displayTranslation();
-    lastSura++;
+    clearSura()
+    addAll()
     getHash()
 }
 
@@ -184,16 +203,17 @@ function setNames(number = lastSura) {
 }
 
 async function initReader() {
-    artxt.innerHTML = ""
-    trtxt.innerHTML = ""
+    // artxt.innerHTML = ""
+    // trtxt.innerHTML = ""
+    clearSura()
     await init();
-    initSuras();
-    setNames(0)
-    loadTrans();
+    await loadTrans();
+    // addSura(0)
+    addAll()
+
     loadTransR(selectedTranslation.value)
     window.addEventListener("hashchange", getHash);
     responsiveMode()
-
     return new Promise(function(resolve, reject) {
         resolve('Success!');
     })
@@ -205,10 +225,10 @@ function initSuras() {
     appendSura()
 }
 
-artxt.onscroll = function() {
-    endOfScroll(artxt, function() { appendSura() })
-    topOfScroll(artxt, e => PrePendSura())
-}
+ scrollingChapters.onscroll = function() {
+     endOfScroll(artxt, function() { appendSura() })
+     topOfScroll(artxt, e => PrePendSura())
+ }
 
 /**
  * check if its at the end of scroll and have a call back function
@@ -268,41 +288,6 @@ function scrollToCV(c, v) {
     document.querySelector(`#artxt > sura[id='${c-1}'] >  aya[id='${v}']`).scrollIntoView()
     document.querySelector(`#trtxt > sura[id='${c-1}'] > aya[id='${v}']`).scrollIntoView()
 }
-/**
- * A warper function of visibility for arabic only/
- */
-function showArabic(){
-    visibility(["arname","artxt"],false)
-
-}
-/**
- * A warper function of visibility for arabic only/
- */
-function hideArabic(){
-    visibility(["arname","artxt"],true)
-
-}
-/**
- * A function to set the hidden attributes of the elements.
- * 
- * @param {string array} listID a string array of the ids to control
- * @param {boolean} control a controller of hiding or showing the element.
- */
-function visibility(listID,control){
-    listID.forEach(e => document.getElementById(e).hidden =control )
-}
-/**
- * A warper function of visibility for Tefsir only/
- */
-function showTefsir(){
-    visibility(["tefsirController","ename","trtxt"],false)
-}
-/**
- * A warper function of visibility for Tefsir only/
- */
-function hideTefsir(){
-    visibility(["tefsirController","ename","trtxt"],true)
-}
 
 function checkSize() {
     let width= window.innerWidth;
@@ -352,19 +337,16 @@ function checkState(number){
         state1.checked = true
         state2.checked = false
         state3.checked = false
-        showArabic()
-        showTefsir()
+     
            break;
         case 2:
-            hideTefsir();
-            showArabic()
+          
             state1.checked = false
             state2.checked = true
             state3.checked = false
             break;
             case 3:
-                showTefsir()
-                hideArabic()
+              
                 state1.checked = false
                 state2.checked = false
                 state3.checked = true
@@ -373,46 +355,12 @@ function checkState(number){
    }
 
 }
-// let lastScrollTopTr=0
-// trtxt.onscroll = e=> {
-//     lastScrollTopTr  = scrollDirectionElement("artxt",lastScrollTopTr)
 
-// }
-
-// trtxt.onscroll = e => scr
-// https://stackoverflow.com/questions/4326845/how-can-i-determine-the-direction-of-a-jquery-scroll-event
-function scrollDirectionElement(elementID){
-        let st =  document.getElementById(elementID).scrollTop;
-        if (st > lastScrollTopTr){
-            // downscroll code
-            console.log("down")
-            document.getElementById(elementID).scrollTop+=Math.round(h)*2 ;
-        } else {
-           // upscroll code
-           console.log("top")
-        document.getElementById(elementID).scrollTop-=Math.round(h)*2 ;
-
-        }
-    lastScrollTopTr = st;
-
-
+function clearSura(){
+    scrollingChapters.innerHTML = ""
 }
-
-let h= trtxt.scrollHeight/artxt.scrollHeight
-// Initial state
-var scrollPos = 0;
-// adding scroll event
-trtxt.addEventListener('scroll', function(){
-  // detects new state and compares it with the new one
-    if (trtxt.scrollTop > scrollPos)
-        {
-            document.getElementById("artxt").scrollTop+=Math.round(h)*5  ;
-            console.log("down")}
-    else{
-        document.getElementById("artxt").scrollTop-=Math.round(h)*5 ;
-        console.log("up")
-
-    }
-	// saves the new position for iteration.
-	scrollPos = (trtxt.scrollTop);
-});
+function addAll(){
+    for (let i = 0 ; i < 114 ; i ++ ){
+        addSura(i)
+        }
+}

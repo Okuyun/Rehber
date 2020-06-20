@@ -83,11 +83,7 @@
         <div class="row">
 
 <div class="row w-100">
-    <div id=ename class="col">
-
-        Fatiha
-
-    </div>
+   
     <div class="col" id="tefsirController">
         <select id="selectedTranslation" onchange="loadTransR(this.value)" class="browser-default custom-select">
                     <option value="1" selected>تفسير الجلالين</option>
@@ -97,11 +93,11 @@
                   </select>
 
     </div>
-    <div id=arname class="col text-right">الفاتحة</div>
-</div>
+    </div>
 
 <div class="row w-100 d-flex justify-content-center">
-        <div class="custom-control custom-radio custom-control-inline">
+<!-- TODO: Activate the buttons -- may use CSS for that :)  -->
+    <!-- <div class="custom-control custom-radio custom-control-inline">
           <input onchange="displayState(1)" type="radio" id="state1" name="state" class="custom-control-input">
           <label class="custom-control-label" for="state1">Show all</label>
         </div>
@@ -112,20 +108,188 @@
         <div class="custom-control custom-radio custom-control-inline">
           <input onchange="displayState(3)" type="radio" id="state3" name="state" class="custom-control-input">
           <label class="custom-control-label" for="state3">Only tefsir</label>
-        </div>
+        </div> -->
 </div>
             <div class="w-100"></div>
             <!-- max-width: 260px; max-height: 100px; -->
-<div class="row">
-    <div id=trtxt class="col  border bg-light overflow-auto" style="height: 70vh;">
-        In the name of Allah, most benevolent, ever-merciful. <br> ALL PRAISE BE to Allah, Lord of all the worlds,<br> Most beneficent, ever-merciful,<br> King of the Day of Judgement. <br> You alone we worship, and to You alone turn for help.
-        <br> Guide us (O Lord) to the path that is straight, <br> The path of those You have blessed, Not of those who have earned Your anger, nor those who have gone astray.
-    </div>
-
-    <div id=artxt class="col arabic text-right border bg-light overflow-auto" style="height: 70vh;">
-        بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ<br>,ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ<br>,ٱلرَّحْمَٰنِ ٱلرَّحِيمِ<br>,مَٰلِكِ يَوْمِ ٱلدِّينِ<br>,إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ<br>,ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ<br>,صِرَٰطَ ٱلَّذِينَ
-        أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ<br>
-    </div>
+            <!-- table-responsive -->
+            <div id="scrollingChapters" class="table-responsive" style="height: 70vh;">
+        
+           <table class="table table-hover table-sm">
+                  
+                <tbody>
+                    <thead>
+                        <tr>
+                          <th  class="w-50 text-center">Fatiha</th>
+                           <th  class="arabic text-center"> الفاتحة</th>
+                        </tr>
+                      </thead>
+                    <tr>
+                        <td>Rahmân ve Rahîm olan Allah'ın ismiyle.</td>
+                        <td class="arabic text-right">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</td>
+                      </tr>
+                  <tr>
+                    <td>Hamd o âlemlerin Rabbi,</td>
+                    <td class="arabic text-right">ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِين</td>
+                  </tr>
+                  <tr>
+                    <td>O Rahmân ve Rahim,</td>
+                    <td class="arabic text-right">ٱلرَّحْمَٰنِ ٱلرَّحِيمِ&nbsp;&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>O, din gününün maliki Allah'ın.</td>
+                    <td class="arabic text-right">مَٰلِكِ يَوْمِ ٱلدِّينِ </td>
+                  </tr>
+                  <tr>
+                    <td>Ancak sana ederiz kulluğu, ibadeti ve ancak senden dileriz yardımı, inayeti. (Ya Rab!).</td>
+                    <td class="arabic text-right">إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ </td>
+                  </tr>
+                  <tr>
+                    <td>Hidayet eyle bizi doğru yola,</td>
+                    <td class="arabic text-right">ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ </td>
+                  </tr>
+                  <tr>
+                    <td>O kendilerine nimet verdiğin mutlu kimselerin yoluna; o gazaba uğramışların ve o sapmışların yoluna değil.</td>
+                    <td class="arabic text-right">صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ </td>
+                  </tr>
+                  <tr>
+                    <td class="w-50 text-center" ></td>Rahmân ve Rahîm olan Allah'ın ismiyle.</td>
+                    <td class="arabic text-right">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</td>
+                  </tr>
+              <tr>
+                <td>Hamd o âlemlerin Rabbi,</td>
+                <td class="arabic text-right">ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِين</td>
+              </tr>
+              <tr>
+                <td>O Rahmân ve Rahim,</td>
+                <td class="arabic text-right">ٱلرَّحْمَٰنِ ٱلرَّحِيمِ&nbsp;&nbsp;</td>
+              </tr>
+              <tr>
+                <td>O, din gününün maliki Allah'ın.</td>
+                <td class="arabic text-right">مَٰلِكِ يَوْمِ ٱلدِّينِ </td>
+              </tr>
+              <tr>
+                <td>Ancak sana ederiz kulluğu, ibadeti ve ancak senden dileriz yardımı, inayeti. (Ya Rab!).</td>
+                <td class="arabic text-right">إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ </td>
+              </tr>
+              <tr>
+                <td>Hidayet eyle bizi doğru yola,</td>
+                <td class="arabic text-right">ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ </td>
+              </tr>
+              <tr>
+                <td>O kendilerine nimet verdiğin mutlu kimselerin yoluna; o gazaba uğramışların ve o sapmışların yoluna değil.</td>
+                <td class="arabic text-right">صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ </td>
+              </tr>  
+                </tbody>
+           </table>
+           <table class="table table-hover table-sm">
+                  
+            <tbody>
+                <thead>
+                    <tr>
+                      <th  class="w-50 text-center">Fatiha</th>
+                       <th  class="arabic text-center"> الفاتحة</th>
+                    </tr>
+                  </thead>
+                <tr>
+                    <td>Rahmân ve Rahîm olan Allah'ın ismiyle.</td>
+                    <td class="arabic text-right">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</td>
+                  </tr>
+              <tr>
+                <td>Hamd o âlemlerin Rabbi,</td>
+                <td class="arabic text-right">ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِين</td>
+              </tr>
+              <tr>
+                <td>O Rahmân ve Rahim,</td>
+                <td class="arabic text-right">ٱلرَّحْمَٰنِ ٱلرَّحِيمِ&nbsp;&nbsp;</td>
+              </tr>
+              <tr>
+                <td>O, din gününün maliki Allah'ın.</td>
+                <td class="arabic text-right">مَٰلِكِ يَوْمِ ٱلدِّينِ </td>
+              </tr>
+              <tr>
+                <td>Ancak sana ederiz kulluğu, ibadeti ve ancak senden dileriz yardımı, inayeti. (Ya Rab!).</td>
+                <td class="arabic text-right">إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ </td>
+              </tr>
+              <tr>
+                <td>Hidayet eyle bizi doğru yola,</td>
+                <td class="arabic text-right">ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ </td>
+              </tr>
+              <tr>
+                <td>O kendilerine nimet verdiğin mutlu kimselerin yoluna; o gazaba uğramışların ve o sapmışların yoluna değil.</td>
+                <td class="arabic text-right">صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ </td>
+              </tr>
+              <tr>
+                <td class="w-50 text-center" >Rahmân ve Rahîm olan Allah'ın ismiyle.</td>
+                <td class="arabic text-right">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</td>
+              </tr>
+          <tr>
+            <td>Hamd o âlemlerin Rabbi,</td>
+            <td class="arabic text-right">ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِين</td>
+          </tr>
+          <tr>
+            <td>O Rahmân ve Rahim,</td>
+            <td class="arabic text-right">ٱلرَّحْمَٰنِ ٱلرَّحِيمِ&nbsp;&nbsp;</td>
+          </tr>
+          <tr>
+            <td>O, din gününün maliki Allah'ın.</td>
+            <td class="arabic text-right">مَٰلِكِ يَوْمِ ٱلدِّينِ </td>
+          </tr>
+          <tr>
+            <td>Ancak sana ederiz kulluğu, ibadeti ve ancak senden dileriz yardımı, inayeti. (Ya Rab!).</td>
+            <td class="arabic text-right">إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ </td>
+          </tr>
+          <tr>
+            <td>Hidayet eyle bizi doğru yola,</td>
+            <td class="arabic text-right">ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ </td>
+          </tr>
+          <tr>
+            <td>O kendilerine nimet verdiğin mutlu kimselerin yoluna; o gazaba uğramışların ve o sapmışların yoluna değil.</td>
+            <td class="arabic text-right">صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ </td>
+          </tr>  
+            </tbody>
+       </table>
+       <table class="table table-hover table-sm">
+                  
+        <tbody>
+            <thead>
+                <tr>
+                  <th  class="w-50 text-center" >Fatiha</th>
+                   <th  class="arabic text-center"> الفاتحة</th>
+                </tr>
+              </thead>
+            <tr>
+                <td>Rahmân ve Rahîm olan Allah'ın ismiyle.</td>
+                <td class="arabic text-right">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</td>
+              </tr>
+          <tr>
+            <td>Hamd o âlemlerin Rabbi,</td>
+            <td class="arabic text-right">ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِين</td>
+          </tr>
+          <tr>
+            <td>O Rahmân ve Rahim,</td>
+            <td class="arabic text-right">ٱلرَّحْمَٰنِ ٱلرَّحِيمِ&nbsp;&nbsp;</td>
+          </tr>
+          <tr>
+            <td>O, din gününün maliki Allah'ın.</td>
+            <td class="arabic text-right">مَٰلِكِ يَوْمِ ٱلدِّينِ </td>
+          </tr>
+          <tr>
+            <td>Ancak sana ederiz kulluğu, ibadeti ve ancak senden dileriz yardımı, inayeti. (Ya Rab!).</td>
+            <td class="arabic text-right">إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ </td>
+          </tr>
+          <tr>
+            <td>Hidayet eyle bizi doğru yola,</td>
+            <td class="arabic text-right">ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ </td>
+          </tr>
+          <tr>
+            <td>O kendilerine nimet verdiğin mutlu kimselerin yoluna; o gazaba uğramışların ve o sapmışların yoluna değil.</td>
+            <td class="arabic text-right">صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ </td>
+          </tr>
+         
+        </tbody>
+   </table>
+           
 </div>
         </div>
         <!-- <div class="container">
