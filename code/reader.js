@@ -275,9 +275,12 @@ function gotosura(){
    setHash(Number(c)  , Number(v) );
 }
 function scrollToCV(c, v) {
+    let h = document.querySelector(`#scrollingChapters > table[id='${c}'] > tbody >  tr[id='${v}']`).offsetTop
+    let offset = document.querySelector(`#scrollingChapters > table[id='${c}'] > thead >  tr`).clientHeight
     if(!v) v = 1;
     if(c=="") c=0;
-    document.querySelector(`#scrollingChapters > table[id='${c}'] > tbody >  tr[id='${v}']`).scrollIntoView()
+    scrollingChapters.scrollTo(0,h - offset)
+    // document.querySelector(`#scrollingChapters > table[id='${c}'] > tbody >  tr[id='${v}']`).scrollIntoView()
 }
 
 function checkSize() {
