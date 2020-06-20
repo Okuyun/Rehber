@@ -50,10 +50,10 @@ function createTableHeader(suraNumber){
     if(suraNumber < 0 ) suraNumber=0; 
 let header = document.createElement("thead")
 let tr =  document.createElement("tr")
-let thTr = createTh(quran.sura[suraNumber].ename)
+let thTr = createTh( " ( " + Number( suraNumber +1 ) +" ) " +  quran.sura[suraNumber].ename )
 thTr.className ="w-50 text-center sticky"
 tr.appendChild(thTr)
-let thAr = createTh(quran.sura[suraNumber].name)
+let thAr = createTh( " ( " +  Number( suraNumber +1 ) +" ) " + quran.sura[suraNumber].name  )
 thAr.className ="arabic text-center sticky"
 tr.appendChild(thAr)
 header.appendChild(tr)
@@ -77,14 +77,15 @@ function loadSura(lastSura) {
 //     <td>Rahmân ve Rahîm olan Allah'ın ismiyle.</td>
 //     <td class="arabic text-right">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</td>
 //   </tr>
+
     suraAr[lastSura].forEach((e, i) => {
         aya = document.createElement("tr")
         aya.id = i + 1
         let td = document.createElement("td");
-        td.innerText=suraTr[lastSura][i]
+        td.innerText="(" +aya.id +")"   +  suraTr[lastSura][i] ;
         aya.appendChild(td)
         td = document.createElement("td");
-        td.innerText=e
+        td.innerText= "(" +aya.id +")" + e 
         td.className="arabic text-right w-50"
         aya.appendChild(td)
         tbody.appendChild(aya)
