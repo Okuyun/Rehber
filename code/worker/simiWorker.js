@@ -15,9 +15,9 @@ postMessage({ 'cmd': 'log', 'msg': 'worker started' })
 
 function wordsToVector(words){
     let array = words.split(" ")
-    let temp = new Map(rootsVector);
+    let temp = new Map();
     /** looping the words in Verse to create their count object. */
-    array.forEach(e => { if (wordToRoot.get(toBuckwalter(e)) !== undefined) temp.set(wordToRoot.get(toBuckwalter(e)), temp.get(wordToRoot.get(toBuckwalter(e))) + 1) })
+    array.forEach(e => { if (wordToRoot.get(toBuckwalter(e)) !== undefined) temp.set(wordToRoot.get(toBuckwalter(e)), !(quanitiy = temp.get(wordToRoot.get(toBuckwalter(e))))?   1:quanitiy+1) })
     return temp
 }
 // toBuckwalter = BWC.toBuckwalter
@@ -100,11 +100,12 @@ onmessage = (e) => {
  * @param {*} b Second vector
  */
 function innerProd(a, b) {
-    let av = [...a.values()]
-    let bv = [...b.values()]
-    let reducer = (a, curr, ind) => curr ? a += curr * bv[ind] : a += 0;
-    // check reduce function in MDN docs
-    return av.reduce(reducer, 0);
+    let [a1,b1] =checkSmaller(a,b)
+  
+    let total =0
+    a1.forEach( (v,k,m) =>  total += a1.get(k) * b1.get(k))
+  
+    return total;
 }
 /**
  * get a vector magnitude
@@ -145,8 +146,11 @@ function allMag() {
  * @param {*} magB magnitude B if we need to set it manually
  */
 function similarity(a, b, magB) {
+   
+    // let [a3,b3]= updateVectors(a1,b1, getInterSection(a1,b1))
+    // let [a2, b2] = termFwarper(a3, b3);
     // let date= new Date();
-    let result = innerProd(a, b) / (magnitude(a) * (magB ? magB : magnitude(b)))
+    let result = innerProd(a, b) / (magnitude(a) * (magnitude(b)))
     // console.log(new Date()-date)
     return result
 }
@@ -239,7 +243,7 @@ function numberOFdocsWithTerm(word) {
     let total = 0;
     surasVectorG.forEach(sura => {
         sura.forEach(verse => {
-            if (verse.vector.get(word) > 0) total += 1;
+            if (!verse.vector.get(word) == false) total += 1;
         })
     })
     return total;
@@ -290,12 +294,8 @@ function updateVectors(a,b,inter){
     })
     return [an,bn]
 }
-function checkSmaller(a,b){
-    let totalA = 0
-    a.forEach((v, k, m) => { if(v>0) totalA += 1  })
-    let totalb = 0
-    b.forEach((v, k, m) => { if(v>0) totalb += 1  })
-    if(totalA > totalb ) return [b,a]
+function checkSmaller(a,b){  
+    if(a.size > b.size) return [b,a]
     else return [a,b]
 }
 
@@ -309,7 +309,6 @@ function cosineTFIDF(a, b) {
     let [atidf, btidf] = tfidfResult(at, bt);
     let inters = getInterSection(a,b)
     let [a1,b1]= updateVectors(atidf,btidf,inters)
-    
     let result= innerProd(a1,b1)/ (magnitude(a1) * magnitude(b1));
     // console.log(new Date()-date)
     return result
