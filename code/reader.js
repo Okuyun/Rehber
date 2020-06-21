@@ -2,7 +2,7 @@
  * The last displayed Sura.
  * 
  */
-let lastSura = 0;
+let lastSura = 1;
 /**
  * Sura counter: to count the number of loaded suras 
  */
@@ -65,10 +65,12 @@ function createTh(data){
     return th;
 }
 
-function loadSura(lastSura) {
+function loadSura(suraNumber) {
+    if(suraNumber<=0) suraNumber=0;
     let sura = document.createElement("table")
-    sura.appendChild(createTableHeader(lastSura))    
-    sura.id = lastSura + 1;
+    sura.appendChild(createTableHeader(suraNumber))    
+    sura.id = suraNumber + 1;
+    // console.trace(sura.id)
     sura.className= "table table-hover table-sm"
     let tbody = document.createElement("tbody");
     let aya
@@ -78,11 +80,11 @@ function loadSura(lastSura) {
 //     <td class="arabic text-right">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</td>
 //   </tr>
 
-    suraAr[lastSura].forEach((e, i) => {
+    suraAr[suraNumber].forEach((e, i) => {
         aya = document.createElement("tr")
         aya.id = i + 1
         let td = document.createElement("td");
-        td.innerText="(" +aya.id +")"   +  suraTr[lastSura][i] ;
+        td.innerText="(" +aya.id +")"   +  suraTr[suraNumber][i] ;
         aya.appendChild(td)
         td = document.createElement("td");
         td.innerText= "(" +aya.id +")" + e 
@@ -91,6 +93,7 @@ function loadSura(lastSura) {
         tbody.appendChild(aya)
     });
     sura.appendChild(tbody)
+    lastSura++;
     return sura;
 }
 /**
@@ -115,7 +118,6 @@ function appendSura() {
         return
     }
     addSura(lastSura);
-    lastSura++;
     // endOfScroll(artxt, appendSura)
     // checkSuraHeight()
     if (scrollingChapters.childElementCount > 4) {
@@ -190,7 +192,7 @@ async function loadTransR(n) {
         removeTextRight()
     }
     clearSura()
-    initSuras()
+    // initSuras()
     getHash()
 }
 
@@ -204,7 +206,7 @@ async function initReader() {
     await loadTrans();
   
     // addAll()
-    initSuras()
+    // initSuras()
     loadTransR(selectedTranslation.value)
     window.addEventListener("hashchange", getHash);
     responsiveMode()
@@ -248,7 +250,7 @@ function resetAll() {
   scrollingChapters.innerHTML = ""; 
 }
 
-function loadhash(chapter) {
+function loadhash(chapter=0) {
     resetAll()
     setSura(chapter)
     initSuras()
@@ -256,7 +258,10 @@ function loadhash(chapter) {
 
 function getHash() {
     let h = decodeURI(location.hash).slice(1);
-   
+    if(h=="") {
+        setHash(1,1)
+        return;
+    };
     getChapterVerse(h);
 }
 /**
@@ -276,10 +281,10 @@ function gotosura(){
    setHash(Number(c)  , Number(v) );
 }
 function scrollToCV(c, v) {
+    if(!v) v = 1;
+    if(c=="") c=1;
     let h = document.querySelector(`#scrollingChapters > table[id='${c}'] > tbody >  tr[id='${v}']`).offsetTop
     let offset = document.querySelector(`#scrollingChapters > table[id='${c}'] > thead >  tr`).clientHeight
-    if(!v) v = 1;
-    if(c=="") c=0;
     scrollingChapters.scrollTo(0,h - offset)
     // document.querySelector(`#scrollingChapters > table[id='${c}'] > tbody >  tr[id='${v}']`).scrollIntoView()
 }
