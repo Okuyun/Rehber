@@ -86,6 +86,11 @@ onmessage = (e) => {
         case 'getVector':
             postMessage({ 'cmd': 'vectorReturned', msg: getVerseVector(data.msg.chapter, data.msg.verse) })
             break;
+        case 'checkSelection':
+            let wtv = wordsToVector(data.data.msg)
+            postMessage({ 'cmd': 'vectorReturned', msg: wtv})
+            postMessage({ 'cmd': 'result', msg: wholeQuranLoop(wtv,magnitude(wtv), data.data.msg.min,similarity) })
+            break;
         default:
             self.postMessage('Unknown command: ' + data.msg);
     };
@@ -203,7 +208,7 @@ function checkSimilarity(c, v, min = 70) {
     }
     return result;
 }
-function wholeQuranLoop(vv,mag,min,similarityFunction){
+function wholeQuranLoop(vv,mag,min=70,similarityFunction){
     let ratio;
     min = min/100
     let result = []

@@ -42,6 +42,7 @@ worker.addEventListener('message', function (e) {
         default:
             self.postMessage('Unknown command: ' + data.msg);
     };
+    menuFn();
 });
 let verseVector;
 worker.onerror = console.error
@@ -382,4 +383,102 @@ function writeToFile() {
         );
     })
     return text;
+}
+
+
+function menuFn() {
+
+    const menu = document.getElementById("contextMenu");
+    const menuOption = document.querySelector(".menu-option");
+    let menuVisible = false;
+    document.addEventListener('keydown', keyPress);
+
+    function select() {
+        let s = getSelection().toString().trim()
+        if (s) return s
+            // else alert("Önce Arapça bir kelime seçin")
+    }
+
+    function keyPress(e) {
+        if (e.key === "Escape") {
+            // preventDefault();
+            if (menuVisible) toggleMenu("hide");
+        }
+    }
+
+    function addContextMenu() {
+        document.querySelectorAll("span.arabic").forEach(e => {
+            e.addEventListener("contextmenu", e => {
+                e.preventDefault();
+                const origin = {
+                    left: e.x,
+                    top: e.y
+                };
+                // console.log(e)
+                setPosition(origin);
+                return false;
+            })
+        })
+    }
+
+    function contextMenuArabic() {
+        let spAr = document.querySelectorAll("span.arabic")
+        for (let e of spAr) {
+            e.addEventListener("click", e => {
+                if (menuVisible) toggleMenu("hide");
+            });
+        }
+    }
+
+
+
+    const toggleMenu = command => {
+        // console.log("toggle" + command)
+        if (!select() && command == "show") return;
+        menu.style.display = command === "show" ? "block" : "none";
+        menuVisible = !menuVisible;
+    };
+
+    const setPosition = ({ top, left }) => {
+        if (window.innerWidth - left < 160) {
+            left = (window.innerWidth - 190)
+        }
+        if (window.innerHeight - top < 220) {
+            top -= 250
+        }
+        menu.style.left = `${left}px`;
+        menu.style.top = `${top}px`;
+        toggleMenu("show");
+    };
+
+    contextMenuArabic();
+
+    document.addEventListener("click", e => {
+        if (menuVisible) toggleMenu("hide");
+    });
+    // should be added by a function - future note  to myself.
+    contextMenu.addEventListener("click", e => {
+        if (!menuVisible) { return }
+        let sel = select();
+        // console.log("worked..." + " sel =" + sel)
+        switch (e.target.value) {
+            case 2: // check similar
+            worker.postMessage({ "cmd": "checkSelection", "data": { msg: sel , min: perc.value} })
+            break;
+            case 4: // google search
+                window.open("https://google.com/search?q=" + sel)
+                break;
+            case 1: // copy 
+                navigator.clipboard.writeText(sel)
+                    .then(() => { console.log('Panoya:', sel) })
+                    .catch(e => { alert('Panoya yazamadım\n' + sel) })
+                break;
+            case 3: // Find in finder
+            window.open("https://a0m0rajab.github.io/BahisQurani/finder.html#w=" + sel)
+                break;
+            
+        }
+        toggleMenu("hide");
+    });
+    addContextMenu();
 }
