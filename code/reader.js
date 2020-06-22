@@ -137,7 +137,7 @@ function removeFirstSura() {
 
 function removeLastSura() {
     scrollingChapters.removeChild(scrollingChapters.lastChild)
-    lastSura--;
+    lastSura = Number(scrollingChapters.firstChild.id) -1 ;
 }
 
 function PrePendSura() {
@@ -147,7 +147,7 @@ function PrePendSura() {
     if(scrollingChapters.firstChild.id == 111){
 
     }
-    scrollingChapters.insertBefore(loadSura(lastSura - 3), scrollingChapters.firstChild)
+    scrollingChapters.insertBefore(loadSura(Number(scrollingChapters.firstChild.id)-2), scrollingChapters.firstChild)
     removeLastSura()
     scrollingChapters.children[1].scrollIntoView()
 }
