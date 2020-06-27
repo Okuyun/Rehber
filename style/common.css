@@ -101,3 +101,11 @@ great {
 #contextMenu .menu-options .menu-option:hover {
     background: rgba(0, 0, 0, 0.2);
 }
+
+.sticky {
+    position: sticky;
+    top: 0; /* Sentinels adjust based on this position. */
+    background-color: #f8f9fa;
+    border-top-width: 0px!important;
+    z-index: 100;
+  }

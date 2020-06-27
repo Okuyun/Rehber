@@ -155,20 +155,33 @@ function greatArray(vector, wordArray, mode) {
     return wordArray;
 
 }
+function finderButton(msg,root){
+    return `
+    <!-- Example split warning button -->
+<div class="btn-group">
+<button type="button" class="btn badge badge-warning align-text-bottom" onclick="openFinder('${root}')">${msg}</button>
+
+</div>
+`
+}
+function openFinder(root){
+    let link = "https://a0m0rajab.github.io/BahisQurani/finder#r=" + root;
+    window.open(link, "finder")
+}
 /**
  * generating the button to open extra sources
  * @param {Number} c chapter number
  * @param {Number} v Verse number
  */
-function splitDown(c, v) {
+function splitDown(c, v,color="light") {
     let cv = c + ":" + v
     return `
     <!-- Example split danger button -->
 <div class="btn-group">
-<button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<button type="button" class="btn badge badge-`+color+` align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 <span class="sr-only">Toggle Dropdown</span>
 </button>
-  <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOneF('${cv}')">${cv + " " + quran.sura[c - 1].name}</button>
+  <button type="button" class="btn badge badge-`+color+` align-text-bottom" onclick="lastOneF('${cv}')">${cv + " " + quran.sura[c - 1].name}</button>
  
   <div class="dropdown-menu">
     <button class="dropdown-item" onclick="openCorpus('${cv}')">Corpus</button>
@@ -305,10 +318,22 @@ function triggerSimilarity() {
     getVerseVector(suraList, ayaList)
     // worker.postMessage("test")
     worker.postMessage({ "cmd": "compare", "msg": { c: suraList, v: ayaList, min: perc } })
+    setHeader(suraList,ayaList)
     // worker.postMessage({"cmd":"compare", "msg":{c:3,v:3}})
     // worker.postMessage({"cmd":"init", "data":{sura:suraAr,suraV:surasVector,rootV:rootsVector, wordsRoots:wordToRoot}})
 
     // result = checkSimilarity(suraList.value, ayaList.value, perc.value)
+}
+function setHeader(ch,ve){
+    let header = document.getElementById("VerseHeader")
+    header.innerText=""
+    let span = document.createElement("span")
+    span.className = "arabic"
+    span.innerHTML = suraAr[ch - 1][ve - 1]
+    header.appendChild(span)
+    let div = splitDown(ch, ve)
+    header.innerHTML += "<br>" + div
+
 }
 /**
  * Init the table.
@@ -324,18 +349,33 @@ function initSimilarity() {
 function createTable(arr) {
     let ayaList = document.getElementById("al");
     let suraList = document.getElementById("sl");
-    wordNumber.innerText = arr.length
+    wordNumber.innerText = arr.length-1
     document.title = suraList.value + " " + ayaList.value + " " + arr.length
     element = document.getElementById("dTable").getElementsByTagName('tbody')[0];
     element.innerHTML = ""
+    if(arr.length  < 2) {
+        element.innerHTML = "There is no similarity"
+        element.className="text-center"
+        return
+    }
+    if(verseVector.size == 1) {
+        wordNumber.innerText = 0
+        element.className="text-center"
+        element.innerHTML += finderButton("Open in finder",verseVector.keys().next().value)
+        return
+    }
     arr.forEach(e => {
-        element.appendChild(createRow(...e))
+        let [ratio,ch,ve] = [...e];
+        if(ayaList.value == ve  && suraList.value == ch){
+          return;
+        }
+        element.appendChild(createRow(ratio,ch,ve))
     });
     // triggerSimilarity();
 }
 /**
  * create Row of the table.
- * @param {Number} ratio the ration.
+ * @param {Number} ratio the ratio.
  * @param {Number} ch the chapter number.
  * @param {Number} ve the vercse number.
  */
