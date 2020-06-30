@@ -324,11 +324,17 @@ function triggerSimilarity() {
 
     // result = checkSimilarity(suraList.value, ayaList.value, perc.value)
 }
-function setHeader(ch,ve){
+function setHeader(ch,ve,text){
     let header = document.getElementById("VerseHeader")
     header.innerText=""
     let span = document.createElement("span")
     span.className = "arabic"
+    if(text){
+        span.innerText= text
+        header.appendChild(span)
+        return
+    }
+    if(!text && !ch ) console.trace("undefined header")
     span.innerHTML = suraAr[ch - 1][ve - 1]
     header.appendChild(span)
     let div = splitDown(ch, ve)
@@ -349,8 +355,15 @@ function initSimilarity() {
 function createTable(arr) {
     let ayaList = document.getElementById("al");
     let suraList = document.getElementById("sl");
-    wordNumber.innerText = arr.length-1
-    document.title = suraList.value + " " + ayaList.value + " " + arr.length
+    let length =  arr.length-1
+    let title =suraList.value + " " + ayaList.value + " " + arr.length
+    if(isSelection)    {
+        length ++;
+        title = "selection"
+    }
+   
+    wordNumber.innerText =length
+    document.title = title
     element = document.getElementById("dTable").getElementsByTagName('tbody')[0];
     element.innerHTML = ""
     if(arr.length  < 2) {
@@ -358,19 +371,20 @@ function createTable(arr) {
         element.className="text-center"
         return
     }
-    if(verseVector.size == 1) {
-        wordNumber.innerText = 0
-        element.className="text-center"
-        element.innerHTML += finderButton("Open in finder",verseVector.keys().next().value)
-        return
-    }
+    // if(verseVector.size == 1) {
+    //     wordNumber.innerText = 0
+    //     element.className="text-center"
+    //     element.innerHTML += finderButton("Open in finder",verseVector.keys().next().value)
+    //     return
+    // }
     arr.forEach(e => {
         let [ratio,ch,ve] = [...e];
-        if(ayaList.value == ve  && suraList.value == ch){
+        if(ayaList.value == ve  && suraList.value == ch && !isSelection){
           return;
         }
         element.appendChild(createRow(ratio,ch,ve))
     });
+    isSelection= false;
     // triggerSimilarity();
 }
 /**
@@ -503,6 +517,9 @@ function menuFn() {
         // console.log("worked..." + " sel =" + sel)
         switch (e.target.value) {
             case 2: // check similar
+            if(!sel) break
+            setHeader(undefined,undefined,sel)
+            isSelection=true
             worker.postMessage({ "cmd": "checkSelection", "data": { msg: sel , min: perc.value} })
             break;
             case 4: // google search
@@ -522,3 +539,5 @@ function menuFn() {
     });
     addContextMenu();
 }
+
+let isSelection = false;

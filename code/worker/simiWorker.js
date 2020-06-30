@@ -151,11 +151,14 @@ function allMag() {
  * @param {*} magB magnitude B if we need to set it manually
  */
 function similarity(a, b, magB) {
-   
-    // let [a3,b3]= updateVectors(a1,b1, getInterSection(a1,b1))
+    // let [a1,b1] =checkSmaller(a,b)
+    let h  = getInterSection(a,b)
+    let [a3,b3]= updateVectors(a,b,h)
     // let [a2, b2] = termFwarper(a3, b3);
     // let date= new Date();
-    let result = innerProd(a, b) / (magnitude(a) * (magnitude(b)))
+    let result = innerProd(a, b3) / magnitude(h)
+    // magnitude(a)*magnitude(b3)
+    // 
     // console.log(new Date()-date)
     return result
 }
@@ -285,7 +288,7 @@ function getInterSection(a,b){
     let intersection = new Map();
     a.forEach((v,k,m)=>{
         if(b.get(k)>0){
-            intersection.set(k,1);
+            intersection.set(k, v + b.get(k));
         }
     })
     return intersection;
