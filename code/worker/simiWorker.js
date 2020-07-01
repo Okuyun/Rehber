@@ -89,7 +89,7 @@ onmessage = (e) => {
         case 'checkSelection':
             let wtv = wordsToVector(data.data.msg)
             postMessage({ 'cmd': 'vectorReturned', msg: wtv})
-            postMessage({ 'cmd': 'result', msg: wholeQuranLoop(wtv,magnitude(wtv), data.data.msg.min,similarity) })
+            postMessage({ 'cmd': 'result', msg: wholeQuranLoop(wtv,magnitude(wtv), data.data.min,similarity) })
             break;
         default:
             self.postMessage('Unknown command: ' + data.msg);
@@ -152,17 +152,28 @@ function allMag() {
  */
 function similarity(a, b, magB) {
     // let [a1,b1] =checkSmaller(a,b)
-    let h  = getInterSection(a,b)
-    let [a3,b3]= updateVectors(a,b,h)
+    // let h  = getInterSection(a,b)
+    // let [a3,b3]= updateVectors(a,b,h)
+    let b4 = updateBvector(a,b)
     // let [a2, b2] = termFwarper(a3, b3);
     // let date= new Date();
-    let result = innerProd(a, b3) / magnitude(h)
+    let result = innerProd(a, b4) / (magnitude(b4)*magnitude(a))
     // magnitude(a)*magnitude(b3)
     // 
     // console.log(new Date()-date)
     return result
 }
-
+function updateBvector(vectorA,vectorB){
+    let updatedVector = new Map();
+    let temp;
+    vectorA.forEach(
+        (value,key,arg ) => {
+            temp = vectorB.get(key)
+            updatedVector.set(key,!temp?0:temp)
+        }
+    )
+    return updatedVector;
+}
 function test() {
     // allMag();
 }
@@ -198,7 +209,7 @@ function similiartyError() {
  * @param {Number} v Verse
  * @param {Number} min minimum similarity rate
  */
-function checkSimilarity(c, v, min = 70) {
+function checkSimilarity(c, v, min = 90) {
     result = [];
     // verse vector
     let vv = getVerseVector(c, v);
@@ -211,12 +222,12 @@ function checkSimilarity(c, v, min = 70) {
     }
     return result;
 }
-function wholeQuranLoop(vv,mag,min=70,similarityFunction){
+function wholeQuranLoop(vv,mag,min=90,similarityFunction){
     let ratio;
     min = min/100
     let result = []
     surasVector.forEach(s => s.forEach(v => {
-        if ((ratio = similarityFunction(v.vector, vv, mag)) >= min) {
+        if ((ratio = similarityFunction(vv , v.vector, mag)) >= min) {
             // console.log(v.aya, (ratio = parseInt(ratio * 100)) > 100 ? 100 : ratio, v.ch, v.ver)
             result.push([(ratio = parseInt(ratio * 100)) > 100 ? 100 : ratio, v.ch, v.ver])
         }

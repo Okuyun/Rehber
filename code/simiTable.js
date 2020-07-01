@@ -380,11 +380,11 @@ function createTable(arr) {
     arr.forEach(e => {
         let [ratio,ch,ve] = [...e];
         if(ayaList.value == ve  && suraList.value == ch && !isSelection){
+          isSelection= false;
           return;
         }
         element.appendChild(createRow(ratio,ch,ve))
     });
-    isSelection= false;
     // triggerSimilarity();
 }
 /**
@@ -427,7 +427,7 @@ function writeToFile() {
         console.log(indS);
         ayas.forEach(
             (words, indA) => {
-                result = checkSimilarity(indS + 1, indA + 1, 70)
+                result = checkSimilarity(indS + 1, indA + 1, 90)
                 result.sort(perDesc)
                 str = result.slice(0, 12)
                 str = str.join(" ")
