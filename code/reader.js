@@ -17,8 +17,8 @@ let suraCounter = 0;
 function setSura(h = 0) {
     h = Number(h)
         //console.log(h);
-    if (h >= 112) {
-        lastSura = 112;
+    if (h >= 114) {
+        lastSura = 0;
         return;
     } else if (h < 0) {
         lastSura = 0;
@@ -48,6 +48,7 @@ function addSura( lastSura) {
 
 function createTableHeader(suraNumber){ 
     if(suraNumber < 0 ) suraNumber=0; 
+    if(suraNumber > 113) return "";
 let header = document.createElement("thead")
 let tr =  document.createElement("tr")
 let thTr = createTh( " ( " + Number( suraNumber +1 ) +" ) " +  quran.sura[suraNumber].ename )
@@ -66,7 +67,8 @@ function createTh(data){
 }
 
 function loadSura(suraNumber) {
-    if(suraNumber<=0) suraNumber=0;
+    if(suraNumber < 0) suraNumber = 114 + suraNumber;
+    if(suraNumber > 113) return "";
     let sura = document.createElement("table")
     sura.appendChild(createTableHeader(suraNumber))    
     sura.id = suraNumber + 1;
@@ -114,10 +116,10 @@ function displayArWr(number = 0) {
 }
 
 function appendSura() {
-    if (lastSura == 114) {
-        return
-    }
+    lastSura = lastSura%114
     addSura(lastSura);
+
+    // addSura(lastSura);
     // endOfScroll(artxt, appendSura)
     // checkSuraHeight()
     if (scrollingChapters.childElementCount > 4) {
@@ -141,15 +143,10 @@ function removeLastSura() {
 }
 
 function PrePendSura() {
-    if (scrollingChapters.firstChild.id == 1) {
-        return;
-    }
-    if(scrollingChapters.firstChild.id == 111){
-
-    }
     scrollingChapters.insertBefore(loadSura(Number(scrollingChapters.firstChild.id)-2), scrollingChapters.firstChild)
     removeLastSura()
     scrollingChapters.children[1].scrollIntoView()
+    lastSura=Number(scrollingChapters.lastChild.id);
 }
 
 
@@ -233,7 +230,7 @@ function initSuras() {
  * Thanks StackOverFlow: https://stackoverflow.com/a/35888762
  */
 function endOfScroll(target, callBack) {
-    if (target.scrollTop + target.clientHeight == target.scrollHeight) {
+    if (Math.trunc( scrollingChapters.scrollTop+scrollingChapters.clientHeight) == target.scrollHeight) {
         callBack();
     }
 }
