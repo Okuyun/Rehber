@@ -310,9 +310,12 @@ function setHeader(ch,ve,text){
     header.innerText=""
     let span = document.createElement("span")
     span.className = "arabic"
+    
     if(text){
         span.innerText= text
         header.appendChild(span)
+        header.innerHTML += "<br>";
+        header.appendChild(createEditButton())
         return
     }
     if(!text && !ch ) console.trace("undefined header")
@@ -320,7 +323,38 @@ function setHeader(ch,ve,text){
     header.appendChild(span)
     let div = splitDown(ch, ve)
     header.innerHTML += "<br>" + div
+    header.appendChild(createEditButton())
 
+}
+function createEditButton(){
+    let btn = document.createElement("button")
+    btn.type = "button"
+    btn.className = "btn badge badge-light align-text-bottom"
+    btn.innerHTML = "Custon Search"
+    btn.id = "CustomSearch"
+    btn.onclick = e => {
+        console.log("clicked")
+        let before = btn.parentNode.firstElementChild
+        let after = document.createElement('input');
+        after.value = before.innerHTML;
+        after.className="arabic form-control text-right"
+        after.dir ="rtl"
+        after.onkeyup = e => {
+            if (event.keyCode !== 13) return ;
+            event.preventDefault();
+            isSelection=true
+            worker.postMessage({ "cmd": "checkSelection", "data": { msg: after.value , min: perc.value} })
+            for(let i = 0; i < VerseHeader.childElementCount; i++){
+                VerseHeader.removeChild(VerseHeader.children[1])
+            }
+            
+        }
+        before.replaceWith(after);
+        btn.hidden=true;
+      
+        
+    }
+    return btn
 }
 /**
  * Init the table.
@@ -342,7 +376,6 @@ function createTable(arr) {
         length ++;
         title = "selection"
     }
-   
     wordNumber.innerText =length
     document.title = title
     element = document.getElementById("dTable").getElementsByTagName('tbody')[0];
@@ -377,6 +410,7 @@ function spanMaker(classType,innerHTML="") {
 }
 function createArabicSpan(text){
     let span = spanMaker("arabic")
+    span.dir="rtl"
     let full = spanMaker("fullText", text)
     let shrinked = spanMaker("shrinkArabic", shrink(text)) 
     span.appendChild(full)
@@ -394,7 +428,6 @@ function createRow(ratio, ch, ve) {
     let tr = document.createElement("tr");
     let td = document.createElement("td");
     td.scope = "col"
-    td.dir="rtl"
     td.className = "text-right"
     //    continue after the worker message, with rowVector function
     let text=mark(suraAr[ch - 1][ve - 1], verseVector)
@@ -537,5 +570,6 @@ function menuFn() {
     });
     addContextMenu();
 }
+
 
 let isSelection = false;
