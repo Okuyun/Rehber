@@ -100,13 +100,17 @@
 </select>
                 </li>
                 <li>
-                    <label name="aya">&emsp;Aya&emsp;&emsp;</label>
+                    <label for="al" name="aya">&emsp;Aya&emsp;&emsp;</label>
                     <select id="al" name="aya" class="select">
   <option value="1">1</option>
   <option value="2">2</option>
   <option value="3">3</option>
   <option value="4">4</option>
 </select>
+                </li>
+                <li>
+                    <label for="oneLine">One_line</label>
+                    <input type="checkbox" id="oneLine" name="oneLine">
                 </li>
             </ul>
 
@@ -236,10 +240,18 @@
     <script src="./code/config.js"></script>
     <script>
         window.name = "simi";
-        version.innerText= config.version;
+        version.innerText = config.version;
+        console.log(shrink)
         initSimilarity();
+        oneLine.onclick = e => {
+            if (e.target.checked) {
+                oneLineShow(true)
+            } else {
+                oneLineShow(false)
+            }
+        }
 
-        // initTable();
+            // initTable();
     </script>
 </body>
 

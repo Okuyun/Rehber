@@ -44,6 +44,7 @@
 
 
 great {
+    margin-right: -1;
     cursor: pointer;
     background-color: yellow;
     color: black;

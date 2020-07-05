@@ -371,12 +371,13 @@ function shrink(text, number = 5) {
      * IF index-5 = -X
      * post+x, start from 0
      */
+    let searchQue = document.getElementById("searchQue")
+    if(!!searchQue){
+        number = number + (searchQue.value.split(" ").length);
+    }
     text = text.split(" ");
-
     let index = text.findIndex(e => e.includes("<great"))
     let endIndex = text.findIndex(e => e.includes("</great>"))
-    number = number + (searchQue.value.split(" ").length);
-
     if (text.length <= number) {
         return text.join(" ")
     }
@@ -394,7 +395,6 @@ function shrink(text, number = 5) {
     }
     //console.log(text.slice(pre,post).length)
     return text.slice(pre, post).join(" ");
-
 }
 let dataArr, wordCt;
 // arr is lsit of aya and sura, searched word.
@@ -1206,8 +1206,9 @@ function oneLineShow(bool) {
         fullTextStyle("table-cell");
         showHideButtonStyle("none")
     }
-    updateSettings("oneline", oneline)
-
+    if (typeof variable !== 'undefined') {
+        updateSettings("oneline", oneline)
+    }
 }
 /**
  * Reset the showHideFull button which is the one near the open last one to showing as + smybol

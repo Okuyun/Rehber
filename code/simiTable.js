@@ -116,18 +116,9 @@ function callWorker() {
  * @param {String} verse The verse words.
  * @param {*} vector The verse vector.
  */
-function mark(ratio, verse, vector) {
+function mark(verse, vector) {
     verse = verse.split(" ")
-    if (ratio >= 60) {
-        // changeGreatColour("yellow")
-        verse = greatArray(vector, verse, 0)
-    } else if (ratio < 60 && ratio >= 40) {
-        // changeGreatColour("")
-        verse = greatArray(vector, verse, 2)
-    } else {
-        // changeGreatColour("red")
-        verse = greatArray(vector, verse, 1)
-    }
+    verse = greatArray(vector, verse)
     return verse.join(" ");
 }
 /**
@@ -136,22 +127,12 @@ function mark(ratio, verse, vector) {
  * @param {*} wordArray 
  * @param {*} mode 
  */
-function greatArray(vector, wordArray, mode) {
-    if (mode == 1) { // more than 60 
-        wordArray = wordArray.map(e => {
-            if (vector.get(wordToRoot.get(toBuckwalter(e))) >= 1) {
-                return `<span style="color:yellow">${e}</span>`
-            } else { return e }
-        })
-    } // less than 40
-    else if (mode == 0) {
-        wordArray = wordArray.map(e => {
-            let word = vector.get(wordToRoot.get(toBuckwalter(e)))
-            if (word < 1 || word == undefined) {
-                return `<span style="color:red">${e}</span>`
-            } else { return e }
-        })
-    }
+function greatArray(vector, wordArray) {
+    wordArray = wordArray.map(e => {
+        if (vector.get(wordToRoot.get(toBuckwalter(e))) >= 1) {
+            return `<great>${e}</great>`
+        } else { return e }
+    })
     return wordArray;
 
 }
@@ -387,6 +368,21 @@ function createTable(arr) {
     });
     // triggerSimilarity();
 }
+
+function spanMaker(classType,innerHTML="") {
+    let span = document.createElement("span")
+    span.className = classType
+    span.innerHTML = innerHTML
+    return span;
+}
+function createArabicSpan(text){
+    let span = spanMaker("arabic")
+    let full = spanMaker("fullText", text)
+    let shrinked = spanMaker("shrinkArabic", shrink(text)) 
+    span.appendChild(full)
+    span.appendChild(shrinked)
+    return span;
+}
 /**
  * create Row of the table.
  * @param {Number} ratio the ratio.
@@ -398,19 +394,21 @@ function createRow(ratio, ch, ve) {
     let tr = document.createElement("tr");
     let td = document.createElement("td");
     td.scope = "col"
+    td.dir="rtl"
     td.className = "text-right"
-    let span = document.createElement("span")
-    span.className = "arabic"
     //    continue after the worker message, with rowVector function
-    span.innerHTML = mark(ratio, suraAr[ch - 1][ve - 1], verseVector)
-    td.appendChild(span)
-    let div = splitDown(ch, ve)
-    td.innerHTML += "<br>" + div
-    // btn group...
+    let text=mark(suraAr[ch - 1][ve - 1], verseVector)
+    td.appendChild(createArabicSpan(text))
     span = document.createElement("span")
-    span.className = "badge badge-info col-1";
+    span.className = "badge badge-info";
     span.innerText = ratio + "%"
+    td.innerHTML += '<br>'
     td.appendChild(span)
+
+    let div = splitDown(ch, ve)
+    td.innerHTML +=  div
+    // btn group...
+   
     tr.appendChild(td)
     return tr;
 }
