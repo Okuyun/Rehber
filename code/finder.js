@@ -936,23 +936,6 @@ async function loadMujam(){
     console.log("Mujam load time",new Date() - date)
     return p
 }
-// from: https://stackoverflow.com/questions/1409225/changing-a-css-rule-set-from-javascript
-// Add variables array then use destrutctor to call it for once! only one time... 
-// no need to crash the app everytime the user will change the CSS since its static and
-//  stable, yet, do you think the array thingy was faster? if yes then go for it and leave 
-// TODO: this, speed is valuable more than some ninja JS skills here. 
-
-function getCSSRule(ruleName) {
-    // ruleName=ruleName.toLowerCase();                      
-    for (let sheet of document.styleSheets) {
-        for (let rule of sheet.cssRules) {
-            if (rule.selectorText == ruleName) {
-                return rule;
-            }
-        }
-    }
-
-}
 
 function changeColour(col) {
     changeGreatColour(col)

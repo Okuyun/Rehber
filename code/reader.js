@@ -52,7 +52,7 @@ function createTableHeader(suraNumber){
 let header = document.createElement("thead")
 let tr =  document.createElement("tr")
 let thTr = createTh( " ( " + Number( suraNumber +1 ) +" ) " +  quran.sura[suraNumber].ename )
-thTr.className ="w-50 text-center sticky"
+thTr.className ="tableTefsir w-50 text-center sticky"
 tr.appendChild(thTr)
 let thAr = createTh( " ( " +  Number( suraNumber +1 ) +" ) " + quran.sura[suraNumber].name  )
 thAr.className ="arabic text-center sticky"
@@ -87,7 +87,9 @@ function loadSura(suraNumber) {
         aya.id = i + 1
         let td = document.createElement("td");
         td.innerText="(" +aya.id +")"   +  suraTr[suraNumber][i] ;
+        td.className="tableTefsir"
         aya.appendChild(td)
+        
         td = document.createElement("td");
         td.innerText= "(" +aya.id +")" + e 
         td.className="arabic text-right w-50"
@@ -216,6 +218,7 @@ function initSuras() {
   for (let index = 0; index < 4; index++) {
     appendSura();
   }
+//   PrePendSura()
 }
 
  scrollingChapters.onscroll = function() {
@@ -236,7 +239,7 @@ function endOfScroll(target, callBack) {
 }
 
 function topOfScroll(target, callBack) {
-    if (target.scrollTop == 0) {
+    if (target.scrollTop <  100) {
         callBack();
     }
 }
@@ -272,17 +275,25 @@ function getChapterVerse(text){
     loadhash(c - 1)
     scrollToCV(c, v)
 }
-function gotosura(){
-   let [c,v] = document.getElementById("suraCV").value.split(":")
-   if(!v) v = 1;
-   setHash(Number(c)  , Number(v) );
+function gotosura(event){
+    console.log(event)
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        let [c,v] = document.getElementById("suraCV").value.split(":")
+        if(!v) v = 1;
+        setHash(Number(c)  , Number(v) );
+    }
 }
 function scrollToCV(c, v) {
     if(!v) v = 1;
     if(c=="") c=1;
     let h = document.querySelector(`#scrollingChapters > table[id='${c}'] > tbody >  tr[id='${v}']`).offsetTop
     let offset = document.querySelector(`#scrollingChapters > table[id='${c}'] > thead >  tr`).clientHeight
-    scrollingChapters.scrollTo(0,h - offset)
+    scrollingChapters.scrollTo({
+        left: 0,
+        top: h-offset  ,
+        behavior: 'smooth'
+    })
     // document.querySelector(`#scrollingChapters > table[id='${c}'] > tbody >  tr[id='${v}']`).scrollIntoView()
 }
 
@@ -313,44 +324,26 @@ window.onresize = () => {
     responsiveMode();
 }
 
-function displayState(state){
-    switch (state){
-        case 1:
-            checkState(1)
-            break;
-        case 2:
-           checkState(2)
-            break;
-        case 3:
-checkState(3)
-        break;
-    }
-}
 
 function checkState(number){
-//    switch(number){
-//        case 1:
-       
-//         state1.checked = true
-//         state2.checked = false
-//         state3.checked = false
-     
-//            break;
-//         case 2:
-          
-//             state1.checked = false
-//             state2.checked = true
-//             state3.checked = false
-//             break;
-//             case 3:
-              
-//                 state1.checked = false
-//                 state2.checked = false
-//                 state3.checked = true
-//                 break;
- 
-//    }
+   switch(number){
+       case 1: 
+       states(true,false,false)      
+       break;
+        case 2:
+            states(false,true,false)      
 
+            break;
+            case 3:
+                states(false,false,true)      
+
+                break;
+   }
+}
+function states(one,two,three){
+    state1.checked = one
+    state2.checked = two
+    state3.checked = three   
 }
 
 function clearSura(){
@@ -360,4 +353,45 @@ function addAll(){
     for (let i = 0 ; i < 114 ; i ++ ){
         addSura(i)
         }
+}
+function displayState(number){
+    switch(number){
+        case 1:
+            checkState(1)
+            showAll();
+        break;
+        case 3:
+            checkState(3)
+            hideArabic();
+            showTefsir()
+        break;
+        case 2:
+            checkState(2)
+            hideTefsir();
+            showArabic();
+        break;
+        
+    }
+}
+function showAll(){
+    showArabic()
+    showTefsir()
+}
+function hideTefsir(){
+    setTefsir("none");
+}
+function showTefsir(){
+    setTefsir("table-cell");
+}
+function showArabic(){
+    setArabic("table-cell");
+}
+function hideArabic(){
+    setArabic("none"); 
+}
+function setTefsir(text){
+    getCSSRule(".tableTefsir").style.display=text;
+}
+function setArabic(text){
+    getCSSRule(".arabic").style.display=text;
 }

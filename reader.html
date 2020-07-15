@@ -41,6 +41,10 @@
   background-color: #f8f9fa;
   border-top-width: 0px!important;
 }
+.row {
+      margin-right: auto;
+      margin-left: auto;
+}
 
     </style>
 </head>
@@ -111,7 +115,7 @@
         </div>
         <div class="row w-100">
           <div class="custom-control custom-radio custom-control-inline">
-            <input onchange="displayState(1)" type="radio" id="state1" name="state" class="custom-control-input">
+            <input checked onchange="displayState(1)" type="radio" id="state1" name="state" class="custom-control-input">
             <label class="custom-control-label" for="state1">Show all</label>
           </div>
           <div class="custom-control custom-radio custom-control-inline">
@@ -305,7 +309,7 @@
 </div>
       </div>
     </div>
-  
+    <script src="./code/common.js"></script>
     <script src="code/quran-data.js"></script>
     <script src="code/quran-sura.js"></script>
     <script src="./code/script.js"></script>
