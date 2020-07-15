@@ -164,7 +164,7 @@ function syncOnclick(Event) {
     // element.scrollIntoView()
 }
 
-function setHash(c, v) {
+function setHash(c, v=1) {
     console.log(c, v)
     location.hash = c + ":" + v;
 }
@@ -220,10 +220,18 @@ function initSuras() {
   }
 //   PrePendSura()
 }
-
+function setDynamicHash(){
+    setHash(scrollingChapters.firstChild.id);
+}
  scrollingChapters.onscroll = function() {
-     endOfScroll(scrollingChapters, function() { appendSura() })
-     topOfScroll(scrollingChapters, e => PrePendSura())
+     endOfScroll(scrollingChapters, function() {
+          appendSura();
+            setDynamicHash()
+        })
+     topOfScroll(scrollingChapters, e =>{
+        PrePendSura();
+        setDynamicHash();
+     })
  }
 
 /**
