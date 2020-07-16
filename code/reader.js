@@ -144,10 +144,10 @@ function removeLastSura() {
     lastSura = Number(scrollingChapters.firstChild.id) -1 ;
 }
 
-function PrePendSura() {
+function PrePendSura(scroll=true) {
     scrollingChapters.insertBefore(loadSura(Number(scrollingChapters.firstChild.id)-2), scrollingChapters.firstChild)
     removeLastSura()
-    scrollingChapters.children[1].scrollIntoView()
+    if (scroll) scrollingChapters.children[1].scrollIntoView()
     lastSura=Number(scrollingChapters.lastChild.id);
 }
 
@@ -229,7 +229,7 @@ function setDynamicHash(){
             setDynamicHash()
         })
      topOfScroll(scrollingChapters, e =>{
-        PrePendSura();
+        PrePendSura(false);
         setDynamicHash();
      })
  }
