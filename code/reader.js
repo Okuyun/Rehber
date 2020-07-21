@@ -56,7 +56,7 @@ let thTr = createTh( " ( " + Number( suraNumber +1 ) +" ) " +  quran.sura[suraNu
 thTr.className ="tableTefsir w-50 text-center sticky"
 tr.appendChild(thTr)
 let thAr = createTh( " ( " +  Number( suraNumber +1 ) +" ) " + quran.sura[suraNumber].name  )
-thAr.className ="arabic text-center sticky"
+thAr.className ="tableArabic arabic text-center sticky"
 tr.appendChild(thAr)
 header.appendChild(tr)
 return header;
@@ -87,13 +87,21 @@ function loadSura(suraNumber) {
         aya = document.createElement("tr")
         aya.id = i + 1
         let td = document.createElement("td");
-        td.innerText="(" +aya.id +")"   +  suraTr[suraNumber][i] ;
         td.className="tableTefsir"
+        td.appendChild(createShareButton())
+        td.appendChild(document.createElement("br"))
+        td.appendChild(document.createTextNode("(" +aya.id +")"   +  suraTr[suraNumber][i]));
         aya.appendChild(td)
         
         td = document.createElement("td");
-        td.innerText= "(" +aya.id +")" + e 
-        td.className="arabic text-right w-50"
+        td.appendChild(createShareButton())
+        td.appendChild(document.createElement("br"))
+        td.className="tableArabic text-right w-50"
+        td.dir="rtl"
+        let span = document.createElement("span")
+        span.innerText= "(" +aya.id +")" + e 
+        span.className="arabic text-right"
+        td.appendChild(span)
         aya.appendChild(td)
         tbody.appendChild(aya)
     });
@@ -407,7 +415,7 @@ function setTefsir(text){
     getCSSRule(".tableTefsir").style.display=text;
 }
 function setArabic(text){
-    getCSSRule(".arabic").style.display=text;
+    getCSSRule(".tableArabic").style.display=text;
 }
 function isInView(){
     let x = scrollingChapters;
@@ -415,4 +423,31 @@ function isInView(){
         if(x.children[h].getBoundingClientRect().height + x.children[h].getBoundingClientRect().y -160 > 0 )
             return x.children[h].id
     }
+}
+
+function share(c,v){
+    if (navigator.share) {
+        navigator.share({
+          title: 'Kuran Rehberi',
+          text: 'bu ayet ilgim çekti',
+          url: location.href.split("#")[0]+`#${c}:${v}`,
+        })
+          .then(() => console.log('Successful share'))
+          .catch((error) => console.log('Error sharing', error));
+      }
+}
+
+function createShareButton(){
+    // <button type="button" class="btn btn-outline-info">Info</button>
+    let btn = document.createElement("button")
+    btn.type="button"
+    btn.className="btn badge badge-info align-text-bottom"
+    btn.innerText = "Share"
+    btn.onclick = e => {
+        let verse = btn.parentElement.parentElement
+        let chapter = verse.parentElement.parentElement
+        console.log(chapter.id,verse.id,"shared")
+        share(chapter.id,verse.id)
+    }
+    return btn
 }
