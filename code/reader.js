@@ -8,6 +8,12 @@ let lastSura = 1;
  */
 let suraCounter = 0;
 /**
+ * 
+ * Determine weather to scroll or not on page update.
+ */
+let isHash = true;
+
+/**
  * Set choosen sura and its search elements to show it.
  * 
  * @param {number} h to set the sura number - H was chosen as random, need to be changed
@@ -16,13 +22,8 @@ let suraCounter = 0;
  */
 function setSura(h = 0) {
     h = Number(h)
+    lastSura = lastSura%114
         //console.log(h);
-    if (h >= 114) {
-        lastSura = 0;
-        return;
-    } else if (h < 0) {
-        lastSura = 0;
-    }
     // return dataShow.innerText = "Please Choose a number between 1-114"
     lastSura = h
 }
@@ -144,10 +145,10 @@ function removeLastSura() {
     lastSura = Number(scrollingChapters.firstChild.id) -1 ;
 }
 
-function PrePendSura(scroll=true) {
+function PrePendSura() {
     scrollingChapters.insertBefore(loadSura(Number(scrollingChapters.firstChild.id)-2), scrollingChapters.firstChild)
     removeLastSura()
-    if (scroll) scrollingChapters.children[1].scrollIntoView()
+    // if (scroll){scrollingChapters.children[1].scrollIntoView()}
     lastSura=Number(scrollingChapters.lastChild.id);
 }
 
@@ -221,18 +222,20 @@ function initSuras() {
 //   PrePendSura()
 }
 function setDynamicHash(){
-    setHash(scrollingChapters.firstChild.id);
+    isHash=false
+    setHash(isInView(),1);
 }
  scrollingChapters.onscroll = function() {
-     endOfScroll(scrollingChapters, function() {
+   
+    endOfScroll(scrollingChapters, function() {
           appendSura();
-            setDynamicHash()
         })
      topOfScroll(scrollingChapters, e =>{
-        PrePendSura(false);
-        setDynamicHash();
+        PrePendSura();
      })
- }
+    setDynamicHash()
+    console.log(isInView())
+}
 
 /**
  * check if its at the end of scroll and have a call back function
@@ -265,6 +268,7 @@ function loadhash(chapter=0) {
 }
 
 function getHash() {
+    if (!isHash) { isHash=true; return} 
     let h = decodeURI(location.hash).slice(1);
     if(h=="") {
         setHash(1,1)
@@ -293,6 +297,8 @@ function gotosura(event){
     }
 }
 function scrollToCV(c, v) {
+    if(!isHash) return;
+    console.log("scrolled?")
     if(!v) v = 1;
     if(c=="") c=1;
     let h = document.querySelector(`#scrollingChapters > table[id='${c}'] > tbody >  tr[id='${v}']`).offsetTop
@@ -402,4 +408,11 @@ function setTefsir(text){
 }
 function setArabic(text){
     getCSSRule(".arabic").style.display=text;
+}
+function isInView(){
+    let x = scrollingChapters;
+    for (let h = 0; h < 4; h++) {
+        if(x.children[h].getBoundingClientRect().height + x.children[h].getBoundingClientRect().y -160 > 0 )
+            return x.children[h].id
+    }
 }
