@@ -116,18 +116,9 @@ function callWorker() {
  * @param {String} verse The verse words.
  * @param {*} vector The verse vector.
  */
-function mark(ratio, verse, vector) {
+function mark(verse, vector) {
     verse = verse.split(" ")
-    if (ratio >= 60) {
-        // changeGreatColour("yellow")
-        verse = greatArray(vector, verse, 0)
-    } else if (ratio < 60 && ratio >= 40) {
-        // changeGreatColour("")
-        verse = greatArray(vector, verse, 2)
-    } else {
-        // changeGreatColour("red")
-        verse = greatArray(vector, verse, 1)
-    }
+    verse = greatArray(vector, verse)
     return verse.join(" ");
 }
 /**
@@ -136,39 +127,42 @@ function mark(ratio, verse, vector) {
  * @param {*} wordArray 
  * @param {*} mode 
  */
-function greatArray(vector, wordArray, mode) {
-    if (mode == 1) { // more than 60 
-        wordArray = wordArray.map(e => {
-            if (vector.get(wordToRoot.get(toBuckwalter(e))) >= 1) {
-                return `<span style="color:yellow">${e}</span>`
-            } else { return e }
-        })
-    } // less than 40
-    else if (mode == 0) {
-        wordArray = wordArray.map(e => {
-            let word = vector.get(wordToRoot.get(toBuckwalter(e)))
-            if (word < 1 || word == undefined) {
-                return `<span style="color:red">${e}</span>`
-            } else { return e }
-        })
-    }
+function greatArray(vector, wordArray) {
+    wordArray = wordArray.map(e => {
+        if (vector.get(wordToRoot.get(toBuckwalter(e))) >= 1) {
+            return `<great>${e}</great>`
+        } else { return e }
+    })
     return wordArray;
 
+}
+function finderButton(msg,root){
+    return `
+    <!-- Example split warning button -->
+<div class="btn-group">
+<button type="button" class="btn badge badge-warning align-text-bottom" onclick="openFinder('${root}')">${msg}</button>
+
+</div>
+`
+}
+function openFinder(root){
+    let link = "https://a0m0rajab.github.io/BahisQurani/finder#r=" + root;
+    window.open(link, "finder")
 }
 /**
  * generating the button to open extra sources
  * @param {Number} c chapter number
  * @param {Number} v Verse number
  */
-function splitDown(c, v) {
+function splitDown(c, v,color="light") {
     let cv = c + ":" + v
     return `
     <!-- Example split danger button -->
 <div class="btn-group">
-<button type="button" class="btn badge badge-light align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<button type="button" class="btn badge badge-`+color+` align-text-bottom dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 <span class="sr-only">Toggle Dropdown</span>
 </button>
-  <button type="button" class="btn badge badge-light align-text-bottom" onclick="lastOneF('${cv}')">${cv + " " + quran.sura[c - 1].name}</button>
+  <button type="button" class="btn badge badge-`+color+` align-text-bottom" onclick="lastOneF('${cv}')">${cv + " " + quran.sura[c - 1].name}</button>
  
   <div class="dropdown-menu">
     <button class="dropdown-item" onclick="openCorpus('${cv}')">Corpus</button>
@@ -305,10 +299,62 @@ function triggerSimilarity() {
     getVerseVector(suraList, ayaList)
     // worker.postMessage("test")
     worker.postMessage({ "cmd": "compare", "msg": { c: suraList, v: ayaList, min: perc } })
+    setHeader(suraList,ayaList)
     // worker.postMessage({"cmd":"compare", "msg":{c:3,v:3}})
     // worker.postMessage({"cmd":"init", "data":{sura:suraAr,suraV:surasVector,rootV:rootsVector, wordsRoots:wordToRoot}})
 
     // result = checkSimilarity(suraList.value, ayaList.value, perc.value)
+}
+function setHeader(ch,ve,text){
+    let header = document.getElementById("VerseHeader")
+    header.innerText=""
+    let span = document.createElement("span")
+    span.className = "arabic"
+    
+    if(text){
+        span.innerText= text
+        header.appendChild(span)
+        header.innerHTML += "<br>";
+        header.appendChild(createEditButton())
+        return
+    }
+    if(!text && !ch ) console.trace("undefined header")
+    span.innerHTML = suraAr[ch - 1][ve - 1]
+    header.appendChild(span)
+    let div = splitDown(ch, ve)
+    header.innerHTML += "<br>" + div
+    header.appendChild(createEditButton())
+
+}
+function createEditButton(){
+    let btn = document.createElement("button")
+    btn.type = "button"
+    btn.className = "btn badge badge-light align-text-bottom"
+    btn.innerHTML = "Custon Search"
+    btn.id = "CustomSearch"
+    btn.onclick = e => {
+        console.log("clicked")
+        let before = btn.parentNode.firstElementChild
+        let after = document.createElement('input');
+        after.value = before.innerHTML;
+        after.className="arabic form-control text-right"
+        after.dir ="rtl"
+        after.onkeyup = e => {
+            if (event.keyCode !== 13) return ;
+            event.preventDefault();
+            isSelection=true
+            worker.postMessage({ "cmd": "checkSelection", "data": { msg: after.value , min: perc.value} })
+            for(let i = 0; i < VerseHeader.childElementCount; i++){
+                VerseHeader.removeChild(VerseHeader.children[1])
+            }
+            
+        }
+        before.replaceWith(after);
+        btn.hidden=true;
+      
+        
+    }
+    return btn
 }
 /**
  * Init the table.
@@ -324,18 +370,56 @@ function initSimilarity() {
 function createTable(arr) {
     let ayaList = document.getElementById("al");
     let suraList = document.getElementById("sl");
-    wordNumber.innerText = arr.length
-    document.title = suraList.value + " " + ayaList.value + " " + arr.length
+    let length =  arr.length-1
+    let title =suraList.value + " " + ayaList.value + " " + arr.length
+    if(isSelection)    {
+        length ++;
+        title = "selection"
+    }
+    wordNumber.innerText =length
+    document.title = title
     element = document.getElementById("dTable").getElementsByTagName('tbody')[0];
     element.innerHTML = ""
+    if(arr.length  < 2) {
+        element.innerHTML = "There is no similarity"
+        element.className="text-center"
+        return
+    }
+    // if(verseVector.size == 1) {
+    //     wordNumber.innerText = 0
+    //     element.className="text-center"
+    //     element.innerHTML += finderButton("Open in finder",verseVector.keys().next().value)
+    //     return
+    // }
     arr.forEach(e => {
-        element.appendChild(createRow(...e))
+        let [ratio,ch,ve] = [...e];
+        if(ayaList.value == ve  && suraList.value == ch && !isSelection){
+          isSelection= false;
+          return;
+        }
+        element.appendChild(createRow(ratio,ch,ve))
     });
     // triggerSimilarity();
 }
+
+function spanMaker(classType,innerHTML="") {
+    let span = document.createElement("span")
+    span.className = classType
+    span.innerHTML = innerHTML
+    return span;
+}
+function createArabicSpan(text){
+    let span = spanMaker("arabic")
+    span.dir="rtl"
+    let full = spanMaker("fullText", text)
+    let shrinked = spanMaker("shrinkArabic", shrink(text)) 
+    span.appendChild(full)
+    span.appendChild(shrinked)
+    return span;
+}
 /**
  * create Row of the table.
- * @param {Number} ratio the ration.
+ * @param {Number} ratio the ratio.
  * @param {Number} ch the chapter number.
  * @param {Number} ve the vercse number.
  */
@@ -345,18 +429,19 @@ function createRow(ratio, ch, ve) {
     let td = document.createElement("td");
     td.scope = "col"
     td.className = "text-right"
-    let span = document.createElement("span")
-    span.className = "arabic"
     //    continue after the worker message, with rowVector function
-    span.innerHTML = mark(ratio, suraAr[ch - 1][ve - 1], verseVector)
-    td.appendChild(span)
-    let div = splitDown(ch, ve)
-    td.innerHTML += "<br>" + div
-    // btn group...
+    let text=mark(suraAr[ch - 1][ve - 1], verseVector)
+    td.appendChild(createArabicSpan(text))
     span = document.createElement("span")
-    span.className = "badge badge-info col-1";
+    span.className = "badge badge-info";
     span.innerText = ratio + "%"
+    td.innerHTML += '<br>'
     td.appendChild(span)
+
+    let div = splitDown(ch, ve)
+    td.innerHTML +=  div
+    // btn group...
+   
     tr.appendChild(td)
     return tr;
 }
@@ -373,7 +458,7 @@ function writeToFile() {
         console.log(indS);
         ayas.forEach(
             (words, indA) => {
-                result = checkSimilarity(indS + 1, indA + 1, 70)
+                result = checkSimilarity(indS + 1, indA + 1, 90)
                 result.sort(perDesc)
                 str = result.slice(0, 12)
                 str = str.join(" ")
@@ -463,6 +548,9 @@ function menuFn() {
         // console.log("worked..." + " sel =" + sel)
         switch (e.target.value) {
             case 2: // check similar
+            if(!sel) break
+            setHeader(undefined,undefined,sel)
+            isSelection=true
             worker.postMessage({ "cmd": "checkSelection", "data": { msg: sel , min: perc.value} })
             break;
             case 4: // google search
@@ -482,3 +570,6 @@ function menuFn() {
     });
     addContextMenu();
 }
+
+
+let isSelection = false;

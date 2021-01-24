@@ -18,13 +18,18 @@
         /* * {
     border: 1px solid;
 } */
+#VerseHeader{
+    top:-1;
+    background-color: #eaeff5!important;
+    padding: 2.5%;
+}
     </style>
 </head>
 
 <body>
     <!-- from bootstrap examples  -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" style="user-select: none;">Kuran Rehberi</a>
+        <a class="navbar-brand" style="user-select: none;"  href="./">Kuran Rehberi</a>
         <span id="version" class="navbar-text">
         </span>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,13 +102,17 @@
 </select>
                 </li>
                 <li>
-                    <label name="aya">&emsp;Aya&emsp;&emsp;</label>
+                    <label for="al" name="aya">&emsp;Aya&emsp;&emsp;</label>
                     <select id="al" name="aya" class="select">
   <option value="1">1</option>
   <option value="2">2</option>
   <option value="3">3</option>
   <option value="4">4</option>
 </select>
+                </li>
+                <li>
+                    <label for="oneLine">One_line</label>
+                    <input type="checkbox" id="oneLine" name="oneLine">
                 </li>
             </ul>
 
@@ -120,23 +129,27 @@
                 </div>
                 <div>
                     <label name="percentage">&emsp;Oran &emsp;</label>
-                    <input max="100" min="0" type="number" name="percentage" id="perc" value="70">
+                    <input max="100" min="0" type="number" name="percentage" id="perc" value="90">
                 </div>
             </div>
         </nav>
 
         <div class="row">
             <div class="col-12">
-                <table id="dTable" class="table">
+                <table id="dTable" class="table table-hover table-sm">
                     <caption style=" caption-side:top;">
                         <span id="wordNumber">3</span>
                         <span id="txtWordFound">ayet</span>
                     </caption>
                     <thead>
                         <tr>
-
                             <th id="arabicHeader" class="text-right">عربي
                             </th>
+                        </tr>
+                          <tr>
+                            <td id="VerseHeader" class="text-right sticky">
+                                gdf
+                            </td>
                         </tr>
                     </thead>
                     <tbody>
@@ -206,6 +219,7 @@
                             </td>
                         </tr>
                     </tbody>
+                  
                 </table>
             </div>
         </div>
@@ -228,10 +242,18 @@
     <script src="./code/config.js"></script>
     <script>
         window.name = "simi";
-        version.innerText= config.version;
+        version.innerText = config.version;
+        console.log(shrink)
         initSimilarity();
+        oneLine.onclick = e => {
+            if (e.target.checked) {
+                oneLineShow(true)
+            } else {
+                oneLineShow(false)
+            }
+        }
 
-        // initTable();
+            // initTable();
     </script>
 </body>
 

@@ -8,6 +8,12 @@ let lastSura = 1;
  */
 let suraCounter = 0;
 /**
+ * 
+ * Determine weather to scroll or not on page update.
+ */
+let isHash = true;
+
+/**
  * Set choosen sura and its search elements to show it.
  * 
  * @param {number} h to set the sura number - H was chosen as random, need to be changed
@@ -16,13 +22,8 @@ let suraCounter = 0;
  */
 function setSura(h = 0) {
     h = Number(h)
+    lastSura = lastSura%114
         //console.log(h);
-    if (h >= 112) {
-        lastSura = 112;
-        return;
-    } else if (h < 0) {
-        lastSura = 0;
-    }
     // return dataShow.innerText = "Please Choose a number between 1-114"
     lastSura = h
 }
@@ -48,13 +49,14 @@ function addSura( lastSura) {
 
 function createTableHeader(suraNumber){ 
     if(suraNumber < 0 ) suraNumber=0; 
+    if(suraNumber > 113) return "";
 let header = document.createElement("thead")
 let tr =  document.createElement("tr")
 let thTr = createTh( " ( " + Number( suraNumber +1 ) +" ) " +  quran.sura[suraNumber].ename )
-thTr.className ="w-50 text-center sticky"
+thTr.className ="tableTefsir w-50 text-center sticky"
 tr.appendChild(thTr)
 let thAr = createTh( " ( " +  Number( suraNumber +1 ) +" ) " + quran.sura[suraNumber].name  )
-thAr.className ="arabic text-center sticky"
+thAr.className ="tableArabic arabic text-center sticky"
 tr.appendChild(thAr)
 header.appendChild(tr)
 return header;
@@ -66,7 +68,8 @@ function createTh(data){
 }
 
 function loadSura(suraNumber) {
-    if(suraNumber<=0) suraNumber=0;
+    if(suraNumber < 0) suraNumber = 114 + suraNumber;
+    if(suraNumber > 113) return "";
     let sura = document.createElement("table")
     sura.appendChild(createTableHeader(suraNumber))    
     sura.id = suraNumber + 1;
@@ -84,11 +87,21 @@ function loadSura(suraNumber) {
         aya = document.createElement("tr")
         aya.id = i + 1
         let td = document.createElement("td");
-        td.innerText="(" +aya.id +")"   +  suraTr[suraNumber][i] ;
+        td.className="tableTefsir"
+        td.appendChild(createShareButton())
+        td.appendChild(document.createElement("br"))
+        td.appendChild(document.createTextNode("(" +aya.id +")"   +  suraTr[suraNumber][i]));
         aya.appendChild(td)
+        
         td = document.createElement("td");
-        td.innerText= "(" +aya.id +")" + e 
-        td.className="arabic text-right w-50"
+        td.appendChild(createShareButton())
+        td.appendChild(document.createElement("br"))
+        td.className="tableArabic text-right w-50"
+        td.dir="rtl"
+        let span = document.createElement("span")
+        span.innerText= "(" +aya.id +")" + e 
+        span.className="arabic text-right"
+        td.appendChild(span)
         aya.appendChild(td)
         tbody.appendChild(aya)
     });
@@ -114,10 +127,10 @@ function displayArWr(number = 0) {
 }
 
 function appendSura() {
-    if (lastSura == 114) {
-        return
-    }
+    lastSura = lastSura%114
     addSura(lastSura);
+
+    // addSura(lastSura);
     // endOfScroll(artxt, appendSura)
     // checkSuraHeight()
     if (scrollingChapters.childElementCount > 4) {
@@ -141,15 +154,10 @@ function removeLastSura() {
 }
 
 function PrePendSura() {
-    if (scrollingChapters.firstChild.id == 1) {
-        return;
-    }
-    if(scrollingChapters.firstChild.id == 111){
-
-    }
     scrollingChapters.insertBefore(loadSura(Number(scrollingChapters.firstChild.id)-2), scrollingChapters.firstChild)
     removeLastSura()
-    scrollingChapters.children[1].scrollIntoView()
+    // if (scroll){scrollingChapters.children[1].scrollIntoView()}
+    lastSura=Number(scrollingChapters.lastChild.id);
 }
 
 
@@ -165,7 +173,7 @@ function syncOnclick(Event) {
     // element.scrollIntoView()
 }
 
-function setHash(c, v) {
+function setHash(c, v=1) {
     console.log(c, v)
     location.hash = c + ":" + v;
 }
@@ -219,12 +227,23 @@ function initSuras() {
   for (let index = 0; index < 4; index++) {
     appendSura();
   }
+//   PrePendSura()
 }
-
+function setDynamicHash(){
+    isHash=false
+    setHash(isInView(),1);
+}
  scrollingChapters.onscroll = function() {
-     endOfScroll(scrollingChapters, function() { appendSura() })
-     topOfScroll(scrollingChapters, e => PrePendSura())
- }
+   
+    endOfScroll(scrollingChapters, function() {
+          appendSura();
+        })
+     topOfScroll(scrollingChapters, e =>{
+        PrePendSura();
+     })
+    setDynamicHash()
+    console.log(isInView())
+}
 
 /**
  * check if its at the end of scroll and have a call back function
@@ -233,13 +252,13 @@ function initSuras() {
  * Thanks StackOverFlow: https://stackoverflow.com/a/35888762
  */
 function endOfScroll(target, callBack) {
-    if (target.scrollTop + target.clientHeight == target.scrollHeight) {
+    if (Math.trunc( scrollingChapters.scrollTop+scrollingChapters.clientHeight) == target.scrollHeight) {
         callBack();
     }
 }
 
 function topOfScroll(target, callBack) {
-    if (target.scrollTop == 0) {
+    if (target.scrollTop <  100) {
         callBack();
     }
 }
@@ -257,6 +276,7 @@ function loadhash(chapter=0) {
 }
 
 function getHash() {
+    if (!isHash) { isHash=true; return} 
     let h = decodeURI(location.hash).slice(1);
     if(h=="") {
         setHash(1,1)
@@ -275,17 +295,27 @@ function getChapterVerse(text){
     loadhash(c - 1)
     scrollToCV(c, v)
 }
-function gotosura(){
-   let [c,v] = document.getElementById("suraCV").value.split(":")
-   if(!v) v = 1;
-   setHash(Number(c)  , Number(v) );
+function gotosura(event){
+    console.log(event)
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        let [c,v] = document.getElementById("suraCV").value.split(":")
+        if(!v) v = 1;
+        setHash(Number(c)  , Number(v) );
+    }
 }
 function scrollToCV(c, v) {
+    if(!isHash) return;
+    console.log("scrolled?")
     if(!v) v = 1;
     if(c=="") c=1;
     let h = document.querySelector(`#scrollingChapters > table[id='${c}'] > tbody >  tr[id='${v}']`).offsetTop
     let offset = document.querySelector(`#scrollingChapters > table[id='${c}'] > thead >  tr`).clientHeight
-    scrollingChapters.scrollTo(0,h - offset)
+    scrollingChapters.scrollTo({
+        left: 0,
+        top: h-offset  ,
+        behavior: 'smooth'
+    })
     // document.querySelector(`#scrollingChapters > table[id='${c}'] > tbody >  tr[id='${v}']`).scrollIntoView()
 }
 
@@ -316,44 +346,26 @@ window.onresize = () => {
     responsiveMode();
 }
 
-function displayState(state){
-    switch (state){
-        case 1:
-            checkState(1)
-            break;
-        case 2:
-           checkState(2)
-            break;
-        case 3:
-checkState(3)
-        break;
-    }
-}
 
 function checkState(number){
-//    switch(number){
-//        case 1:
-       
-//         state1.checked = true
-//         state2.checked = false
-//         state3.checked = false
-     
-//            break;
-//         case 2:
-          
-//             state1.checked = false
-//             state2.checked = true
-//             state3.checked = false
-//             break;
-//             case 3:
-              
-//                 state1.checked = false
-//                 state2.checked = false
-//                 state3.checked = true
-//                 break;
- 
-//    }
+   switch(number){
+       case 1: 
+       states(true,false,false)      
+       break;
+        case 2:
+            states(false,true,false)      
 
+            break;
+            case 3:
+                states(false,false,true)      
+
+                break;
+   }
+}
+function states(one,two,three){
+    state1.checked = one
+    state2.checked = two
+    state3.checked = three   
 }
 
 function clearSura(){
@@ -363,4 +375,79 @@ function addAll(){
     for (let i = 0 ; i < 114 ; i ++ ){
         addSura(i)
         }
+}
+function displayState(number){
+    switch(number){
+        case 1:
+            checkState(1)
+            showAll();
+        break;
+        case 3:
+            checkState(3)
+            hideArabic();
+            showTefsir()
+        break;
+        case 2:
+            checkState(2)
+            hideTefsir();
+            showArabic();
+        break;
+        
+    }
+}
+function showAll(){
+    showArabic()
+    showTefsir()
+}
+function hideTefsir(){
+    setTefsir("none");
+}
+function showTefsir(){
+    setTefsir("table-cell");
+}
+function showArabic(){
+    setArabic("table-cell");
+}
+function hideArabic(){
+    setArabic("none"); 
+}
+function setTefsir(text){
+    getCSSRule(".tableTefsir").style.display=text;
+}
+function setArabic(text){
+    getCSSRule(".tableArabic").style.display=text;
+}
+function isInView(){
+    let x = scrollingChapters;
+    for (let h = 0; h < 4; h++) {
+        if(x.children[h].getBoundingClientRect().height + x.children[h].getBoundingClientRect().y -160 > 0 )
+            return x.children[h].id
+    }
+}
+
+function share(c,v){
+    if (navigator.share) {
+        navigator.share({
+          title: 'Kuran Rehberi',
+          text: 'bu ayet ilgim çekti',
+          url: location.href.split("#")[0]+`#${c}:${v}`,
+        })
+          .then(() => console.log('Successful share'))
+          .catch((error) => console.log('Error sharing', error));
+      }
+}
+
+function createShareButton(){
+    // <button type="button" class="btn btn-outline-info">Info</button>
+    let btn = document.createElement("button")
+    btn.type="button"
+    btn.className="btn badge badge-info align-text-bottom"
+    btn.innerText = "Share"
+    btn.onclick = e => {
+        let verse = btn.parentElement.parentElement
+        let chapter = verse.parentElement.parentElement
+        console.log(chapter.id,verse.id,"shared")
+        share(chapter.id,verse.id)
+    }
+    return btn
 }
