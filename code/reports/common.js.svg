@@ -7,10 +7,10 @@
             width="443.4" height="30"
             rx="3" ry="3"
             style="fill:#90caf9; stroke:#444; stroke-width:1" />
-                   <title>const DATA_URL = &quot;https://maeyler.github.io/Iqra3/data/&quot;</title>
+                   <title>const DATA_URL = &quot;/Kuran/data/&quot;</title>
             <text x="65" y="85"
                 font-family="monospace" font-size="13" fill="#222">
-                <tspan x="65" y="85">const DATA_URL = &quot;https://maeyler.github.io/Iqra3/...</tspan>
+                <tspan x="65" y="85">const DATA_URL = &quot;/Kuran/...</tspan>
             </text>
                    
                    

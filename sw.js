@@ -2,32 +2,32 @@
 const PREF ='BQ', CACHE = PREF+'01'
 // automate file things with WebPage that show everything underit with the needed style.
 const FILES = [
-  '/BahisQurani/',
-//   '/BahisQurani/finder.html',
-//   '/BahisQurani/reader.html',
-//   '/BahisQurani/code/buckwalter.js',
-//   '/BahisQurani/code/common.js',
-//   '/BahisQurani/code/finder.js',
-//   '/BahisQurani/code/quran-data.js',
-//   '/BahisQurani/code/quran-sura.js',
-//   '/BahisQurani/code/script.js',
-//   '/BahisQurani/data/ar.jalalayn.txt',
-//   '/BahisQurani/data/ar.muyassar.txt',
-//   '/BahisQurani/data/en.ahmedali.txt',
-//   '/BahisQurani/data/en.yusufali.txt',
-//   '/BahisQurani/data/quran-simple-clean.txt',
-//   '/BahisQurani/data/quran-uthmani.txt',
-//   '/BahisQurani/data/tr.diyanet.txt',
-//   '/BahisQurani/data/tr.yazir.txt',
-  '/BahisQurani/style/me_quran.ttf',
+  '/Rehber/',
+//   '/Rehber/finder.html',
+//   '/Rehber/reader.html',
+//   '/Rehber/code/buckwalter.js',
+//   '/Rehber/code/common.js',
+//   '/Rehber/code/finder.js',
+//   '/Rehber/code/quran-data.js',
+//   '/Rehber/code/quran-sura.js',
+//   '/Rehber/code/script.js',
+//   '/Rehber/data/ar.jalalayn.txt',
+//   '/Rehber/data/ar.muyassar.txt',
+//   '/Rehber/data/en.ahmedali.txt',
+//   '/Rehber/data/en.yusufali.txt',
+//   '/Rehber/data/quran-simple-clean.txt',
+//   '/Rehber/data/quran-uthmani.txt',
+//   '/Rehber/data/tr.diyanet.txt',
+//   '/Rehber/data/tr.yazir.txt',
+  '/Rehber/style/me_quran.ttf',
 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
 'https://code.jquery.com/jquery-3.3.1.slim.min.js',
 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js',
 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js',
-// '/BahisQurani/style/keyboard.css',
-// '/BahisQurani/code/keyboard.js',
-// '/BahisQurani/code/language.js',
-'/BahisQurani/images/search.png'
+// '/Rehber/style/keyboard.css',
+// '/Rehber/code/keyboard.js',
+// '/Rehber/code/language.js',
+'/Rehber/images/search.png'
 ]
 
 function installCB(e) {  //CB means call-back
@@ -41,7 +41,7 @@ function installCB(e) {  //CB means call-back
 addEventListener('install', installCB)
 
 function save(req, resp) {
-  if (!req.url.includes("BahisQurani")) 
+  if (!req.url.includes("Rehber")) 
      return resp;
   return caches.open(CACHE)
   .then(cache => { // save request

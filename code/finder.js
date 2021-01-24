@@ -1014,14 +1014,14 @@ function openMeali(cv) {
 }
 // cv = chapter verses C:V 
 function openIqra(cv) {
-    let link = "https://maeyler.github.io/Kuran/reader.html#v=" + cv;
+    let link = "/Kuran/reader.html#v=" + cv;
     window.open(link, "iqra")
     lastOne = "iqra";
     warpLast()
 }
 
 function openSimi(cv) {
-    let link = "https://a0m0rajab.github.io/BahisQurani/simi#" + cv;
+    let link = "/Rehber/simi#" + cv;
     window.open(link, "simi")
     lastOne = "simi";
     warpLast()

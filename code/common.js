@@ -4,7 +4,7 @@
  * @author Abdurrahman RAJAB 
  */
 "use strict";
-const DATA_URL = "https://maeyler.github.io/Iqra3/data/" // in common.js
+const DATA_URL = "/Kuran/data/" // in common.js
 
 /**
  * &emsp; used in both Mujam
