@@ -402,7 +402,15 @@ function createTable(arr, word) {
     if (arr.length == 0) { document.getElementById("PaginationMenu").hidden = true; return }; // empty array. TODO: can make a message for the user to show that its not found
     dataArr = arr;
     wordCt = word;
-    wordNumber.innerText = arr.length //+ parseInt(wordNumber.innerText)
+    let message = arr.length
+    dTable.hidden = false
+    if (message == 0) {
+        message = "bulunmadi"
+        dTable.hidden = "true"
+        console.log(dTable, "Data table")
+    }
+    finderMessage.innerText = ""
+    wordNumber.innerText = message//+ parseInt(wordNumber.innerText)
     document.title += " " + wordNumber.innerText;
     // arr.forEach((e, i) => {
     //     if (i > 100) { console.log(i); return; } else {
@@ -706,9 +714,10 @@ function serachedWordTable(word) {
         [word, wordLst] = mujamList(word)
         wordLst[1] = [...wordLst];
     }
-
+    dTable.hidden = "true"
+    finderMessage.innerText ="Bulunmadı"
     document.title = "Kuran Rehber: Finder - " + word;
-    wordNumber.innerText = 0;
+    wordNumber.innerText = "Bulunmadı";
     let words = word.split("+")
     words.forEach(e => {
         word = e;
