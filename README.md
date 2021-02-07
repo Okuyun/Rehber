@@ -29,4 +29,4 @@ A latex template made for the project to make it easier to write the thesis.
 
 Source Code: 
 You can find this at this repo :) 
-http://a0m0rajab.github.io/BahisQurani
+http://Okuyun.github.io/Rehber

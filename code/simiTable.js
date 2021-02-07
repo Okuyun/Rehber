@@ -146,7 +146,7 @@ function finderButton(msg,root){
 `
 }
 function openFinder(root){
-    let link = "https://a0m0rajab.github.io/BahisQurani/finder#r=" + root;
+    let link = "./finder#r=" + root;
     window.open(link, "finder")
 }
 /**
@@ -562,7 +562,7 @@ function menuFn() {
                     .catch(e => { alert('Panoya yazamadım\n' + sel) })
                 break;
             case 3: // Find in finder
-            window.open("https://a0m0rajab.github.io/BahisQurani/finder.html#w=" + sel)
+                window.open("../Rehber/finder.html#w=allah")
                 break;
             
         }
