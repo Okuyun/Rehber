@@ -1,6 +1,6 @@
 .arabic {
     
-    font: 20px hafs16, serif;
+    font: 20px me_quran, serif;
 }
 
 .container {
@@ -44,11 +44,6 @@
 @font-face {
     font-family: hafs;
     src: url("./Hafs-ver13/UthmanicHafs1\ Ver13.otf");
-}
-
-@font-face {
-    font-family: hafs16; 
-    src: url("./UthmanicHafs1\ Ver16.ttf")
 }
 
 
