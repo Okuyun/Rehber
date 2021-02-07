@@ -30,7 +30,7 @@ function readRoots(text, target) {
 
 async function initMujam() {
     await initMAE();
-    await readExternal("https://okuyun.github.io/Kuran/data/words.txt", rootsMap, readRoots);
+    await readExternal("../Kuran/data/words.txt", rootsMap, readRoots);
     return new Promise((resolve, reject) => { resolve('Success!'); })
 }
 let wRefs = [];
