@@ -715,7 +715,7 @@ function serachedWordTable(word) {
         wordLst[1] = [...wordLst];
     }
     dTable.hidden = "true"
-    finderMessage.innerText ="Bulunmadı"
+    finderMessage.innerText = "Bulunmadı"
     document.title = "Kuran Rehber: Finder - " + word;
     wordNumber.innerText = "Bulunmadı";
     let words = word.split("+")
@@ -926,7 +926,6 @@ async function initFinder() {
         }
     });
     window.addEventListener("hashchange", hashChanged);
-
     if (storageAvailable("localStorage")) {
         if (window.localStorage.settings === undefined) {
             initLocalStorage();
@@ -960,7 +959,15 @@ function changeGreatColour(col) {
 
 }
 
-function changeFont(language, size) {
+function setFontSize(language, size, rule, update) {
+    if (!rule) {
+        var { rule, update } = getFontRule(language)
+    }
+    rule.style.fontSize = size + "px"
+
+    updateSettings(update, size)
+}
+function getFontRule(language) {
     //console.log(language,size)
     let rule, update = "translation";
     if (language == "arabic") {
@@ -971,9 +978,12 @@ function changeFont(language, size) {
         //.translation 
         rule = getCSSRule(".translation")
     }
+    return { rule, update }
+}
+function changeFont(language, size) {
+    let { rule, update } = getFontRule(language)
     let old = parseInt(rule.style.fontSize);
-    rule.style.fontSize = old + size + "px"
-    updateSettings(update, old + size)
+    setFontSize(update, old + size, rule, update)
 }
 
 async function loadTransF(n = 3) {
@@ -1318,8 +1328,8 @@ function loadSettings() {
     if (storageAvailable('localStorage')) {
         settings = JSON.parse(localStorage.getItem('settings'))
         changeColour(settings.colour)
-        changeFont("arabic", 0)
-        changeFont("x", 0)
+        setFontSize("arabic", settings.arabic)
+        setFontSize("translation", settings.translation)
         lastOne = settings.lastOne;
         language(settings.lang)
         showState(settings.dstate)
