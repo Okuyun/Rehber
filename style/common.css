@@ -1,6 +1,6 @@
 .arabic {
     
-    font: 20px me_quran, serif;
+    font: 20px Zekr, serif;
 }
 
 .container {
@@ -44,6 +44,16 @@
 @font-face {
     font-family: hafs;
     src: url("./Hafs-ver13/UthmanicHafs1\ Ver13.otf");
+}
+
+@font-face {
+    font-family: Zekr;
+    src: url("./ZEKRQURAN.TTF");
+}
+
+@font-face {
+    font-family: ZekrBold;
+    src: url("./ZEKRQURANBOLD.TTF");
 }
 
 
