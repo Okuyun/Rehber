@@ -57,8 +57,13 @@
 }
 
 
+body {
+    background-color: #f9f4e8;
+}
 
-
+.sticky-top {
+        background-color: #f9f4e8;
+}
 
 great {
     margin-right: -1;
