@@ -497,16 +497,6 @@ function getPages() {
     return Math.ceil(dataArr.length / verseInPage) - 1;
 }
 
-function setTotalVerses() {
-    verseInPage = document.getElementById("dataAmount").value
-    if (verseInPage == "All") {
-        verseInPage = dataArr.length - 1;
-    } else {
-        verseInPage = parseInt(verseInPage)
-    }
-    paginationControl(0)
-}
-
 function paginationPrev() {
     paginationControl(dataIndex - 1)
 }
@@ -570,7 +560,6 @@ function search(word, arr = suraSr) {
             // aya = normlisation(aya)
             // working :) -- the insan error is caused by the RegEx
             let locs = removeOddChar(aya).indexOf(removeOddChar(word.toLowerCase()))
-
             if (locs !== -1) {
                 loc.push([i, j, locs])
             }
@@ -946,6 +935,11 @@ async function loadMujam() {
     let p = await initMujam();
     console.log("Mujam load time", new Date() - date)
     return p
+}
+function changeVersesPerPage() {
+    let amount = setVersePerPage()
+    updateSettings("verse_per_page", amount)
+
 }
 
 function changeColour(col) {
@@ -1337,6 +1331,8 @@ function loadSettings() {
         return loadTransF(settings.source);
     }
 }
+
+
 
 function showState(state) {
     switch (state) {
