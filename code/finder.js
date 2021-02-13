@@ -954,7 +954,6 @@ function changeColour(col) {
 function changeGreatColour(col) {
     document.getElementById("greatColour").value = col;
     getCSSRule("great").style.backgroundColor = col;
-
 }
 
 function setFontSize(language, size, rule, update) {
@@ -982,6 +981,10 @@ function changeFont(language, size) {
     let { rule, update } = getFontRule(language)
     let old = parseInt(rule.style.fontSize);
     setFontSize(update, old + size, rule, update)
+}
+function setFontToDefault(language, size) {
+    let { rule, update } = getFontRule(language)
+    setFontSize(update, size, rule, update)
 }
 
 async function loadTransF(n = 3) {
