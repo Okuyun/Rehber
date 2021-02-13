@@ -101,6 +101,11 @@
         ⚙️ Ayarlar
         </button>
           </li>
+<li class="nav-item">
+                      <button onclick="toggleDarkMode()" class="btn nav-link" >
+                        Dark Mode
+                      </button>
+                    </li>
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
@@ -368,30 +373,30 @@
                                 <option value="me_quran">me quran</option>
                               </select>
                               <hr>
-        <span id=fontAr>font size</span> 
+        <span id=fontAr>font size</span> <br>
+
+                  <button type="button" class="btn btn-outline-primary" onclick="changeFont(`arabic`,5)">+</button>
+
         <button type="button" onclick="setFontToDefault('arabic',20)" class="btn btn-outline-warning" >Default</button>
+          <button type="button" class="btn btn-outline-primary" onclick="changeFont(`arabic`,-5)">-</button>
 
         <br>
         <div class="container input-group">
-          <button type="button" class="btn" onclick="changeFont(`arabic`,5)">+🗚</button>
           <div class="btn">
             <p class="arabic input-form">
               <great>بِسْمِ ٱللَّهِ</great> ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
             </p>
           </div>
-          <button type="button" class="btn" onclick="changeFont(`arabic`,-5)">🗛-</button>
         </div>
       
         
         <br>
-        <span id=txtTrans>Translation:</span>
+        <span id=txtTrans>Translation:</span><br>
+        <button type="button" class="btn btn-outline-primary" onclick="changeFont(`x`,5)">+</button>
         <button type="button" onclick="setFontToDefault('x',20)" class="btn btn-outline-warning">Default</button>
-
+        <button type="button" class="btn btn-outline-primary" onclick="changeFont(`x`,-5)">-</button>
         <br>
-        <button type="button" class="btn" onclick="changeFont(`x`,5)">+🗚</button>
         <p class="translation">Rahman ve Rahim olan Allah'ın adıyla:</p>
-        <button type="button" class="btn" onclick="changeFont(`x`,-5)">🗛-</button>
-
         <br>
 
       

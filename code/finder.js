@@ -515,8 +515,8 @@ function getFontType() {
     updateSettings("fontType", fontType)
 }
 
-function setFontType(type){
-    document.getElementById("fontType").value =type
+function setFontType(type) {
+    document.getElementById("fontType").value = type
     getFontType()
 }
 
@@ -1598,6 +1598,33 @@ function menuFn() {
         toggleMenu("hide");
     });
     addContextMenu();
+}
+
+function setCustomMode(bgcolor, color) {
+    let rule = getCSSRule(".custom-mode")
+    rule.style.color = color
+    rule.style["background-color"] = bgcolor
+}
+function toggleMode(mode) {
+    let list = ['#PaginationMenu',
+        "#pageNext",
+        ".arabic", "body",
+        "#settingsModel > div > div",
+        "#choosenPage", "#lastPage",
+        "#firstPage", "#stickySearch",
+        "#dTable", "#pagePrev", "#settingsModel",
+        "#settingsModel > div > div > div.modal-body > div > div > p",
+        "#FeedBackModal > div > div", "#THtext"]
+    list.forEach(e => {
+        document.querySelector(e).classList.toggle(mode)
+
+    })
+}
+function toggleCustomMode() {
+    toggleMode("custom-mode")
+}
+function toggleDarkMode() {
+    toggleMode("dark-mode")
 }
 /**
  * Clear HTML table without touching the headers.

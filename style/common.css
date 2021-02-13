@@ -132,3 +132,14 @@ great {
     border-top-width: 0px!important;
     z-index: 100;
   }
+
+
+.dark-mode {
+  background-color: black;
+  color: white;
+}
+
+.custom-mode {
+  background-color: rgb(18, 16, 143);
+  color: rgb(130, 153, 3);
+}
