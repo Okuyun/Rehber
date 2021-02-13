@@ -509,13 +509,21 @@ function paginationLast() {
     paginationControl(getPages())
 }
 
-function setVersePerPage(mode) {
+function setVersePerPage(mode, verse) {
     if (mode == 0) dataIndex = 0; // if dataindex it will go to the last page, now it will reset.
     let controller = document.getElementById("dataAmount").value
+    if (verse) {
+        document.getElementById("dataAmount").value = verse
+        controller = verse;
+    }
     let lastPageButton = document.getElementById("lastPage")
     verseInPage = parseInt(controller);
-    lastPageButton.innerText = getPages() + 1;
-    paginationControl(dataIndex)
+    if (dataArr) {
+        lastPageButton.innerText = getPages() + 1;
+        paginationControl(dataIndex)
+    }
+    updateSettings("verse_per_page", controller)
+    return controller
 }
 
 function paginationSet() {
@@ -936,11 +944,7 @@ async function loadMujam() {
     console.log("Mujam load time", new Date() - date)
     return p
 }
-function changeVersesPerPage() {
-    let amount = setVersePerPage()
-    updateSettings("verse_per_page", amount)
 
-}
 
 function changeColour(col) {
     changeGreatColour(col)
@@ -1273,11 +1277,11 @@ function normlisation(text) {
 }
 
 function initLocalStorage() {
-    let keys = ["arabic", "translation", "colour", "source", "oneline", "lastOne", "lang"]
+    let keys = ["arabic", "translation", "colour", "source", "oneline", "lastOne", "lang", "verse_per_page"]
     let arabicSize = parseInt(getCSSRule(".arabic").style.fontSize);
     let translationSize = parseInt(getCSSRule(".translation").style.fontSize);
     let colour = "#ffff00";
-    let values = [arabicSize, translationSize, colour, 5, oneline, lastOne, "1"]
+    let values = [arabicSize, translationSize, colour, 5, oneline, lastOne, "1", 10]
     for (let i = 0; i < keys.length; i++) {
         updateSettings(keys[i], values[i])
     }
@@ -1324,6 +1328,7 @@ function loadSettings() {
         changeColour(settings.colour)
         setFontSize("arabic", settings.arabic)
         setFontSize("translation", settings.translation)
+        setVersePerPage(undefined, settings.verse_per_page)
         lastOne = settings.lastOne;
         language(settings.lang)
         showState(settings.dstate)
