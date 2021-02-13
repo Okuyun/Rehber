@@ -509,6 +509,17 @@ function paginationLast() {
     paginationControl(getPages())
 }
 
+function getFontType() {
+    let fontType = document.getElementById("fontType").value
+    getCSSRule(".arabic").style.fontFamily = `${fontType}, serif`
+    updateSettings("fontType", fontType)
+}
+
+function setFontType(type){
+    document.getElementById("fontType").value =type
+    getFontType()
+}
+
 function setVersePerPage(mode, verse) {
     if (mode == 0) dataIndex = 0; // if dataindex it will go to the last page, now it will reset.
     let controller = document.getElementById("dataAmount").value
@@ -1280,11 +1291,11 @@ function normlisation(text) {
 }
 
 function initLocalStorage() {
-    let keys = ["arabic", "translation", "colour", "source", "oneline", "lastOne", "lang", "verse_per_page"]
+    let keys = ["arabic", "translation", "colour", "source", "oneline", "lastOne", "lang", "verse_per_page", "fontType"]
     let arabicSize = parseInt(getCSSRule(".arabic").style.fontSize);
     let translationSize = parseInt(getCSSRule(".translation").style.fontSize);
     let colour = "#ffff00";
-    let values = [arabicSize, translationSize, colour, 5, oneline, lastOne, "1", 10]
+    let values = [arabicSize, translationSize, colour, 5, oneline, lastOne, "1", 10, "Zekr"]
     for (let i = 0; i < keys.length; i++) {
         updateSettings(keys[i], values[i])
     }
@@ -1336,6 +1347,7 @@ function loadSettings() {
         language(settings.lang)
         showState(settings.dstate)
         displayState(settings.dstate)
+        setFontType(settings.fontType)
         return loadTransF(settings.source);
     }
 }

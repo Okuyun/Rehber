@@ -361,6 +361,13 @@
           </button>
         </div>
         <div class="modal-body">
+                              <label for="fontType">Font type</label>
+                              <select onchange="getFontType()" id="fontType" name="fontType" class="select col-3">
+                                <option value="Zekr" selected>Zekr</option>
+                                <option value="ZekrBold">ZekrBold</option>
+                                <option value="me_quran">me quran</option>
+                              </select>
+                              <hr>
         <span id=fontAr>font size</span> 
         <button type="button" onclick="setFontToDefault('arabic',20)" class="btn btn-outline-warning" >Default</button>
 
