@@ -1,6 +1,6 @@
 .arabic {
     font: 20px Zekr, serif;
-    line-height: 135%;
+    line-height: 1.8;
 }
 
 .container {
@@ -84,13 +84,18 @@ great {
     display: table-cell;
 }
 
+.table-responsive{
+    padding-left: 0px;
+    padding-right: 0px;
+    overflow: hidden;
+}
+
 .shrinkArabic {
     display: none;
     white-space: nowrap;
     text-overflow: ellipsis;
-    max-width: 80vw;
-    overflow-x: hidden;
-    /* overflow-x: scroll; */
+    max-width: 90vw;
+    overflow: hidden; 
 }
 
 #showHideFull {
