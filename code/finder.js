@@ -1612,7 +1612,7 @@ function toggleMode(mode) {
         "#settingsModel > div > div",
         "#choosenPage", "#lastPage",
         "#firstPage", "#stickySearch",
-        "#dTable", "#pagePrev", "#settingsModel",
+        , "#pagePrev", "#settingsModel", "#dTable",
         "#settingsModel > div > div > div.modal-body > div > div > p",
         "#FeedBackModal > div > div", "#THtext"]
     list.forEach(e => {
@@ -1625,6 +1625,16 @@ function toggleCustomMode() {
 }
 function toggleDarkMode() {
     toggleMode("dark-mode")
+    document.querySelector("#dTable").classList.toggle("table-dark")
+    let highlight = getCSSRule("great");
+    if (highlight.style["color"] != "white") {
+        highlight.style["background-color"] = "#343a40"
+        highlight.style["color"] = "white"
+    } else {
+        highlight.style["background-color"] = "yellow"
+        highlight.style["color"] = "black"
+    }
+
 }
 /**
  * Clear HTML table without touching the headers.
