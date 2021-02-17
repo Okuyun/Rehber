@@ -1348,6 +1348,7 @@ function loadSettings() {
         showState(settings.dstate)
         displayState(settings.dstate)
         setFontType(settings.fontType)
+        if (settings["dark-mode"]) toggleDarkMode()
         return loadTransF(settings.source);
     }
 }
@@ -1627,12 +1628,24 @@ function toggleDarkMode() {
     toggleMode("dark-mode")
     document.querySelector("#dTable").classList.toggle("table-dark")
     let highlight = getCSSRule("great");
+    let navigation = document.querySelector("body > nav");
+    // if light mode else dark mode
     if (highlight.style["color"] != "white") {
         highlight.style["background-color"] = "#343a40"
         highlight.style["color"] = "white"
+        navigation.classList.add("navbar-dark")
+        navigation.classList.add("bg-dark")
+        navigation.classList.remove("navbar-light")
+        navigation.classList.remove("bg-light")
+        updateSettings("dark-mode", true)
     } else {
         highlight.style["background-color"] = "yellow"
         highlight.style["color"] = "black"
+        navigation.classList.remove("navbar-dark")
+        navigation.classList.remove("bg-dark")
+        navigation.classList.add("navbar-light")
+        navigation.classList.add("bg-light")
+        updateSettings("dark-mode", false)
     }
 
 }
