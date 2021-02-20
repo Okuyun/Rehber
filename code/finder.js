@@ -716,7 +716,6 @@ function mujamList(rl) {
 
 function serachedWordTable(word) {
     // submitData(word);
-    word = word.trim();
     // word = normlisation(word)
     if (isRoot(word)) {
         [word, wordLst] = mujamList(word)
