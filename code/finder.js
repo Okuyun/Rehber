@@ -1222,9 +1222,7 @@ function oneLineShow(bool) {
         fullTextStyle("table-cell");
         showHideButtonStyle("none")
     }
-    if (typeof variable !== 'undefined') {
-        updateSettings("oneline", oneline)
-    }
+    updateSettings("oneline", oneline)
 }
 /**
  * Reset the showHideFull button which is the one near the open last one to showing as + smybol
