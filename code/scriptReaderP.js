@@ -213,7 +213,6 @@ function loadTrans(choosen = "1") {
             break;
         case "6":
             translate = data.trYL;
-
             break;
 
     }

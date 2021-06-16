@@ -1014,7 +1014,11 @@ async function loadTransF(n = 3) {
 }
 
 function getTefsirText(n) {
-    let tefsir = ["تفسير الجلالين", "تفسير الميسر", "Türkçe: Diyanet Meali", "English: Ahmed Ali", "Türkçe: Elmalılı Hamdi Yazır", "English: Abdullah Yusuf Ali", "French"]
+    let tefsir = [
+        "تفسير الجلالين", "تفسير الميسر", "Türkçe: Diyanet Meali", "English: Ahmed Ali", "Türkçe: Elmalılı Hamdi Yazır", "English: Abdullah Yusuf Ali", "French"
+    ,"English: Pickthall",
+    "Türkçe: Muhammet Abay",
+    ]
     return tefsir[n - 1];
 }
 
