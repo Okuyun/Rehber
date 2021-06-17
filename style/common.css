@@ -6,6 +6,9 @@
 .container {
     max-width: 95vw;
 }
+.overflow{
+    overflow: visible!important;
+}
 
 #finderMessage{
     justify-content: center;
