@@ -92,6 +92,7 @@ function createArTd() {
  * @param {string} word the searched word string
  */
 function createRow(sn, an, word = "") {
+    let pageOfVerse= "S."+pageOf(sn+1, an+1)
     // https://stackoverflow.com/questions/37924104/table-column-sizing -- to follow and fix.
     // array first element = sura number, second= aya number
     // the function be written in much prettier way but whatever.
@@ -129,7 +130,7 @@ function createRow(sn, an, word = "") {
     // translationHeader.style.display="table-cell"
     let td = createTd();
     td.className = "tableTranslation"
-    let tb = createDropDownSplit(quran.sura[sn].tname + " " + (sn + 1) + ":" + (an + 1));
+    let tb = createDropDownSplit(quran.sura[sn].tname + " " + (sn + 1) + ":" + (an + 1),null, pageOfVerse);
     //tb.href="https://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
     td.innerHTML += tb;
     td.append("\xA0\xA0")
@@ -181,7 +182,7 @@ function createRow(sn, an, word = "") {
 
     // TODO: if oneline: add controler
 
-    let arB = createDropDownSplit(quran.sura[sn].name + " " + (sn + 1) + ":" + (an + 1), 1);
+    let arB = createDropDownSplit(quran.sura[sn].name + " " + (sn + 1) + ":" + (an + 1), 1, pageOfVerse);
     //arB.href="https://maeyler.github.io/Iqra3/reader#v="+(sn + 1) + ":" + (an + 1)
 
 
@@ -1067,9 +1068,10 @@ function openCorpus(cv) {
     warpLast()
 }
 
-function createDropDownSplit(suraCV, control) {
+function createDropDownSplit(suraCV, control,page=1) {
     // may change it to javascript later, but this is much easier LOL.
     // NEED TO reFactor.
+    suraCV= page +" " +suraCV
     let cv = suraCV.split(" ");
     cv = cv[cv.length - 1]
     let x = `
