@@ -22,8 +22,9 @@ let data = {
     trTr: "tr.diyanet.txt",
     trEl: "tr.yazir.txt",
     trYL: "en.yusufali.txt",
-    fr: "fr.hamidullah.txt",
-    trEnPick:"en.pickthall.txt",
+    frHa: "fr.hamidullah.txt",
+    deZa: "de.zaidan.txt",
+    trPi: "en.pickthall.txt",
     trTrAb: "tr.abay.txt",
 }
 
@@ -164,13 +165,16 @@ function loadTrans(choosen = "1") {
             translate = data.trYL;
             break;
         case "7":
-                translate = data.fr;
-        break;
+            translate = data.frHa;
+            break;
         case "8":
-            translate = data.trEnPick;
+            translate = data.trPi;
             break;
         case "9":
             translate = data.trTrAb;
+            break;
+        case "10":
+            translate = data.deZa;
             break;
     }
     return readExternal(dataUrl + translate, suraTr, dataToArray)
