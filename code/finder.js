@@ -1019,6 +1019,7 @@ function getTefsirText(n) {
         "تفسير الجلالين", "تفسير الميسر", "Türkçe: Diyanet Meali", "English: Ahmed Ali", "Türkçe: Elmalılı Hamdi Yazır", "English: Abdullah Yusuf Ali", "French"
     ,"English: Pickthall",
     "Türkçe: Muhammet Abay",
+        "German: Zaidan",
     ]
     return tefsir[n - 1];
 }
