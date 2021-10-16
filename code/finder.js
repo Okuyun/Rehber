@@ -4,6 +4,24 @@
  */
 
 /**
+ * The translations files, paths and names, have been used in the translations JS as well
+ */
+ let translations = [
+    {id:"arclean", path: "quran-simple-clean.txt", name: "Arabic Clean" },
+    {id:"aruthman", path: "quran-uthmani.txt", name: "Arabic Uthmani" },
+       { id:"tfArJal", path: "ar.jalalayn.txt", name: "تفسير الميسر" },
+   {id:"tfArMu", path: "ar.muyassar.txt", name: "تفسير الجلالين" },
+   {id:"trEn", path: "en.ahmedali.txt", name: "English: Ahmed Ali" },
+   {id:"trTr", path: "tr.diyanet.txt", name: "Türkçe: Diyanet Meali" },
+   {id:"trEl", path: "tr.yazir.txt", name: "Türkçe: Yazır Meali" },
+   {id:"trYL", path: "en.yusufali.txt", name: "English: Yusuf Ali" },
+   {id:"frHa", path: "fr.hamidullah.txt", name: "French: Hamidullah" },
+   {id:"deZa", path: "de.zaidan.txt", name: "German: Zaidan" },
+   {id:"trPi", path: "en.pickthall.txt", name: "English: pickthall" },
+   {id:"trTrAb", path: "tr.abay.txt", name: "Türkçe: çeviriyazı " },
+]
+
+/**
  * Used to check one line function if its open or not.
  */
 let oneline = false;
@@ -998,8 +1016,8 @@ function setFontToDefault(language, size) {
     setFontSize(update, size, rule, update)
 }
 
-async function loadTransF(n = 3) {
-    await loadTrans(n.toString())
+async function loadTransF(n = "arclean") {
+    await loadTrans(n)
     // clearTable();
     // toCheck...
     // if (!location.hash.includes("r=")) findAction(searchQue.value);
@@ -1015,13 +1033,7 @@ async function loadTransF(n = 3) {
 }
 
 function getTefsirText(n) {
-    let tefsir = [
-        "تفسير الجلالين", "تفسير الميسر", "Türkçe: Diyanet Meali", "English: Ahmed Ali", "Türkçe: Elmalılı Hamdi Yazır", "English: Abdullah Yusuf Ali", "French"
-    ,"English: Pickthall",
-    "Türkçe: Muhammet Abay",
-        "German: Zaidan",
-    ]
-    return tefsir[n - 1];
+    return translations[n].name;
 }
 
 function openMeali(cv) {

@@ -16,16 +16,7 @@ let dataUrl = "./data/"
 let data = {
     arclean: "quran-simple-clean.txt",
     aruthman: "quran-uthmani.txt",
-    tfArJal: "ar.jalalayn.txt",
-    tfArMu: "ar.muyassar.txt",
-    trEn: "en.ahmedali.txt",
     trTr: "tr.diyanet.txt",
-    trEl: "tr.yazir.txt",
-    trYL: "en.yusufali.txt",
-    frHa: "fr.hamidullah.txt",
-    deZa: "de.zaidan.txt",
-    trPi: "en.pickthall.txt",
-    trTrAb: "tr.abay.txt",
 }
 
 /**
@@ -131,51 +122,4 @@ function timer(log, callback) {
     let h = callback()
     console.log(log, Date.now() - start, "ms");
     return h;
-}
-
-
-/**
- * Load translation and set the translation array to use it in the future.
- * 
- * @param {Number} choosen The choosen number of selected translatio
- */
-let choosenGen;
-
-function loadTrans(choosen = "1") {
-    choosenGen = choosen
-    suraTr = []
-    let translate = data.tfArJal;
-    switch (choosen) {
-        case "1":
-            translate = data.tfArJal;
-            break;
-        case "2":
-            translate = data.tfArMu;
-            break;
-        case "3":
-            translate = data.trTr;
-            break;
-        case "4":
-            translate = data.trEn;
-            break;
-        case "5":
-            translate = data.trEl;
-            break;
-        case "6":
-            translate = data.trYL;
-            break;
-        case "7":
-            translate = data.frHa;
-            break;
-        case "8":
-            translate = data.trPi;
-            break;
-        case "9":
-            translate = data.trTrAb;
-            break;
-        case "10":
-            translate = data.deZa;
-            break;
-    }
-    return readExternal(dataUrl + translate, suraTr, dataToArray)
 }
