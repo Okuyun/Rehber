@@ -10,14 +10,14 @@ const translations = [ //this order is fixed
     { id:"aruthman", path: "quran-uthmani.txt", name: "Arabic Uthmani" },
     { id:"arclean", path: "quran-simple-clean.txt", name: "Arabic Clean" },
     { id:"tfJa", path: "ar.jalalayn.txt", name: "تفسير الميسر" },
-    { id:"trTr", path: "tr.diyanet.txt", name: "Türkçe: Diyanet (1980)" },
+    { id:"trTr", path: "tr.diyanet.txt", name: "Türkçe: Diyanet (1987)" },
     { id:"enAh", path: "en.ahmedali.txt", name: "English: Ahmed Ali" },
     { id:"trEl", path: "tr.yazir.txt", name: "Türkçe: Elmalılı Yazır" },
     { id:"enYu", path: "en.yusufali.txt", name: "English: Yusuf Ali" },
     { id:"frHa", path: "fr.hamidullah.txt", name: "Français: Hamidullah" },
     { id:"enPi", path: "en.pickthall.txt", name: "English: M Pickthall" },
     { id:"trAb", path: "tr.abay.txt", name: "Türkçe: çeviriyazı " },
-    { id:"deZa", path: "de.zaidan.txt", name: "Deutch: Amir Zaidan" },
+    { id:"deZa", path: "de.zaidan.txt", name: "Deutsch: Amir Zaidan" },
     { id:"tfMu", path: "ar.muyassar.txt", name: "تفسير الجلالين" },
 ]
 

@@ -63,7 +63,7 @@ let languages={
         turkish:"Turkish",
         english:"English",
         soundSettings: "Listening options",
-        listening: "lisetning"
+        listening: "listening"
 
     },
 }
