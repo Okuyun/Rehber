@@ -4,24 +4,6 @@
  */
 
 /**
- * The translations files, paths and names, have been used in the translations JS as well
- */
- let translations = [
-    {id:"arclean", path: "quran-simple-clean.txt", name: "Arabic Clean" },
-    {id:"aruthman", path: "quran-uthmani.txt", name: "Arabic Uthmani" },
-       { id:"tfArJal", path: "ar.jalalayn.txt", name: "تفسير الميسر" },
-   {id:"tfArMu", path: "ar.muyassar.txt", name: "تفسير الجلالين" },
-   {id:"trEn", path: "en.ahmedali.txt", name: "English: Ahmed Ali" },
-   {id:"trTr", path: "tr.diyanet.txt", name: "Türkçe: Diyanet Meali" },
-   {id:"trEl", path: "tr.yazir.txt", name: "Türkçe: Yazır Meali" },
-   {id:"trYL", path: "en.yusufali.txt", name: "English: Yusuf Ali" },
-   {id:"frHa", path: "fr.hamidullah.txt", name: "French: Hamidullah" },
-   {id:"deZa", path: "de.zaidan.txt", name: "German: Zaidan" },
-   {id:"trPi", path: "en.pickthall.txt", name: "English: pickthall" },
-   {id:"trTrAb", path: "tr.abay.txt", name: "Türkçe: çeviriyazı " },
-]
-
-/**
  * Used to check one line function if its open or not.
  */
 let oneline = false;
@@ -1016,7 +998,7 @@ function setFontToDefault(language, size) {
     setFontSize(update, size, rule, update)
 }
 
-async function loadTransF(n = "arclean") {
+async function loadTransF(n = 1) { // "arclean") {
     await loadTrans(n)
     // clearTable();
     // toCheck...
@@ -1026,15 +1008,15 @@ async function loadTransF(n = "arclean") {
     // will need an object of the link and name of each tefsir, to get them from there, and parse them.
     // the object will be looped through to create the select option list, then would be used to parse the name and even the data.
     // maybe better approach to manage them from one place, when you change the object you will have to change the data as a whole. TODO
-    THtext.innerText = getTefsirText(n) + "\u2002";
+    THtext.innerText = translations[n].name + "\u2002";
     findActionH(searchQue.value)
     updateSettings("source", n)
     langSpeechSettings()
 }
 
-function getTefsirText(n) {
+/* function getTefsirText(n) { //not used
     return translations[n].name;
-}
+} */
 
 function openMeali(cv) {
     cv = cv.split(":");
@@ -1390,7 +1372,7 @@ const SR = new webkitSpeechRecognition()
 function SearchVoice(language) {
     let speechLang = "tr-TR"
     // TODO: tefsir source is not defined -- check form local storage.
-    switch (settings.source) {
+    /* switch (settings.source) {
         case 3:
         case 5:
             speechLang = "tr-TR"
@@ -1403,11 +1385,14 @@ function SearchVoice(language) {
         case 6:
             speechLang = "en-EN"
             break;
-    }
+    } */
+    let trCode = translations[settings.source].id
+    if (trCode.startsWith('ar')) speechLang = "ar-AR"
+    if (trCode.startsWith('en')) speechLang = "en-EN"
 
     function listen(lang) {
         SR.lang = lang ? lang : speechLang; //: "en-EN"; 
-        console.log(SR.lang)
+        console.log(trCode, SR.lang)
         SR.start()
     }
 
