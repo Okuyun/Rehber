@@ -101,12 +101,9 @@
         <div class="row w-100">
           <div class="col" id="tefsirController">
             <select id="selectedTranslation" onchange="loadTransR(this.value)" class="browser-default custom-select">
-                        <option value="1" selected>تفسير الجلالين</option>
-                        <option value="2">تفسير الميسر</option>
-                        <option value="3">Türkçe Meali</option>
-                        <option value="4">English Translation</option>
-                      </select>
-      
+              <template id="selectedTranslationOptions">
+                <option></option>
+              </template>                
         </div>
         <div class="col">
           <div class="row">
@@ -323,6 +320,7 @@
     <script>
         initReader()
         version.innerText = config.version;
+        populateTranslationMenu("selectedTranslation","#selectedTranslationOptions","option", "value",readerCallBack);
     </script>
 
 </body>

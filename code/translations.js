@@ -35,17 +35,22 @@ const menuItems = [3,5,4,6,8,7,10,9,2,11] //this order is arbitrary
      let translate = translations[choosen].path;
      return readExternal(dataUrl + translate, suraTr, dataToArray)
  }
+function finderCallBack(index){
+    return "loadTransF('"+index+"')"
+}
+function readerCallBack(index){
+    return index
+}
 
-function populateTranslationMenu(){
-    let menu = document.getElementById("translationMenu");
-    let template = document.querySelector('#translationButton');
+function populateTranslationMenu(menuId, templateId, cloneType, attributionName, callBack){
+    let menu = document.getElementById(menuId);
+    let template = document.querySelector(templateId);
     menuItems.forEach( index => {
         // if(index < 2) return;
         let clone = template.content.cloneNode(true);
-        let button = clone.querySelector('button');
+        let button = clone.querySelector(cloneType);
         button.innerHTML = translations[index].name;
-        button.setAttribute("onclick", "loadTransF('"+index+"')");
+        button.setAttribute(attributionName, callBack(index));
         menu.appendChild(clone);
     })
-
 }
