@@ -530,6 +530,7 @@
       timer("Loading Arabic",() => loadArabic().then(() => timer("Init finder",initFinder)))
       // setVersePerPage() 
       version.innerText= config.version;
+      populateTranslationMenu();
       //initFinder();
       //setTimeout(findAction, 250, 'بسم الله');
     //  setTimeout(initFinder, 250, "بسم الله");
