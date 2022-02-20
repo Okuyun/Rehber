@@ -1342,7 +1342,8 @@ function loadSettings() {
         setFontSize("translation", settings.translation)
         setVersePerPage(undefined, settings.verse_per_page)
         lastOne = settings.lastOne;
-        language(settings.lang)
+        // language(settings.lang) NOT USED
+        texts = languages[currentLanguage()]
         showState(settings.dstate)
         displayState(settings.dstate)
         setFontType(settings.fontType)
@@ -1441,7 +1442,7 @@ function speechCancel() {
  * @see updateSettings
  * @see loadLang
  */
-function language(val) {
+function language(val) { //NOT USED
     val = parseInt(val)
     switch (val) {
         case 1:
@@ -1482,25 +1483,18 @@ function loadLang() {
  * @see loadLang
  */
 function langSpeechSettings() {
-    switch (settings.source) {
-        case 3:
-        case 5:
-            language(1)
-            btnOtherLang.innerText = texts.turkish;
+    let lan = 'en', str = 'english'; //default
+    switch (Number(settings.source)) {
+        case 3: case 5: case 9:
+            lan = 'tr'; str = 'turkish';
             break;
-        case 1:
-        case 2:
-            language(2)
-            btnOtherLang.innerText = texts.arabic;
-            break;
-        case 4:
-        case 6:
-            language(3)
-            btnOtherLang.innerText = texts.english;
-            break;
+        case 1: case 2:
+            lan = 'ar'; str = 'arabic';
     }
-    loadLang();
-
+    console.log('* change to '+lan, str)
+    texts = languages[lan]; 
+    changeLanguage(lan)  // loadLang();
+    btnOtherLang.innerText = texts[str];
 }
 
 
@@ -1661,3 +1655,24 @@ function toggleDarkMode() {
 // TODO: write docs and split the code to more readable style.. 
 // bug:la habersiz
 // TODO: instead of removing/clearning diactricits( vowels - tashkeel) check if its there then search by another array.
+
+//Language support added by M A Eyler -- Feb 2022
+//use localStorage.language tr, ar, en
+//instead of settings.lang  1,  2,  3
+function currentLanguage() {
+    const LANG = ['', 'tr', 'ar', 'en']
+    return localStorage.language
+        || LANG[settings.lang]
+        || navigator.language.substring(0,2);
+}
+function changeLanguage(lan) {
+    localStorage.language = lan
+    if (parent.applyLanguage) 
+        parent.applyLanguage()
+    else loadLang()
+}
+function languageListener(e) {
+    console.log('* listener *', e.data, window.name)
+    if (e.data == "language") loadLang()
+}
+addEventListener("message", languageListener)
