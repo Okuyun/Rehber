@@ -9,7 +9,7 @@
 const translations = [ //this order is fixed
     { id:"aruthman", path: "quran-uthmani.txt", name: "Arabic Uthmani" },
     { id:"arclean", path: "quran-simple-clean.txt", name: "Arabic Clean" },
-    { id:"tfJa", path: "ar.jalalayn.txt", name: "تفسير الميسر" },
+    { id:"tfJa", path: "ar.jalalayn.txt", name:"تفسير الجلالين" },
     { id:"trTr", path: "tr.diyanet.txt", name: "Türkçe: Diyanet (1987)" },
     { id:"enAh", path: "en.ahmedali.txt", name: "English: Ahmed Ali" },
     { id:"trEl", path: "tr.yazir.txt", name: "Türkçe: Elmalılı Yazır" },
@@ -18,8 +18,8 @@ const translations = [ //this order is fixed
     { id:"enPi", path: "en.pickthall.txt", name: "English: M Pickthall" },
     { id:"trAb", path: "tr.abay.txt", name: "Türkçe: çeviriyazı " },
     { id:"deZa", path: "de.zaidan.txt", name: "Deutsch: Amir Zaidan" },
-    { id:"tfMu", path: "ar.muyassar.txt", name: "تفسير الجلالين" },
-]
+    { id:"tfMu", path: "ar.muyassar.txt", name: "تفسير الميسر" },
+] 
 
 const menuItems = [3,5,4,6,8,7,10,9,2,11] //this order is arbitrary
 /**

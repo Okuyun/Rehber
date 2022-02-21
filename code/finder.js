@@ -937,7 +937,7 @@ async function initFinder() {
     if (storageAvailable("localStorage")) {
         if (window.localStorage.settings === undefined) {
             initLocalStorage();
-            await loadTransF();
+            await loadTransF(4, true); //default is ahmedali
         } else {
             await loadSettings()
         }
@@ -998,7 +998,10 @@ function setFontToDefault(language, size) {
     setFontSize(update, size, rule, update)
 }
 
-async function loadTransF(n = 1) { // "arclean") {
+//called from initFinder() with init=true
+//or from finderCallBack() with init=undefined
+async function loadTransF(n, init=false) {
+    console.log('loadTransF', {n, init})
     await loadTrans(n)
     // clearTable();
     // toCheck...
@@ -1011,7 +1014,7 @@ async function loadTransF(n = 1) { // "arclean") {
     THtext.innerText = translations[n].name + "\u2002";
     findActionH(searchQue.value)
     updateSettings("source", n)
-    langSpeechSettings()
+    langSpeechSettings(init) //save language settings?
 }
 
 /* function getTefsirText(n) { //not used
@@ -1289,7 +1292,7 @@ function normlisation(text) {
 }
 
 function initLocalStorage() {
-    let keys = ["arabic", "translation", "colour", "source", "oneline", "lastOne", "lang", "verse_per_page", "fontType"]
+    let keys = ["arabic", "translation", "colour", "source", "oneline", "lastOne", /* "lang", */ "verse_per_page", "fontType"]
     let arabicSize = parseInt(getCSSRule(".arabic").style.fontSize);
     let translationSize = parseInt(getCSSRule(".translation").style.fontSize);
     let colour = "#ffff00";
@@ -1348,7 +1351,7 @@ function loadSettings() {
         displayState(settings.dstate)
         setFontType(settings.fontType)
         if (settings["dark-mode"]) toggleDarkMode()
-        return loadTransF(settings.source);
+        return loadTransF(settings.source, true);
     }
 }
 
@@ -1482,18 +1485,18 @@ function loadLang() {
  * A seprate langauge laod for speech language since it needed a switch case. 
  * @see loadLang
  */
-function langSpeechSettings() {
+function langSpeechSettings(init) {
     let lan = 'en', str = 'english'; //default
     switch (Number(settings.source)) {
         case 3: case 5: case 9:
             lan = 'tr'; str = 'turkish';
             break;
-        case 1: case 2:
+        case 1: case 2: case 11:
             lan = 'ar'; str = 'arabic';
     }
-    console.log('* change to '+lan, str)
-    texts = languages[lan]; 
-    changeLanguage(lan)  // loadLang();
+    if (init) lan = currentLanguage()
+    else changeLanguage(lan)
+    texts = languages[lan]; loadLang();
     btnOtherLang.innerText = texts[str];
 }
 
@@ -1662,10 +1665,11 @@ function toggleDarkMode() {
 function currentLanguage() {
     const LANG = ['', 'tr', 'ar', 'en']
     return localStorage.language
-        || LANG[settings.lang]
+        || LANG[settings.lang]  //for transition
         || navigator.language.substring(0,2);
 }
 function changeLanguage(lan) {
+    console.log('* changeLanguage to '+lan)
     localStorage.language = lan
     if (parent.applyLanguage) 
         parent.applyLanguage()
