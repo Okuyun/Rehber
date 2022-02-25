@@ -937,10 +937,10 @@ async function initFinder() {
     if (storageAvailable("localStorage")) {
         if (window.localStorage.settings === undefined) {
             initLocalStorage();
-            await loadTransF(4, true); //default is ahmedali
         } else {
-            await loadSettings()
+            await loadSettings();
         }
+        await loadTransF(); loadLang()
     }
     hashChanged();
     menuFn();
@@ -998,10 +998,8 @@ function setFontToDefault(language, size) {
     setFontSize(update, size, rule, update)
 }
 
-//called from initFinder() with init=true
-//or from finderCallBack() with init=undefined
-async function loadTransF(n, init=false) {
-    console.log('loadTransF', {n, init})
+//called from initFinder() from finderCallBack()
+async function loadTransF(n = settings.source) {
     await loadTrans(n)
     // clearTable();
     // toCheck...
@@ -1014,7 +1012,7 @@ async function loadTransF(n, init=false) {
     THtext.innerText = translations[n].name + "\u2002";
     findActionH(searchQue.value)
     updateSettings("source", n)
-    langSpeechSettings(init) //save language settings?
+    langSpeechSettings()
 }
 
 /* function getTefsirText(n) { //not used
@@ -1292,11 +1290,11 @@ function normlisation(text) {
 }
 
 function initLocalStorage() {
-    let keys = ["arabic", "translation", "colour", "source", "oneline", "lastOne", /* "lang", */ "verse_per_page", "fontType"]
+    let keys = ["arabic", "translation", "colour", "source", "oneline", "lastOne", "verse_per_page", "fontType"]
     let arabicSize = parseInt(getCSSRule(".arabic").style.fontSize);
     let translationSize = parseInt(getCSSRule(".translation").style.fontSize);
     let colour = "#ffff00";
-    let values = [arabicSize, translationSize, colour, 5, oneline, lastOne, "1", 10, "Zekr"]
+    let values = [arabicSize, translationSize, colour, 4, oneline, lastOne, 20, "Zekr"]
     for (let i = 0; i < keys.length; i++) {
         updateSettings(keys[i], values[i])
     }
@@ -1346,12 +1344,11 @@ function loadSettings() {
         setVersePerPage(undefined, settings.verse_per_page)
         lastOne = settings.lastOne;
         // language(settings.lang) NOT USED
-        texts = languages[currentLanguage()]
+        // texts = languages[currentLanguage()]
         showState(settings.dstate)
         displayState(settings.dstate)
         setFontType(settings.fontType)
         if (settings["dark-mode"]) toggleDarkMode()
-        return loadTransF(settings.source, true);
     }
 }
 
@@ -1459,7 +1456,7 @@ function language(val) { //NOT USED
             break;
 
     }
-    updateSettings("lang", val)
+    // updateSettings("lang", val)
 }
 /**
  * Load langugae file and change the UI based on it,
@@ -1467,6 +1464,7 @@ function language(val) { //NOT USED
  * @see langSpeechSettings
  */
 function loadLang() {
+    texts = languages[currentLanguage()]
     txtWordFound.innerText = texts.occ;
     fontAr.innerText = texts.font + " " + texts.size;
     txtTrans.innerText = texts.trans + " " + texts.size;
@@ -1485,18 +1483,18 @@ function loadLang() {
  * A seprate langauge laod for speech language since it needed a switch case. 
  * @see loadLang
  */
-function langSpeechSettings(init) {
-    let lan = 'en', str = 'english'; //default
+function langSpeechSettings() {
+    let str = 'english'; //default
     switch (Number(settings.source)) {
         case 3: case 5: case 9:
-            lan = 'tr'; str = 'turkish';
+            str = 'turkish';
             break;
         case 1: case 2: case 11:
-            lan = 'ar'; str = 'arabic';
+            str = 'arabic';
     }
-    if (init) lan = currentLanguage()
-    else changeLanguage(lan)
-    texts = languages[lan]; loadLang();
+    // if (init) lan = currentLanguage()
+    // else changeLanguage(lan)
+    // texts = languages[lan]; loadLang();
     btnOtherLang.innerText = texts[str];
 }
 
@@ -1675,8 +1673,19 @@ function changeLanguage(lan) {
         parent.applyLanguage()
     else loadLang()
 }
+function nextLanguage() {
+    const NEXT = {tr:'en', en:'ar', ar:'tr'}
+    changeLanguage(NEXT[currentLanguage()])
+}
 function languageListener(e) {
     console.log('* listener *', e.data, window.name)
     if (e.data == "language") loadLang()
 }
-addEventListener("message", languageListener)
+
+{// listen to 'language' message
+    addEventListener("message", languageListener)
+ // add langButton into the navbar
+    let b = document.createElement('button')
+    b.id = 'langButton'; b.onclick = nextLanguage
+    document.body.querySelector('.navbar-brand').after(b)
+}

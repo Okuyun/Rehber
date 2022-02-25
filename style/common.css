@@ -151,3 +151,18 @@ great {
   background-color: rgb(18, 16, 143);
   color: rgb(130, 153, 3);
 }
+
+/* Language button added by M A Eyler -- Feb 2022 */
+#langButton {
+    height: 28px; width: 28px;
+    /* flaticon.com/free-icon/language_1246334 */
+    background-image: url(/Kuran/image/language.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: #ff7;
+    border: none;
+    border-radius: 15px;
+    transition: all 0.4s ease-out;
+    user-select: none;
+    cursor: pointer;
+}
