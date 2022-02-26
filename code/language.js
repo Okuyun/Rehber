@@ -1,5 +1,6 @@
 let languages={
     ar:{
+        title:"باحث قرآني",
         pref:"الإعدادات",
         occ:"عدد الآيات",
         size:"حجم",
@@ -22,6 +23,7 @@ let languages={
 
     },
     tr:{
+        title:"Kur'an Rehberi",
         pref:"ayarlar",
         occ:"ayet",
         size:"boy",
@@ -45,6 +47,7 @@ let languages={
 
     },
     en:{
+        title:"Verse Finder",
         pref:"preference",
         occ:"verses",
         size:"size",

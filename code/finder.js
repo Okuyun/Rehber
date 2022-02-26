@@ -1000,6 +1000,8 @@ function setFontToDefault(language, size) {
 
 //called from initFinder() from finderCallBack()
 async function loadTransF(n = settings.source) {
+    // console.log('* loadTransF', n, settings.source)
+    if (n != settings.source) updateSettings("source", n)
     await loadTrans(n)
     // clearTable();
     // toCheck...
@@ -1011,7 +1013,6 @@ async function loadTransF(n = settings.source) {
     // maybe better approach to manage them from one place, when you change the object you will have to change the data as a whole. TODO
     THtext.innerText = translations[n].name + "\u2002";
     findActionH(searchQue.value)
-    updateSettings("source", n)
     langSpeechSettings()
 }
 
@@ -1371,7 +1372,8 @@ function showState(state) {
 const SR = new webkitSpeechRecognition()
 
 function SearchVoice(language) {
-    let speechLang = "tr-TR"
+    let lang = currentLanguage()
+    let speechLang = lang+'-'+lang.toUpperCase()  //"tr-TR"
     // TODO: tefsir source is not defined -- check form local storage.
     /* switch (settings.source) {
         case 3:
@@ -1388,11 +1390,11 @@ function SearchVoice(language) {
             break;
     } */
     let trCode = translations[settings.source].id
-    if (trCode.startsWith('ar')) speechLang = "ar-AR"
-    if (trCode.startsWith('en')) speechLang = "en-EN"
+    // if (trCode.startsWith('ar')) speechLang = "ar-AR"
+    // if (trCode.startsWith('en')) speechLang = "en-EN"
 
     function listen(lang) {
-        SR.lang = lang ? lang : speechLang; //: "en-EN"; 
+        SR.lang = lang || speechLang //: "en-EN"; 
         console.log(trCode, SR.lang)
         SR.start()
     }
@@ -1478,6 +1480,8 @@ function loadLang() {
     btnClose.innerText = texts.close;
     modelVoiceControl.innerText = texts.soundSettings;
     loadText.innerText = texts.listening;
+    let title = document.querySelector('.navbar-brand')
+    if (title) title.innerText = texts.title;
 }
 /**
  * A seprate langauge laod for speech language since it needed a switch case. 
@@ -1677,15 +1681,28 @@ function nextLanguage() {
     const NEXT = {tr:'en', en:'ar', ar:'tr'}
     changeLanguage(NEXT[currentLanguage()])
 }
-function languageListener(e) {
-    console.log('* listener *', e.data, window.name)
+function changeTrans(i) {
+    let k = settings.source
+    console.log("* changeTranslation", k, i)
+    updateSettings("source", i)
+    if (parent.applyTranslation) 
+        parent.applyTranslation()
+    else loadTransF()
+}
+function messageListener(e) {
+    // console.log('* listener *', e.data, window.name)
     if (e.data == "language") loadLang()
+    else if (e.data == "translation") {
+        // let k = settings.source
+        settings = JSON.parse(localStorage.settings)
+        loadTransF()
+    }
 }
 
-{// listen to 'language' message
-    addEventListener("message", languageListener)
+{// listen to language and translation messages
+    addEventListener("message", messageListener)
  // add langButton into the navbar
-    let b = document.createElement('button')
-    b.id = 'langButton'; b.onclick = nextLanguage
-    document.body.querySelector('.navbar-brand').after(b)
+    // let b = document.createElement('button')
+    // b.id = 'langButton'; b.onclick = nextLanguage
+    // document.body.querySelector('.navbar-brand').after(b)
 }

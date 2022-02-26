@@ -35,8 +35,9 @@ const menuItems = [3,5,4,6,8,7,10,9,2,11] //this order is arbitrary
      let translate = translations[choosen].path;
      return readExternal(dataUrl + translate, suraTr, dataToArray)
  }
-function finderCallBack(index){
-    return "loadTransF('"+index+"')"
+function finderCallBack(index){ //by M A Eyler
+ // return "loadTransF('"+index+"')"
+    return "changeTrans('"+index+"')"
 }
 function readerCallBack(index){
     return index
