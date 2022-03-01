@@ -940,7 +940,7 @@ async function initFinder() {
         } else {
             await loadSettings();
         }
-        await loadTransF(); loadLang()
+        await loadTransF(); loadLang(); 
     }
     hashChanged();
     menuFn();
@@ -1465,6 +1465,7 @@ function language(val) { //NOT USED
  * used html ID's to change the text and the json file. 
  * @see langSpeechSettings
  */
+ 
 function loadLang() {
     texts = languages[currentLanguage()]
     txtWordFound.innerText = texts.occ;
@@ -1476,7 +1477,7 @@ function loadLang() {
     state1.labels[0].innerText = texts.show;
     state2.labels[0].innerText = texts.arabic;
     state3.labels[0].innerText = texts.oneLine;
-    btnArabic.innerText = texts.arabic;
+    btnArabic.innerText = texts.quran;
     btnClose.innerText = texts.close;
     modelVoiceControl.innerText = texts.soundSettings;
     loadText.innerText = texts.listening;
@@ -1488,6 +1489,7 @@ function loadLang() {
  * @see loadLang
  */
 function langSpeechSettings() {
+    texts = languages[currentLanguage()]
     let str = 'english'; //default
     switch (Number(settings.source)) {
         case 3: case 5: case 9:
@@ -1499,7 +1501,7 @@ function langSpeechSettings() {
     // if (init) lan = currentLanguage()
     // else changeLanguage(lan)
     // texts = languages[lan]; loadLang();
-    btnOtherLang.innerText = texts[str];
+    btnOtherLang.innerText = texts.tefsir+" "+ texts[str];
 }
 
 

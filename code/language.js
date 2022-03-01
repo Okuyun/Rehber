@@ -19,7 +19,8 @@ let languages={
         turkish:"تركي",
         english:"انكليزي",
         soundSettings:"خيارات الاستماع",
-        listening: "يتم تسجيل الصوت"
+        listening: "يتم تسجيل الصوت",
+        quran:"القرآن الكريم",
 
     },
     tr:{
@@ -42,7 +43,8 @@ let languages={
         turkish:"Türkçe",
         english:"İnglizce",
         soundSettings: "Dinleme seçenekleri",
-        listening: "Dinliyorum"
+        listening: "Dinliyorum",
+        quran:"Kuran",
 
 
     },
@@ -66,7 +68,7 @@ let languages={
         turkish:"Turkish",
         english:"English",
         soundSettings: "Listening options",
-        listening: "listening"
-
+        listening: "listening",
+        quran:"Quran",
     },
 }
