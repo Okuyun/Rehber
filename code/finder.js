@@ -404,10 +404,10 @@ function createTable(arr, word) {
     dataArr = arr;
     wordCt = word;
     let message = arr.length
-    dTable.hidden = false
+    hideTable(false)
     if (message == 0) {
-        message = "bulunmadi"
-        dTable.hidden = "true"
+        message = languages[currentLanguage()].not_found
+        hideTable(false)
         console.log(dTable, "Data table")
     }
     finderMessage.innerText = ""
@@ -714,6 +714,14 @@ function mujamList(rl) {
     let wordLst = list.map(e => [Number(e.split(":")[0] - 1), Number(e.split(":")[1] - 1)])
     return [root, wordLst];
 }
+function hideTable(state){
+    // dTable.hidden = state
+    caption_text.hidden = state
+    col_arabic.hidden = state
+    if(state) col_tefsir.style.textAlign  = "center"
+    else col_tefsir.style.textAlign  = "left"
+
+}
 
 function serachedWordTable(word) {
     // submitData(word);
@@ -722,8 +730,8 @@ function serachedWordTable(word) {
         [word, wordLst] = mujamList(word)
         wordLst[1] = [...wordLst];
     }
-    dTable.hidden = "true"
-    finderMessage.innerText = "Bulunmadı"
+    hideTable(true)
+    finderMessage.innerText = languages[currentLanguage()].not_found
     document.title = "Kuran Rehber: Finder - " + word;
     wordNumber.innerText = "Bulunmadı";
     let words = word.split("+")
@@ -1372,7 +1380,9 @@ function showState(state) {
 const SR = new webkitSpeechRecognition()
 
 function SearchVoice(language) {
-    let lang = currentLanguage()
+    let lang = translations[settings.source].id
+    lang = lang.slice(0, 2)
+    console.log("SearchVoice lang: " + lang)
     let speechLang = lang+'-'+lang.toUpperCase()  //"tr-TR"
     // TODO: tefsir source is not defined -- check form local storage.
     /* switch (settings.source) {
@@ -1389,13 +1399,13 @@ function SearchVoice(language) {
             speechLang = "en-EN"
             break;
     } */
-    let trCode = translations[settings.source].id
+    // let trCode = translations[settings.source].id
     // if (trCode.startsWith('ar')) speechLang = "ar-AR"
     // if (trCode.startsWith('en')) speechLang = "en-EN"
 
     function listen(lang) {
         SR.lang = lang || speechLang //: "en-EN"; 
-        console.log(trCode, SR.lang)
+        console.log("Listen Function",speechLang, SR.lang)
         SR.start()
     }
 
@@ -1485,6 +1495,7 @@ function loadLang() {
     if (title) title.innerText = texts.title;
     modelVoiceControl_text.innerText = texts.voice_control;
     btnClose_voice_control.innerText = texts.close;
+    finderMessage.innerText = languages[currentLanguage()].not_found
     langSpeechSettings()
 }
 /**
@@ -1511,7 +1522,8 @@ function langSpeechSettings() {
     console.log("native language: ", nativeLanguage,str,currentLanguage())
     let tefisr_search_text = texts[str]+"/"+nativeLanguage[str]
     if(texts[str] == nativeLanguage[str]) tefisr_search_text = texts[str]
-    btnOtherLang.innerText = tefisr_search_text
+    //  tefisr_search_text 
+    btnOtherLang.innerText = texts.tefsir
 }
 
 

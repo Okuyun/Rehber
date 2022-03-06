@@ -21,7 +21,8 @@ let languages={
         soundSettings:"خيارات الاستماع",
         listening: "يتم تسجيل الصوت",
         quran:"القرآن الكريم",
-        voice_control: "البحث بالصوت" 
+        voice_control: "البحث بالصوت",
+        not_found:"الكلمة غير موجودة",
     },
     tr:{
         title:"Kur'an Rehberi",
@@ -45,7 +46,8 @@ let languages={
         soundSettings: "Dinleme seçenekleri",
         listening: "Dinliyorum",
         quran:"Kuran",
-        voice_control: "Ses Araması"
+        voice_control: "Ses Araması",
+        not_found:"Aratılan kelime bulunamadı",
     },
     en:{
         title:"Verse Finder",
@@ -69,6 +71,7 @@ let languages={
         soundSettings: "Listening options",
         listening: "listening",
         quran:"Quran",
-        voice_control: "Voice Search"
+        voice_control: "Voice Search",
+        not_found:"Word not found",
     },
 }
