@@ -21,7 +21,7 @@ let languages={
         soundSettings:"خيارات الاستماع",
         listening: "يتم تسجيل الصوت",
         quran:"القرآن الكريم",
-
+        voice_control: "البحث بالصوت" 
     },
     tr:{
         title:"Kur'an Rehberi",
@@ -45,8 +45,7 @@ let languages={
         soundSettings: "Dinleme seçenekleri",
         listening: "Dinliyorum",
         quran:"Kuran",
-
-
+        voice_control: "Ses Araması"
     },
     en:{
         title:"Verse Finder",
@@ -70,5 +69,6 @@ let languages={
         soundSettings: "Listening options",
         listening: "listening",
         quran:"Quran",
+        voice_control: "Voice Search"
     },
 }

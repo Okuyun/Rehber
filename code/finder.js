@@ -1483,6 +1483,9 @@ function loadLang() {
     loadText.innerText = texts.listening;
     let title = document.querySelector('.navbar-brand')
     if (title) title.innerText = texts.title;
+    modelVoiceControl_text.innerText = texts.voice_control;
+    btnClose_voice_control.innerText = texts.close;
+    langSpeechSettings()
 }
 /**
  * A seprate langauge laod for speech language since it needed a switch case. 
@@ -1491,17 +1494,24 @@ function loadLang() {
 function langSpeechSettings() {
     texts = languages[currentLanguage()]
     let str = 'english'; //default
+    let nativeLanguage = "en"
     switch (Number(settings.source)) {
         case 3: case 5: case 9:
             str = 'turkish';
+            nativeLanguage = "tr"
             break;
         case 1: case 2: case 11:
             str = 'arabic';
+            nativeLanguage= "ar"
     }
     // if (init) lan = currentLanguage()
     // else changeLanguage(lan)
     // texts = languages[lan]; loadLang();
-    btnOtherLang.innerText = texts.tefsir+" "+ texts[str];
+    nativeLanguage = languages[nativeLanguage]
+    console.log("native language: ", nativeLanguage,str,currentLanguage())
+    let tefisr_search_text = texts[str]+"/"+nativeLanguage[str]
+    if(texts[str] == nativeLanguage[str]) tefisr_search_text = texts[str]
+    btnOtherLang.innerText = tefisr_search_text
 }
 
 
