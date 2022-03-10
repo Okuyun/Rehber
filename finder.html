@@ -543,93 +543,104 @@
        evt.preventDefault(); 
       let searchQueParent =  document.querySelector("#stickySearch");
       searchQueParent.classList.remove("sticky-top")
-
+      
+       settings.prevstate = settings.dstate
        displayState(1)
-       findAction("الله")
+       //findAction("الله")
        startIntro();
       }
   }
-      function startIntro(){
+  
+const intro_str = {};
+
+intro_str.en =
+`You may search in the Noble Quran using Finder. Language selection is on the World icon.
+You may select the translation using this menu.
+You may do the search in Arabic or in the selected translation.
+Audio search is here.
+Three modes of display: Quran with or without translation, single-line mode.
+You may display the verses using the selected resource.
+You may display the verses using the last-selected resource.
+You may display the verses directly by clicking the marked word.
+When a word is selected, you search that word by a left click.
+You may start using the application.`;
+
+intro_str.tr =
+`Rehber yazılımı ile Kuran-ı Kerim'de arama yapabilirsiniz. Dil seçimi Dünya simgesinde.
+Bu menüden istediğiniz tefsiri seçebilirsiniz.
+Aramak istediğiniz kelimeyi Kuran’da Arapça olarak veya tefsir içinde kendi dilinde aratabilirsiniz.
+Sesli arama yapabilirsiniz.
+Sonuçları görmek için üç mod: Tefsir ve Kuran, sadece Kuran, Kuran tek satır.
+Bu buton ile diğer kaynaklara yönlendirilirsiniz.
+Buradan son kaynağınıza yönlendirilirsiniz.
+İşaretli kelimeye tıkladığınızda ilgili sayfaya doğrudan yönlendirir.
+Bir kelime seçtikten sonra sağ tıklama ile seçenekler açılır.
+Uygulamayı kullanmaya başlayabilirsiniz.`;
+
+intro_str.ar = //this string needed for Arabic
+` 1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+  10`;
+
+  function startIntro(){
         let intro = introJs();
-          intro.setOptions({
-            steps: [
-              { 
-                intro: "Bu program Kuran okuma ve ezberleme deneyimlerinizi iyileştirilecek."
-              },
-              
-              {
-                element: document.querySelector("#translationHeader"),
-                intro: "Buradan desteklenen seçeneklerde tefsiri ve dili seçebilirsiniz.",
-                position: 'bottom'
-              },
-              {
-                element: document.querySelector('#searchQue'),
-                intro: "Bu alanda aramak istediğiniz kelimeyi Kuran’dan Arapça olarak veya tefsir içinde seçtiğiniz tefsir dilinde aratabilirsiniz."
-              },
-              // {
-              //   element: document.querySelector('#button-addon4 > button:nth-child(1)'),
-              //   intro: "Buradan program ayarlarını değiştirebilirsiniz.",
-              //   position: 'bottom'
-              // },
-              // {
-              //   element:  document.querySelector("#button-addon4 > button:nth-child(2)"),
-              //   intro: 'Buradan ise programciya iletisim kurabilirsiniz.',
-              //   position: 'left'
-              // },
-              {
-                element: document.querySelector("#button-addon4 > button"),
-                intro: "Buradan sesli arama yapabilirsiniz.",
-                position: 'bottom'
-              },
-              {
-                element: document.querySelector("body > div.container > div.row.bg-white > div:nth-child(3)"),
-                intro: 'Bunlar ise prorgamin üç modu, tefsir-kuran, sadece kuran, kuran tek satir modu.',
-                position: 'bottom'
-              },
-              {
-                element: document.querySelector("#dTable > tbody > tr:nth-child(1) > td.tableTranslation > div > button.btn.badge.badge-light.align-text-bottom.dropdown-toggle.dropdown-toggle-split"),
-                intro: "Bu buton ile diğer kaynaklara yönlendirilirsiniz.",
-                position: 'bottom'
-              },
-              {
-                element: document.querySelector("#dTable > tbody > tr:nth-child(1) > td.tableTranslation > div > button:nth-child(2)"),
-                intro: "Buradan son kaynağınıza gidebilirsiniz.",
-                position: 'bottom'
-              },
-              {
-                element: document.querySelector("#dTable > tbody > tr:nth-child(1) > td.text-right > span > span.fullText > great"),
-                intro: "İşaretli kelimeye tıklandığınızda Iqra uygulamasına yönlendirilirsiniz.",
-                position: 'bottom'
-              },
-              {
-                element: document.querySelector("#dTable > tbody > tr:nth-child(1) > td.text-right > span"),
-                intro: " Ayette herhangi bir kelime seçip sağ tıklama ile seçenekler açılır.",
-                position: 'bottom'
-              },
-              {
-                element: document.querySelector("#PaginationMenu > ul"),
-                intro: "Burada ilgili sayfaları görebilir ve istediğiniz sayfaya gidebilirsiniz.",
-                position: 'bottom'
-              },
-              {
-                intro: "Uygulamayı kullanmaya başlayabilirsiniz.",
-              }
-            ]
-          });
-        let turkish = {  nextLabel: 'Sonraki &rarr;',
+        let steps = [
+          { element: document.querySelector("#langButton"),
+            num: 1
+          },
+          { element: document.querySelector("#translationHeader"),
+            num: 2, position: 'bottom'
+          },
+          { element: document.querySelector('#searchQue'),
+            num: 3
+          },
+          { element: document.querySelector("#button-addon4 > button"),
+            num: 4, position: 'bottom'
+          },
+          { element: stickySearch.querySelector("div:nth-child(3)"),
+            num: 5, position: 'bottom'
+          },
+          { element: dTable.querySelector(".btn-group > button:nth-child(3)"),
+            num: 6, position: 'bottom'
+          },
+          { element: dTable.querySelector(".btn-group > button:nth-child(2)"),
+            num: 7, position: 'bottom'
+          },
+          { element: dTable.querySelector("td.text-right > span > span.fullText > great"),
+            num: 8, position: 'bottom'
+          },
+          { element: dTable.querySelector("tr:nth-child(1) > td.text-right > span"),
+            num: 9, position: 'bottom'
+          },
+          { num: 10
+          }
+        ]
+        let A = intro_str[currentLanguage()].split('\n')
+        for (let i = 0; i < A.length; i++) steps[i].intro = A[i];
+        intro.setOptions({steps});
+        let labels = {  nextLabel: '&rarr;',
             /* Previous button label in tooltip box */
-            prevLabel: '&larr; Önceki',
+            prevLabel: '&larr;',
             /* Skip button label in tooltip box */
-            skipLabel: 'Geç',
+            skipLabel: '&#9243;', //ESC
             /* Done button label in tooltip box */
-            doneLabel: 'Bitti'}
-            intro.setOptions(turkish)
+            doneLabel: '&#127383;' //OK
+          }
+          intro.setOptions(labels)
           // intro.setOptions({overlayOpacity: 0})
 
           intro.start();
           intro.onexit(function(){
             let searchQueParent =  document.querySelector("#stickySearch");
-      searchQueParent.classList.add("sticky-top")
+            searchQueParent.classList.add("sticky-top")
+            displayState(settings.prevstate)
           });
       }
     </script>
