@@ -48,7 +48,8 @@
     <!-- from bootstrap examples  -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" style="user-select: none;" href="./"></a>
-      <button id=langButton onclick="nextLanguage()"></button>
+      <button id=helpButton class=yellowButton onclick="doIntro()"></button>
+      <button id=langButton class=yellowButton onclick="nextLanguage()"></button>
       <span id="version" class="navbar-text"></span>
       
       <button
@@ -532,24 +533,16 @@
       // setVersePerPage() 
       version.innerText= config.version;
       populateTranslationMenu("translationMenu","#translationButton","button", "onclick",finderCallBack);
-      //initFinder();
-      //setTimeout(findAction, 250, 'بسم الله');
-    //  setTimeout(initFinder, 250, "بسم الله");
-    </script>
-    <script>
-    document.onkeydown = (evt) => {
-      let k = evt.key.toUpperCase()
-      if (evt.key == 'F1') {
-       evt.preventDefault(); 
-      let searchQueParent =  document.querySelector("#stickySearch");
-      searchQueParent.classList.remove("sticky-top")
-      
-       settings.prevstate = settings.dstate
-       displayState(1)
-       //findAction("الله")
-       startIntro();
-      }
-  }
+document.onkeydown = (evt) => {
+    if (evt.key !== 'F1') return
+    evt.preventDefault(); doIntro() 
+}
+function doIntro() {
+    let searchQueParent =  document.querySelector("#stickySearch");
+    searchQueParent.classList.remove("sticky-top")
+    settings.prevstate = settings.dstate
+    displayState(1); startIntro()
+}
   
 const intro_str = {};
 

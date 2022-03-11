@@ -152,11 +152,9 @@ great {
   color: rgb(130, 153, 3);
 }
 
-/* Language button added by M A Eyler -- Feb 2022 */
-#langButton {
+.yellowButton {
+    margin: 0 8px;
     height: 28px; width: 28px;
-    /* flaticon.com/free-icon/language_1246334 */
-    background-image: url(/Kuran/image/language.png);
     background-size: contain;
     background-repeat: no-repeat;
     background-color: #ff7;
@@ -165,4 +163,18 @@ great {
     transition: all 0.4s ease-out;
     user-select: none;
     cursor: pointer;
+}
+.yellowButton:hover {
+    height: 32px; width: 32px;
+    margin: 0 6px;
+  }
+/* Language button added by M A Eyler -- Feb 2022 */
+#langButton {
+    /* flaticon.com/free-icon/language_1246334 */
+    background-image: url(/Rehber/images/language.png);
+}
+/* Help button added by M A Eyler -- Mar 2022 */
+#helpButton {
+    /* icons8.com/icon/646/help */
+    background-image: url(/Rehber/images/icons8-help-50.png)
 }
