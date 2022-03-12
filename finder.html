@@ -548,29 +548,29 @@ const intro_str = {};
 
 intro_str.en =
 `You may search in the Noble Quran using Finder. Language selection is on the World icon.
-You may select the translation using this menu.
 You may do the search in Arabic or in the selected translation.
 Audio search is here.
 Three modes of display: Quran with or without translation, single-line mode.
-You may display the verses using the selected resource.
+You may select the translation using this menu.
+You may select the resource to display the result.
 You may display the verses using the last-selected resource.
 You may display the verses directly by clicking the marked word.
-When a word is selected, you search that word by a left click.
+When a word is selected, you have other options on a left click.
 You may start using the application.`;
 
 intro_str.tr =
-`Rehber yazılımı ile Kuran-ı Kerim'de arama yapabilirsiniz. Dil seçimi Dünya simgesinde.
-Bu menüden istediğiniz tefsiri seçebilirsiniz.
+`Rehber yazılımı ile Kuran-ı Kerim'de kelime arayın. Dil seçimi Dünya simgesinde.
 Aramak istediğiniz kelimeyi Kuran’da Arapça olarak veya tefsir içinde kendi dilinde aratabilirsiniz.
 Sesli arama yapabilirsiniz.
 Sonuçları görmek için üç mod: Tefsir ve Kuran, sadece Kuran, Kuran tek satır.
-Bu buton ile diğer kaynaklara yönlendirilirsiniz.
+Bu menüden istediğiniz tefsiri seçebilirsiniz.
+Bu menüden diğer kaynaklara yönlendirilirsiniz.
 Buradan son kaynağınıza yönlendirilirsiniz.
 İşaretli kelimeye tıkladığınızda ilgili sayfaya doğrudan yönlendirir.
-Bir kelime seçtikten sonra sağ tıklama ile seçenekler açılır.
+Bir kelime seçtikten sonra, sağ tıklama ile diğer seçenekler açılır.
 Uygulamayı kullanmaya başlayabilirsiniz.`;
 
-intro_str.ar = //this string needed for Arabic
+intro_str.ar =
 ` 1
   2
   3
@@ -585,45 +585,24 @@ intro_str.ar = //this string needed for Arabic
   function startIntro(){
         let intro = introJs();
         let steps = [
-          { element: document.querySelector("#langButton"),
-            num: 1
-          },
-          { element: document.querySelector("#translationHeader"),
-            num: 2, position: 'bottom'
-          },
-          { element: document.querySelector('#searchQue'),
-            num: 3
-          },
-          { element: document.querySelector("#button-addon4 > button"),
-            num: 4, position: 'bottom'
-          },
-          { element: stickySearch.querySelector("div:nth-child(3)"),
-            num: 5, position: 'bottom'
-          },
-          { element: dTable.querySelector(".btn-group > button:nth-child(3)"),
-            num: 6, position: 'bottom'
-          },
-          { element: dTable.querySelector(".btn-group > button:nth-child(2)"),
-            num: 7, position: 'bottom'
-          },
-          { element: dTable.querySelector("td.text-right > span > span.fullText > great"),
-            num: 8, position: 'bottom'
-          },
-          { element: dTable.querySelector("tr:nth-child(1) > td.text-right > span"),
-            num: 9, position: 'bottom'
-          },
-          { num: 10
-          }
+          { element: document.querySelector("#langButton") },
+          { element: document.querySelector('#searchQue') },
+          { element: document.querySelector("#button-addon4 > button") },
+          { element: document.querySelector("#stickySearch > div:nth-child(3)") },
+          { element: document.querySelector("#THtext") },
+          { element: dTable.querySelector("td.text-right > .btn-group > button:nth-child(1)") },
+          { element: dTable.querySelector("td.text-right > .btn-group > button:nth-child(2)") },
+          { element: dTable.querySelector("td.text-right > span > span.fullText > great") },
+          { element: dTable.querySelector("td.text-right > span") },
+          { }
         ]
         let A = intro_str[currentLanguage()].split('\n')
         for (let i = 0; i < A.length; i++) steps[i].intro = A[i];
         intro.setOptions({steps});
-        let labels = {  nextLabel: '&rarr;',
-            /* Previous button label in tooltip box */
+        let labels = {
+            nextLabel: '&rarr;',
             prevLabel: '&larr;',
-            /* Skip button label in tooltip box */
             skipLabel: '&#9243;', //ESC
-            /* Done button label in tooltip box */
             doneLabel: '&#127383;' //OK
           }
           intro.setOptions(labels)
