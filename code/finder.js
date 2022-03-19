@@ -1552,9 +1552,10 @@ function menuFn() {
         document.querySelectorAll("span.arabic").forEach(e => {
             e.addEventListener("contextmenu", e => {
                 e.preventDefault();
+                let bounds = e.target.getBoundingClientRect();
                 const origin = {
                     left: e.x,
-                    top: e.y
+                    top: bounds.top + bounds.height
                 };
                 // console.log(e)
                 setPosition(origin);
