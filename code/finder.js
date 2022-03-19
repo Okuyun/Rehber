@@ -1534,7 +1534,12 @@ function menuFn() {
     const menuOption = document.querySelector(".menu-option");
     let menuVisible = false;
     document.addEventListener('keydown', keyPress);
-
+    PageVisibility(leavePage)
+    function leavePage(hidden) {
+        if (document[hidden]) {
+            toggleMenu("hide")
+        }
+    }
     function select() {
         let s = getSelection().toString().trim()
         if (s) return s
@@ -1735,4 +1740,22 @@ function messageListener(e) {
     // let b = document.createElement('button')
     // b.id = 'langButton'; b.onclick = nextLanguage
     // document.body.querySelector('.navbar-brand').after(b)
+}
+
+function PageVisibility(callBackFunction) {
+    let hidden, visibilityChange;
+    if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support
+        hidden = "hidden";
+        visibilityChange = "visibilitychange";
+    } else if (typeof document.msHidden !== "undefined") {
+        hidden = "msHidden";
+        visibilityChange = "msvisibilitychange";
+    } else if (typeof document.webkitHidden !== "undefined") {
+        hidden = "webkitHidden";
+        visibilityChange = "webkitvisibilitychange";
+    }
+    function hadleVisibilityChange() {
+        return callBackFunction(hidden);
+    }
+    document.addEventListener(visibilityChange,hadleVisibilityChange  , false);
 }
