@@ -1528,12 +1528,11 @@ function langSpeechSettings() {
     btnOtherLang.innerText = texts.tefsir
 }
 
-
+let menuVisible = false;
+const menu = document.getElementById("contextMenu");
+const menuOption = document.querySelector(".menu-option");
 function menuFn() {
-
-    const menu = document.getElementById("contextMenu");
-    const menuOption = document.querySelector(".menu-option");
-    let menuVisible = false;
+    menuVisible = false;
     document.addEventListener('keydown', keyPress);
     PageVisibility(leavePage)
     function leavePage(hidden) {
@@ -1541,39 +1540,12 @@ function menuFn() {
             toggleMenu("hide")
         }
     }
-    function select() {
-        let s = getSelection().toString().trim()
-        if (s) return s
-        // else alert("Önce Arapça bir kelime seçin")
-    }
-
     function keyPress(e) {
         if (e.key === "Escape") {
             // preventDefault();
             if (menuVisible) toggleMenu("hide");
         }
     }
-
-    function addContextMenu() {
-        document.addEventListener("contextmenu", e => {
-            toggleMenu("hide");
-            let parentNode = e.target.parentNode
-            let tagName = parentNode.tagName.toLowerCase() 
-            let arabicClassContained =  parentNode.classList.contains("arabic")
-            if ( tagName== "span" && arabicClassContained) {
-                let bounds = e.target.getBoundingClientRect();
-                const origin = {
-                    left: e.x,
-                    top: bounds.top + bounds.height
-                };
-                setPosition(origin);
-                toggleMenu("show");
-                e.preventDefault();
-            }
-            return false;
-        })
-    }
-
     function contextMenuArabic() {
         let spAr = document.querySelectorAll("span.arabic")
         for (let e of spAr) {
@@ -1582,60 +1554,90 @@ function menuFn() {
             });
         }
     }
-
-
-
-    const toggleMenu = command => {
-        // console.log("toggle" + command)
-        if (!select() && command == "show") return;
-        menu.style.display = command === "show" ? "block" : "none";
-        menuVisible = !menuVisible;
-    };
-
-    const setPosition = ({ top, left }) => {
-        if (window.innerWidth - left < 160) {
-            left = (window.innerWidth - 190)
-        }
-        if (window.innerHeight - top < 220) {
-            top -= 250
-        }
-        menu.style.left = `${left}px`;
-        menu.style.top = `${top}px`;
-        toggleMenu("show");
-    };
-
     contextMenuArabic();
-
-    document.addEventListener("click", e => {
-        if (menuVisible) toggleMenu("hide");
-    });
-    // should be added by a function - future note  to myself.
-    contextMenu.addEventListener("click", e => {
-        if (!menuVisible) { return }
-        let sel = select();
-        // console.log("worked..." + " sel =" + sel)
-        switch (e.target.value) {
-            case 0: // Search in finder
-                findAction(sel)
-                break;
-            case 1: // google search
-                window.open("https://google.com/search?q=" + sel)
-                break;
-            case 2: // copy 
-                navigator.clipboard.writeText(sel)
-                    .then(() => { console.log('Panoya:', sel) })
-                    .catch(e => { alert('Panoya yazamadım\n' + sel) })
-                break;
-            case 3: // search for root
-                let root = wordToRoot.get(toBuckwalter(sel))
-                setHash(toArabic(root), "r")
-                // findAction(rootToWords(root))
-                break;
-        }
-        toggleMenu("hide");
-    });
-    addContextMenu();
 }
+document.addEventListener("click", e => {
+    if (menuVisible) toggleMenu("hide");
+});
+function selectionPosition(){
+    let s = getSelection()
+    let oRange = s.getRangeAt(0); 
+    let oRect = oRange.getBoundingClientRect();
+    return oRect
+}
+function select() {
+    let s = getSelection().toString().trim()
+   
+    if (s) return s
+    // else alert("Önce Arapça bir kelime seçin")
+}
+const setPosition = ({ top, left }) => {
+    if (window.innerWidth - left < 160) {
+        left = (window.innerWidth - 190)
+    }
+    if (window.innerHeight - top < 220) {
+        top -= 250
+    }
+    menu.style.left = `${left}px`;
+    menu.style.top = `${top}px`;
+    toggleMenu("show");
+};
+
+const toggleMenu = command => {
+    // console.log("toggle" + command)
+    if (!select() && command == "show") return;
+    menu.style.display = command === "show" ? "block" : "none";
+    menuVisible = !menuVisible;
+};
+
+function addOptions(){
+    // should be added by a function - future note  to myself.
+contextMenu.addEventListener("click", e => {
+if (!menuVisible) { return }
+let sel = select();
+// console.log("worked..." + " sel =" + sel)
+switch (e.target.value) {
+    case 0: // Search in finder
+        findAction(sel)
+        break;
+    case 1: // google search
+        window.open("https://google.com/search?q=" + sel)
+        break;
+    case 2: // copy 
+        navigator.clipboard.writeText(sel)
+            .then(() => { console.log('Panoya:', sel) })
+            .catch(e => { alert('Panoya yazamadım\n' + sel) })
+        break;
+    case 3: // search for root
+        let root = wordToRoot.get(toBuckwalter(sel))
+        setHash(toArabic(root), "r")
+        // findAction(rootToWords(root))
+        break;
+}
+toggleMenu("hide");
+});
+}
+function addContextMenu() {
+document.addEventListener("contextmenu", e => {
+    toggleMenu("hide");
+    let parentNode = e.target.parentNode
+    let tagName = parentNode.tagName.toLowerCase() 
+    let arabicClassContained =  parentNode.classList.contains("arabic")
+    if ( tagName== "span" && arabicClassContained) {
+        let bounds = selectionPosition()
+        const origin = {
+            left: e.x,
+            top: bounds.bottom
+        };
+        setPosition(origin);
+        toggleMenu("show");
+        e.preventDefault();
+    }
+    return false;
+})
+}
+addContextMenu();
+addOptions()
 function updateContextMenuLanguage(){
     let elements = ["contextMenuCopy","contextMenuFindWord","contextMenuFindRoot","contextMenuGoogleSearch"]
     let keywords = ["copy","findWord","findRoot","googleSearch"]
