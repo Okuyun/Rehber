@@ -1549,18 +1549,22 @@ function menuFn() {
     }
 
     function addContextMenu() {
-        document.querySelectorAll("span.arabic").forEach(e => {
-            e.addEventListener("contextmenu", e => {
-                e.preventDefault();
+        document.addEventListener("contextmenu", e => {
+            toggleMenu("hide");
+            let parentNode = e.target.parentNode
+            let tagName = parentNode.tagName.toLowerCase() 
+            let arabicClassContained =  parentNode.classList.contains("arabic")
+            if ( tagName== "span" && arabicClassContained) {
                 let bounds = e.target.getBoundingClientRect();
                 const origin = {
                     left: e.x,
                     top: bounds.top + bounds.height
                 };
-                // console.log(e)
                 setPosition(origin);
-                return false;
-            })
+                toggleMenu("show");
+                e.preventDefault();
+            }
+            return false;
         })
     }
 
