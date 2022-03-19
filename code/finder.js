@@ -1498,6 +1498,7 @@ function loadLang() {
     if(document.getElementById("wordNumber").innerText == "Bulunmadı")
     { finderMessage.innerText = languages[currentLanguage()].not_found}
     langSpeechSettings()
+    updateContextMenuLanguage()
 }
 /**
  * A seprate langauge laod for speech language since it needed a switch case. 
@@ -1634,6 +1635,16 @@ function menuFn() {
         toggleMenu("hide");
     });
     addContextMenu();
+}
+function updateContextMenuLanguage(){
+    let elements = ["contextMenuCopy","contextMenuFindWord","contextMenuFindRoot","contextMenuGoogleSearch"]
+    let keywords = ["copy","findWord","findRoot","googleSearch"]
+    for(let i = 0; i < elements.length; i++){
+        let language = languages[currentLanguage()]
+        let keyword = keywords[i]
+        translation = language[keyword]
+        document.getElementById(elements[i]).innerText = translation
+    }
 }
 
 function setCustomMode(bgcolor, color) {

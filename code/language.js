@@ -23,6 +23,10 @@ let languages={
         quran:"القرآن الكريم",
         voice_control: "البحث بالصوت",
         not_found:"الكلمة غير موجودة",
+        copy: "نسخ",
+        findWord: "البحث عن كلمة",
+        findRoot: "البحث عن الجذر",
+        googleSearch: "البحث عن طريق جوجل",
     },
     tr:{
         title:"Kur'an Rehberi",
@@ -48,6 +52,10 @@ let languages={
         quran:"Kuran",
         voice_control: "Ses Araması",
         not_found:"Aratılan kelime bulunamadı",
+        copy: "Kopyala",
+        findWord: "Kelimeyi bul",
+        findRoot: "Kökü bul",
+        googleSearch: "Google'dan arama",
     },
     en:{
         title:"Verse Finder",
@@ -73,5 +81,9 @@ let languages={
         quran:"Quran",
         voice_control: "Voice Search",
         not_found:"Word not found",
+        copy: "Copy",
+        findWord: "Find Word",
+        findRoot: "Find Root",
+        googleSearch: "Google Search",
     },
 }
