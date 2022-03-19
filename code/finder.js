@@ -1495,7 +1495,8 @@ function loadLang() {
     if (title) title.innerText = texts.title;
     modelVoiceControl_text.innerText = texts.voice_control;
     btnClose_voice_control.innerText = texts.close;
-    finderMessage.innerText = languages[currentLanguage()].not_found
+    if(document.getElementById("wordNumber").innerText == "Bulunmadı")
+    { finderMessage.innerText = languages[currentLanguage()].not_found}
     langSpeechSettings()
 }
 /**
