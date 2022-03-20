@@ -1598,7 +1598,7 @@ let sel = select();
 // console.log("worked..." + " sel =" + sel)
 switch (e.target.value) {
     case 0: // Search in finder
-        findAction(sel)
+        setHash(sel)
         break;
     case 1: // google search
         window.open("https://google.com/search?q=" + sel)
