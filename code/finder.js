@@ -763,7 +763,7 @@ function submitData(word, message = "no", email = "anon") {
     link = link.replace("email", email)
 
     link = link.replace("navigator", navigatorToString())
-    link = decodeURI(link)
+    link = decodeURIComponent(link)
     let submit = '&submit=Submit';
     link = link + submit;
     let post = document.createElement("iframe")
@@ -810,7 +810,7 @@ function cancelFeedBack() {
 
 function findActionH(word) {
     clearTable();
-    word = decodeURI(word);
+    word = decodeURIComponent(word);
     searchQue.value = word
     serachedWordTable(word);
 }
@@ -841,7 +841,7 @@ function addSuggestions(wordList) {
 }
 
 // function rootToWords(rootB) {
-//     return rootsMap.get((decodeURI(rootB))).map(e => toArabic(e)).join("+")
+//     return rootsMap.get((decodeURIComponent(rootB))).map(e => toArabic(e)).join("+")
 // }
 function rootToFinder(root) {
     // wordCt = root;
@@ -859,7 +859,7 @@ function rootToFinder(root) {
     createTable(rootArr, root)
 }
 function readHash() {
-    let h = decodeURI(location.hash);
+    let h = decodeURIComponent(location.hash);
     // console.log("hashChanged...")
     let type = h[1];
     h = h.slice(3);
@@ -871,7 +871,7 @@ function hashChanged() {
     let [h, type, arabic] = readHash()
     switch (type) {
         case "b":
-            arabic = toArabic(decodeURI(arabic));
+            arabic = toArabic(decodeURIComponent(arabic));
             break;
         case "w":
             break;
@@ -889,7 +889,7 @@ function hashChanged() {
             return;
     }
 
-    // arabic=toArabic(decodeURI(arabic)); // move the decode function to BuckWalter code... better approach
+    // arabic=toArabic(decodeURIComponent(arabic)); // move the decode function to BuckWalter code... better approach
     if (arabic.length <= 0) {
         console.log("arabic length", arabic.length)
         return;
@@ -929,7 +929,7 @@ function setHash(word, type) {
       s-->|yes| loadSettings
  */
 async function initFinder() {
-    let h = decodeURI(location.hash);
+    let h = decodeURIComponent(location.hash);
     let type = h[1];
     if (type == "r") {
         await loadMujam();
