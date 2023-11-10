@@ -588,7 +588,8 @@ function search(word, arr = suraSr) {
     return loc;
 }
 function normalizeElif(word){
-    return word.replace(/[أإآى]/gu, 'ا');
+    word = word.replace(/[أإآ]/gu, 'ا')
+    return word.replace(/[ى]/gu, 'ي');
 }
 
 function removeOddChar(string) {
